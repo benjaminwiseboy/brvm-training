@@ -1,11 +1,11 @@
 export function money(n: number): string {
   const sign = n < 0 ? "-" : "";
   const digits = Math.abs(Math.round(n)).toString();
-  return sign + digits.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  return sign + digits.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 }
 
 export function splitMarkup(input: string): { bold: boolean; text: string }[] {
-  const text = input.replace(/&nbsp;/g, " ");
+  const text = input.replace(/&nbsp;/g, " ");
   return text
     .split(/(\*\*[^*]+\*\*)/g)
     .filter((seg) => seg.length > 0)
