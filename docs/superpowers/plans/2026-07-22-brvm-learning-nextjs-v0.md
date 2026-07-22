@@ -11,6 +11,7 @@
 ## Global Constraints
 
 - **Cible :** Next.js App Router + TypeScript + React 19. Projet à la racine `brvm-training/app/` (dépôt git déjà initialisé, `docs/` déjà présent).
+- **Version réelle installée = Next.js 16.2.11 / React 19.2.4** (le scaffold a pris Next **16**, pas 15). Les patterns de ce plan restent valides sous Next 16 (params async `Promise<…>` + `await params`, `generateStaticParams`, `redirect`/`notFound`/`useRouter` depuis `next/navigation`, `next/font/google`). ⚠️ **Next 16 a des breaking changes vs les connaissances d'entraînement** : avant d'écrire du code Next non trivial (routing, server/client components, config, fetching), **lire le doc local pertinent sous `node_modules/next/dist/docs/01-app/`** (le `AGENTS.md` à la racine du projet l'exige). Bundler par défaut = Turbopack.
 - **Pas de Tailwind.** Tokens et composants portés de `POC-Module-1/styles.css`. Styles composant en **CSS Modules**.
 - **Pas d'auth, pas de Supabase, aucune variable d'environnement** en v0.
 - **Persistance :** `localStorage`, clé exacte `brvm-learning:v1`. Hydratation SSR-safe (état neutre au 1er rendu, lecture au `mount`).
