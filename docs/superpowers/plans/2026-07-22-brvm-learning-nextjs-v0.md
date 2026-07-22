@@ -15,7 +15,7 @@
 - **Pas d'auth, pas de Supabase, aucune variable d'environnement** en v0.
 - **Persistance :** `localStorage`, clé exacte `brvm-learning:v1`. Hydratation SSR-safe (état neutre au 1er rendu, lecture au `mount`).
 - **Polices :** Poppins (titres + chiffres), Nunito (corps), via `next/font/google`.
-- **Tokens de marque (valeurs exactes) :** `--blue #0F4A6E`, `--blue-1 #1C6E96`, `--blue-2 #0E2F44`, `--or #F2B705`, `--pos #1FA774`, `--coral #F0714E`, `--clay #C6553B`, fond neutre `#F4F4F1`.
+- **Tokens de marque (valeurs exactes) :** `--blue #0F4A6E`, `--blue-1 #1C6E96`, `--blue-2 #0E2F44`, `--or #F2B705`, `--pos #1FA774`, `--coral #F0714E`, `--clay #E07A4E`, fond neutre `#F4F4F1` (`--paper`). **Valeurs exactes = celles de `../POC-Module-1/styles.css` (source de vérité) en cas de doute.**
 - **Formatage FCFA maison :** fonction `money()` avec séparateur de milliers ` ` (espace insécable normal) — **jamais** `Intl.NumberFormat('fr-FR')` (son espace fine insécable s'affiche à largeur nulle en Poppins).
 - **Règle de contenu :** « puce auto-explicative » — **ne jamais simplifier** le texte des `.txt` ; chaque puce enseigne le pourquoi + le comment ; tout sigle défini à sa 1ʳᵉ apparition. Le gras `**…**` de la source est conservé.
 - **Source de vérité contenu :** `brvm-training/BRVM Learning/MXX.txt` (hors dépôt `app/`). Source de vérité visuelle/logique : `brvm-training/POC-Module-1/` (hors dépôt `app/`).
