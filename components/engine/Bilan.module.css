@@ -1,0 +1,253 @@
+/* =============================================================
+   Bilan — écran « Bilan / Feedback » (fin du défi quiz).
+   Porté depuis POC-Module-1/styles.css : .eyebrow, .scorecard(::before/
+   .is-win/.is-soft), .scorecard__ring (remplacé ici par le composant
+   ScoreRing — Task 5), .scorecard__main(__icon/__title/__body), .stats,
+   .stat(.st-green/.st-gold/.st-teal/.st-clay/__ic/__meta/__val/__label),
+   .exps(h3/.exp/.exp__badge/__body/__title/__text/__note), .btn(+--gold/--lg).
+   ============================================================= */
+
+.wrap {
+  display: block;
+}
+
+.eyebrow {
+  font-family: var(--f-display);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--or-deep);
+  margin: 0 0 16px;
+}
+
+/* ---------- Carte de score ---------- */
+.scorecard {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+  padding: 26px;
+  margin-bottom: 22px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.scorecard::before {
+  content: "";
+  position: absolute;
+  right: -60px;
+  top: -60px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  opacity: 0.5;
+}
+.isWin::before {
+  background: radial-gradient(circle, rgba(47, 147, 201, 0.18), transparent 65%);
+}
+.isSoft::before {
+  background: radial-gradient(circle, rgba(217, 115, 78, 0.16), transparent 65%);
+}
+
+.ring {
+  flex: none;
+}
+
+.main {
+  min-width: 0;
+  flex: 1;
+}
+.icon {
+  font-size: 26px;
+  line-height: 1;
+}
+.title {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: clamp(1.25rem, 3.4vw, 1.7rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin: 6px 0 6px;
+  color: var(--blue-2);
+}
+.body {
+  color: var(--ink-soft);
+  margin: 0 0 16px;
+  font-weight: 600;
+  max-width: 42ch;
+}
+
+/* ---------- Pastilles (Score / Portefeuille / Bonus-Correction) ---------- */
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 15px 10px 11px;
+}
+.statIc {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+}
+.stGreen .statIc {
+  background: var(--pos-soft);
+}
+.stGold .statIc {
+  background: var(--gold-soft);
+}
+.stTeal .statIc {
+  background: var(--teal-soft);
+}
+.stClay .statIc {
+  background: var(--clay-soft);
+}
+.statMeta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+.statVal {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.statLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+/* ---------- Explications ---------- */
+.exps {
+  padding: 4px 2px;
+}
+.exps h3 {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--blue-2);
+  margin: 0 0 14px;
+}
+.exp {
+  display: flex;
+  gap: 15px;
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+}
+.exp:first-of-type {
+  border-top: none;
+}
+.expBadge {
+  flex: none;
+  align-self: flex-start;
+  font-family: var(--f-display);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #8a3d1e;
+  background: var(--clay-soft);
+  border: 1px solid #efc7b4;
+  padding: 6px 10px;
+  border-radius: 999px;
+  margin-top: 3px;
+}
+.expBody {
+  min-width: 0;
+}
+.expTitle {
+  font-family: var(--f-display);
+  font-weight: 700;
+  color: var(--blue-2);
+  margin: 0 0 5px;
+}
+.expText {
+  color: var(--ink);
+  margin: 0;
+  font-size: 1rem;
+}
+.expNote {
+  margin: 12px 0 0;
+  padding: 13px 15px;
+  border-radius: 14px;
+  background: var(--gold-soft);
+  border: 1px solid #efd79a;
+  color: #6c4d12;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.expNote::before {
+  content: "⚠️ ";
+}
+
+/* ---------- Bouton « Continuer » (cf. .btn.btn--gold.btn--lg, nextBar()) ---------- */
+.btn {
+  appearance: none;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  padding: 17px 28px;
+  font-family: var(--f-display);
+  font-size: 1.06rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  margin-top: 26px;
+  transition: transform 0.12s, filter 0.2s;
+}
+.btn:active {
+  transform: translateY(1px) scale(0.995);
+}
+.btn:focus-visible {
+  outline: 3px solid var(--or);
+  outline-offset: 3px;
+}
+.btnGold {
+  background: linear-gradient(135deg, #f7cf49, var(--or));
+  color: #3a2907;
+  box-shadow: 0 12px 26px -12px rgba(242, 183, 5, 0.85);
+}
+.btnGold:hover {
+  filter: brightness(1.04);
+}
+.arw {
+  transition: transform 0.2s;
+}
+.btn:hover .arw {
+  transform: translateX(3px);
+}
+
+/* ---------- Responsive (cf. styles.css @media 640px) ---------- */
+@media (max-width: 640px) {
+  .scorecard {
+    flex-direction: column;
+    text-align: center;
+  }
+  .body {
+    max-width: none;
+  }
+  .stats {
+    justify-content: center;
+  }
+}
