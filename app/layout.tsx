@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins, Nunito } from "next/font/google";
+import { ProgressProvider } from "@/lib/store";
 import "./globals.css";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["500", "600", "700", "800"], variable: "--font-poppins" });
@@ -13,7 +14,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className={`${poppins.variable} ${nunito.variable}`}>
-      <body>{children}</body>
+      <body>
+        <ProgressProvider>{children}</ProgressProvider>
+      </body>
     </html>
   );
 }
