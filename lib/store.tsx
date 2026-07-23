@@ -42,10 +42,12 @@ export function deriveStatus(doneCount: number): { emoji: string; label: string 
  * État d'affichage d'un module dans le tableau de bord.
  * - "done" : le module est dans `completed`, quelle que soit sa position.
  * - "current" : le premier code de `order` qui n'est pas encore complété.
- * - "unlocked" : uniquement le code juste après "current" — et uniquement
- *   tant qu'aucun module n'a encore été terminé (aperçu d'accroche pour un
- *   tout nouvel apprenant). Dès qu'un module est complété, la progression
- *   redevient strictement séquentielle : seul "current" est ouvert.
+ * - "unlocked" : le code juste après "current" — aperçu d'accroche du
+ *   module suivant, cohérent avec `POC-Module-1/data/user-state.js` où M09
+ *   reste "unlocked" alors que 7 modules sont déjà "done" et M08 "current".
+ *   Exception : si ce code est le tout dernier de `order` (le module
+ *   "boss" final), il n'est jamais prévisualisé à l'avance — il ne devient
+ *   accessible qu'en tant que "current", une fois réellement atteint.
  * - "locked" : tout le reste.
  */
 export function deriveModuleState(
@@ -57,8 +59,7 @@ export function deriveModuleState(
   const currentIdx = order.findIndex((c) => !completed[c]);
   const idx = order.indexOf(code);
   if (idx === currentIdx) return "current";
-  const doneCount = Object.keys(completed).length;
-  if (doneCount === 0 && idx === currentIdx + 1) return "unlocked";
+  if (idx === currentIdx + 1 && currentIdx + 1 !== order.length - 1) return "unlocked";
   return "locked";
 }
 
