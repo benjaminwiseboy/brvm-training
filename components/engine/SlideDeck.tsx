@@ -31,25 +31,26 @@ export function SlideDeck({
   const [i, setI] = useState(0);
   const [seen, setSeen] = useState<boolean[]>(() => slides.map((_, idx) => idx === 0));
 
+  // `onDone()` est décidé DANS le handler (pas dans un updater setState) : les
+  // updaters doivent rester purs (React Strict Mode les exécute 2× en dev, ce
+  // qui déclencherait onDone deux fois par clic sur la dernière slide).
   const go = useCallback(
     (dir: number) => {
-      setI((current) => {
-        const n = current + dir;
-        if (n < 0) return current;
-        if (n >= slides.length) {
-          onDone();
-          return current;
-        }
-        setSeen((prev) => {
-          if (prev[n]) return prev;
-          const next = [...prev];
-          next[n] = true;
-          return next;
-        });
-        return n;
+      const n = i + dir;
+      if (n < 0) return; // borne basse : Précédent no-op (bouton déjà disabled à i===0)
+      if (n >= slides.length) {
+        onDone(); // dernière slide + avancer → exactement un appel par clic
+        return;
+      }
+      setSeen((prev) => {
+        if (prev[n]) return prev;
+        const next = [...prev];
+        next[n] = true;
+        return next;
       });
+      setI(n);
     },
-    [slides.length, onDone],
+    [i, slides.length, onDone],
   );
 
   // Notifie le parent à chaque changement d'index (reprise du cours).
