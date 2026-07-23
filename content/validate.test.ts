@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { validateModule, validateAll } from "./validate";
+import { MODULES } from "./registry";
 import type { Module } from "@/lib/types";
 
 const base: Module = {
@@ -34,5 +35,8 @@ describe("validateModule", () => {
 describe("validateAll", () => {
   it("rejette les codes dupliqués", () => {
     expect(validateAll([base, base])).toContain("code dupliqué: M01");
+  });
+  it("tous les modules du registry sont valides", () => {
+    expect(validateAll(Object.values(MODULES))).toEqual([]);
   });
 });
