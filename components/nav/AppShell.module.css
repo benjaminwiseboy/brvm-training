@@ -91,3 +91,302 @@
   margin: 0 auto;
   padding: 40px 20px 90px;
 }
+
+/* =============================================================
+   Variante "dash" (Task 11) — sidebar desktop / onglets mobile.
+   Porté depuis POC-Module-1/styles.css : .sidebar(+__brand/__nav/__foot),
+   .navitem(+__ic/.is-active), .sbwallet(+__label/__amt/__status), .sbuser
+   (+__meta/__name/__role), .avatar, .top__right .wallet(+__meta/__label/
+   __amount), .dash, .tabbar, .tab(+__ic/.is-active), et la bascule
+   @media(min-width:901px) (lignes ~440-547 de styles.css).
+
+   Gap #2 (cf. task-11-brief.md) : dans le POC, cette bascule s'appuie sur une
+   cascade globale `body.dash-page` pour cacher/afficher `.sidebar`/`.top`/
+   `.tabbar` — impossible à reproduire via CSS Modules (scopés par fichier).
+   Ici, AppShell.tsx ne RENDS ces éléments dans le JSX que pour
+   variant="dash" (les pages de module ne les reçoivent jamais) ; le
+   @media ci-dessous se contente de choisir, parmi les éléments dash déjà
+   rendus, lequel est visible à quelle largeur — il ne masque jamais rien
+   côté pages de module.
+   ============================================================= */
+
+.dashShell {
+  min-height: 100dvh;
+}
+
+/* Sidebar (desktop) — cachée par défaut (mobile), affichée ≥901px ci-dessous. */
+.sidebar {
+  display: none;
+  flex-direction: column;
+  gap: 20px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 250px;
+  padding: 22px 16px;
+  background: var(--card);
+  border-right: 1px solid var(--line);
+  overflow-y: auto;
+  z-index: 50;
+}
+.sidebarBrand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 4px 8px 0;
+}
+.brandSub {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: -2px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.sidebarNav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.navitem {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--ink-soft);
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 15px;
+  transition: background 0.18s, color 0.18s;
+}
+.navitem:hover {
+  background: var(--paper);
+  color: var(--blue-2);
+}
+.navitemActive {
+  background: var(--blue-2);
+  color: #fff;
+}
+.navitemActive:hover {
+  background: var(--blue-2);
+  color: #fff;
+}
+.navitemIc {
+  font-size: 18px;
+  width: 22px;
+  text-align: center;
+}
+
+.sidebarFoot {
+  margin-top: auto;
+  display: grid;
+  gap: 12px;
+}
+.sbwallet {
+  background: linear-gradient(140deg, var(--blue-1), var(--blue-2));
+  color: #fff;
+  border-radius: 18px;
+  padding: 14px 16px;
+}
+.sbwalletLabel {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #a9c2d4;
+  font-weight: 700;
+}
+.sbwalletAmt {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 1.3rem;
+  font-variant-numeric: tabular-nums;
+  margin-top: 3px;
+}
+.cur {
+  color: var(--or);
+  font-size: 0.6em;
+  margin-left: 4px;
+}
+.sbwalletStatus {
+  font-size: 12px;
+  font-weight: 700;
+  color: #c0d2e0;
+  margin-top: 7px;
+}
+.sbuser {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 10px 12px;
+}
+.sbuserMeta {
+  min-width: 0;
+}
+.sbuserName {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--blue-2);
+}
+.resetBtn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin-top: 2px;
+  font-family: var(--f-display);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--azure);
+  text-decoration: none;
+}
+.resetBtn:hover {
+  color: var(--blue-2);
+  text-decoration: underline;
+}
+.resetBtn:focus-visible {
+  outline: 3px solid var(--or);
+  outline-offset: 3px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex: none;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  background: radial-gradient(circle at 30% 28%, var(--azure), var(--blue-2));
+  border: 2px solid #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Header mobile (variante dash) — équivalent de <header class="top"> côté
+   dashboard, avec le mini-portefeuille (pas de badge de statut : déjà
+   affiché dans ProgressCard, cf. `.top__right .wallet__badge{display:none}`
+   dans le POC). */
+.dashTop {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--paper) 84%, transparent);
+  backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.dashTopBar {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: space-between;
+}
+.topWallet {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
+  color: #eaf1f6;
+  padding: 8px 8px 8px 16px;
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+}
+.topWalletMeta {
+  text-align: right;
+  line-height: 1.15;
+}
+.topWalletLabel {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #a6becf;
+  font-weight: 700;
+}
+.topWalletAmount {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.dashMain {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 34px 20px 56px;
+  display: grid;
+  gap: 26px;
+}
+
+/* Barre d'onglets flottante (mobile) */
+.tabbar {
+  position: fixed;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  z-index: 60;
+  display: flex;
+  gap: 3px;
+  background: color-mix(in srgb, var(--card) 90%, transparent);
+  backdrop-filter: saturate(140%) blur(12px);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px;
+  box-shadow: var(--shadow-lg);
+  max-width: calc(100vw - 28px);
+}
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 60px;
+  padding: 8px 8px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--ink-soft);
+  font-size: 10px;
+  font-weight: 700;
+  transition: background 0.2s, color 0.2s;
+}
+.tabIc {
+  font-size: 17px;
+}
+.tabActive {
+  background: var(--blue-2);
+  color: #fff;
+}
+
+/* Bascule sidebar (desktop) ↔ header+onglets (mobile) — scopée aux éléments
+   de la variante "dash" (voir le commentaire de section ci-dessus). */
+@media (min-width: 901px) {
+  .dashShell {
+    padding-left: 250px;
+  }
+  .sidebar {
+    display: flex;
+  }
+  .dashTop {
+    display: none;
+  }
+  .tabbar {
+    display: none;
+  }
+  .dashMain {
+    padding-top: 40px;
+  }
+}
+@media (max-width: 900px) {
+  .dashMain {
+    padding-bottom: 116px;
+  }
+}

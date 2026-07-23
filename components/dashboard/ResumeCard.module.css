@@ -1,0 +1,114 @@
+/* =============================================================
+   ResumeCard — héro du tableau de bord (salutation + reprise).
+   Porté depuis POC-Module-1/styles.css : .dash-hero (+::before, >*,
+   __greet, __name (+b), __sub (+b)), .resume (+__play, __meta, __k, __t,
+   __sub, __arw).
+   ============================================================= */
+
+.hero {
+  background: linear-gradient(140deg, var(--blue-1), var(--blue-2));
+  color: #fff;
+  border-radius: var(--radius-xl);
+  padding: 28px 28px 26px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  right: -60px;
+  top: -70px;
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.09), transparent 62%);
+}
+.hero > * {
+  position: relative;
+}
+
+.greet {
+  font-family: var(--f-display);
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  color: #a9c2d4;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+}
+.name {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: clamp(1.7rem, 5vw, 2.4rem);
+  line-height: 1.05;
+  margin: 0;
+}
+.sub {
+  color: #c0d2e0;
+  font-weight: 600;
+  margin: 9px 0 22px;
+}
+.sub b {
+  color: #fff;
+}
+
+.resume {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  padding: 13px 15px;
+  color: #fff;
+  transition: background 0.2s, transform 0.1s;
+}
+.resume:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.resume:active {
+  transform: scale(0.99);
+}
+.play {
+  flex: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--or);
+  color: #3a2907;
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  box-shadow: 0 6px 16px -6px rgba(242, 183, 5, 0.8);
+}
+.meta {
+  min-width: 0;
+  flex: 1;
+}
+.k {
+  font-size: 10.5px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #a9c2d4;
+  font-weight: 700;
+}
+.t {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.04rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.subline {
+  font-size: 12.5px;
+  color: #bcd0de;
+  font-weight: 600;
+}
+.arw {
+  flex: none;
+  font-size: 20px;
+}

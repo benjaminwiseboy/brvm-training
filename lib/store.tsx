@@ -96,6 +96,15 @@ const Ctx = createContext<{
   setResumeSlide: (code: string, slide: number) => void;
   setOnboarded: () => void;
   reset: () => void;
+  /**
+   * `true` une fois l'effet de lecture `localStorage` (ci-dessous) exécuté —
+   * ajouté pour la Task 11 : `app/page.tsx` doit pouvoir attendre la fin de
+   * l'hydratation avant de décider de rediriger vers `/onboarding`, sinon
+   * `state.onboarded === false` (valeur neutre de `initialState()`, avant
+   * lecture du localStorage persisté) déclencherait une redirection-éclair
+   * pour tout apprenant déjà onboardé.
+   */
+  hydrated: boolean;
 } | null>(null);
 
 export function ProgressProvider({ children }: { children: React.ReactNode }) {
@@ -115,6 +124,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     setResumeSlide: (code: string, slide: number) => setState((s) => ({ ...s, resume: { code, slide } })),
     setOnboarded: () => setState((s) => ({ ...s, onboarded: true })),
     reset: () => setState(initialState()),
+    hydrated,
   };
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

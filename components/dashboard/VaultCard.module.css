@@ -1,0 +1,119 @@
+/* =============================================================
+   VaultCard — section « Le Coffre-fort » du tableau de bord.
+   Porté depuis POC-Module-1/styles.css : .dash-sec__head, .dash-h2,
+   .dash-sec__hint, .res-grid, .res(+__ic(+tons)/__body/__name/__meta),
+   .res--locked. `.open` (lien « Ouvrir le Coffre-fort ») n'a pas
+   d'équivalent exact dans le POC (mockup statique sans navigation réelle) —
+   cf. task-11-report.md, Step 5 du brief l'exige explicitement.
+   ============================================================= */
+
+.sec {
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.h2 {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: var(--blue-2);
+  margin: 0;
+}
+.hint {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.res {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: var(--shadow-sm);
+}
+.ic {
+  flex: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 21px;
+}
+.icGreen {
+  background: var(--pos-soft);
+}
+.icGold {
+  background: var(--gold-soft);
+}
+.icTeal {
+  background: var(--teal-soft);
+}
+.icCoral {
+  background: var(--coral-soft);
+}
+.body {
+  min-width: 0;
+}
+.name {
+  display: block;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--blue-2);
+  line-height: 1.15;
+}
+.meta {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  margin-top: 3px;
+}
+.locked {
+  opacity: 0.62;
+}
+.locked .ic {
+  filter: grayscale(0.55);
+}
+
+.open {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--blue);
+  text-decoration: none;
+}
+.open:hover {
+  color: var(--blue-2);
+}
+.open:focus-visible {
+  outline: 3px solid var(--or);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

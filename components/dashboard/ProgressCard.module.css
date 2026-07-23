@@ -1,0 +1,131 @@
+/* =============================================================
+   ProgressCard — carte de progression du tableau de bord (anneau + stats).
+   Porté depuis POC-Module-1/styles.css : .scorecard(::before, variante
+   .is-win seule — le tableau de bord n'affiche jamais .is-soft), .scorecard
+   __main(__icon/__title/__body), .stats, .stat(+tons/__ic/__meta/__val/
+   __label). Cf. components/engine/Bilan.module.css (Task 7) pour le même
+   port dans le contexte du Bilan de module — dupliqué ici plutôt que
+   partagé entre CSS Modules (les classes ne se partagent pas entre
+   fichiers), avec un 4ᵉ ton (.stBlue) pour le nouveau chip « Statut ».
+   ============================================================= */
+
+.scorecard {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+  padding: 26px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.scorecard::before {
+  content: "";
+  position: absolute;
+  right: -60px;
+  top: -60px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  opacity: 0.5;
+  background: radial-gradient(circle, rgba(47, 147, 201, 0.18), transparent 65%);
+}
+
+.ring {
+  flex: none;
+}
+
+.main {
+  min-width: 0;
+  flex: 1;
+}
+.icon {
+  font-size: 26px;
+  line-height: 1;
+}
+.title {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: clamp(1.25rem, 3.4vw, 1.7rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin: 6px 0 6px;
+  color: var(--blue-2);
+}
+.body {
+  color: var(--ink-soft);
+  margin: 0 0 16px;
+  font-weight: 600;
+  max-width: 42ch;
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 15px 10px 11px;
+}
+.statIc {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+}
+.stBlue .statIc {
+  background: var(--blue-soft);
+}
+.stGreen .statIc {
+  background: var(--pos-soft);
+}
+.stGold .statIc {
+  background: var(--gold-soft);
+}
+.stTeal .statIc {
+  background: var(--teal-soft);
+}
+.statMeta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+.statVal {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.statLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+/* ---------- Responsive (cf. styles.css @media 640px) ---------- */
+@media (max-width: 640px) {
+  .scorecard {
+    flex-direction: column;
+    text-align: center;
+  }
+  .body {
+    max-width: none;
+  }
+  .stats {
+    justify-content: center;
+  }
+}
