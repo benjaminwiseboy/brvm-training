@@ -97,7 +97,7 @@ export const m03: Module = {
     ],
     questions: [
       {
-        prompt: "Combien Koffi vient-il de recevoir en cash grâce aux dividendes ?",
+        prompt: "Combien Koffi vient-il de recevoir **en cash** grâce aux dividendes ?",
         answer: "100000",
         options: [
           { value: "10000", label: "10 000 FCFA" },
@@ -106,7 +106,7 @@ export const m03: Module = {
         ],
       },
       {
-        prompt: "S'il revend toutes ses actions aujourd'hui, quelle est sa plus-value ?",
+        prompt: "S'il revend toutes ses actions aujourd'hui, quelle est sa **plus-value** ?",
         answer: "200000",
         options: [
           { value: "20000", label: "20 000 FCFA" },

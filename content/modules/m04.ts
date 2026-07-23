@@ -6,9 +6,10 @@ import type { Module } from "@/lib/types";
    ou un glisser-déposer, mais la forme s'intègre parfaitement au quiz à
    options partagées existant (3 options au lieu de 2, cf. m01/m02).
    Dernier module de la Phase 1 : le paragraphe de transition « Fin de la
-   Phase 1 » du .txt est replié en 4ᵉ entrée de `feedback.explanations`
-   (badge 🏆), faute d'un champ dédié dans le type Feedback — voir le
-   rapport de la Task 14 pour la justification de ce choix.
+   Phase 1 » du .txt est replié dans le `note` de la dernière explication
+   (Fatou), comme le "À retenir" de M02/M03 — pas un 4ᵉ entrée séparée,
+   pour garder `explanations.length === questions.length` (cf. le rendu
+   "Les {total} explications" dans Bilan.tsx, corrigé en review Task 14).
    ============================================================= */
 export const m04: Module = {
   code: "M04",
@@ -143,11 +144,7 @@ export const m04: Module = {
         verdict: "Action",
         title: "Fatou",
         body: "Elle a le temps (horizon long) et vise le rendement max. Elle peut encaisser la volatilité. Seules les actions solides offrent cette croissance de long terme.",
-      },
-      {
-        verdict: "🏆",
-        title: "Fin de la Phase 1",
-        body: "Bravo, vous terminez la Phase 1 « Les Fondations » ! Vous connaissez le marché, les produits et la façon de gagner de l'argent. Vous ne regarderez plus jamais le journal télé de la même manière. Il est temps de définir VOTRE propre stratégie.",
+        note: "🏆 **Bravo, vous terminez la Phase 1 « Les Fondations » !** Vous connaissez le marché, les produits et la façon de gagner de l'argent. Vous ne regarderez plus jamais le journal télé de la même manière. Il est temps de définir VOTRE propre stratégie.",
       },
     ],
   },
