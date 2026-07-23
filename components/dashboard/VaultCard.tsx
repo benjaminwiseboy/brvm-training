@@ -6,7 +6,7 @@ import styles from "./VaultCard.module.css";
  * verbatim du champ `resources` de POC-Module-1/data/user-state.js
  * (règle de fidélité du contenu : ne pas paraphraser).
  */
-const RESOURCES = [
+export const RESOURCES = [
   { icon: "📊", name: "Tracker de portefeuille", tone: "green", unlocked: true },
   { icon: "✅", name: "Check-list « 7 premiers jours »", tone: "gold", unlocked: true },
   { icon: "📅", name: "Calendrier des dividendes", tone: "teal", unlocked: false, need: "Phase 3" },
