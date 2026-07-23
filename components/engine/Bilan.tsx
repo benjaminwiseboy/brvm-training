@@ -22,10 +22,16 @@ export function Bilan({
   result,
   feedback,
   onNext,
+  walletTotal,
 }: {
   result: { correct: number; total: number; capitalDelta: number };
   feedback: Feedback;
   onNext: () => void;
+  /** Capital total du portefeuille après application de capitalDelta (fourni par
+   * ModulePlayer, Task 10, une fois le store de progression branché). Tant que
+   * l'appelant ne le passe pas, la pastille affiche la variation signée du round
+   * en repli, pour ne pas casser les appelants existants. */
+  walletTotal?: number;
 }) {
   // Chemin « leçon » (simulateur, feedback.headline/golden/plan) : pas de
   // score à afficher ici. Hors scope Task 7 — TODO Task 8 (buildLesson()).
@@ -62,15 +68,14 @@ export function Bilan({
 
           <div className={styles.stats}>
             <Stat cls={styles.stGreen} icon="🎯" val={`${correct} / ${total}`} label="Score" />
-            {/* NB : la POC affiche ici le capital TOTAL du portefeuille (money(state.capital)),
-                une donnée que ce composant ne reçoit pas (l'interface exacte du brief ne passe
-                que `result.capitalDelta`, pas le capital courant). On affiche donc la variation
-                signée de cette manche — le total réel est porté par <Wallet/> ailleurs sur la
-                page (ModulePlayer, Task 8). Voir task-7-report.md. */}
             <Stat
               cls={styles.stGold}
               icon="💰"
-              val={`${capitalDelta >= 0 ? "+" : "−"}${money(Math.abs(capitalDelta))}`}
+              val={
+                walletTotal !== undefined
+                  ? money(walletTotal)
+                  : `${capitalDelta >= 0 ? "+" : "−"}${money(Math.abs(capitalDelta))}`
+              }
               label="Portefeuille"
             />
             {perfect ? (
