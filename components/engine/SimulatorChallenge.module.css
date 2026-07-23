@@ -1,0 +1,249 @@
+/* =============================================================
+   SimulatorChallenge — écran « Défi » alternatif (simulateur DCA &
+   intérêts composés, module M08).
+   Porté depuis POC-Module-1/styles.css : .section-head(+.kicker/h2/p)
+   (identique à QuizChallenge), .sim(+__controls/__row/__top/__label/
+   __val/__range +::-webkit-slider-thumb/::-moz-range-thumb/:focus-visible/
+   __out), .simfig(+--invest/--final/--gains), .chart__legend(+.lg/
+   .lg--invest/.lg--gains), .chart, .sim__note, .btn(+--gold, pleine
+   largeur, cf. app.js cta.style.width="100%").
+   ============================================================= */
+
+.wrap {
+  display: block;
+}
+
+/* ---------- En-tête de section (identique à QuizChallenge) ---------- */
+.sectionHead {
+  margin-bottom: 22px;
+}
+.kicker {
+  font-family: var(--f-display);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--or-deep);
+}
+.title {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: clamp(1.7rem, 4.6vw, 2.3rem);
+  letter-spacing: -0.01em;
+  margin: 7px 0 8px;
+  color: var(--blue-2);
+}
+.instruction {
+  color: var(--ink-soft);
+  margin: 0;
+  font-weight: 600;
+}
+
+/* ---------- Simulateur ---------- */
+.sim {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+  padding: clamp(24px, 5vw, 40px);
+  display: grid;
+  gap: 22px;
+  margin-bottom: 22px;
+}
+.simControls {
+  display: grid;
+  gap: 18px;
+}
+.simRow {
+  display: grid;
+  gap: 11px;
+}
+.simTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.simLabel {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--blue-2);
+}
+.simVal {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 1.08rem;
+  color: var(--blue);
+  font-variant-numeric: tabular-nums;
+}
+
+.simRange {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--paper-2);
+  outline: none;
+}
+.simRange::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: 3px solid #fff;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+.simRange::-webkit-slider-thumb:active {
+  transform: scale(1.14);
+}
+.simRange::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: 3px solid #fff;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+.simRange::-moz-range-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--paper-2);
+}
+.simRange:focus-visible {
+  outline: 3px solid var(--or);
+  outline-offset: 4px;
+}
+
+/* ---------- Pastilles de résultat ---------- */
+.simOut {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.simfig {
+  border-radius: var(--radius);
+  padding: 16px 14px;
+  text-align: center;
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+.simfigVal {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: clamp(1.02rem, 2.9vw, 1.3rem);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.simfigLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--ink-soft);
+  margin-top: 5px;
+}
+.simfigInvest .simfigVal {
+  color: var(--blue-2);
+}
+.simfigFinal {
+  background: #eaf5fc;
+  border-color: #c7e4f4;
+}
+.simfigFinal .simfigVal {
+  color: var(--azure);
+}
+.simfigGains {
+  background: var(--gold-soft);
+  border-color: #efd79a;
+}
+.simfigGains .simfigVal {
+  color: var(--or-deep);
+}
+
+/* ---------- Légende + graphique ---------- */
+.chartLegend {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.chartLegend .lg {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+.chartLegend .lg i {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+}
+.lgInvest i {
+  background: var(--blue);
+}
+.lgGains i {
+  background: var(--or);
+}
+.chart {
+  width: 100%;
+}
+.simNote {
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-weight: 600;
+  margin: -4px 0 0;
+}
+
+/* ---------- Bouton CTA (pleine largeur, cf. app.js cta.style.width) ---------- */
+.btn {
+  appearance: none;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  padding: 17px 28px;
+  font-family: var(--f-display);
+  font-size: 1.06rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  transition: transform 0.12s, box-shadow 0.2s, background 0.2s, border-color 0.2s, opacity 0.2s, filter 0.2s;
+}
+.btn:active {
+  transform: translateY(1px) scale(0.995);
+}
+.btn:focus-visible {
+  outline: 3px solid var(--or);
+  outline-offset: 3px;
+}
+.btnGold {
+  background: linear-gradient(135deg, #f7cf49, var(--or));
+  color: #3a2907;
+  box-shadow: 0 12px 26px -12px rgba(242, 183, 5, 0.85);
+}
+.btnGold:hover {
+  filter: brightness(1.04);
+}
+.arw {
+  transition: transform 0.2s;
+}
+.btn:hover .arw {
+  transform: translateX(3px);
+}
+
+/* ---------- Responsive (cf. styles.css @media 640px : .sim__out) ---------- */
+@media (max-width: 640px) {
+  .simOut {
+    grid-template-columns: 1fr;
+  }
+}

@@ -251,3 +251,108 @@
     justify-content: center;
   }
 }
+
+/* ---------- Leçon (feedback du simulateur) ----------
+   Porté depuis POC-Module-1/styles.css : .lesson-hl(+__ic/__title/__body),
+   .callout--highlight (repris localement en .golden, une seule teinte
+   utilisée par la leçon — cf. .callout/.callout--highlight déjà portés en
+   BlockRenderer.module.css pour les blocs de slide, dupliqués ici plutôt
+   que partagés entre CSS Modules, comme .btn/.btnGold ailleurs dans le
+   moteur), .planbox(+__title), .planlist, .planitem(+__n). */
+.lessonHl {
+  background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
+  color: #fff;
+  border-radius: var(--radius-xl);
+  padding: 26px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.lessonHl::before {
+  content: "";
+  position: absolute;
+  right: -50px;
+  top: -50px;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.08), transparent 62%);
+}
+.lessonHl > * {
+  position: relative;
+}
+.lessonHlIc {
+  font-size: 28px;
+  line-height: 1;
+}
+.lessonHlTitle {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: clamp(1.3rem, 3.6vw, 1.8rem);
+  line-height: 1.15;
+  margin: 10px 0 10px;
+}
+.lessonHlBody {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  margin: 0;
+  max-width: 52ch;
+}
+
+.golden {
+  border-radius: var(--radius);
+  padding: 16px 19px;
+  font-size: 1.02rem;
+  border: 1px solid #efd79a;
+  font-weight: 600;
+  background: var(--gold-soft);
+  color: #6c4d12;
+  margin: 0;
+}
+.golden strong {
+  color: #7a5411;
+}
+
+.planbox {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 22px;
+  margin: 18px 0 0;
+}
+.planboxTitle {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--blue-2);
+  margin: 0 0 15px;
+}
+.planlist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 13px;
+}
+.planitem {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.planitemN {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--blue-soft);
+  color: var(--blue);
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 0.95rem;
+}

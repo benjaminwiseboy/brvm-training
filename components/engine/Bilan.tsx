@@ -34,13 +34,36 @@ export function Bilan({
   walletTotal?: number;
 }) {
   // Chemin « leçon » (simulateur, feedback.headline/golden/plan) : pas de
-  // score à afficher ici. Hors scope Task 7 — TODO Task 8 (buildLesson()).
+  // score à afficher ici — port de buildLesson() dans POC-Module-1/app.js.
   if (!feedback.perfect || !feedback.imperfect) {
     return (
       <div className={styles.wrap}>
         <p className={styles.eyebrow}>Section 3 · La Leçon</p>
-        {/* TODO(Task 8) : rendre feedback.headline + feedback.golden + feedback.plan,
-            cf. buildLesson() dans POC-Module-1/app.js. */}
+
+        {feedback.headline && (
+          <div className={styles.lessonHl}>
+            <div className={styles.lessonHlIc}>{feedback.headline.icon || "💡"}</div>
+            <h2 className={styles.lessonHlTitle}>{renderMarkup(feedback.headline.title)}</h2>
+            <p className={styles.lessonHlBody}>{renderMarkup(feedback.headline.body)}</p>
+          </div>
+        )}
+
+        {feedback.golden && <div className={styles.golden}>{renderMarkup(feedback.golden)}</div>}
+
+        {feedback.plan && (
+          <div className={styles.planbox}>
+            <h3 className={styles.planboxTitle}>{feedback.plan.title}</h3>
+            <ul className={styles.planlist}>
+              {feedback.plan.items.map((item, i) => (
+                <li className={styles.planitem} key={i}>
+                  <span className={styles.planitemN}>{i + 1}</span>
+                  <span>{renderMarkup(item)}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         <button type="button" className={`${styles.btn} ${styles.btnGold}`} onClick={onNext}>
           Continuer <span className={styles.arw}>→</span>
         </button>
