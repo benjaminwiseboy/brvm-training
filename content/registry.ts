@@ -1,9 +1,12 @@
 import type { Module } from "@/lib/types";
 import { m01 } from "./modules/m01";
+import { m02 } from "./modules/m02";
+import { m03 } from "./modules/m03";
+import { m04 } from "./modules/m04";
 import { m08 } from "./modules/m08";
-// … imports m02..m26 ajoutés au fil des tâches de conversion
+// … imports m05..m26 ajoutés au fil des tâches de conversion
 
-export const MODULES: Record<string, Module> = { M01: m01, M08: m08 /*, …*/ };
+export const MODULES: Record<string, Module> = { M01: m01, M02: m02, M03: m03, M04: m04, M08: m08 /*, …*/ };
 
 export const PHASES = [
   { name: "Phase 1 · Les Fondations", badge: "🥉", codes: ["M01","M02","M03","M04"] },
