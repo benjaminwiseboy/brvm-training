@@ -1,0 +1,136 @@
+/* =============================================================
+   Wallet — portefeuille fictif (élément signature du POC).
+   Porté depuis POC-Module-1/styles.css : .wallet, .wallet__amount,
+   .wallet__amount .cur, .delta-chip(.gain/.loss), .wallet.is-correction,
+   + règle mobile masquant le label.
+   ============================================================= */
+
+.wallet {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
+  color: #eaf1f6;
+  padding: 8px 8px 8px 16px;
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+.wallet.isCorrection {
+  animation: shake 0.5s;
+}
+.wallet.isCorrection .amount {
+  color: #ffd9c7;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-5px);
+  }
+  40% {
+    transform: translateX(5px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(3px);
+  }
+}
+
+.meta {
+  text-align: right;
+  line-height: 1.15;
+}
+
+.label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #a6becf;
+  font-weight: 700;
+}
+
+.amount {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.amount .cur {
+  color: var(--or);
+  font-size: 0.68em;
+  margin-left: 4px;
+  font-weight: 700;
+}
+
+/* Jeton delta flottant */
+.deltaChip {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 3px 11px;
+  border-radius: 999px;
+  pointer-events: none;
+  white-space: nowrap;
+  opacity: 0;
+}
+.gain {
+  color: #0b5e40;
+  background: var(--pos-soft);
+}
+.loss {
+  color: #8a3d1e;
+  background: var(--clay-soft);
+}
+.run {
+  animation: floatUp 1.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+@keyframes floatUp {
+  0% {
+    opacity: 0;
+    transform: translateY(2px) scale(0.9);
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(-6px) scale(1);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(-30px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-52px) scale(0.96);
+  }
+}
+
+/* Responsive : masque le label sur mobile (cf. styles.css) */
+@media (max-width: 640px) {
+  .wallet {
+    gap: 0;
+    padding: 7px 14px;
+  }
+  .label {
+    display: none;
+  }
+  .amount {
+    font-size: 15px;
+  }
+}
+@media (max-width: 400px) {
+  .amount {
+    font-size: 14px;
+  }
+}
