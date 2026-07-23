@@ -8,9 +8,10 @@ export function validateModule(m: Module): string[] {
     if (!s.blocks || s.blocks.length === 0) errs.push(`${tag}: slide ${i + 1} vide`);
   });
   if (m.challenge.type === "quiz") {
-    const values = new Set(m.challenge.options.map((o) => o.value));
+    const sharedValues = new Set(m.challenge.options.map((o) => o.value));
     if (m.challenge.questions.length === 0) errs.push(`${tag}: quiz sans question`);
     m.challenge.questions.forEach((q) => {
+      const values = q.options ? new Set(q.options.map((o) => o.value)) : sharedValues;
       if (!values.has(q.answer)) errs.push(`${tag}: réponse "${q.answer}" absente des options`);
     });
   } else {

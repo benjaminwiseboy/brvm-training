@@ -30,6 +30,35 @@ describe("validateModule", () => {
     const bad = { ...base, slides: [] } as Module;
     expect(validateModule(bad)).toContain("M01: aucune slide");
   });
+  it("valide chaque question par rapport à ses propres options quand elles sont définies", () => {
+    const withPerQuestionOptions = {
+      ...base,
+      challenge: {
+        ...base.challenge,
+        questions: [
+          { prompt: "p1", answer: "100000", options: [{ value: "100000", label: "100 000 FCFA" }, { value: "200000", label: "200 000 FCFA" }] },
+          { prompt: "p2", answer: "10pct", options: [{ value: "5pct", label: "5 %" }, { value: "10pct", label: "10 %" }, { value: "15pct", label: "15 %" }] },
+          { prompt: "p3", answer: "mythe" }, // pas d'override : retombe sur les options du challenge
+        ],
+      },
+    } as Module;
+    expect(validateModule(withPerQuestionOptions)).toEqual([]);
+  });
+  it("ne mélange pas les options par question : une réponse valide pour une question mais absente de celles d'une autre question échoue toujours", () => {
+    const crossContaminated = {
+      ...base,
+      challenge: {
+        ...base.challenge,
+        questions: [
+          { prompt: "p1", answer: "100000", options: [{ value: "100000", label: "100 000 FCFA" }] },
+          // "mythe" est valide au niveau du challenge (base.challenge.options) mais absent des
+          // options propres à CETTE question -> doit échouer même si le fallback existe ailleurs.
+          { prompt: "p2", answer: "mythe", options: [{ value: "10pct", label: "10 %" }] },
+        ],
+      },
+    } as Module;
+    expect(validateModule(crossContaminated)).toContain("M01: réponse \"mythe\" absente des options");
+  });
 });
 
 describe("validateAll", () => {

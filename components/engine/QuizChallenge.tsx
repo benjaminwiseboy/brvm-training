@@ -69,6 +69,7 @@ export function QuizChallenge({
       {challenge.questions.map((q, qi) => {
         const answer = answers[qi];
         const right = answer === q.answer;
+        const opts = q.options ?? challenge.options;
 
         return (
           <div
@@ -84,7 +85,7 @@ export function QuizChallenge({
             <div className={styles.qNo}>Affirmation {qi + 1}</div>
             <p className={styles.qPrompt}>{renderMarkup(q.prompt)}</p>
             <div className={styles.qOpts}>
-              {challenge.options.map((o) => {
+              {opts.map((o) => {
                 const selected = answer === o.value;
                 // Port exact de validateChallenge() : une fois verrouillé,
                 // la bonne réponse passe en "correct", la réponse choisie
