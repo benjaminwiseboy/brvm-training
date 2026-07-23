@@ -1,0 +1,181 @@
+/* =============================================================
+   SlideDeck — navigation du cours (slides).
+   Porté depuis POC-Module-1/styles.css : .slides__head, .slides__count,
+   .dots, .card, .slide(+__phone/__title/__body.fade), .slides__nav,
+   .btn(+--primary/--gold/--ghost/--lg), .arw.
+   ============================================================= */
+
+.wrap {
+  display: block;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.count {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.dots {
+  display: flex;
+  gap: 8px;
+}
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--line-strong);
+  transition: transform 0.3s, background 0.3s;
+}
+.dot.on {
+  background: var(--blue);
+  transform: scale(1.3);
+}
+.dot.seen {
+  background: var(--pos);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+  padding: clamp(24px, 5vw, 40px);
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+}
+
+.phone {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--f-display);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--or-deep);
+  background: var(--gold-soft);
+  padding: 7px 14px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 4.2vw, 2.1rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin: 0 0 20px;
+  color: var(--blue-2);
+}
+
+.body {
+  display: grid;
+  gap: 16px;
+  animation: fade 0.32s ease;
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.nav {
+  display: flex;
+  gap: 12px;
+  margin-top: 22px;
+}
+.nav .btn {
+  flex: 1;
+}
+
+/* ---------- Boutons (mêmes règles que POC-Module-1/styles.css .btn*) ---------- */
+.btn {
+  appearance: none;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  padding: 17px 28px;
+  font-family: var(--f-display);
+  font-size: 1.06rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  transition: transform 0.12s, box-shadow 0.2s, background 0.2s, border-color 0.2s, opacity 0.2s, filter 0.2s;
+}
+.btn:active {
+  transform: translateY(1px) scale(0.995);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.btn:focus-visible {
+  outline: 3px solid var(--or);
+  outline-offset: 3px;
+}
+
+.btnPrimary {
+  background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
+  color: #fff;
+  box-shadow: 0 12px 26px -14px rgba(14, 47, 68, 0.9);
+}
+.btnPrimary:hover {
+  filter: brightness(1.08);
+}
+
+.btnGold {
+  background: linear-gradient(135deg, #f7cf49, var(--or));
+  color: #3a2907;
+  box-shadow: 0 12px 26px -12px rgba(242, 183, 5, 0.85);
+}
+.btnGold:hover {
+  filter: brightness(1.04);
+}
+
+.btnGhost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+.btnGhost:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.arw {
+  transition: transform 0.2s;
+}
+.btn:hover .arw {
+  transform: translateX(3px);
+}
+.arwBack {
+  display: inline-block;
+  transform: rotate(180deg);
+}
+
+@media (max-width: 640px) {
+  .nav {
+    flex-direction: column-reverse;
+  }
+}

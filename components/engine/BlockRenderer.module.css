@@ -1,0 +1,120 @@
+/* =============================================================
+   BlockRenderer — les 6 types de blocs d'une slide.
+   Porté depuis POC-Module-1/styles.css : .b-lead, .b-text, .b-list,
+   .b-duo(+__item/__side), .callout(+--info/--highlight/--warn),
+   .countries.
+   ============================================================= */
+
+.lead {
+  font-size: clamp(1.15rem, 2.6vw, 1.38rem);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.38;
+  margin: 0;
+}
+
+.text {
+  font-size: 1.06rem;
+  color: var(--ink);
+  margin: 0;
+}
+
+.list {
+  list-style: none;
+  margin: 4px 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.list li {
+  position: relative;
+  padding-left: 32px;
+  color: var(--ink);
+}
+.list li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.38em;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--pos-soft);
+  box-shadow: inset 0 0 0 4px var(--pos);
+}
+
+.duo {
+  display: grid;
+  gap: 12px;
+}
+@media (min-width: 560px) {
+  .duo {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.duoItem {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 17px 19px;
+}
+.duoSide {
+  font-family: var(--f-display);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+
+.callout {
+  border-radius: var(--radius);
+  padding: 16px 19px;
+  font-size: 1.02rem;
+  border: 1px solid;
+  font-weight: 600;
+  margin: 0;
+}
+.highlight {
+  background: var(--gold-soft);
+  border-color: #efd79a;
+  color: #6c4d12;
+}
+.highlight strong {
+  color: #7a5411;
+}
+.info {
+  background: var(--pos-soft);
+  border-color: #b7e6d2;
+  color: #0b5e40;
+}
+.info strong {
+  color: #094a34;
+}
+/* --warn : variante non présente dans le POC (n'apparaît dans aucun bloc de
+   slide de M01/M08) — ton d'alerte douce, cohérent avec .exp__note / .opt.wrong
+   (clay) déjà utilisés ailleurs dans le POC pour signaler une correction. */
+.warn {
+  background: var(--clay-soft);
+  border-color: #efc7b4;
+  color: #8a3d1e;
+}
+.warn strong {
+  color: #6b2c14;
+}
+
+.countries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+.countries span {
+  font-family: var(--f-display);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 15px;
+  border-radius: 999px;
+  background: var(--blue-soft);
+  color: #0e3a56;
+}
