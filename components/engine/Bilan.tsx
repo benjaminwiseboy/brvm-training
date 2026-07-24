@@ -23,6 +23,7 @@ export function Bilan({
   feedback,
   onNext,
   walletTotal,
+  diagnostic,
 }: {
   result: { correct: number; total: number; capitalDelta: number };
   feedback: Feedback;
@@ -32,7 +33,38 @@ export function Bilan({
    * l'appelant ne le passe pas, la pastille affiche la variation signée du round
    * en repli, pour ne pas casser les appelants existants. */
   walletTotal?: number;
+  /** Chemin « diagnostic » (test de profilage points-based, M05, Task 15a) :
+   * quand fourni, prime sur les deux autres chemins (quiz/leçon) — `result`/
+   * `feedback` sont alors ignorés (l'appelant peut passer des valeurs factices,
+   * même précédent que le chemin simulateur/leçon dans ModulePlayer, Task 10).
+   * Pas de score chiffré ni de capital pour ce module (cf. barème harmonisé
+   * Phase 2 : "diagnostic / simulateur — pas de score chiffré") : pas de
+   * ScoreRing, pas de pastilles capital/portefeuille, juste la bande de
+   * profil correspondante. */
+  diagnostic?: { points: number; bands: { min: number; max: number; emoji: string; label: string; body: string }[] };
 }) {
+  if (diagnostic) {
+    const band = diagnostic.bands.find((b) => diagnostic.points >= b.min && diagnostic.points <= b.max);
+
+    return (
+      <div className={styles.wrap}>
+        <p className={styles.eyebrow}>Section 3 · Votre profil</p>
+
+        {band && (
+          <div className={styles.lessonHl}>
+            <div className={styles.lessonHlIc}>{band.emoji}</div>
+            <h2 className={styles.lessonHlTitle}>{renderMarkup(band.label)}</h2>
+            <p className={styles.lessonHlBody}>{renderMarkup(band.body)}</p>
+          </div>
+        )}
+
+        <button type="button" className={`${styles.btn} ${styles.btnGold}`} onClick={onNext}>
+          Continuer <span className={styles.arw}>→</span>
+        </button>
+      </div>
+    );
+  }
+
   // Chemin « leçon » (simulateur, feedback.headline/golden/plan) : pas de
   // score à afficher ici — port de buildLesson() dans POC-Module-1/app.js.
   if (!feedback.perfect || !feedback.imperfect) {

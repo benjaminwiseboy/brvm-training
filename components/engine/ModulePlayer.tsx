@@ -9,6 +9,7 @@ import { Hero } from "./Hero";
 import { SlideDeck } from "./SlideDeck";
 import { QuizChallenge } from "./QuizChallenge";
 import { SimulatorChallenge } from "./SimulatorChallenge";
+import { DiagnosticChallenge } from "./DiagnosticChallenge";
 import { Bilan } from "./Bilan";
 import { Wallet } from "./Wallet";
 
@@ -20,8 +21,8 @@ const EMPTY_RESULT: Result = { correct: 0, total: 0, capitalDelta: 0 };
 
 /**
  * Machine à états qui joue un module de bout en bout — intro (Hero) → cours
- * (SlideDeck) → défi (QuizChallenge ou SimulatorChallenge, selon
- * `module.challenge.type`) → bilan (Bilan) — et écrit la progression
+ * (SlideDeck) → défi (QuizChallenge, SimulatorChallenge ou DiagnosticChallenge,
+ * selon `module.challenge.type`) → bilan (Bilan) — et écrit la progression
  * (`useProgress().completeModule`) une seule fois, à l'entrée en bilan.
  *
  * Décisions (gaps non couverts par le brief, cf. task-10-report.md) :
@@ -29,6 +30,12 @@ const EMPTY_RESULT: Result = { correct: 0, total: 0, capitalDelta: 0 };
  *   quand même `completeModule` avec `correct=1, total=1` (leçon terminée à
  *   100%, jamais un score "0%") et `capitalDelta = module.reward ?? 0` (bonus
  *   de complétion s'il est défini par le contenu — 0 pour M08 qui n'en a pas).
+ * - Chemin diagnostic (`DiagnosticChallenge.onResult`, Task 15a, M05) : même
+ *   traitement que le simulateur pour `completeModule` (`correct=1, total=1`,
+ *   `capitalDelta = module.reward ?? 0` — 0 pour M05, cf. barème harmonisé
+ *   "pas de score chiffré" en Phase 2) ; les points du test sont stockés à
+ *   part (`diagnosticPoints`) et transmis à `<Bilan diagnostic={...}>` avec
+ *   les bandes du challenge, pour que Bilan résolve le profil correspondant.
  * - `completeModule` est appelé directement dans le corps du handler de clic
  *   (jamais dans un `useEffect` déclenché par `phase === "bilan"`), pour
  *   éviter le double-appel en Strict Mode déjà corrigé dans SlideDeck/
@@ -42,6 +49,7 @@ export function ModulePlayer({ module }: { module: Module }) {
   const { state, completeModule, setResumeSlide } = useProgress();
   const [phase, setPhase] = useState<Phase>("intro");
   const [result, setResult] = useState<Result>(EMPTY_RESULT);
+  const [diagnosticPoints, setDiagnosticPoints] = useState<number | null>(null);
 
   function handleChallengeResult(r: Result) {
     setResult(r);
@@ -51,6 +59,12 @@ export function ModulePlayer({ module }: { module: Module }) {
 
   function handleSimulatorDone() {
     handleChallengeResult({ correct: 1, total: 1, capitalDelta: module.reward ?? 0 });
+  }
+
+  function handleDiagnosticResult({ points }: { points: number }) {
+    setDiagnosticPoints(points);
+    completeModule(module.code, 1, 1, module.reward ?? 0);
+    setPhase("bilan");
   }
 
   function handleNext() {
@@ -80,8 +94,22 @@ export function ModulePlayer({ module }: { module: Module }) {
         <SimulatorChallenge challenge={module.challenge} onDone={handleSimulatorDone} />
       )}
 
+      {phase === "defi" && module.challenge.type === "diagnostic" && (
+        <DiagnosticChallenge challenge={module.challenge} onResult={handleDiagnosticResult} />
+      )}
+
       {phase === "bilan" && (
-        <Bilan result={result} feedback={module.feedback} onNext={handleNext} walletTotal={state.capital} />
+        <Bilan
+          result={result}
+          feedback={module.feedback}
+          onNext={handleNext}
+          walletTotal={state.capital}
+          diagnostic={
+            module.challenge.type === "diagnostic" && diagnosticPoints !== null
+              ? { points: diagnosticPoints, bands: module.challenge.bands }
+              : undefined
+          }
+        />
       )}
     </>
   );

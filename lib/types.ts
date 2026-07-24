@@ -23,7 +23,14 @@ export type SimulatorChallenge = {
              step: number; value: number; kind: "money" | "pct" | "years" }[];
 };
 
-export type Challenge = QuizChallenge | SimulatorChallenge;
+export type DiagnosticChallenge = {
+  type: "diagnostic";
+  kicker: string; title: string; instruction: string;
+  questions: { prompt: string; options: { label: string; points: number }[] }[];
+  bands: { min: number; max: number; emoji: string; label: string; body: string }[];
+};
+
+export type Challenge = QuizChallenge | SimulatorChallenge | DiagnosticChallenge;
 
 export type Feedback = {
   // quiz

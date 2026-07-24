@@ -14,6 +14,12 @@ export function validateModule(m: Module): string[] {
       const values = q.options ? new Set(q.options.map((o) => o.value)) : sharedValues;
       if (!values.has(q.answer)) errs.push(`${tag}: réponse "${q.answer}" absente des options`);
     });
+  } else if (m.challenge.type === "diagnostic") {
+    if (m.challenge.questions.length === 0) errs.push(`${tag}: diagnostic sans question`);
+    m.challenge.questions.forEach((q) => {
+      if (!q.options || q.options.length === 0) errs.push(`${tag}: diagnostic sans option de réponse`);
+    });
+    if (m.challenge.bands.length === 0) errs.push(`${tag}: diagnostic sans bande de résultat`);
   } else {
     if (m.challenge.sliders.length === 0) errs.push(`${tag}: simulateur sans curseur`);
   }

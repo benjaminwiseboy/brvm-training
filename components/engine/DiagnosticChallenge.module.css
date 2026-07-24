@@ -1,0 +1,149 @@
+/* =============================================================
+   DiagnosticChallenge — écran « Défi » du test de profilage points-based
+   (M05 — Profil de risque). Pas de précédent POC (le prototype vanilla n'a
+   jamais construit ce type d'écran) : markup/CSS neufs, mais alignés sur le
+   même langage visuel que QuizChallenge.module.css (mêmes cartes/boutons,
+   même échelle border-radius/shadow/spacing, mêmes variables de marque de
+   app/globals.css). Pas de coloration correct/wrong (pas de bonne réponse) :
+   uniquement .selected (choix en cours) et .muted (options non choisies,
+   une fois verrouillé).
+   ============================================================= */
+
+.wrap {
+  display: block;
+}
+
+.sectionHead {
+  margin-bottom: 22px;
+}
+.kicker {
+  font-family: var(--f-display);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--or-deep);
+}
+.title {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: clamp(1.7rem, 4.6vw, 2.3rem);
+  letter-spacing: -0.01em;
+  margin: 7px 0 8px;
+  color: var(--blue-2);
+}
+.instruction {
+  color: var(--ink-soft);
+  margin: 0;
+  font-weight: 600;
+}
+
+/* ---------- Carte question ---------- */
+.q {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 22px 22px 20px;
+  margin-bottom: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.qNo {
+  font-family: var(--f-display);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--or-deep);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.qPrompt {
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 8px 0 18px;
+  line-height: 1.4;
+}
+.qOpts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+/* ---------- Options ---------- */
+.opt {
+  appearance: none;
+  border: 2px solid var(--line-strong);
+  background: var(--card);
+  color: var(--ink);
+  border-radius: 16px;
+  padding: 15px 18px;
+  font-family: var(--f-display);
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  gap: 8px;
+  transition: border-color 0.18s, background 0.18s, color 0.18s, transform 0.12s;
+}
+.opt:hover {
+  border-color: var(--blue);
+}
+.opt:active {
+  transform: scale(0.98);
+}
+.selected {
+  border-color: var(--blue);
+  background: var(--blue-soft);
+  color: #0e3a56;
+}
+
+/* Verrouillage post-validation (le clic est aussi bloqué en JS) */
+.locked .opt {
+  cursor: default;
+  pointer-events: none;
+}
+.locked .opt:hover {
+  border-color: var(--line-strong);
+}
+
+.muted {
+  opacity: 0.5;
+}
+
+/* ---------- Bouton Valider (pleine largeur, cf. QuizChallenge) ---------- */
+.btn {
+  appearance: none;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  padding: 17px 28px;
+  font-family: var(--f-display);
+  font-size: 1.06rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  transition: transform 0.12s, box-shadow 0.2s, background 0.2s, border-color 0.2s, opacity 0.2s, filter 0.2s;
+}
+.btn:active {
+  transform: translateY(1px) scale(0.995);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.btn:focus-visible {
+  outline: 3px solid var(--or);
+  outline-offset: 3px;
+}
+.btnGold {
+  background: linear-gradient(135deg, #f7cf49, var(--or));
+  color: #3a2907;
+  box-shadow: 0 12px 26px -12px rgba(242, 183, 5, 0.85);
+}
+.btnGold:hover {
+  filter: brightness(1.04);
+}

@@ -61,6 +61,38 @@ describe("validateModule", () => {
   });
 });
 
+describe("validateModule — diagnostic", () => {
+  const diagnosticBase: Module = {
+    ...base,
+    challenge: {
+      type: "diagnostic", kicker: "k", title: "t", instruction: "i",
+      questions: [
+        { prompt: "p1", options: [{ label: "a", points: 0 }, { label: "b", points: 4 }, { label: "c", points: 8 }] },
+      ],
+      bands: [{ min: 0, max: 8, emoji: "🛡️", label: "Prudent", body: "b" }],
+    },
+  } as Module;
+
+  it("accepte un diagnostic bien formé", () => {
+    expect(validateModule(diagnosticBase)).toEqual([]);
+  });
+  it("rejette un diagnostic sans question", () => {
+    const bad = { ...diagnosticBase, challenge: { ...diagnosticBase.challenge, questions: [] } } as Module;
+    expect(validateModule(bad)).toContain("M01: diagnostic sans question");
+  });
+  it("rejette un diagnostic dont une question n'a pas d'option", () => {
+    const bad = {
+      ...diagnosticBase,
+      challenge: { ...diagnosticBase.challenge, questions: [{ prompt: "p1", options: [] }] },
+    } as Module;
+    expect(validateModule(bad)).toContain("M01: diagnostic sans option de réponse");
+  });
+  it("rejette un diagnostic sans bande de résultat", () => {
+    const bad = { ...diagnosticBase, challenge: { ...diagnosticBase.challenge, bands: [] } } as Module;
+    expect(validateModule(bad)).toContain("M01: diagnostic sans bande de résultat");
+  });
+});
+
 describe("validateAll", () => {
   it("rejette les codes dupliqués", () => {
     expect(validateAll([base, base])).toContain("code dupliqué: M01");
