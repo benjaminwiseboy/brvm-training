@@ -11,7 +11,6 @@ import { QuizChallenge } from "./QuizChallenge";
 import { SimulatorChallenge } from "./SimulatorChallenge";
 import { DiagnosticChallenge } from "./DiagnosticChallenge";
 import { Bilan } from "./Bilan";
-import { Wallet } from "./Wallet";
 
 type Phase = "intro" | "cours" | "defi" | "bilan";
 
@@ -102,8 +101,6 @@ function ModulePlayerInner({ module }: { module: Module }) {
 
   return (
     <>
-      <Wallet amount={state.capital} delta={result.capitalDelta} />
-
       {phase === "intro" && <Hero module={module} onStart={() => setPhase("cours")} />}
 
       {phase === "cours" && (

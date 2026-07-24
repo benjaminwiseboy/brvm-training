@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { useProgress, deriveStatus } from "@/lib/store";
 import { money } from "@/lib/format";
+import { Wallet } from "@/components/engine/Wallet";
 import styles from "./AppShell.module.css";
 
 /**
@@ -43,6 +44,11 @@ const NAV_ITEMS: NavItem[] = [
 ];
 
 export function AppShell({ children, variant = "module" }: { children: ReactNode; variant?: "dash" | "module" }) {
+  // Lu ici (pas seulement dans DashShell) : la variante "module" a besoin de
+  // `state.capital` pour le Wallet de l'en-tête ci-dessous. Un `useContext`
+  // supplémentaire dans un composant imbriqué (DashShell) est sans coût —
+  // pas de duplication de logique, juste une deuxième lecture du contexte.
+  const { state } = useProgress();
   if (variant === "dash") return <DashShell>{children}</DashShell>;
 
   return (
@@ -61,6 +67,7 @@ export function AppShell({ children, variant = "module" }: { children: ReactNode
             <span className={styles.brandMark}>B</span>
             <span className={styles.brandName}>BRVM Learning</span>
           </div>
+          <Wallet amount={state.capital} />
         </div>
       </header>
       <main className={styles.stage}>{children}</main>

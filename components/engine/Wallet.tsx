@@ -12,14 +12,19 @@ const CHIP_LIFETIME = 1800; // ms — durée avant retrait du DOM (cf. flashDelt
 
 /**
  * Portefeuille fictif animé — port de rollCapital()/flashDelta() dans
- * POC-Module-1/app.js.
+ * POC-Module-1/app.js. Élément signature de l'en-tête (`AppShell`,
+ * variante "module"), pas un bandeau de page — reste un pill compact
+ * car il vit comme item flex de `.bar` (`justify-content: space-between`),
+ * jamais rendu seul en enfant direct d'un conteneur en flux bloc.
  *
  * `amount` est la valeur courante affichée : au changement, le compteur
- * « roule » de l'ancienne à la nouvelle valeur via requestAnimationFrame.
- * `delta` (optionnel) déclenche, à chaque valeur non nulle reçue, un jeton
- * flottant +X/−X et — si négatif — un flash "correction" sur le portefeuille.
+ * « roule » de l'ancienne à la nouvelle valeur via requestAnimationFrame,
+ * et le delta (dérivé en interne de ce même changement, pas passé en prop —
+ * ça permet à `AppShell` d'afficher `<Wallet amount={state.capital} />` sans
+ * connaître le détail du défi qui vient d'être noté) déclenche un jeton
+ * flottant +X/−X et — si négatif — un flash "correction".
  */
-export function Wallet({ amount, delta }: { amount: number; delta?: number }) {
+export function Wallet({ amount }: { amount: number }) {
   const [display, setDisplay] = useState(amount);
   const [chip, setChip] = useState<Chip | null>(null);
   const [isCorrection, setIsCorrection] = useState(false);
@@ -27,14 +32,26 @@ export function Wallet({ amount, delta }: { amount: number; delta?: number }) {
   const prevAmount = useRef(amount);
   const chipSeq = useRef(0);
 
-  // Roule le compteur de l'ancienne à la nouvelle valeur (easeOutCubic, 900ms).
+  // Roule le compteur de l'ancienne à la nouvelle valeur (easeOutCubic, 900ms)
+  // et déclenche le jeton +/− flottant (+ flash "correction" si négatif).
   // Premier rendu : `prevAmount` vaut déjà `amount` (état initial de useState
-  // ci-dessus), donc from === to et l'effet sort sans animer.
+  // ci-dessus), donc from === to et l'effet sort sans rien animer.
   useEffect(() => {
     const from = prevAmount.current;
     const to = amount;
     prevAmount.current = to;
     if (from === to) return;
+
+    const delta = to - from;
+    chipSeq.current += 1;
+    setChip({ id: chipSeq.current, amount: delta });
+
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    if (delta < 0) {
+      setIsCorrection(true);
+      timers.push(setTimeout(() => setIsCorrection(false), CORRECTION_FLASH));
+    }
+    timers.push(setTimeout(() => setChip(null), CHIP_LIFETIME));
 
     const reduceMotion =
       typeof window !== "undefined" &&
@@ -51,25 +68,12 @@ export function Wallet({ amount, delta }: { amount: number; delta?: number }) {
       if (p < 1) raf = requestAnimationFrame(tick);
     }
     raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      timers.forEach(clearTimeout);
+    };
   }, [amount]);
-
-  // Jeton +/− flottant + flash « correction » (delta < 0).
-  useEffect(() => {
-    if (!delta) return;
-
-    chipSeq.current += 1;
-    setChip({ id: chipSeq.current, amount: delta });
-
-    const timers: ReturnType<typeof setTimeout>[] = [];
-    if (delta < 0) {
-      setIsCorrection(true);
-      timers.push(setTimeout(() => setIsCorrection(false), CORRECTION_FLASH));
-    }
-    timers.push(setTimeout(() => setChip(null), CHIP_LIFETIME));
-
-    return () => timers.forEach(clearTimeout);
-  }, [delta]);
 
   return (
     <div className={`${styles.wallet} ${isCorrection ? styles.isCorrection : ""}`} aria-live="polite">
