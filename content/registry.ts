@@ -7,10 +7,15 @@ import { m05 } from "./modules/m05";
 import { m06 } from "./modules/m06";
 import { m07 } from "./modules/m07";
 import { m08 } from "./modules/m08";
-// … imports m09..m26 ajoutés au fil des tâches de conversion
+import { m09 } from "./modules/m09";
+import { m10 } from "./modules/m10";
+import { m11 } from "./modules/m11";
+import { m12 } from "./modules/m12";
+// … imports m13..m26 ajoutés au fil des tâches de conversion
 
 export const MODULES: Record<string, Module> = {
-  M01: m01, M02: m02, M03: m03, M04: m04, M05: m05, M06: m06, M07: m07, M08: m08 /*, …*/
+  M01: m01, M02: m02, M03: m03, M04: m04, M05: m05, M06: m06, M07: m07, M08: m08,
+  M09: m09, M10: m10, M11: m11, M12: m12 /*, …*/
 };
 
 export const PHASES = [
