@@ -26,7 +26,7 @@ export const m25: Module = {
   totalModules: 26,
   title: "Simulations finales : le grand oral de l'investisseur",
   phase: "Phase 5 · Suivi & maîtrise",
-  status: { emoji: "🥇", label: "L'Analyste Stratège" },
+  status: { emoji: "🎓", label: "L'Analyste Confirmé" },
   reward: 40000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----

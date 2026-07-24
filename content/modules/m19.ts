@@ -6,15 +6,22 @@ import type { Module } from "@/lib/types";
    au complet, appliqué à un cas fictif « Banque du Fleuve »).
    Barème NON standard (§4 : « Défi de synthèse (capstone) | 3 |
    +50 000 | −10 000 ») : le plus haut de toute la Phase 3.
-   DISTINCTION STATUT vs BADGE (point explicitement signalé par le
-   brief) : le .txt a deux lignes distinctes en tête — « Statut
-   actuel : 🥇 L'Analyste Stratège » (le badge déjà détenu PENDANT ce
-   module → va dans `status`, même convention que tous les modules
-   Phase 3) et « Badge à débloquer : 🎓 L'Analyste Confirmé » (contenu
-   de célébration ponctuel → va UNIQUEMENT dans
-   `feedback.perfect.icon`/`.title`, jamais dans `status` — aucun
-   nouveau mécanisme de « badge » n'est inventé ; `deriveStatus()`
-   gère déjà la progression via le champ `status` de chaque module).
+   ÉCHELLE DE STATUT 5 PALIERS (décision produit explicite, revue
+   finale — NE PAS « corriger » en revenant à 🥇) : le champ `status`
+   représente une échelle qui GRIMPE le long de l'ordre des modules
+   (🥉 M01 → 🥈 M05 → 🥇 M09 → 🎓 M19-M25 → 💎 M26), lue par
+   `deriveStatus(doneCount)` qui prend le `status` du module courant
+   (index = nombre de modules terminés, clampé au dernier). Pour éviter
+   toute régression 🎓→🥇 (flicker pire que le trou d'origine), M19 à
+   M25 portent TOUS 🎓 « L'Analyste Confirmé » et M26 porte 💎 « Le
+   Loup de la BRVM ». Ce champ `status` PERSISTANT est distinct du
+   badge de complétion PONCTUEL `feedback.perfect.icon`/`.title` (qui
+   célèbre une seule fois la réussite de CE module) : les deux
+   réutilisent volontairement le même emoji+libellé 🎓 « L'Analyste
+   Confirmé », ce n'est pas un doublon à dédupliquer. Le .txt d'origine
+   avait deux lignes en tête — « Statut actuel : 🥇 » et « Badge à
+   débloquer : 🎓 » — mais le statut affiché suit désormais l'échelle
+   ci-dessus, pas la ligne littérale du .txt.
    6 questions, 3 options chacune (Q5 lettrées A/B/C dans le .txt) ;
    6 explications verbatim, une par « Pilier ». Le paragraphe de
    clôture « Transition — Fin de la Phase 3 » est replié dans le
@@ -29,7 +36,7 @@ export const m19: Module = {
   totalModules: 26,
   title: "Défi de synthèse : analyser une entreprise de A à Z",
   phase: "Phase 3 · L'Analyse",
-  status: { emoji: "🥇", label: "L'Analyste Stratège" },
+  status: { emoji: "🎓", label: "L'Analyste Confirmé" },
   reward: 50000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----

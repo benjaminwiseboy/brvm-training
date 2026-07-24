@@ -114,7 +114,7 @@ export function Bilan({
 
       <div className={`${styles.scorecard} ${perfect ? styles.isWin : styles.isSoft}`}>
         <div className={styles.ring}>
-          <ScoreRing pct={pct} />
+          <ScoreRing pct={pct} tone={perfect ? "win" : "soft"} />
         </div>
         <div className={styles.main}>
           <div className={styles.icon}>{data.icon}</div>
@@ -136,12 +136,18 @@ export function Bilan({
             {perfect ? (
               <Stat cls={styles.stTeal} icon="⭐" val={`+${money(capitalDelta)}`} label="Bonus" />
             ) : (
-              <Stat
-                cls={styles.stClay}
-                icon="📉"
-                val={`−${money(Math.abs(capitalDelta))}`}
-                label="Correction"
-              />
+              // Fix 6 (revue finale) : on masque la pastille « Correction » quand
+              // `capitalDelta === 0` (ex. M26, `penaltyPerError: 0` — décision
+              // contenu volontaire) : afficher « −0 FCFA » se lit comme un bug de
+              // rendu même si le nombre est techniquement exact.
+              capitalDelta !== 0 && (
+                <Stat
+                  cls={styles.stClay}
+                  icon="📉"
+                  val={`−${money(Math.abs(capitalDelta))}`}
+                  label="Correction"
+                />
+              )
             )}
           </div>
         </div>

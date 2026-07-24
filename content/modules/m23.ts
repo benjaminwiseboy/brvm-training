@@ -30,7 +30,7 @@ export const m23: Module = {
   totalModules: 26,
   title: "Garder ce qu'on gagne (la fiscalité)",
   phase: "Phase 5 · Suivi & maîtrise",
-  status: { emoji: "🥇", label: "L'Analyste Stratège" },
+  status: { emoji: "🎓", label: "L'Analyste Confirmé" },
   reward: 15000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----

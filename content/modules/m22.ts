@@ -22,7 +22,7 @@ export const m22: Module = {
   totalModules: 26,
   title: "Passer votre premier ordre",
   phase: "Phase 4 · Passage à l'action",
-  status: { emoji: "🥇", label: "L'Analyste Stratège" },
+  status: { emoji: "🎓", label: "L'Analyste Confirmé" },
   reward: 20000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----

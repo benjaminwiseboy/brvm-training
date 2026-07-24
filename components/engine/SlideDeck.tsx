@@ -18,18 +18,27 @@ import styles from "./SlideDeck.module.css";
  *   Quiz/Simulateur/Bilan sont hors scope ici — donc le bouton reste
  *   « Suivant » sur toutes les slides ; seul son effet change).
  * - `onSlide?.(i)` est notifié à chaque changement d'index (reprise).
+ * - `initialIndex` (Fix 3, revue finale) : index de départ du deck, pour
+ *   reprendre le cours au slide exact où l'apprenant s'était arrêté
+ *   (`state.resume.slide`). Clampé aux bornes valides (une donnée `resume`
+ *   périmée pointant hors slides retombe sur 0). Défaut 0 = comportement
+ *   historique (démarrage au premier slide). Les slides 0..initialIndex sont
+ *   marqués « vus » pour que le stepper reflète le parcours déjà effectué.
  */
 export function SlideDeck({
   slides,
   onSlide,
   onDone,
+  initialIndex = 0,
 }: {
   slides: Slide[];
   onSlide?: (i: number) => void;
   onDone: () => void;
+  initialIndex?: number;
 }) {
-  const [i, setI] = useState(0);
-  const [seen, setSeen] = useState<boolean[]>(() => slides.map((_, idx) => idx === 0));
+  const start = Math.min(Math.max(0, initialIndex), Math.max(0, slides.length - 1));
+  const [i, setI] = useState(start);
+  const [seen, setSeen] = useState<boolean[]>(() => slides.map((_, idx) => idx <= start));
 
   // `onDone()` est décidé DANS le handler (pas dans un updater setState) : les
   // updaters doivent rester purs (React Strict Mode les exécute 2× en dev, ce

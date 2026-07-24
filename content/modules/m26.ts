@@ -40,12 +40,18 @@ import type { Module } from "@/lib/types";
    elle n'apparaît donc nulle part dans `challenge`, seulement utilisée
    ci-dessus pour calibrer penaltyPerError.
 
-   DISTINCTION STATUT vs CERTIFICAT (même convention que M19) : le
-   .txt a deux lignes en tête — « Statut actuel : 🥇 L'Analyste
-   Stratège » (déjà détenu PENDANT ce module → `status`) et
-   « Certificat à débloquer : 💎 Le Loup de la BRVM » (célébration
-   ponctuelle → UNIQUEMENT dans `feedback.perfect.icon` et dans le
-   `.note` de l'explication, jamais dans `status`).
+   ÉCHELLE DE STATUT 5 PALIERS (décision produit explicite, revue
+   finale — même convention que M19, NE PAS revenir à 🥇) : dernier
+   module du parcours, M26 porte le palier terminal `status` = 💎
+   « Le Loup de la BRVM ». Comme `deriveStatus`'s `idx` clampe au
+   dernier index une fois `doneCount >= 25`, ce statut persiste ensuite
+   pour toujours (état post-complétion), sans code supplémentaire. Ce
+   champ `status` PERSISTANT réutilise volontairement le même
+   emoji+libellé que le certificat de complétion PONCTUEL
+   (`feedback.perfect.icon` et `.note` de l'explication) : pas un
+   doublon à dédupliquer. Le .txt d'origine avait deux lignes
+   (« Statut actuel : 🥇 » / « Certificat à débloquer : 💎 »), mais le
+   statut affiché suit désormais l'échelle 5 paliers.
    Le paragraphe « [capitalFictif] FCFA » n'est pas reproduit
    littéralement (placeholder de template, pas du texte final) : le
    montant réel du portefeuille est déjà affiché en direct par
@@ -65,7 +71,7 @@ export const m26: Module = {
   totalModules: 26,
   title: "L'épreuve du feu : gérer son portefeuille en temps de crise",
   phase: "Phase 5 · Suivi & maîtrise",
-  status: { emoji: "🥇", label: "L'Analyste Stratège" },
+  status: { emoji: "💎", label: "Le Loup de la BRVM" },
   reward: 100000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----

@@ -60,7 +60,7 @@ Deux vérifications manuelles prévues par le plan v0 (Task 19, étapes 1 et 3) 
 
 1. **Parcours complet en navigateur** — `localStorage` vidé, `npm run dev`, puis `/onboarding` → remise du million → M01 → … → M26 → dashboard. Vérifier à l'œil :
    - déverrouillage progressif des modules (un module ne s'ouvre qu'après le précédent) ;
-   - reprise au bon slide quand on quitte un module en cours et qu'on y revient ;
+   - reprise au bon slide quand on quitte un module en cours et qu'on y revient — **implémenté** (revue finale, Fix 3 : `ModulePlayer` saute l'intro et initialise `SlideDeck` sur `state.resume.slide` quand le pointeur `resume` désigne le module courant ; vérifié structurellement dans le code) ; un clic-à-clic en direct reste néanmoins recommandé pour confirmer le rendu ;
    - cohérence du capital affiché (Portefeuille / Wallet) au fil des modules ;
    - évolution du statut 🥉 → 💎 et déblocage des badges 🎓 (à M19) et 💎 (à M26).
 

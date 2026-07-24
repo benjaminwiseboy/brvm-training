@@ -7,7 +7,19 @@ const CX = 66;
 const CY = 66;
 const CIRC = 2 * Math.PI * R;
 
-export function ScoreRing({ pct, label = "réussite" }: { pct: number; label?: string }) {
+export function ScoreRing({
+  pct,
+  label = "réussite",
+  tone = "win",
+}: {
+  pct: number;
+  label?: string;
+  /** Teinte de l'anneau (Fix 5, revue finale) : "win" = vert (`--pos`) pour un
+   * résultat parfait, "soft" = argile/orange (`--clay`) pour un résultat
+   * imparfait — port de `.is-win`/`.is-soft .ring__fg` du POC. Défaut "win"
+   * pour ne pas casser les appelants existants. */
+  tone?: "win" | "soft";
+}) {
   const clamped = Math.max(0, Math.min(100, Math.round(pct)));
   const offset = CIRC * (1 - clamped / 100);
 
@@ -24,7 +36,7 @@ export function ScoreRing({ pct, label = "réussite" }: { pct: number; label?: s
       <svg className={styles.svg} viewBox="0 0 132 132" aria-hidden="true">
         <circle className={styles.bg} cx={CX} cy={CY} r={R} />
         <circle
-          className={styles.fg}
+          className={`${styles.fg} ${tone === "soft" ? styles.soft : ""}`}
           cx={CX}
           cy={CY}
           r={R}

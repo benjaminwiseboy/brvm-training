@@ -24,7 +24,7 @@ export const m24: Module = {
   totalModules: 26,
   title: "Quand vendre ses titres (l'art de la sortie)",
   phase: "Phase 5 · Suivi & maîtrise",
-  status: { emoji: "🥇", label: "L'Analyste Stratège" },
+  status: { emoji: "🎓", label: "L'Analyste Confirmé" },
   reward: 25000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----

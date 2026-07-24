@@ -43,11 +43,39 @@ const EMPTY_RESULT: Result = { correct: 0, total: 0, capitalDelta: 0 };
  * - `Bilan.walletTotal` reçoit `state.capital` tel quel : ce state a déjà été
  *   mis à jour par `completeModule` au moment où la phase "bilan" est rendue
  *   (même batch synchrone), donc pas de recalcul ni de double comptage.
+ *
+ * Fix 3 (revue finale) — reprise au slide exact : `ModulePlayer` attend
+ * l'hydratation du store (`hydrated`) AVANT de monter la machine à états. La
+ * route `/module/[code]` monte ce composant sans attendre la lecture
+ * localStorage ; or l'initialiseur `useState` du montage doit lire le VRAI
+ * `state.resume` (pas la valeur neutre de `initialState()` du tout premier
+ * rendu pré-hydratation). On isole donc la machine dans `ModulePlayerInner`,
+ * monté seulement une fois `hydrated === true` — même précédent que
+ * `app/page.tsx` qui rend `null` tant que l'hydratation n'est pas finie.
  */
 export function ModulePlayer({ module }: { module: Module }) {
+  const { hydrated } = useProgress();
+  // Tant que le store n'est pas hydraté depuis localStorage, on ne peut pas
+  // décider intro-vs-reprise : ne rien rendre (bref, cohérent avec app/page.tsx).
+  if (!hydrated) return null;
+  return <ModulePlayerInner module={module} />;
+}
+
+function ModulePlayerInner({ module }: { module: Module }) {
   const router = useRouter();
   const { state, completeModule, setResumeSlide } = useProgress();
-  const [phase, setPhase] = useState<Phase>("intro");
+  // Reprise (Fix 3) : si le pointeur `resume` du store désigne CE module à un
+  // slide > 0, on saute l'intro (Hero) et on monte directement en phase
+  // "cours", `SlideDeck` initialisé au bon slide. Sinon flux intro→cours
+  // classique au slide 0. `ResumeCard` et `ModuleMap` pointent tous deux vers
+  // la même route `/module/<code>` sans param distinctif : les deux chemins
+  // d'entrée lisent donc le MÊME `state.resume` et se comportent de façon
+  // identique — c'est le sens de `resume` dans ce codebase (posé à chaque
+  // changement de slide, pas seulement via la carte de reprise).
+  const resume = state.resume;
+  const resumesHere = !!resume && resume.code === module.code && resume.slide > 0;
+  const [phase, setPhase] = useState<Phase>(resumesHere ? "cours" : "intro");
+  const [initialSlide] = useState(resumesHere ? resume!.slide : 0);
   const [result, setResult] = useState<Result>(EMPTY_RESULT);
   const [diagnosticPoints, setDiagnosticPoints] = useState<number | null>(null);
 
@@ -81,6 +109,7 @@ export function ModulePlayer({ module }: { module: Module }) {
       {phase === "cours" && (
         <SlideDeck
           slides={module.slides}
+          initialIndex={initialSlide}
           onSlide={(i) => setResumeSlide(module.code, i)}
           onDone={() => setPhase("defi")}
         />

@@ -25,7 +25,7 @@ export const m21: Module = {
   totalModules: 26,
   title: "Les OPCVM en pratique (déléguer intelligemment)",
   phase: "Phase 4 · Passage à l'action",
-  status: { emoji: "🥇", label: "L'Analyste Stratège" },
+  status: { emoji: "🎓", label: "L'Analyste Confirmé" },
   reward: 20000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
