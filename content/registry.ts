@@ -13,11 +13,17 @@ import { m11 } from "./modules/m11";
 import { m12 } from "./modules/m12";
 import { m13 } from "./modules/m13";
 import { m14 } from "./modules/m14";
-// … imports m15..m26 ajoutés au fil des tâches de conversion
+import { m15 } from "./modules/m15";
+import { m16 } from "./modules/m16";
+import { m17 } from "./modules/m17";
+import { m18 } from "./modules/m18";
+import { m19 } from "./modules/m19";
+// … imports m20..m26 ajoutés au fil des tâches de conversion
 
 export const MODULES: Record<string, Module> = {
   M01: m01, M02: m02, M03: m03, M04: m04, M05: m05, M06: m06, M07: m07, M08: m08,
-  M09: m09, M10: m10, M11: m11, M12: m12, M13: m13, M14: m14 /*, …*/
+  M09: m09, M10: m10, M11: m11, M12: m12, M13: m13, M14: m14,
+  M15: m15, M16: m16, M17: m17, M18: m18, M19: m19 /*, …*/
 };
 
 export const PHASES = [
