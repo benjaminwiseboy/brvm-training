@@ -21,13 +21,16 @@ import { m19 } from "./modules/m19";
 import { m20 } from "./modules/m20";
 import { m21 } from "./modules/m21";
 import { m22 } from "./modules/m22";
-// … imports m23..m26 ajoutés au fil des tâches de conversion
+import { m23 } from "./modules/m23";
+import { m24 } from "./modules/m24";
+import { m25 } from "./modules/m25";
+import { m26 } from "./modules/m26";
 
 export const MODULES: Record<string, Module> = {
   M01: m01, M02: m02, M03: m03, M04: m04, M05: m05, M06: m06, M07: m07, M08: m08,
   M09: m09, M10: m10, M11: m11, M12: m12, M13: m13, M14: m14,
   M15: m15, M16: m16, M17: m17, M18: m18, M19: m19,
-  M20: m20, M21: m21, M22: m22 /*, …*/
+  M20: m20, M21: m21, M22: m22, M23: m23, M24: m24, M25: m25, M26: m26
 };
 
 export const PHASES = [
