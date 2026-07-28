@@ -74,6 +74,12 @@ export const m11: Module = {
           ],
         },
         { kind: "text", value: "Impressionnant ? Gardez cet extrait en tête : dans les slides suivantes, on décortique une colonne à la fois." },
+        {
+          kind: "download",
+          label: "Télécharger un vrai BOC (PDF)",
+          sublabel: "Bulletin officiel de la BRVM du 17/07/2026 · 19 pages",
+          href: "/docs/boc-exemple-brvm.pdf",
+        },
       ],
     },
     {

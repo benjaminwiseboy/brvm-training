@@ -15,6 +15,7 @@ export function validateModule(m: Module): string[] {
     if (!s.blocks || s.blocks.length === 0) errs.push(`${tag}: slide ${i + 1} vide`);
     s.blocks?.forEach((b) => {
       if (b.kind === "boctable") validateBocTable(tag, `tableau (slide ${i + 1})`, b, errs);
+      if (b.kind === "download" && !b.href) errs.push(`${tag}: bloc de téléchargement (slide ${i + 1}) sans href`);
     });
   });
   if (m.challenge.type === "quiz") {

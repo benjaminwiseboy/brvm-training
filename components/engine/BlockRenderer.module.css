@@ -118,3 +118,47 @@
   background: var(--blue-soft);
   color: #0e3a56;
 }
+
+.download {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--blue-soft);
+  border: 1px solid #bcd4e6;
+  border-radius: var(--radius);
+  padding: 15px 18px;
+  text-decoration: none;
+  transition: border-color 0.18s, transform 0.12s;
+}
+.download:hover {
+  border-color: var(--blue);
+}
+.download:active {
+  transform: scale(0.99);
+}
+.downloadIcon {
+  font-size: 26px;
+  line-height: 1;
+}
+.downloadMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+.downloadLabel {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: #0e3a56;
+}
+.downloadSublabel {
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+.downloadArrow {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--blue);
+}

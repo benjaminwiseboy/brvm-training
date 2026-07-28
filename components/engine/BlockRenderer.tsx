@@ -54,5 +54,17 @@ export function BlockRenderer({ block }: { block: Block }) {
 
     case "boctable":
       return <BocTable caption={block.caption} columns={block.columns} rows={block.rows} highlightCols={block.highlightCols} />;
+
+    case "download":
+      return (
+        <a className={styles.download} href={block.href} download target="_blank" rel="noopener noreferrer">
+          <span className={styles.downloadIcon} aria-hidden="true">📄</span>
+          <span className={styles.downloadMeta}>
+            <span className={styles.downloadLabel}>{block.label}</span>
+            {block.sublabel && <span className={styles.downloadSublabel}>{block.sublabel}</span>}
+          </span>
+          <span className={styles.downloadArrow} aria-hidden="true">↓</span>
+        </a>
+      );
   }
 }
