@@ -7,7 +7,10 @@ const KEY = "brvm-learning:v1";
 export type ProgressState = {
   onboarded: boolean; capital: number; streak: number;
   completed: Record<string, { score: number; at: string }>;
-  resume?: { code: string; slide: number };
+  // `phase` (Fix P1, critique UX) : sans elle, quitter en plein défi puis
+  // revenir rejouait tout le cours depuis la dernière slide vue au lieu de
+  // reprendre directement au défi — `slide` seul ne distinguait pas les deux.
+  resume?: { code: string; slide: number; phase?: "cours" | "defi" };
   unlockedResources: string[];
 };
 
@@ -137,7 +140,7 @@ export function applyCompletion(
 const Ctx = createContext<{
   state: ProgressState;
   completeModule: (code: string, correct: number, total: number, capitalDelta: number) => void;
-  setResumeSlide: (code: string, slide: number) => void;
+  setResumeSlide: (code: string, slide: number, phase?: "cours" | "defi") => void;
   setOnboarded: () => void;
   reset: () => void;
   /**
@@ -179,7 +182,8 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     state,
     completeModule: (code: string, correct: number, total: number, delta: number) =>
       setState((s) => applyCompletion(s, code, correct, total, delta)),
-    setResumeSlide: (code: string, slide: number) => setState((s) => ({ ...s, resume: { code, slide } })),
+    setResumeSlide: (code: string, slide: number, phase: "cours" | "defi" = "cours") =>
+      setState((s) => ({ ...s, resume: { code, slide, phase } })),
     setOnboarded: () => setState((s) => ({ ...s, onboarded: true })),
     reset: () => setState(initialState()),
     hydrated,

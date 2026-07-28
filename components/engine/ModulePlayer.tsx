@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Module } from "@/lib/types";
 import { useProgress } from "@/lib/store";
+import { useConfirmBeforeLeaving, useReportModulePhase } from "@/lib/navGuard";
 import { getNext } from "@/content/registry";
 import { Hero } from "./Hero";
 import { SlideDeck } from "./SlideDeck";
@@ -17,6 +18,11 @@ type Phase = "intro" | "cours" | "defi" | "bilan";
 type Result = { correct: number; total: number; capitalDelta: number };
 
 const EMPTY_RESULT: Result = { correct: 0, total: 0, capitalDelta: 0 };
+
+// Ordre = index reporté à AppShell pour son stepper de header (cf.
+// lib/navGuard.tsx, useReportModulePhase) — mêmes 4 libellés que
+// POC-Module-1/app.js (`var STEPS = ["Intro", "Cours", "Défi", "Bilan"]`).
+const PHASE_ORDER: Phase[] = ["intro", "cours", "defi", "bilan"];
 
 /**
  * Machine à états qui joue un module de bout en bout — intro (Hero) → cours
@@ -72,11 +78,28 @@ function ModulePlayerInner({ module }: { module: Module }) {
   // identique — c'est le sens de `resume` dans ce codebase (posé à chaque
   // changement de slide, pas seulement via la carte de reprise).
   const resume = state.resume;
-  const resumesHere = !!resume && resume.code === module.code && resume.slide > 0;
-  const [phase, setPhase] = useState<Phase>(resumesHere ? "cours" : "intro");
+  // Reprise consciente de la phase (Fix P1, critique UX) : avant, `resume`
+  // ne pointait qu'une slide de cours — quitter en plein défi puis revenir
+  // rejouait tout le cours au lieu de reprendre directement au défi.
+  const resumesAtDefi = !!resume && resume.code === module.code && resume.phase === "defi";
+  const resumesHere =
+    !!resume && resume.code === module.code && resume.slide > 0 && resume.phase !== "defi";
+  const [phase, setPhase] = useState<Phase>(resumesAtDefi ? "defi" : resumesHere ? "cours" : "intro");
   const [initialSlide] = useState(resumesHere ? resume!.slide : 0);
   const [result, setResult] = useState<Result>(EMPTY_RESULT);
   const [diagnosticPoints, setDiagnosticPoints] = useState<number | null>(null);
+
+  // Fix P0/P1 (critique UX) : les liens persistants d'AppShell (retour,
+  // sidebar, tabbar) restent cliquables pendant le défi — sans garde, un
+  // clic dessus sortait silencieusement du module en perdant les réponses
+  // en cours. Couvre tous les types de défi (quiz/simulateur/diagnostic),
+  // pas seulement le quiz.
+  useConfirmBeforeLeaving(phase === "defi", "Quitter le défi ? Vos réponses en cours seront perdues.");
+
+  // Fix P1 (critique UX) : reporte la phase courante au stepper du header
+  // d'AppShell (`ModuleShell`) — design repris de POC-Module-1 (`.stepper`
+  // dans `<header class="top">`), pas un indicateur local à ModulePlayer.
+  useReportModulePhase(PHASE_ORDER.indexOf(phase));
 
   function handleChallengeResult(r: Result) {
     setResult(r);
@@ -108,7 +131,10 @@ function ModulePlayerInner({ module }: { module: Module }) {
           slides={module.slides}
           initialIndex={initialSlide}
           onSlide={(i) => setResumeSlide(module.code, i)}
-          onDone={() => setPhase("defi")}
+          onDone={() => {
+            setResumeSlide(module.code, module.slides.length - 1, "defi");
+            setPhase("defi");
+          }}
         />
       )}
 
