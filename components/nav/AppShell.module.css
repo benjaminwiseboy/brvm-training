@@ -1,8 +1,10 @@
 /* =============================================================
-   AppShell — coquille des écrans de module (bouton retour + marque).
-   Porté depuis POC-Module-1/styles.css : .top(+__bar/__left), .backbtn,
-   .brand(+__mark/__name), .stage.
-   Task 11 y ajoutera la sidebar/les onglets ; pour l'instant, retour seul.
+   AppShell — coquille des écrans de module, surmontée de la nav
+   persistante partagée (sidebar/onglets, plus bas).
+   Porté depuis POC-Module-1/styles.css : .top(+__bar), .brand(+__mark/
+   __name), .stage. Pas de .backbtn : le bouton retour du POC faisait
+   doublon avec "Accueil" dans la sidebar, désormais persistante — retiré
+   plutôt que dupliqué.
    ============================================================= */
 
 .shell {
@@ -13,7 +15,12 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: color-mix(in srgb, var(--paper) 84%, transparent);
+  /* Fond plus blanc/opaque (Fix, demande explicite) qu'un simple
+     `--paper` translucide — celui-ci se fondait presque dans le fond de
+     page (déjà `--paper`), le header ne se distinguait du contenu qui
+     défile dessous que via le flou. `--card` (blanc pur) + 90% tranche
+     nettement, tout en gardant un peu de verre dépoli. */
+  background: color-mix(in srgb, var(--card) 90%, transparent);
   backdrop-filter: saturate(140%) blur(12px);
   border-bottom: 1px solid var(--line);
 }
@@ -28,32 +35,42 @@
   justify-content: space-between;
 }
 
-.backbtn {
-  flex: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: var(--card);
-  border: 1px solid var(--line-strong);
+/* Code + titre + phase du module courant (Fix, demande explicite — "comme
+   dans le POC" : cf. POC-Module-1/app.js, `.brand__sub` rempli par
+   `M.phase + " · " + M.code`). `flex:1`/`min-width:0` + ellipsis sur chaque
+   ligne : tronque proprement plutôt que de pousser le portefeuille hors
+   écran sur mobile. */
+.moduleInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.moduleTitle {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 15px;
   color: var(--blue-2);
-  font-size: 20px;
-  font-weight: 800;
-  text-decoration: none;
-  box-shadow: var(--shadow-sm);
-  transition: border-color 0.2s, background 0.2s, transform 0.1s;
 }
-.backbtn:hover {
-  border-color: var(--blue);
-  background: var(--paper);
+/* Numéro de module en doré (Fix, demande explicite) — `--or-deep`, pas
+   `--or` : `--or` (#F2B705) tombe sous 2:1 de contraste en texte sur fond
+   clair (cf. .impeccable/critique), `--or-deep` est le token déjà utilisé
+   pour tout texte doré ailleurs dans l'app (kickers, eyebrows). */
+.moduleCode {
+  color: var(--or-deep);
 }
-.backbtn:active {
-  transform: scale(0.94);
-}
-.backbtn:focus-visible {
-  outline: 3px solid var(--or);
-  outline-offset: 3px;
+.modulePhase {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
 }
 
 .brand {
@@ -94,21 +111,80 @@
 }
 
 /* =============================================================
-   Variante "dash" (Task 11) — sidebar desktop / onglets mobile.
+   Stepper de progression (variante "module") — porté tel quel de
+   POC-Module-1/styles.css (.stepper, .stepper__seg, .stepper__track,
+   .stepper__fill, .stepper__name, .is-active, .is-done).
+   ============================================================= */
+.stepper {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 20px 12px;
+  display: flex;
+  gap: 9px;
+}
+.stepperSeg {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.stepperTrack {
+  height: 5px;
+  border-radius: 999px;
+  background: var(--line-strong);
+  overflow: hidden;
+}
+.stepperFill {
+  height: 100%;
+  width: 100%;
+  border-radius: 999px;
+  background: var(--blue);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s ease;
+}
+.stepperName {
+  font-family: var(--f-display);
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-weight: 700;
+}
+.stepperSegActive .stepperName {
+  color: var(--blue);
+}
+.stepperSegActive .stepperFill {
+  transform: scaleX(1);
+}
+.stepperSegDone .stepperFill {
+  background: var(--pos);
+  transform: scaleX(1);
+}
+@media (max-width: 640px) {
+  .stepperName {
+    font-size: 0;
+  }
+  .stepperName::first-letter {
+    font-size: 10.5px;
+  }
+}
+
+/* =============================================================
+   Navigation persistante — sidebar desktop / onglets mobile.
+   Partagée par les deux variantes ("module" et "dash").
    Porté depuis POC-Module-1/styles.css : .sidebar(+__brand/__nav/__foot),
    .navitem(+__ic/.is-active), .sbwallet(+__label/__amt/__status), .sbuser
    (+__meta/__name/__role), .avatar, .top__right .wallet(+__meta/__label/
    __amount), .dash, .tabbar, .tab(+__ic/.is-active), et la bascule
    @media(min-width:901px) (lignes ~440-547 de styles.css).
 
-   Gap #2 (cf. task-11-brief.md) : dans le POC, cette bascule s'appuie sur une
-   cascade globale `body.dash-page` pour cacher/afficher `.sidebar`/`.top`/
-   `.tabbar` — impossible à reproduire via CSS Modules (scopés par fichier).
-   Ici, AppShell.tsx ne RENDS ces éléments dans le JSX que pour
-   variant="dash" (les pages de module ne les reçoivent jamais) ; le
-   @media ci-dessous se contente de choisir, parmi les éléments dash déjà
-   rendus, lequel est visible à quelle largeur — il ne masque jamais rien
-   côté pages de module.
+   Dans le POC, la bascule sidebar/onglets s'appuie sur une cascade globale
+   `body.dash-page` — impossible à reproduire via CSS Modules (scopés par
+   fichier). Ici, `Sidebar`/`Tabbar` (AppShell.tsx) sont rendus dans les DEUX
+   variantes ; le @media ci-dessous choisit laquelle des deux est visible à
+   quelle largeur, uniformément pour les pages de module et le tableau de
+   bord.
    ============================================================= */
 
 .dashShell {
@@ -130,6 +206,19 @@
   border-right: 1px solid var(--line);
   overflow-y: auto;
   z-index: 50;
+  transition: opacity 0.2s;
+}
+
+/* Estompée pendant une tâche à fort enjeu (Fix P2, critique UX) — le défi
+   d'un module concurrençait visuellement la nav persistante ; jamais
+   masquée (fonctionnalité intacte), juste retirée du premier plan tant
+   qu'on ne l'utilise pas. Restaurée au survol/focus. */
+.chromeDim {
+  opacity: 0.4;
+}
+.chromeDim:hover,
+.chromeDim:focus-within {
+  opacity: 1;
 }
 .sidebarBrand {
   display: flex;
@@ -217,6 +306,15 @@
   color: #c0d2e0;
   margin-top: 7px;
 }
+/* Variante "module" du bloc sbwallet (Fix, critique UX) — statut seul, sans
+   montant : celui-ci est déjà affiché, animé, dans le header (Wallet.tsx). */
+.sbwalletStatusBig {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 1.05rem;
+  margin-top: 3px;
+  line-height: 1.25;
+}
 .sbuser {
   display: flex;
   align-items: center;
@@ -277,7 +375,9 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: color-mix(in srgb, var(--paper) 84%, transparent);
+  /* Même fond que .top (Fix, demande explicite) — cohérence entre les deux
+     variantes de header. */
+  background: color-mix(in srgb, var(--card) 90%, transparent);
   backdrop-filter: saturate(140%) blur(12px);
   border-bottom: 1px solid var(--line);
 }
@@ -293,10 +393,10 @@
 .topWallet {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
   color: #eaf1f6;
-  padding: 8px 8px 8px 16px;
+  padding: 10px 16px 10px 22px;
   border-radius: 999px;
   box-shadow: var(--shadow);
 }
@@ -328,31 +428,34 @@
   gap: 26px;
 }
 
-/* Barre d'onglets flottante (mobile) */
+/* Barre d'onglets (mobile) — fixée au bord bas de l'écran (pattern iOS/
+   Android standard), pas un pill flottant : celui-ci ne tenait pas compte de
+   `env(safe-area-inset-bottom)` et pouvait chevaucher le home indicator sur
+   iPhone à encoche. */
 .tabbar {
   position: fixed;
-  left: 50%;
-  bottom: 14px;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 60;
   display: flex;
-  gap: 3px;
-  background: color-mix(in srgb, var(--card) 90%, transparent);
+  background: color-mix(in srgb, var(--card) 94%, transparent);
   backdrop-filter: saturate(140%) blur(12px);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 6px;
-  box-shadow: var(--shadow-lg);
-  max-width: calc(100vw - 28px);
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -6px 20px -14px rgba(14, 47, 68, 0.28);
+  padding: 8px max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom))
+    max(8px, env(safe-area-inset-left));
+  transition: opacity 0.2s;
 }
 .tab {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  min-width: 60px;
-  padding: 8px 8px;
-  border-radius: 999px;
+  justify-content: center;
+  gap: 3px;
+  padding: 6px 4px;
+  border-radius: 12px;
   text-decoration: none;
   color: var(--ink-soft);
   font-size: 10px;
@@ -367,10 +470,11 @@
   color: #fff;
 }
 
-/* Bascule sidebar (desktop) ↔ header+onglets (mobile) — scopée aux éléments
-   de la variante "dash" (voir le commentaire de section ci-dessus). */
+/* Bascule sidebar (desktop) ↔ header+onglets (mobile) — commune aux deux
+   variantes (voir le commentaire de section ci-dessus). */
 @media (min-width: 901px) {
-  .dashShell {
+  .dashShell,
+  .shell {
     padding-left: 250px;
   }
   .sidebar {
@@ -387,7 +491,10 @@
   }
 }
 @media (max-width: 900px) {
-  .dashMain {
-    padding-bottom: 116px;
+  .dashMain,
+  .stage {
+    /* Dégagement de la tabbar fixée en bas (~76px pleine hauteur) + sa
+       propre réserve de safe-area, pour ne jamais recouvrir le contenu. */
+    padding-bottom: calc(76px + env(safe-area-inset-bottom));
   }
 }

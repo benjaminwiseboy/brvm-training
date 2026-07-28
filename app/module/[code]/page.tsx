@@ -14,7 +14,7 @@ export default async function ModulePage({ params }: { params: Promise<{ code: s
   const mod = getModule(code);
   if (!mod) notFound();
   return (
-    <AppShell>
+    <AppShell moduleInfo={{ code: mod.code, title: mod.title, phase: mod.phase }}>
       <ModulePlayer module={mod} />
     </AppShell>
   );
