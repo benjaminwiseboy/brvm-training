@@ -11,6 +11,8 @@ export type Slide = { title: string; blocks: Block[] };
 export type QuizChallenge = {
   type: "quiz";
   kicker: string; title: string; instruction: string;
+  /** Mise en scène d'un cas concret (M03 : « le scénario de Koffi »), affichée à part de `instruction` dans un encart dédié — pas mélangée au texte d'instruction générique. */
+  scenario?: string;
   penaltyPerError: number; perfectReward: number;
   options: { value: string; label: string }[];   // ex. Mythe/Réalité, Feu vert/rouge
   questions: { prompt: string; answer: string; options?: { value: string; label: string }[] }[]; // answer ∈ (options ?? challenge.options).value — per-question override for questions whose correct-answer set differs from the challenge-level shared options (e.g. numeric-amount questions in the same challenge as a percentage question)

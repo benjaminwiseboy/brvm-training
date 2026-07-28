@@ -87,8 +87,9 @@ export const m03: Module = {
     type: "quiz",
     kicker: "Le Défi",
     title: "Calcul mental guidé",
-    instruction:
-      "Lisez le scénario et répondez. (Bonne réponse = + 10 000 FCFA · erreur = − 5 000 FCFA.) **Le scénario de Koffi :** L'an dernier, Koffi a acheté **100 actions** de la banque SuperBank à **10 000 FCFA** l'action (soit 1 000 000 FCFA investis). Aujourd'hui, l'action vaut **12 000 FCFA**, et SuperBank vient de lui verser un dividende de **1 000 FCFA par action**.",
+    instruction: "Lisez le scénario ci-dessous, puis répondez aux 3 questions. (Bonne réponse = + 10 000 FCFA · erreur = − 5 000 FCFA.)",
+    scenario:
+      "**Le scénario de Koffi :** L'an dernier, Koffi a acheté **100 actions** de la banque SuperBank à **10 000 FCFA** l'action (soit 1 000 000 FCFA investis). Aujourd'hui, l'action vaut **12 000 FCFA**, et SuperBank vient de lui verser un dividende de **1 000 FCFA par action**.",
     penaltyPerError: 5000,
     perfectReward: 30000,
     // Chaque question ci-dessous fournit son propre `options` (distracteurs

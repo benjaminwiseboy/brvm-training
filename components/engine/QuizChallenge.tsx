@@ -108,6 +108,13 @@ export function QuizChallenge({
         <p className={styles.instruction}>{renderMarkup(challenge.instruction)}</p>
       </div>
 
+      {challenge.scenario && (
+        <div className={styles.scenario}>
+          <p className={styles.scenarioLabel}>📖 Scénario</p>
+          <p className={styles.scenarioText}>{renderMarkup(challenge.scenario)}</p>
+        </div>
+      )}
+
       {!validated && (
         <div className={styles.head}>
           <span className={styles.count}>
