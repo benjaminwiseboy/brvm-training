@@ -27,7 +27,7 @@ export const m06: Module = {
     eyebrow: "Formation BRVM · Module 06",
     headline: "Devenez fermier, pas chasseur.",
     lead:
-      "La rente vous procure des revenus réguliers, presque sans effort : vous possédez des actions comme un fermier possède des arbres, et vous récoltez les dividendes chaque année — sans jamais vendre le capital.",
+      "Vous connaissez votre profil d'investisseur (M05) — reste à le mettre en musique : c'est le rôle d'une stratégie. La rente vous procure des revenus réguliers, presque sans effort : vous possédez des actions comme un fermier possède des arbres, et vous récoltez les dividendes chaque année — sans jamais vendre le capital.",
     card: {
       label: "La stratégie de rente",
       title: "Repérer une bonne valeur de rente",
@@ -36,7 +36,7 @@ export const m06: Module = {
         "**Des bénéfices réguliers** — rentable chaque année, sans exception.",
         "**Des bénéfices qui montent** — pour que le dividende suive la vie chère.",
         "**Un dividende généreux** — taux de distribution entre 50 et 70 %.",
-        "**Un rendement élevé** — viser 9-10 % à la BRVM.",
+        "**Un rendement élevé** — viser entre 6 et 10 % à la BRVM.",
       ],
     },
     objectives: [
@@ -83,6 +83,11 @@ export const m06: Module = {
       title: "Problème n°1 que la rente résout : financer les études des enfants",
       blocks: [
         {
+          kind: "lead",
+          value:
+            "Voici quelques exemples de problèmes que la rente peut résoudre — pas les seuls, mais parmi les plus fréquents.",
+        },
+        {
           kind: "text",
           value:
             "Vous constituez peu à peu un portefeuille d'actions qui versent de bons dividendes. Chaque année, ces dividendes arrivent sur votre compte et paient la scolarité.",
@@ -101,17 +106,17 @@ export const m06: Module = {
         {
           kind: "text",
           value:
-            "Un chiffre qui fait réfléchir : en Côte d'Ivoire, la pension versée par la CNPS (la Caisse Nationale de Prévoyance Sociale, la caisse de retraite) représente en moyenne environ **un tiers** de vos meilleures années de salaire.",
+            "Prenons un exemple : en Côte d'Ivoire, la pension versée par la CNPS (la Caisse Nationale de Prévoyance Sociale) représente en moyenne environ **un tiers** de vos meilleures années de salaire. Concrètement : si vous gagniez 600 000 FCFA par mois, votre retraite tournera autour de **200 000 FCFA** — soit 400 000 FCFA de train de vie en moins **chaque mois**.",
         },
         {
           kind: "text",
           value:
-            "Concrètement : si vous gagniez 600 000 FCFA par mois, votre retraite tournera autour de **200 000 FCFA** — soit 400 000 FCFA de train de vie en moins **chaque mois**.",
+            "Ce n'est pas propre à la Côte d'Ivoire : même en France, la pension moyenne ne remplace pas non plus l'intégralité du dernier salaire — les estimations du Conseil d'orientation des retraites évoquent un taux de remplacement de l'ordre de **50 à 75 %** selon les revenus et les carrières, avec une baisse plus marquée pour les hauts salaires.",
         },
         {
           kind: "text",
           value:
-            "La parade : en investissant pendant votre vie active, vous vous bâtissez une **seconde source de revenus**. Le jour venu, les dividendes viennent combler ce manque.",
+            "La parade est la même partout : en investissant pendant votre vie active, vous vous bâtissez une **seconde source de revenus**. Le jour venu, les dividendes viennent combler ce manque.",
         },
       ],
     },
@@ -121,9 +126,15 @@ export const m06: Module = {
         { kind: "text", value: "Même en travaillant, la rente ajoute un revenu **par-dessus** votre salaire." },
         {
           kind: "callout",
+          tone: "info",
+          value:
+            "**Exemple :** avec 6 000 000 FCFA investis dans des actions de rente à 8 % de rendement, vous touchez 480 000 FCFA de dividendes par an. Réparti sur 12 mois, cela fait **40 000 FCFA en plus chaque mois** — de quoi couvrir une facture, la cantine, ou simplement souffler avant la fin du mois.",
+        },
+        {
+          kind: "callout",
           tone: "warn",
           value:
-            "⚠️ Une particularité de la BRVM à connaître : ici, les dividendes sont versés **une seule fois par an** (entre mai et juillet), en une somme unique — pas chaque mois comme un salaire. Il faut donc savoir **répartir vous-même** cette somme sur les 12 mois de l'année.",
+            "⚠️ Une particularité de la BRVM à connaître : ici, les dividendes sont versés **une seule fois par an** (entre mai et juillet), en une somme unique — pas chaque mois comme un salaire. Il faut donc savoir **répartir vous-même** cette somme sur les 12 mois de l'année, comme dans l'exemple ci-dessus.",
         },
       ],
     },
@@ -150,7 +161,7 @@ export const m06: Module = {
           kind: "list",
           items: [
             "**Un dividende généreux** — regardez le taux de distribution : la part du bénéfice réellement reversée aux actionnaires. En dessous de 50 %, l'entreprise est plutôt radine ; entre 50 et 70 %, elle est généreuse. ⚠️ À **100 %**, méfiance : elle distribue tout et ne garde rien pour investir dans son avenir — ses dividendes futurs risquent de plafonner.",
-            "**Un rendement de départ élevé** — le rendement = dividende ÷ prix de l'action. Il vous dit ce que l'action rapporte **chaque année**, par rapport à ce que vous la payez. À la BRVM, viser **9-10 %** est un bon repère (contre ~3 % sur un livret d'épargne).",
+            "**Un rendement de départ élevé** — le rendement = dividende ÷ prix de l'action. Il vous dit ce que l'action rapporte **chaque année**, par rapport à ce que vous la payez. À la BRVM, viser **entre 6 et 10 %** est un bon repère (contre ~3 % sur un livret d'épargne).",
           ],
         },
         { kind: "lead", value: "Enfilez votre casquette de fermier : à vous de repérer les bonnes valeurs de rente. 👇" },
@@ -190,7 +201,7 @@ export const m06: Module = {
       },
       {
         prompt:
-          "Quelle est la meilleure **valeur de rente** ? **A :** bénéfices réguliers et croissants, distribue **60 %**, rendement **9 %**. **B :** bénéfices en dents de scie, distribue **15 %**, rendement **2 %**.",
+          "Quelle est la meilleure **valeur de rente** ?\n🅰️ Bénéfices réguliers et croissants, distribue **60 %**, rendement **9 %**.\n🅱️ Bénéfices en dents de scie, distribue **15 %**, rendement **2 %**.",
         answer: "A",
         options: [
           { value: "A", label: "Entreprise A" },
