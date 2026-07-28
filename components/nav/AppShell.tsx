@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useProgress, deriveStatus } from "@/lib/store";
@@ -75,14 +75,62 @@ export function AppShell({
   );
 }
 
+/**
+ * Masque le header (`.top`/`.dashTop`) au scroll vers le bas, le réaffiche
+ * au scroll vers le haut (Fix, demande explicite — "rend la lecture
+ * touffue" en restant fixé en permanence). Toujours visible tant qu'on n'a
+ * pas dépassé `REVEAL_THRESHOLD` : évite qu'un minuscule scroll near-top
+ * (rebond iOS, etc.) fasse disparaître le header juste après l'arrivée sur
+ * la page. Le seuil de direction (`DIRECTION_THRESHOLD`) filtre le bruit
+ * des micro-scrolls qui ne traduisent pas une intention de lire vers le
+ * haut ou le bas. Actif sur toutes les tailles d'écran (Fix, demande
+ * explicite) — `.headerHidden` (AppShell.module.css) n'est plus restreint
+ * au mobile.
+ */
+const REVEAL_THRESHOLD = 40;
+const DIRECTION_THRESHOLD = 4;
+
+function useAutoHideHeader() {
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const delta = y - lastY;
+        if (y < REVEAL_THRESHOLD) {
+          setHidden(false);
+        } else if (delta > DIRECTION_THRESHOLD) {
+          setHidden(true);
+        } else if (delta < -DIRECTION_THRESHOLD) {
+          setHidden(false);
+        }
+        lastY = y;
+        ticking = false;
+      });
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return hidden;
+}
+
 function ModuleShell({ children, moduleInfo }: { children: ReactNode; moduleInfo?: ModuleInfo }) {
   const { state } = useProgress();
+  const headerHidden = useAutoHideHeader();
 
   return (
     <div className={styles.shell}>
       <Sidebar variant="module" />
 
-      <header className={styles.top}>
+      <header className={`${styles.top} ${headerHidden ? styles.headerHidden : ""}`}>
         <div className={styles.bar}>
           {/* Code (doré) + titre + phase du module courant (Fix, demande
               explicite — "comme dans le POC" : cf. POC-Module-1/app.js,
@@ -111,12 +159,13 @@ function ModuleShell({ children, moduleInfo }: { children: ReactNode; moduleInfo
 
 function DashShell({ children }: { children: ReactNode }) {
   const { state } = useProgress();
+  const headerHidden = useAutoHideHeader();
 
   return (
     <div className={styles.dashShell}>
       <Sidebar variant="dash" />
 
-      <header className={styles.dashTop}>
+      <header className={`${styles.dashTop} ${headerHidden ? styles.headerHidden : ""}`}>
         <div className={styles.dashTopBar}>
           <div className={styles.brand}>
             <span className={styles.brandMark}>B</span>

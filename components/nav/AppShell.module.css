@@ -15,14 +15,29 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  /* Fond plus blanc/opaque (Fix, demande explicite) qu'un simple
-     `--paper` translucide — celui-ci se fondait presque dans le fond de
-     page (déjà `--paper`), le header ne se distinguait du contenu qui
-     défile dessous que via le flou. `--card` (blanc pur) + 90% tranche
-     nettement, tout en gardant un peu de verre dépoli. */
-  background: color-mix(in srgb, var(--card) 90%, transparent);
+  /* Fond translucide plutôt qu'un `--paper` opaque : le header se distingue
+     du contenu qui défile dessous par le flou, sans trancher trop fort. */
+  background: color-mix(in srgb, var(--card) 70%, transparent);
   backdrop-filter: saturate(140%) blur(12px);
   border-bottom: 1px solid var(--line);
+  transition: transform 0.25s ease-out;
+}
+
+/* Masqué au scroll vers le bas, réaffiché vers le haut (Fix, demande
+   explicite — "rend la lecture touffue" en restant fixé en permanence) —
+   partagé par `.top` et `.dashTop` (cf. `useAutoHideHeader` dans
+   AppShell.tsx), sur toutes les tailles d'écran (Fix, demande explicite).
+   `.dashTop` n'est de toute façon rendu qu'en mobile (`display: none`
+   ≥901px, cf. plus bas) : cette règle ne s'applique concrètement qu'à `.top`
+   sur desktop. */
+.headerHidden {
+  transform: translateY(-100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .top,
+  .dashTop {
+    transition: none;
+  }
 }
 
 .bar {
@@ -161,15 +176,6 @@
   background: var(--pos);
   transform: scaleX(1);
 }
-@media (max-width: 640px) {
-  .stepperName {
-    font-size: 0;
-  }
-  .stepperName::first-letter {
-    font-size: 10.5px;
-  }
-}
-
 /* =============================================================
    Navigation persistante — sidebar desktop / onglets mobile.
    Partagée par les deux variantes ("module" et "dash").
@@ -377,9 +383,10 @@
   z-index: 50;
   /* Même fond que .top (Fix, demande explicite) — cohérence entre les deux
      variantes de header. */
-  background: color-mix(in srgb, var(--card) 90%, transparent);
+  background: color-mix(in srgb, var(--card) 70%, transparent);
   backdrop-filter: saturate(140%) blur(12px);
   border-bottom: 1px solid var(--line);
+  transition: transform 0.25s ease-out;
 }
 .dashTopBar {
   max-width: 1180px;
@@ -498,9 +505,11 @@
 @media (max-width: 900px) {
   .dashMain,
   .stage {
-    /* Dégagement de la tabbar fixée en bas (~76px pleine hauteur) + sa
-       propre réserve de safe-area, pour ne jamais recouvrir le contenu. */
-    padding-bottom: calc(76px + env(safe-area-inset-bottom));
+    /* Dégagement de la tabbar fixée en bas (~76px pleine hauteur) + marge de
+       respiration (Fix, demande explicite — le dernier bouton touchait la
+       tabbar) + sa propre réserve de safe-area, pour ne jamais recouvrir le
+       contenu. */
+    padding-bottom: calc(76px + 32px + env(safe-area-inset-bottom));
   }
 }
 
