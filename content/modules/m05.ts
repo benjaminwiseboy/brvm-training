@@ -84,22 +84,27 @@ export const m05: Module = {
     kicker: "Le Défi",
     title: "Le test de profilage",
     instruction:
-      "Répondez avec sincérité : chaque réponse rapporte des points (entre parenthèses), additionnés pour un score sur 32 points.",
+      "Répondez avec sincérité : chaque réponse rapporte des points (entre parenthèses), additionnés pour un score sur 40 points. Un test inspiré de ceux utilisés par les conseillers financiers.",
+    sections: [
+      { title: "Votre situation", startIndex: 0 },
+      { title: "Vos objectifs et votre tolérance au risque", startIndex: 1 },
+      { title: "Vos connaissances", startIndex: 4 },
+    ],
     questions: [
-      {
-        prompt: "Votre objectif principal en investissant ?",
-        options: [
-          { label: "Préserver mon capital et toucher un revenu, sans risque.", points: 0 },
-          { label: "Un rendement correct, avec un risque modéré, pour battre l'inflation.", points: 4 },
-          { label: "La croissance maximale à long terme, quitte à subir des secousses.", points: 8 },
-        ],
-      },
       {
         prompt: "Dans combien de temps retirerez-vous une part importante de cet argent ?",
         options: [
           { label: "Moins de 3 ans.", points: 0 },
           { label: "Entre 4 et 10 ans.", points: 4 },
           { label: "Dans plus de 10 ans.", points: 8 },
+        ],
+      },
+      {
+        prompt: "Votre objectif principal en investissant ?",
+        options: [
+          { label: "Préserver mon capital et toucher un revenu, sans risque.", points: 0 },
+          { label: "Un rendement correct, avec un risque modéré, pour battre l'inflation.", points: 4 },
+          { label: "La croissance maximale à long terme, quitte à subir des secousses.", points: 8 },
         ],
       },
       {
@@ -118,45 +123,51 @@ export const m05: Module = {
           { label: "Plus de 2 ans.", points: 8 },
         ],
       },
+      {
+        prompt: "Comment décririez-vous vos connaissances de la bourse aujourd'hui ?",
+        options: [
+          { label: "Débutant(e) : je découvre tout juste.", points: 0 },
+          { label: "Je connais les bases (action, obligation, dividende…).", points: 4 },
+          { label: "Je comprends bien les différents produits et leurs risques.", points: 8 },
+        ],
+      },
     ],
-    // Les 4 bandes portent aussi, en fin de `body` (voir note ci-dessous),
-    // l'aside « ℹ️ L'astuce » du .txt source (ligne 75) : ce texte s'applique
-    // universellement, quel que soit le profil obtenu, et le type
-    // DiagnosticChallenge n'a pas de champ dédié à du contenu « toutes
-    // bandes confondues ». Décision éditoriale (cf. task-15-brief.md) : le
-    // dupliquer dans chacune des 4 bandes plutôt que de le perdre.
     bands: [
       {
-        min: 0,
-        max: 8,
-        emoji: "🛡️",
-        label: "PRUDENT",
-        body:
-          "La sécurité avant tout. Cible : **80 %** obligations/OPCVM obligataires + **20 %** actions très stables (banques, télécoms). **L'astuce :** cette « structure » (le % actions vs obligations) reste la même quel que soit le montant. Que vous investissiez 15 000 ou 500 000 FCFA par mois, les pourcentages ne changent pas.",
+        min: 0, max: 10, emoji: "🛡️", label: "PRUDENT",
+        body: "La sécurité avant tout.",
+        allocation: [
+          "🛡️ 80 % obligations / OPCVM obligataires",
+          "📈 20 % actions très stables (banques, télécoms)",
+        ],
+        tip: "**L'astuce :** cette « structure » (le % actions vs obligations) reste la même quel que soit le montant. Que vous investissiez 15 000 ou 500 000 FCFA par mois, les pourcentages ne changent pas.",
       },
       {
-        min: 9,
-        max: 16,
-        emoji: "⚖️",
-        label: "ÉQUILIBRÉ",
-        body:
-          "Le juste milieu. Cible : **50 %** obligations + **50 %** actions réparties sur plusieurs secteurs (ou OPCVM mixtes). **L'astuce :** cette « structure » (le % actions vs obligations) reste la même quel que soit le montant. Que vous investissiez 15 000 ou 500 000 FCFA par mois, les pourcentages ne changent pas.",
+        min: 11, max: 20, emoji: "⚖️", label: "ÉQUILIBRÉ",
+        body: "Le juste milieu.",
+        allocation: [
+          "⚖️ 50 % obligations",
+          "📈 50 % actions réparties sur plusieurs secteurs (ou OPCVM mixtes)",
+        ],
+        tip: "**L'astuce :** cette « structure » (le % actions vs obligations) reste la même quel que soit le montant. Que vous investissiez 15 000 ou 500 000 FCFA par mois, les pourcentages ne changent pas.",
       },
       {
-        min: 17,
-        max: 24,
-        emoji: "📈",
-        label: "CROISSANCE",
-        body:
-          "Vous avez le temps (5 ans +) et visez la performance. Cible : **30 %** obligations + **70 %** actions. **L'astuce :** cette « structure » (le % actions vs obligations) reste la même quel que soit le montant. Que vous investissiez 15 000 ou 500 000 FCFA par mois, les pourcentages ne changent pas.",
+        min: 21, max: 30, emoji: "📈", label: "CROISSANCE",
+        body: "Vous avez le temps (5 ans +) et visez la performance.",
+        allocation: [
+          "🛡️ 30 % obligations",
+          "📈 70 % actions",
+        ],
+        tip: "**L'astuce :** cette « structure » (le % actions vs obligations) reste la même quel que soit le montant. Que vous investissiez 15 000 ou 500 000 FCFA par mois, les pourcentages ne changent pas.",
       },
       {
-        min: 25,
-        max: 32,
-        emoji: "🚀",
-        label: "AUDACIEUX",
-        body:
-          "Très long terme, les krachs sont des opportunités. Cible : **10-20 %** de sécurité + **80-100 %** actions. **L'astuce :** cette « structure » (le % actions vs obligations) reste la même quel que soit le montant. Que vous investissiez 15 000 ou 500 000 FCFA par mois, les pourcentages ne changent pas.",
+        min: 31, max: 40, emoji: "🚀", label: "AUDACIEUX",
+        body: "Très long terme, les krachs sont des opportunités.",
+        allocation: [
+          "🛡️ 10-20 % de sécurité",
+          "📈 80-100 % actions",
+        ],
+        tip: "**L'astuce :** cette « structure » (le % actions vs obligations) reste la même quel que soit le montant. Que vous investissiez 15 000 ou 500 000 FCFA par mois, les pourcentages ne changent pas.",
       },
     ],
   },

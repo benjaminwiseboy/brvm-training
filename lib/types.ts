@@ -28,8 +28,17 @@ export type SimulatorChallenge = {
 export type DiagnosticChallenge = {
   type: "diagnostic";
   kicker: string; title: string; instruction: string;
+  /** Regroupe les questions en parties thématiques (M05) — `startIndex` = index (0-based) de la 1ère question de la partie dans `questions`. Optionnel : sans ce champ, comportement inchangé (aucun séparateur). */
+  sections?: { title: string; startIndex: number }[];
   questions: { prompt: string; options: { label: string; points: number }[] }[];
-  bands: { min: number; max: number; emoji: string; label: string; body: string }[];
+  bands: {
+    min: number; max: number; emoji: string; label: string;
+    body: string;
+    /** Répartition cible, une puce par ligne (remplace l'ancienne prose inline). */
+    allocation: string[];
+    /** Astuce affichée sous la répartition (ex. « la structure ne change pas selon le montant »). */
+    tip: string;
+  }[];
 };
 
 export type Challenge = QuizChallenge | SimulatorChallenge | DiagnosticChallenge;

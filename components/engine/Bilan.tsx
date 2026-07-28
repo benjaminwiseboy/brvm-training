@@ -42,7 +42,10 @@ export function Bilan({
    * Phase 2 : "diagnostic / simulateur — pas de score chiffré") : pas de
    * ScoreRing, pas de pastilles capital/portefeuille, juste la bande de
    * profil correspondante. */
-  diagnostic?: { points: number; bands: { min: number; max: number; emoji: string; label: string; body: string }[] };
+  diagnostic?: {
+    points: number;
+    bands: { min: number; max: number; emoji: string; label: string; body: string; allocation: string[]; tip: string }[];
+  };
   /** Chemin quiz (Task revue M03) : permet d'afficher, à côté de chaque explication, la réponse erronée choisie par l'apprenant — pas seulement la bonne réponse. */
   quiz?: { challenge: QuizChallengeData; answers: (string | null)[] };
 }) {
@@ -58,8 +61,15 @@ export function Bilan({
             <div className={styles.lessonHlIc}>{band.emoji}</div>
             <h2 className={styles.lessonHlTitle}>{renderMarkup(band.label)}</h2>
             <p className={styles.lessonHlBody}>{renderMarkup(band.body)}</p>
+            <ul className={styles.allocList}>
+              {band.allocation.map((a, i) => (
+                <li key={i}>{renderMarkup(a)}</li>
+              ))}
+            </ul>
           </div>
         )}
+
+        {band?.tip && <div className={styles.golden}>{renderMarkup(band.tip)}</div>}
 
         <button type="button" className={`${styles.btn} ${styles.btnGold}`} onClick={onNext}>
           Continuer <span className={styles.arw}>→</span>

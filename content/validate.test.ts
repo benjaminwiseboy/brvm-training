@@ -69,7 +69,7 @@ describe("validateModule — diagnostic", () => {
       questions: [
         { prompt: "p1", options: [{ label: "a", points: 0 }, { label: "b", points: 4 }, { label: "c", points: 8 }] },
       ],
-      bands: [{ min: 0, max: 8, emoji: "🛡️", label: "Prudent", body: "b" }],
+      bands: [{ min: 0, max: 8, emoji: "🛡️", label: "Prudent", body: "b", allocation: ["a"], tip: "t" }],
     },
   } as Module;
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import type { DiagnosticChallenge as DiagnosticChallengeData } from "@/lib/types";
 import { renderMarkup } from "@/lib/markup";
 import styles from "./DiagnosticChallenge.module.css";
@@ -72,30 +72,42 @@ export function DiagnosticChallenge({
 
       {challenge.questions.map((q, qi) => {
         const answer = answers[qi];
+        const section = challenge.sections?.find((s) => s.startIndex === qi);
+        const sectionNo = section ? challenge.sections!.indexOf(section) + 1 : 0;
 
         return (
-          <div key={qi} className={[styles.q, validated ? styles.locked : ""].filter(Boolean).join(" ")}>
-            <div className={styles.qNo}>Question {qi + 1}</div>
-            <p className={styles.qPrompt}>{renderMarkup(q.prompt)}</p>
-            <div className={styles.qOpts}>
-              {q.options.map((o, oi) => {
-                const selected = answer === oi;
-                return (
-                  <button
-                    key={oi}
-                    type="button"
-                    className={[styles.opt, selected ? styles.selected : validated ? styles.muted : ""]
-                      .filter(Boolean)
-                      .join(" ")}
-                    onClick={() => selectOption(qi, oi)}
-                    disabled={validated}
-                  >
-                    {o.label}
-                  </button>
-                );
-              })}
+          <Fragment key={qi}>
+            {section && (
+              <div className={styles.sectionDivider}>
+                <span className={styles.sectionNo}>
+                  Partie {sectionNo} / {challenge.sections!.length}
+                </span>
+                <h3 className={styles.sectionTitle}>{section.title}</h3>
+              </div>
+            )}
+            <div className={[styles.q, validated ? styles.locked : ""].filter(Boolean).join(" ")}>
+              <div className={styles.qNo}>Question {qi + 1}</div>
+              <p className={styles.qPrompt}>{renderMarkup(q.prompt)}</p>
+              <div className={styles.qOpts}>
+                {q.options.map((o, oi) => {
+                  const selected = answer === oi;
+                  return (
+                    <button
+                      key={oi}
+                      type="button"
+                      className={[styles.opt, selected ? styles.selected : validated ? styles.muted : ""]
+                        .filter(Boolean)
+                        .join(" ")}
+                      onClick={() => selectOption(qi, oi)}
+                      disabled={validated}
+                    >
+                      {o.label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          </Fragment>
         );
       })}
 
