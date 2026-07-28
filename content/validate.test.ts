@@ -93,6 +93,33 @@ describe("validateModule — diagnostic", () => {
   });
 });
 
+describe("validateModule — planner", () => {
+  const plannerBase: Module = {
+    ...base,
+    challenge: {
+      type: "planner", kicker: "k", title: "t", instruction: "i",
+      questions: [
+        { icon: "🎯", pillarLabel: "Votre objectif", prompt: "p1", options: [{ label: "a" }, { label: "b" }] },
+      ],
+    },
+  } as Module;
+
+  it("accepte un plan bien formé", () => {
+    expect(validateModule(plannerBase)).toEqual([]);
+  });
+  it("rejette un plan sans question", () => {
+    const bad = { ...plannerBase, challenge: { ...plannerBase.challenge, questions: [] } } as Module;
+    expect(validateModule(bad)).toContain("M01: plan sans question");
+  });
+  it("rejette un plan dont une question n'a pas d'option", () => {
+    const bad = {
+      ...plannerBase,
+      challenge: { ...plannerBase.challenge, questions: [{ icon: "🎯", pillarLabel: "x", prompt: "p1", options: [] }] },
+    } as Module;
+    expect(validateModule(bad)).toContain("M01: plan sans option de réponse");
+  });
+});
+
 describe("validateAll", () => {
   it("rejette les codes dupliqués", () => {
     expect(validateAll([base, base])).toContain("code dupliqué: M01");

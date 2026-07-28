@@ -25,6 +25,7 @@ export function Bilan({
   walletTotal,
   diagnostic,
   quiz,
+  plan,
 }: {
   result: { correct: number; total: number; capitalDelta: number };
   feedback: Feedback;
@@ -48,7 +49,40 @@ export function Bilan({
   };
   /** Chemin quiz (Task revue M03) : permet d'afficher, à côté de chaque explication, la réponse erronée choisie par l'apprenant — pas seulement la bonne réponse. */
   quiz?: { challenge: QuizChallengeData; answers: (string | null)[] };
+  /** Chemin « plan » (questionnaire de plan d'investissement, M09) : prime sur
+   * les autres chemins comme `diagnostic` — récap direct des réponses de
+   * l'apprenant (pas de score, pas de bonne/mauvaise réponse), réutilisant le
+   * même habillage visuel que l'ex-`feedback.plan` (planbox/planlist). */
+  plan?: { items: { icon: string; label: string }[] };
 }) {
+  if (plan) {
+    return (
+      <div className={styles.wrap}>
+        <p className={styles.eyebrow}>Votre plan</p>
+
+        <div className={styles.planbox}>
+          <h3 className={styles.planboxTitle}>Votre plan d&rsquo;investissement</h3>
+          <ul className={styles.planlist}>
+            {plan.items.map((item, i) => (
+              <li className={styles.planitem} key={i}>
+                <span className={styles.planitemN}>{item.icon}</span>
+                <span>{renderMarkup(item.label)}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className={styles.golden}>
+          Ce plan est votre boussole : gardez-le en tête à chaque nouvelle opportunité.
+        </div>
+
+        <button type="button" className={`${styles.btn} ${styles.btnGold}`} onClick={onNext}>
+          Continuer <span className={styles.arw}>→</span>
+        </button>
+      </div>
+    );
+  }
+
   if (diagnostic) {
     const band = diagnostic.bands.find((b) => diagnostic.points >= b.min && diagnostic.points <= b.max);
 

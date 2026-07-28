@@ -17,7 +17,6 @@ export const m09: Module = {
   title: "Votre plan d'investissement",
   phase: "Phase 2 · La Boussole",
   status: { emoji: "🥈", label: "L'Investisseur Curieux" },
-  reward: 20000,
 
   hero: {
     eyebrow: "Formation BRVM · Module 09",
@@ -101,67 +100,76 @@ export const m09: Module = {
       title: "Votre plan, en une phrase",
       blocks: [
         { kind: "lead", value: "Un plan d'investissement complet répond à 5 questions : pourquoi (objectif), pour quand (horizon), comment (stratégie), avec quel dosage de risque (profil), et avec combien (capacité d'épargne)." },
-        { kind: "text", value: "À vous de vérifier si vous savez reconnaître un plan complet. 👇" },
+        { kind: "text", value: "À vous de construire le vôtre. 👇" },
       ],
     },
   ],
 
   challenge: {
-    type: "quiz",
+    type: "planner",
     kicker: "Le Défi",
-    title: "Les éléments d'un bon plan",
-    instruction: "Pour chaque situation, dites si le plan décrit est complet. (1 erreur = − 5 000 FCFA.)",
-    penaltyPerError: 5000,
-    perfectReward: 20000,
-    options: [
-      { value: "complet", label: "Plan complet" },
-      { value: "incomplet", label: "Il manque un élément" },
-    ],
+    title: "Construisez votre plan",
+    instruction:
+      "Répondez pour chacun des 5 piliers — il n'y a pas de bonne ou de mauvaise réponse, juste VOTRE plan. À la fin, vous obtiendrez le récap de votre plan d'investissement personnel.",
     questions: [
       {
-        prompt: "**Fatou** : « Je veux financer les études de ma fille dans 8 ans, avec une stratégie de croissance, je suis prête à encaisser des baisses, et j'investis 50 000 FCFA/mois. »",
-        answer: "complet",
+        icon: "🎯",
+        pillarLabel: "Votre objectif",
+        prompt: "Pourquoi investissez-vous avant tout ?",
+        options: [
+          { label: "Toucher un revenu régulier" },
+          { label: "Faire grossir un capital pour un projet précis" },
+          { label: "Saisir des opportunités de marché à court terme" },
+        ],
       },
       {
-        prompt: "**Moussa** : « Je veux 30 000 FCFA de revenus complémentaires par mois d'ici 3 ans, via des actions à bon dividende ; je tolère de petites fluctuations, et j'épargne 40 000 FCFA/mois. »",
-        answer: "complet",
+        icon: "⏳",
+        pillarLabel: "Votre horizon",
+        prompt: "Dans combien de temps aurez-vous besoin de cet argent ?",
+        options: [
+          { label: "Moins de 3 ans" },
+          { label: "Entre 3 et 8 ans" },
+          { label: "Plus de 8 ans" },
+        ],
       },
       {
-        prompt: "**Ibrahim** : « Je veux investir pour gagner de l'argent. » — c'est tout ce qu'il sait dire de son projet.",
-        answer: "incomplet",
+        icon: "🧭",
+        pillarLabel: "Votre stratégie",
+        prompt: "Quelle stratégie vous correspond le mieux ?",
+        options: [
+          { label: "La rente (module 6)" },
+          { label: "La croissance (module 7)" },
+          { label: "Le trade (module 8)" },
+          { label: "Un mélange de plusieurs stratégies" },
+        ],
+      },
+      {
+        icon: "⚖️",
+        pillarLabel: "Votre profil",
+        prompt: "Comment réagiriez-vous si votre portefeuille baissait de 25 % ?",
+        options: [
+          { label: "Je préfère éviter ce genre de baisse : je reste prudent(e)" },
+          { label: "Je m'inquiète un peu, mais je patiente" },
+          { label: "Je garde mon calme, voire j'en profite" },
+        ],
+      },
+      {
+        icon: "💰",
+        pillarLabel: "Votre capacité d'épargne",
+        prompt: "Combien pouvez-vous investir chaque mois, régulièrement ?",
+        options: [
+          { label: "Moins de 25 000 FCFA" },
+          { label: "Entre 25 000 et 100 000 FCFA" },
+          { label: "Plus de 100 000 FCFA" },
+        ],
       },
     ],
   },
 
-  feedback: {
-    perfect: {
-      icon: "🎉",
-      title: "Plan limpide ! + 20 000 FCFA sur votre portefeuille !",
-      body: "Vous savez reconnaître les 5 éléments d'un plan d'investissement complet.",
-    },
-    imperfect: {
-      icon: "📉",
-      title: "Aïe ! Un plan incomplet mène à des décisions au hasard (− 5 000 FCFA par erreur).",
-      body: "Reprenons les 5 éléments.",
-    },
-    explanations: [
-      {
-        verdict: "Plan complet",
-        title: "Fatou",
-        body: "Objectif (études), horizon (8 ans), stratégie (croissance), profil (tolère les baisses) et capacité d'épargne (50 000/mois) : les 5 éléments sont là.",
-      },
-      {
-        verdict: "Plan complet",
-        title: "Moussa",
-        body: "Objectif (revenu régulier via dividendes → rente), horizon (3 ans), stratégie (rente), profil (petites fluctuations tolérées) et capacité d'épargne (40 000/mois) : les 5 éléments sont là aussi, même si son horizon court impose la prudence.",
-      },
-      {
-        verdict: "Plan incomplet",
-        title: "Ibrahim",
-        body: "« Gagner de l'argent » n'est ni un objectif précis, ni un horizon, ni une stratégie. Sans ces repères, impossible de choisir la bonne opportunité — c'est exactement la maison sans plan.",
-      },
-    ],
-  },
+  // Feedback vide à dessein, comme M05 (diagnostic) : la branche `plan` de
+  // Bilan.tsx construit le récap directement à partir des réponses choisies,
+  // sans jamais lire `feedback`.
+  feedback: {},
 
   next: {
     label: "Mon plan est posé ! Reste la régularité pour le faire vivre.",

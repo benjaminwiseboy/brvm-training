@@ -41,7 +41,21 @@ export type DiagnosticChallenge = {
   }[];
 };
 
-export type Challenge = QuizChallenge | SimulatorChallenge | DiagnosticChallenge;
+export type PlanBuilderChallenge = {
+  type: "planner";
+  kicker: string; title: string; instruction: string;
+  /** Un « pilier » du plan d'investissement par question (M09) — pas de bonne/mauvaise
+   * réponse : chaque option est une réponse personnelle possible, et le libellé choisi
+   * est réutilisé tel quel dans le récap final (Bilan.tsx, branche `plan`). */
+  questions: {
+    icon: string;
+    pillarLabel: string; // ex. "Votre objectif"
+    prompt: string;
+    options: { label: string }[];
+  }[];
+};
+
+export type Challenge = QuizChallenge | SimulatorChallenge | DiagnosticChallenge | PlanBuilderChallenge;
 
 export type Feedback = {
   // quiz

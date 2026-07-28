@@ -11,6 +11,7 @@ import { SlideDeck } from "./SlideDeck";
 import { QuizChallenge } from "./QuizChallenge";
 import { SimulatorChallenge } from "./SimulatorChallenge";
 import { DiagnosticChallenge } from "./DiagnosticChallenge";
+import { PlanBuilderChallenge } from "./PlanBuilderChallenge";
 import { Bilan } from "./Bilan";
 import { PhaseComplete } from "./PhaseComplete";
 
@@ -89,6 +90,7 @@ function ModulePlayerInner({ module }: { module: Module }) {
   const [initialSlide] = useState(resumesHere ? resume!.slide : 0);
   const [result, setResult] = useState<Result>(EMPTY_RESULT);
   const [diagnosticPoints, setDiagnosticPoints] = useState<number | null>(null);
+  const [planAnswers, setPlanAnswers] = useState<number[] | null>(null);
 
   // Fix P0/P1 (critique UX) : les liens persistants d'AppShell (retour,
   // sidebar, tabbar) restent cliquables pendant le défi — sans garde, un
@@ -114,6 +116,12 @@ function ModulePlayerInner({ module }: { module: Module }) {
 
   function handleDiagnosticResult({ points }: { points: number }) {
     setDiagnosticPoints(points);
+    completeModule(module.code, 1, 1, module.reward ?? 0);
+    setPhase("bilan");
+  }
+
+  function handlePlanResult({ answers }: { answers: number[] }) {
+    setPlanAnswers(answers);
     completeModule(module.code, 1, 1, module.reward ?? 0);
     setPhase("bilan");
   }
@@ -159,6 +167,10 @@ function ModulePlayerInner({ module }: { module: Module }) {
         <DiagnosticChallenge challenge={module.challenge} onResult={handleDiagnosticResult} />
       )}
 
+      {phase === "defi" && module.challenge.type === "planner" && (
+        <PlanBuilderChallenge challenge={module.challenge} onResult={handlePlanResult} />
+      )}
+
       {phase === "bilan" && (
         <Bilan
           result={result}
@@ -173,6 +185,16 @@ function ModulePlayerInner({ module }: { module: Module }) {
           diagnostic={
             module.challenge.type === "diagnostic" && diagnosticPoints !== null
               ? { points: diagnosticPoints, bands: module.challenge.bands }
+              : undefined
+          }
+          plan={
+            module.challenge.type === "planner" && planAnswers !== null
+              ? {
+                  items: module.challenge.questions.map((q, i) => ({
+                    icon: q.icon,
+                    label: `${q.pillarLabel} : ${q.options[planAnswers[i]].label}`,
+                  })),
+                }
               : undefined
           }
         />
