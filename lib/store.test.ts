@@ -72,9 +72,9 @@ describe("deriveStatus — échelle 5 paliers", () => {
   it("grimpe 🥉→🥈→🥇→🎓→💎 selon le nombre de modules terminés", () => {
     expect(deriveStatus(0).emoji).toBe("🥉");
     expect(deriveStatus(4).emoji).toBe("🥈");
-    expect(deriveStatus(8).emoji).toBe("🥇");
-    expect(deriveStatus(18).emoji).toBe("🎓");
-    expect(deriveStatus(25).emoji).toBe("💎");
+    expect(deriveStatus(10).emoji).toBe("🥇");
+    expect(deriveStatus(20).emoji).toBe("🎓");
+    expect(deriveStatus(27).emoji).toBe("💎");
     expect(deriveStatus(28).emoji).toBe("💎"); // clamp post-complétion : persiste
   });
 });
