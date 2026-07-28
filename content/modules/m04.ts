@@ -148,7 +148,6 @@ export const m04: Module = {
         verdict: "Action",
         title: "Fatou",
         body: "Elle a le temps (horizon long) et vise le rendement max. Elle peut encaisser la volatilité. Seules les actions solides offrent cette croissance de long terme.",
-        note: "🏆 **Bravo, vous terminez la Phase 1 « Les Fondations » !** Vous connaissez le marché, les produits et la façon de gagner de l'argent. Vous ne regarderez plus jamais le journal télé de la même manière. Il est temps de définir VOTRE propre stratégie.",
       },
     ],
   },

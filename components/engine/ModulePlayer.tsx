@@ -5,15 +5,16 @@ import { useRouter } from "next/navigation";
 import type { Module } from "@/lib/types";
 import { useProgress } from "@/lib/store";
 import { useConfirmBeforeLeaving, useReportModulePhase } from "@/lib/navGuard";
-import { getNext } from "@/content/registry";
+import { getNext, phaseCompletionFor } from "@/content/registry";
 import { Hero } from "./Hero";
 import { SlideDeck } from "./SlideDeck";
 import { QuizChallenge } from "./QuizChallenge";
 import { SimulatorChallenge } from "./SimulatorChallenge";
 import { DiagnosticChallenge } from "./DiagnosticChallenge";
 import { Bilan } from "./Bilan";
+import { PhaseComplete } from "./PhaseComplete";
 
-type Phase = "intro" | "cours" | "defi" | "bilan";
+type Phase = "intro" | "cours" | "defi" | "bilan" | "phase-recap";
 
 type Result = { correct: number; total: number; capitalDelta: number; answers?: (string | null)[] };
 
@@ -99,7 +100,7 @@ function ModulePlayerInner({ module }: { module: Module }) {
   // Fix P1 (critique UX) : reporte la phase courante au stepper du header
   // d'AppShell (`ModuleShell`) — design repris de POC-Module-1 (`.stepper`
   // dans `<header class="top">`), pas un indicateur local à ModulePlayer.
-  useReportModulePhase(PHASE_ORDER.indexOf(phase));
+  useReportModulePhase(PHASE_ORDER.indexOf(phase === "phase-recap" ? "bilan" : phase));
 
   function handleChallengeResult(r: Result) {
     setResult(r);
@@ -120,6 +121,13 @@ function ModulePlayerInner({ module }: { module: Module }) {
   function handleNext() {
     const nextMod = getNext(module.code);
     router.push(nextMod ? `/module/${nextMod.code.toLowerCase()}` : "/");
+  }
+
+  // Après le Bilan : si ce module est le dernier de sa phase, montrer
+  // l'écran de fin de phase avant de continuer — sinon comportement inchangé.
+  function handleBilanNext() {
+    if (phaseCompletionFor(module.code)) { setPhase("phase-recap"); return; }
+    handleNext();
   }
 
   return (
@@ -155,7 +163,7 @@ function ModulePlayerInner({ module }: { module: Module }) {
         <Bilan
           result={result}
           feedback={module.feedback}
-          onNext={handleNext}
+          onNext={handleBilanNext}
           walletTotal={state.capital}
           quiz={
             module.challenge.type === "quiz"
@@ -169,6 +177,19 @@ function ModulePlayerInner({ module }: { module: Module }) {
           }
         />
       )}
+
+      {phase === "phase-recap" && (() => {
+        const completion = phaseCompletionFor(module.code)!;
+        return (
+          <PhaseComplete
+            badge={completion.badge}
+            name={completion.name}
+            recap={completion.recap}
+            futureNote={completion.futureNote}
+            onNext={handleNext}
+          />
+        );
+      })()}
     </>
   );
 }

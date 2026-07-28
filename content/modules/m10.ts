@@ -124,14 +124,6 @@ export const m10: Module = {
       body: "Investir **25 000 FCFA/mois pendant 20 ans** rapporte souvent bien plus que **100 000 FCFA/mois pendant 5 ans**. Le montant aide ; le temps, lui, décuple.",
     },
     golden: "**La leçon d'or :** le meilleur moment pour commencer, c'était il y a 10 ans. Le deuxième, c'est **aujourd'hui**. Peu importe le montant — commencez tôt, régulièrement, et réinvestissez.",
-    plan: {
-      title: "Votre plan est maintenant complet",
-      items: [
-        "Votre **tolérance au risque** (M05).",
-        "Votre **stratégie** — rente ou croissance (M06 / M07).",
-        "La **régularité** — DCA + intérêts composés (ce module).",
-      ],
-    },
   },
 
   next: {
