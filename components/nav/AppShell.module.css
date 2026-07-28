@@ -389,6 +389,11 @@
   align-items: center;
   gap: 16px;
   justify-content: space-between;
+  /* Fix (débordement mobile) : sur un écran étroit, `.brand` (non
+     rétrécissable, cf. `flex: none` ci-dessus) et `.topWallet` peuvent
+     dépasser la largeur disponible cumulés sur une seule ligne — passe sur
+     deux lignes plutôt que de déborder du viewport. */
+  flex-wrap: wrap;
 }
 .topWallet {
   display: flex;
@@ -496,5 +501,27 @@
     /* Dégagement de la tabbar fixée en bas (~76px pleine hauteur) + sa
        propre réserve de safe-area, pour ne jamais recouvrir le contenu. */
     padding-bottom: calc(76px + env(safe-area-inset-bottom));
+  }
+}
+
+/* Fix (débordement mobile) : `.topWallet` n'avait aucune compression mobile,
+   contrairement à Wallet.module.css (même pilule, utilisée dans le header
+   des pages de module) qui masque déjà le label et réduit la police sous
+   ces mêmes seuils. */
+@media (max-width: 640px) {
+  .topWallet {
+    gap: 8px;
+    padding: 8px 16px;
+  }
+  .topWalletLabel {
+    display: none;
+  }
+  .topWalletAmount {
+    font-size: 15px;
+  }
+}
+@media (max-width: 400px) {
+  .topWalletAmount {
+    font-size: 14px;
   }
 }

@@ -65,6 +65,12 @@ html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
+  /* Filet de sécurité (Fix, débordement mobile) : empêche un futur élément
+     trop large de créer un scroll horizontal sur toute la page — ne
+     remplace pas la correction à la source (cf. AppShell.module.css,
+     .dashTopBar/.topWallet), qui reste nécessaire pour que le contenu
+     concerné reste lisible plutôt que simplement coupé. */
+  overflow-x: hidden;
   font-family: var(--f-body);
   color: var(--ink);
   background: var(--paper);
