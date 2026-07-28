@@ -30,11 +30,14 @@ export function SlideDeck({
   onSlide,
   onDone,
   initialIndex = 0,
+  onExitToIntro,
 }: {
   slides: Slide[];
   onSlide?: (i: number) => void;
   onDone: () => void;
   initialIndex?: number;
+  /** Fix nav (M06) : rendu au clic sur "Précédent" quand i===0, pour revenir à l'écran Hero du module au lieu de rester bloqué. Optionnel pour ne pas casser un futur appelant qui ne le fournirait pas. */
+  onExitToIntro?: () => void;
 }) {
   const start = Math.min(Math.max(0, initialIndex), Math.max(0, slides.length - 1));
   const [i, setI] = useState(start);
@@ -46,7 +49,7 @@ export function SlideDeck({
   const go = useCallback(
     (dir: number) => {
       const n = i + dir;
-      if (n < 0) return; // borne basse : Précédent no-op (bouton déjà disabled à i===0)
+      if (n < 0) { onExitToIntro?.(); return; }
       if (n >= slides.length) {
         onDone(); // dernière slide + avancer → exactement un appel par clic
         return;
@@ -59,7 +62,7 @@ export function SlideDeck({
       });
       setI(n);
     },
-    [i, slides.length, onDone],
+    [i, slides.length, onDone, onExitToIntro],
   );
 
   // Notifie le parent à chaque changement d'index (reprise du cours).
@@ -114,7 +117,7 @@ export function SlideDeck({
           type="button"
           className={`${styles.btn} ${styles.btnGhost}`}
           onClick={() => go(-1)}
-          disabled={i === 0}
+          disabled={i === 0 && !onExitToIntro}
         >
           <span className={styles.arwBack}>→</span> Précédent
         </button>

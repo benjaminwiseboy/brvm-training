@@ -131,6 +131,7 @@ function ModulePlayerInner({ module }: { module: Module }) {
           slides={module.slides}
           initialIndex={initialSlide}
           onSlide={(i) => setResumeSlide(module.code, i)}
+          onExitToIntro={() => setPhase("intro")}
           onDone={() => {
             setResumeSlide(module.code, module.slides.length - 1, "defi");
             setPhase("defi");
