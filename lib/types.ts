@@ -56,6 +56,8 @@ export type Module = {
     eyebrow: string; headline: string; lead: string;
     rules?: string[];      // module « cadeau » (M01)
     card?: { label: string; title: string; hint: string; rules: string[] }; // carte thématique
+    /** M02 (revue) : "ce que vous saurez faire à la fin du module", affiché sur l'écran d'accueil, sur TOUS les modules. */
+    objectives?: string[];
     cta: string;
   };
   slides: Slide[];

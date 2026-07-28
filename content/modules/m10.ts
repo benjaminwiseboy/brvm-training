@@ -31,6 +31,11 @@ export const m10: Module = {
         "**Le temps** — le vrai moteur, on va le voir en direct.",
       ],
     },
+    objectives: [
+      "Comprendre le DCA (investir un montant fixe, à intervalle régulier).",
+      "Comprendre les intérêts composés et pourquoi le temps est le vrai moteur.",
+      "Simuler l'écart entre l'argent investi et la richesse totale.",
+    ],
     cta: "Découvrir ces mécanismes",
   },
 

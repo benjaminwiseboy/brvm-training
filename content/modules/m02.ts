@@ -30,6 +30,11 @@ export const m02: Module = {
         "**Jamais d'argent emprunté** — ni celui de l'essentiel.",
       ],
     },
+    objectives: [
+      "Les 3 règles d'or à respecter avant d'investir le moindre franc.",
+      "Combien mettre de côté (fonds d'urgence) avant de penser bourse.",
+      "Reconnaître une situation « feu vert » d'une situation « feu rouge ».",
+    ],
     cta: "Découvrir les 3 règles d'or",
   },
 

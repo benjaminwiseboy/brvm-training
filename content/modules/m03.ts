@@ -33,6 +33,11 @@ export const m03: Module = {
         "**Attention** — la plus-value n'est réelle que le jour où vous vendez.",
       ],
     },
+    objectives: [
+      "Distinguer le dividende (cash régulier) de la plus-value (capital qui grossit).",
+      "Repérer la date de détachement du dividende dans le BOC.",
+      "Calculer un rendement de dividende à partir d'un cas concret.",
+    ],
     cta: "Découvrir les 2 moteurs du gain",
   },
 

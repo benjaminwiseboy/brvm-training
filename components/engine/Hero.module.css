@@ -159,6 +159,42 @@
   color: #fff;
 }
 
+/* ---------- Objectifs du module (affiché sur tous les modules) ---------- */
+.objectives {
+  margin: 22px 0 0;
+}
+.objectivesLabel {
+  font-family: var(--f-display);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+}
+.objectivesList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.objectivesList li {
+  position: relative;
+  padding-left: 26px;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+.objectivesList li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: -1px;
+  color: var(--pos);
+  font-weight: 800;
+}
+
 /* ---------- CTA — port de .btn.btn--gold.btn--lg.hero__cta ---------- */
 .cta {
   appearance: none;

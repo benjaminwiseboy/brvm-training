@@ -21,6 +21,19 @@ function RulesList({ items }: { items: string[] }) {
   );
 }
 
+function ObjectivesList({ items }: { items: string[] }) {
+  return (
+    <div className={styles.objectives}>
+      <p className={styles.objectivesLabel}>🎯 À la fin de ce module, vous saurez :</p>
+      <ul className={styles.objectivesList}>
+        {items.map((o, i) => (
+          <li key={i}>{renderMarkup(o)}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 /**
  * Écran d'accueil du module — port de buildHero() dans POC-Module-1/app.js.
  *
@@ -61,6 +74,8 @@ export function Hero({ module, onStart }: { module: Module; onStart: () => void 
           </>
         )}
       </div>
+
+      {h.objectives && h.objectives.length > 0 && <ObjectivesList items={h.objectives} />}
 
       <button type="button" className={styles.cta} onClick={onStart}>
         {h.cta} <span className={styles.arw}>→</span>

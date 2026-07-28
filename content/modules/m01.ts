@@ -21,11 +21,11 @@ export const m01: Module = {
     eyebrow: "Formation BRVM · Module 01",
     headline: "Oubliez Wall&nbsp;Street.",
     lead:
-      "Écrans rouges, traders qui hurlent au téléphone… oubliez ces images. La bourse, surtout la BRVM, est bien plus **calme, sûre et accessible** que vous ne le croyez.",
-    rules: [
-      "Bonne réponse → votre portefeuille **monte**.",
-      "Erreur → il baisse un peu (une « **correction de marché** »).",
-      "Objectif : finir la formation avec le **plus gros portefeuille** possible.",
+      "Bienvenue dans **BRVM Learning** ! Vous allez apprendre à investir à la Bourse Régionale des Valeurs Mobilières, module après module, sans jargon inutile. On commence par une idée simple : écrans rouges, traders qui hurlent au téléphone… oubliez ces images. La bourse, surtout la BRVM, est bien plus **calme, sûre et accessible** que vous ne le croyez.",
+    objectives: [
+      "Comprendre ce qu'est réellement la bourse, et à quoi elle sert.",
+      "Découvrir ce qui rend la BRVM unique au monde (8 pays, 1 seul compte).",
+      "Démonter 4 idées reçues qui empêchent beaucoup de gens d'investir.",
     ],
     cta: "Recevoir mon million et commencer",
   },

@@ -39,6 +39,11 @@ export const m06: Module = {
         "**Un rendement élevé** — viser 9-10 % à la BRVM.",
       ],
     },
+    objectives: [
+      "Comprendre la logique de la rente : des revenus réguliers, sans vendre le capital.",
+      "Identifier les 4 critères d'une bonne valeur de rente.",
+      "Voir comment la rente peut compléter un salaire ou une retraite.",
+    ],
     cta: "Devenir un œil de rentier",
   },
 

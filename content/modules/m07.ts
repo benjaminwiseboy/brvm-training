@@ -41,6 +41,11 @@ export const m07: Module = {
         "**La psychologie du marché** — l'engouement collectif peut tout emballer.",
       ],
     },
+    objectives: [
+      "Comprendre la logique de la croissance : faire grossir un capital pour un projet.",
+      "Connaître les 5 moteurs qui font monter un cours de bourse.",
+      "Savoir sur quel horizon viser une stratégie de croissance.",
+    ],
     cta: "Découvrir les moteurs de la croissance",
   },
 

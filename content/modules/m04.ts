@@ -36,6 +36,10 @@ export const m04: Module = {
         "**L'OPCVM** — un panier géré par des professionnels, risque mutualisé.",
       ],
     },
+    objectives: [
+      "Différencier action, obligation et OPCVM sur le couple risque/gain.",
+      "Associer le bon produit à un objectif et un horizon donnés.",
+    ],
     cta: "Découvrir les 3 produits",
   },
 
