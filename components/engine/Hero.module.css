@@ -159,9 +159,13 @@
   color: #fff;
 }
 
-/* ---------- Objectifs du module (affiché sur tous les modules) ---------- */
+/* ---------- Objectifs du module — désormais DANS l'encart (.card), donc
+   palette claire-sur-bleu comme .rules/.hint/.label ci-dessus, pas la
+   palette sombre-sur-clair du corps de page. ---------- */
 .objectives {
   margin: 22px 0 0;
+  padding: 20px 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 .objectivesLabel {
   font-family: var(--f-display);
@@ -169,8 +173,8 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 700;
-  color: var(--ink-soft);
-  margin: 0 0 10px;
+  color: #a9c2d4;
+  margin: 0 0 12px;
 }
 .objectivesList {
   list-style: none;
@@ -182,9 +186,12 @@
 .objectivesList li {
   position: relative;
   padding-left: 26px;
-  color: var(--ink);
+  color: #dae6ef;
   font-weight: 600;
-  font-size: 0.98rem;
+  font-size: 0.95rem;
+}
+.objectivesList strong {
+  color: #fff;
 }
 .objectivesList li::before {
   content: "✓";

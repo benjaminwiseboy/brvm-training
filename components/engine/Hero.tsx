@@ -73,9 +73,9 @@ export function Hero({ module, onStart }: { module: Module; onStart: () => void 
             <RulesList items={h.rules ?? []} />
           </>
         )}
-      </div>
 
-      {h.objectives && h.objectives.length > 0 && <ObjectivesList items={h.objectives} />}
+        {h.objectives && h.objectives.length > 0 && <ObjectivesList items={h.objectives} />}
+      </div>
 
       <button type="button" className={styles.cta} onClick={onStart}>
         {h.cta} <span className={styles.arw}>→</span>
