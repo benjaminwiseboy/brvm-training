@@ -172,10 +172,13 @@ export function Bilan({
           {feedback.explanations.map((e, i) => {
             const q = quiz?.challenge.questions[i];
             const chosenValue = quiz?.answers[i] ?? null;
-            const isWrong = !!q && chosenValue !== null && chosenValue !== q.answer;
-            const chosenLabel = isWrong
-              ? (q!.options ?? quiz!.challenge.options).find((o) => o.value === chosenValue)?.label
-              : undefined;
+            // Toujours résoudre le libellé de la réponse choisie (bonne OU
+            // mauvaise) — avant, seule une réponse fausse était affichée.
+            const chosenLabel =
+              q && chosenValue !== null
+                ? (q.options ?? quiz!.challenge.options).find((o) => o.value === chosenValue)?.label
+                : undefined;
+            const isCorrectAnswer = !!q && chosenValue === q.answer;
             return (
               <div className={styles.exp} key={i}>
                 <span className={styles.expBadge}>{e.verdict}</span>
@@ -183,7 +186,7 @@ export function Bilan({
                   <p className={styles.expTitle}>{renderMarkup(e.title)}</p>
                   <p className={styles.expText}>{renderMarkup(e.body)}</p>
                   {chosenLabel && (
-                    <p className={styles.expWrong}>
+                    <p className={`${styles.expAnswer} ${isCorrectAnswer ? styles.expAnswerRight : styles.expAnswerWrong}`}>
                       Votre réponse : <strong>{chosenLabel}</strong>
                     </p>
                   )}

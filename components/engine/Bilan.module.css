@@ -157,7 +157,13 @@
   border-top: none;
 }
 .expBadge {
-  flex: none;
+  /* Largeur fixe (au lieu d'une largeur intrinsèque au texte) : sans ça,
+     un verdict court ("10 %") et un verdict long ("100 000 FCFA") décalent
+     le titre/texte de chaque explication à des positions différentes. */
+  flex: 0 0 108px;
+  width: 108px;
+  box-sizing: border-box;
+  text-align: center;
   align-self: flex-start;
   font-family: var(--f-display);
   font-size: 10.5px;
@@ -185,10 +191,15 @@
   margin: 0;
   font-size: 1rem;
 }
-.expWrong {
+.expAnswer {
   margin: 6px 0 0;
   font-size: 0.92rem;
   font-weight: 600;
+}
+.expAnswerRight {
+  color: #0b5e40;
+}
+.expAnswerWrong {
   color: #8a3d1e;
 }
 .expNote {
