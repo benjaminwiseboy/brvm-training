@@ -6,8 +6,8 @@ import type { Module } from "@/lib/types";
    Défi = quiz à 3 questions, boutons déjà réels dans le .txt
    (2 ou 3 options selon la question — Q3 n'a que 2 boutons dans
    la source, conservé tel quel). Ligne réelle d'Ecobank (ETIT,
-   17/07/2026), repliée verbatim dans `challenge.instruction`
-   (pas de kind « table » dans `Block`/`QuizChallenge`).
+   17/07/2026), rendue en vrai tableau (champ `table`, cf. revue
+   post-lancement) plutôt que repliée en prose.
    Le .txt ne donne pas de 2ᵉ ligne de corps pour le feedback
    « imperfect » (seulement le titre) : un court « Reprenons. » est
    ajouté (même repli que M12), le champ `body` étant requis par
@@ -39,6 +39,11 @@ export const m13: Module = {
         "**La météo vs le climat** — ne jamais confondre la variation du jour et celle de l'année.",
       ],
     },
+    objectives: [
+      "Distinguer les colonnes de prix d'une ligne d'action : cours précédent, ouverture, clôture, cours de référence.",
+      "Comprendre le rôle du « disjoncteur » des ± 7,5 % et le prix sur lequel il se calcule.",
+      "Ne plus confondre la variation du jour et la tendance de l'année avant de juger une action.",
+    ],
     cta: "Décoder une vraie ligne d'action",
   },
 
@@ -107,8 +112,13 @@ export const m13: Module = {
     type: "quiz",
     kicker: "Le Défi",
     title: "Décoder les mouvements",
-    instruction:
-      "Ligne réelle d'Ecobank (ETIT), 17/07/2026 — Cours précédent : 73 · Ouverture : 68 · Clôture : 68 · Cours de référence : 68. Variation du jour : −6,85 % · Variation sur l'année : +195,65 %. Volume : 1 662 045 titres · Valeur : 113 073 294 FCFA. (1 erreur = − 5 000 FCFA.)",
+    instruction: "Voici une vraie ligne d'action, telle qu'elle apparaît dans le BOC. Observez-la et répondez. (1 erreur = − 5 000 FCFA.)",
+    table: {
+      caption: "Ligne réelle d'Ecobank (ETIT) · BOC du 17/07/2026",
+      columns: ["Cours précédent", "Ouverture", "Clôture", "Cours de référence", "Var. jour", "Var. année", "Volume", "Valeur"],
+      rows: [["73", "68", "68", "68", "−6,85 %", "+195,65 %", "1 662 045", "113 073 294 FCFA"]],
+      highlightCols: [4, 5],
+    },
     penaltyPerError: 5000,
     perfectReward: 20000,
     // Recopie des options de Q1 en repli neutre (requis par le type) :

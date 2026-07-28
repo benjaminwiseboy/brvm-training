@@ -4,9 +4,9 @@ import type { Module } from "@/lib/types";
    Contenu du Module 12 — Le BOC avancé (1/3) : indices,
    compartiments & secteurs.
    Défi = quiz à 3 questions ; les données du haut du BOC (indices,
-   PER sectoriels) sont déjà présentées dans le .txt sous forme
-   compacte (« Composite +38,40 %/an · … ») — repliées verbatim
-   dans `challenge.instruction`. Q1/Q2/Q3 ont chacune 3 boutons
+   PER sectoriels) sont rendues en vrai tableau (champ `table`,
+   cf. revue post-lancement) plutôt que repliées en prose dans
+   `challenge.instruction`. Q1/Q2/Q3 ont chacune 3 boutons
    déjà réels dans le .txt (pas de conversion numérique nécessaire) ;
    options par question quand même utilisées, car les 3 paires
    diffèrent d'une question à l'autre (précédent M03/M06/M07).
@@ -41,6 +41,11 @@ export const m12: Module = {
         "**Les secteurs** — 7 familles de métiers, chacune avec sa propre norme (PER, rendement…).",
       ],
     },
+    objectives: [
+      "Comprendre ce que mesure un indice boursier, et lire les niveaux du Composite, du BRVM 30 et du Prestige.",
+      "Distinguer les 3 compartiments (Prestige, Principal, Croissance) et les 7 secteurs de la cote.",
+      "Se servir de l'indice comme d'un thermomètre du marché et comme d'un bulletin de notes pour votre propre portefeuille.",
+    ],
     cta: "Regarder la météo du marché",
   },
 
@@ -82,19 +87,37 @@ export const m12: Module = {
             "**BRVM Prestige (175)** — la moyenne de **l'élite** : les entreprises du compartiment le plus exigeant.",
           ],
         },
+        {
+          kind: "boctable",
+          caption: "Exemple réel de ce qu'on retrouve en haut du BOC",
+          columns: ["Indice", "Niveau"],
+          rows: [
+            ["BRVM Composite", "478"],
+            ["BRVM 30", "228"],
+            ["BRVM Prestige", "175"],
+          ],
+        },
       ],
     },
     {
       title: "Compartiments & secteurs : deux façons de ranger",
       blocks: [
         { kind: "text", value: "On range aussi les entreprises comme dans un championnat de foot et un annuaire des métiers :" },
+        { kind: "text", value: "Par **compartiment** (comme les divisions d'un championnat) :" },
         {
           kind: "list",
           items: [
-            "Par **compartiment** (comme les divisions d'un championnat) : **Prestige** = la première division, les 12 plus grands « clubs », les plus solides et les plus suivis ; **Principal** = les 35 suivants ; **Croissance** = les jeunes clubs qui montent. Pour débuter, les valeurs « Prestige » sont plutôt rassurantes.",
-            "Par **secteur** (comme les familles de métiers) : 7 en tout — Télécoms, Services Financiers, Consommation Discrétionnaire, Consommation de Base, Industriels, Énergie, Services Publics. Chaque famille a sa propre note moyenne → vous voyez tout de suite **quel métier a le vent en poupe**.",
+            "**Prestige** — la première division : les 12 plus grands « clubs », les plus solides et les plus suivis. Pour débuter, plutôt rassurant.",
+            "**Principal** — les 35 « clubs » suivants.",
+            "**Croissance** — les jeunes « clubs » qui montent.",
           ],
         },
+        { kind: "text", value: "Par **secteur** (comme les familles de métiers), 7 en tout :" },
+        {
+          kind: "countries",
+          items: ["Télécoms", "Services Financiers", "Consommation Discrétionnaire", "Consommation de Base", "Industriels", "Énergie", "Services Publics"],
+        },
+        { kind: "text", value: "Chaque famille a sa propre note moyenne → vous voyez tout de suite **quel métier a le vent en poupe**." },
       ],
     },
     {
@@ -121,7 +144,19 @@ export const m12: Module = {
           ],
         },
         { kind: "text", value: "L'écart (~4 points) montre qu'à la BRVM, les fruits (dividendes) comptent presque autant que la croissance de l'arbre. Ne les oubliez jamais." },
-        { kind: "callout", tone: "info", value: "(Tout en bas du BOC, deux repères utiles : le PER moyen ≈ 14 — un indicateur « cher / pas cher » détaillé avec Graham — et le rendement moyen ~6 %. Le reste, ce sont des outils de pros : ignorez-les pour l'instant.) 👇" },
+        {
+          kind: "boctable",
+          caption: "Ce que dit l'encart ci-dessous, visualisé",
+          columns: ["Indicateur", "Valeur"],
+          rows: [
+            ["BRVM Composite (prix seuls)", "+38,40 %/an"],
+            ["BRVM Composite Total Return (prix + dividendes)", "+42,69 %/an"],
+            ["PER moyen du marché", "≈ 14"],
+            ["Rendement moyen du marché", "≈ 6 %"],
+          ],
+          highlightCols: [1],
+        },
+        { kind: "callout", tone: "info", value: "(Tout en bas du BOC, deux repères utiles : le PER moyen ≈ 14 — un indicateur « cher / pas cher » détaillé au **module 20**, avec Graham — et le rendement moyen ~6 %. Le reste, ce sont des outils de pros : ignorez-les pour l'instant.) 👇" },
       ],
     },
   ],
@@ -131,8 +166,18 @@ export const m12: Module = {
     type: "quiz",
     kicker: "Le Défi",
     title: "Lire le tableau de bord",
-    instruction:
-      "🌡️ **Indices :** Composite **+38,40 %**/an · Composite **Total Return +42,69 %**/an. 📊 **PER par secteur :** Conso de Base **10,31** · Services Financiers **15,61** · Conso Discrétionnaire **38,58**. (1 erreur = − 5 000 FCFA.)",
+    instruction: "Observez ce tableau de bord inspiré du BOC et répondez. (1 erreur = − 5 000 FCFA.)",
+    table: {
+      caption: "Tableau de bord du marché (inspiré du BOC)",
+      columns: ["Indicateur", "Valeur"],
+      rows: [
+        ["BRVM Composite", "+38,40 %/an"],
+        ["BRVM Composite Total Return", "+42,69 %/an"],
+        ["PER — Consommation de Base", "10,31"],
+        ["PER — Services Financiers", "15,61"],
+        ["PER — Consommation Discrétionnaire", "38,58"],
+      ],
+    },
     penaltyPerError: 5000,
     perfectReward: 20000,
     // Recopie des options de Q1 en repli neutre (requis par le type) :

@@ -9,9 +9,9 @@ import type { Module } from "@/lib/types";
    AUTRES valeurs de la même colonne du tableau du BOC (mêmes
    3 lignes SNTS/BOAC/CIE pour les 3 questions) → chaque question a
    sa propre paire d'options (mécanisme M03/M06/M07). Le tableau du
-   BOC (Section 2 du .txt) n'a pas d'équivalent "table" dans
-   `Block`/`QuizChallenge` (pas de kind dédié) : ses valeurs sont
-   repliées, verbatim, dans `challenge.instruction`.
+   BOC (Section 2 du .txt) est rendu en vrai tableau HTML (kind
+   "boctable" côté slide, champ `table` côté défi) — cf. revue
+   post-lancement : plus de valeurs repliées en prose.
    Barème Phase 3 standard (§4) : +20 000 / −5 000.
    ============================================================= */
 export const m11: Module = {
@@ -39,6 +39,11 @@ export const m11: Module = {
         "**Le loyer (dividende)** — combien l'action vous versera, et à quelle date.",
       ],
     },
+    objectives: [
+      "Reconnaître la structure d'un extrait du BOC, sans paniquer devant le nombre de colonnes.",
+      "Repérer les 3 colonnes essentielles pour débuter : le prix, le volume, le dividende.",
+      "Lire une ligne réelle du bulletin et en tirer une décision concrète.",
+    ],
     cta: "Ouvrir le grand tableau d'affichage",
   },
 
@@ -52,6 +57,23 @@ export const m11: Module = {
           value:
             "Le **BOC** (Bulletin Officiel de la Cote) est le document officiel que la BRVM publie chaque soir de bourse. Voyez-le comme le **grand tableau d'affichage** de la bourse : tout ce qui s'est passé dans la journée y est écrit — les prix, les quantités échangées, les dividendes à venir. C'est là qu'on va chercher l'info avant d'acheter.",
         },
+      ],
+    },
+    {
+      title: "Voici à quoi ressemble un extrait du BOC",
+      blocks: [
+        { kind: "text", value: "Avant d'aller plus loin, regardons un vrai extrait (données fictives, structure réelle) — trois lignes, avec les colonnes qu'on va apprendre à lire ensemble :" },
+        {
+          kind: "boctable",
+          caption: "Extrait du BOC · séance du jour (données fictives, structure réelle)",
+          columns: ["Valeur", "Cours clôture", "Volume", "Dividende net", "Date paiement"],
+          rows: [
+            ["SNTS — SONATEL SÉNÉGAL", "18 500", "45 200", "1 500", "15/05/2026"],
+            ["BOAC — BOA CÔTE D'IVOIRE", "6 200", "12 000", "620", "22/04/2026"],
+            ["CIE — CIE CÔTE D'IVOIRE", "1 950", "3 500", "250", "10/06/2026"],
+          ],
+        },
+        { kind: "text", value: "Impressionnant ? Gardez cet extrait en tête : dans les slides suivantes, on décortique une colonne à la fois." },
       ],
     },
     {
@@ -100,8 +122,16 @@ export const m11: Module = {
     type: "quiz",
     kicker: "Le Défi",
     title: "La chasse au trésor",
-    instruction:
-      "Observez cet extrait du BOC (données fictives, structure réelle) et retrouvez les infos demandées. **SNTS — SONATEL SÉNÉGAL** : cours clôture 18 500 · volume 45 200 · dividende net 1 500 · paiement 15/05/2026. **BOAC — BOA CÔTE D'IVOIRE** : cours clôture 6 200 · volume 12 000 · dividende net 620 · paiement 22/04/2026. **CIE — CIE CÔTE D'IVOIRE** : cours clôture 1 950 · volume 3 500 · dividende net 250 · paiement 10/06/2026. (1 erreur = − 5 000 FCFA.)",
+    instruction: "Observez cet extrait du BOC et retrouvez les infos demandées. (1 erreur = − 5 000 FCFA.)",
+    table: {
+      caption: "Extrait du BOC · séance du jour (données fictives, structure réelle)",
+      columns: ["Valeur", "Cours clôture", "Volume", "Dividende net", "Date paiement"],
+      rows: [
+        ["SNTS — SONATEL SÉNÉGAL", "18 500", "45 200", "1 500", "15/05/2026"],
+        ["BOAC — BOA CÔTE D'IVOIRE", "6 200", "12 000", "620", "22/04/2026"],
+        ["CIE — CIE CÔTE D'IVOIRE", "1 950", "3 500", "250", "10/06/2026"],
+      ],
+    },
     penaltyPerError: 5000,
     perfectReward: 20000,
     // Recopie des options de la Mission 1 en repli neutre (requis par le

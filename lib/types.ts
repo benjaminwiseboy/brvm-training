@@ -1,10 +1,20 @@
+export type BocTableData = {
+  /** Ex. "Extrait du BOC (données fictives, structure réelle)". */
+  caption?: string;
+  columns: string[];
+  rows: string[][];
+  /** Index (0-based) des colonnes à mettre en valeur (fond doré) — ex. la colonne qu'une question interroge. */
+  highlightCols?: number[];
+};
+
 export type Block =
   | { kind: "text"; value: string }
   | { kind: "lead"; value: string }
   | { kind: "callout"; tone: "info" | "highlight" | "warn"; value: string }
   | { kind: "duo"; items: { side: string; value: string }[] }
   | { kind: "list"; items: string[] }
-  | { kind: "countries"; items: string[] };
+  | { kind: "countries"; items: string[] }
+  | ({ kind: "boctable" } & BocTableData);
 
 export type Slide = { title: string; blocks: Block[] };
 
@@ -13,6 +23,8 @@ export type QuizChallenge = {
   kicker: string; title: string; instruction: string;
   /** Mise en scène d'un cas concret (M03 : « le scénario de Koffi »), affichée à part de `instruction` dans un encart dédié — pas mélangée au texte d'instruction générique. */
   scenario?: string;
+  /** Extrait de BOC affiché en tableau réel, bien mis en valeur au-dessus de `instruction` (Phase 3, M11+) — remplace le repli "valeurs recopiées verbatim dans instruction" des premiers modules Phase 3. */
+  table?: BocTableData;
   penaltyPerError: number; perfectReward: number;
   options: { value: string; label: string }[];   // ex. Mythe/Réalité, Feu vert/rouge
   questions: { prompt: string; answer: string; options?: { value: string; label: string }[] }[]; // answer ∈ (options ?? challenge.options).value — per-question override for questions whose correct-answer set differs from the challenge-level shared options (e.g. numeric-amount questions in the same challenge as a percentage question)

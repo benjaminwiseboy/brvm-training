@@ -39,6 +39,11 @@ export const m14: Module = {
         "**La capitalisation** — la taille de l'entreprise : géant ou petite boutique ?",
       ],
     },
+    objectives: [
+      "Calculer et interpréter le PER : plus il est bas, plus vite vous récupérez votre mise.",
+      "Lire le rendement net comme le « loyer » annuel d'une action, et repérer la date de détachement du dividende.",
+      "Comprendre ce que mesure la capitalisation boursière et pourquoi elle indique la taille d'une entreprise.",
+    ],
     cta: "Lire le BOC comme un analyste",
   },
 
@@ -96,8 +101,12 @@ export const m14: Module = {
     type: "quiz",
     kicker: "Le Défi",
     title: "Lire comme un analyste",
-    instruction:
-      "Colonnes d'analyse de Sonatel (données réelles) — PER : 7,74 · Rendement net : 5,44 % · Dernier dividende : 1 740 FCFA (payé le 26 mai 2026). (1 erreur = − 5 000 FCFA.)",
+    instruction: "Voici les colonnes d'analyse d'une vraie ligne du BOC. Observez-les et répondez. (1 erreur = − 5 000 FCFA.)",
+    table: {
+      caption: "Colonnes d'analyse de Sonatel (données réelles)",
+      columns: ["PER", "Rendement net", "Dernier dividende", "Date de paiement"],
+      rows: [["7,74", "5,44 %", "1 740 FCFA", "26/05/2026"]],
+    },
     penaltyPerError: 5000,
     perfectReward: 20000,
     // Recopie des options de Q1 en repli neutre (requis par le type) :

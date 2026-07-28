@@ -66,8 +66,19 @@
 }
 .instruction {
   color: var(--ink-soft);
-  margin: 0;
+  margin: 0 0 22px;
   font-weight: 600;
+}
+
+/* Fait ressortir l'extrait de BOC au-dessus de l'instruction : cadre or,
+   plus large que le reste de l'écran, pour qu'il se voie au premier coup
+   d'œil plutôt que de se fondre dans le texte. */
+.tableEmphasis {
+  margin: 0 0 20px;
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  background: var(--gold-soft);
+  border: 1.5px solid #efd79a;
 }
 
 .scenario {

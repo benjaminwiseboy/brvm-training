@@ -1,4 +1,11 @@
-import type { Module } from "@/lib/types";
+import type { BocTableData, Module } from "@/lib/types";
+
+function validateBocTable(tag: string, where: string, table: BocTableData, errs: string[]) {
+  if (table.columns.length === 0) errs.push(`${tag}: ${where} sans colonne`);
+  table.rows.forEach((row, ri) => {
+    if (row.length !== table.columns.length) errs.push(`${tag}: ${where} ligne ${ri + 1} n'a pas le même nombre de cellules que de colonnes`);
+  });
+}
 
 export function validateModule(m: Module): string[] {
   const errs: string[] = [];
@@ -6,6 +13,9 @@ export function validateModule(m: Module): string[] {
   if (!m.slides || m.slides.length === 0) errs.push(`${tag}: aucune slide`);
   m.slides?.forEach((s, i) => {
     if (!s.blocks || s.blocks.length === 0) errs.push(`${tag}: slide ${i + 1} vide`);
+    s.blocks?.forEach((b) => {
+      if (b.kind === "boctable") validateBocTable(tag, `tableau (slide ${i + 1})`, b, errs);
+    });
   });
   if (m.challenge.type === "quiz") {
     const sharedValues = new Set(m.challenge.options.map((o) => o.value));
@@ -14,6 +24,7 @@ export function validateModule(m: Module): string[] {
       const values = q.options ? new Set(q.options.map((o) => o.value)) : sharedValues;
       if (!values.has(q.answer)) errs.push(`${tag}: réponse "${q.answer}" absente des options`);
     });
+    if (m.challenge.table) validateBocTable(tag, "tableau du défi", m.challenge.table, errs);
   } else if (m.challenge.type === "diagnostic") {
     if (m.challenge.questions.length === 0) errs.push(`${tag}: diagnostic sans question`);
     m.challenge.questions.forEach((q) => {

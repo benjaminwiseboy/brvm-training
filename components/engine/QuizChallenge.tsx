@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import type { QuizChallenge as QuizChallengeData } from "@/lib/types";
 import { renderMarkup } from "@/lib/markup";
+import { BocTable } from "./BocTable";
 import styles from "./QuizChallenge.module.css";
 
 /**
@@ -105,8 +106,15 @@ export function QuizChallenge({
       <div className={styles.sectionHead}>
         <div className={styles.kicker}>{challenge.kicker}</div>
         <h2 className={styles.title}>{renderMarkup(challenge.title)}</h2>
-        <p className={styles.instruction}>{renderMarkup(challenge.instruction)}</p>
       </div>
+
+      {challenge.table && (
+        <div className={styles.tableEmphasis}>
+          <BocTable {...challenge.table} />
+        </div>
+      )}
+
+      <p className={styles.instruction}>{renderMarkup(challenge.instruction)}</p>
 
       {challenge.scenario && (
         <div className={styles.scenario}>

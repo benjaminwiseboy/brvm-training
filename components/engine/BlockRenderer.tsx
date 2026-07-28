@@ -1,5 +1,6 @@
 import type { Block } from "@/lib/types";
 import { renderMarkup } from "@/lib/markup";
+import { BocTable } from "./BocTable";
 import styles from "./BlockRenderer.module.css";
 
 /**
@@ -50,5 +51,8 @@ export function BlockRenderer({ block }: { block: Block }) {
           ))}
         </div>
       );
+
+    case "boctable":
+      return <BocTable caption={block.caption} columns={block.columns} rows={block.rows} highlightCols={block.highlightCols} />;
   }
 }
