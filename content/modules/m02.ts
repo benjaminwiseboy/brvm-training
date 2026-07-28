@@ -78,8 +78,16 @@ export const m02: Module = {
     {
       title: "Alors, combien investir ?",
       blocks: [
-        { kind: "text", value: "Ce qu'il vous reste **après** avoir : (1) payé l'essentiel, (2) constitué votre fonds d'urgence, (3) mis de côté vos projets proches." },
-        { kind: "text", value: "Ce surplus, investissez-le **régulièrement** (la magie de la régularité, on la verra au M10)." },
+        { kind: "text", value: "Ce qu'il vous reste **après** avoir :" },
+        {
+          kind: "list",
+          items: [
+            "✅ payé l'essentiel,",
+            "✅ constitué votre fonds d'urgence,",
+            "✅ mis de côté vos projets proches.",
+          ],
+        },
+        { kind: "text", value: "Ce surplus, investissez-le **régulièrement** (la magie de la régularité, on la verra au module 10)." },
       ],
     },
   ],
