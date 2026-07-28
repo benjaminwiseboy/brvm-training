@@ -55,6 +55,11 @@ export const m15: Module = {
         "**Le mode de remboursement** — In Fine (tout à la fin) ou Amortissement (progressif).",
       ],
     },
+    objectives: [
+      "Distinguer le remboursement In Fine de l'Amortissement, et savoir lequel rapporte le plus d'intérêts au total.",
+      "Comprendre pourquoi le coupon couru se rembourse au vendeur quand on achète une obligation en cours d'année.",
+      "Décoder le nom d'une obligation au BOC (émetteur, taux, échéance) comme une carte d'identité.",
+    ],
     cta: "Devenir le banquier",
   },
 

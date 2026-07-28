@@ -40,6 +40,11 @@ export const m24: Module = {
         "**L'ordre au marché 🚀** — aucun prix fixé, exécution immédiate, mais risque de payer plus cher.",
       ],
     },
+    objectives: [
+      "Comprendre comment le carnet d'ordres met face à face acheteurs et vendeurs, sans prix fixe imposé.",
+      "Distinguer l'ordre à cours limité de l'ordre au marché, et savoir quand utiliser chacun.",
+      "Éviter le piège du prix moyen qui explose en passant un ordre au marché sur un titre peu liquide.",
+    ],
     cta: "Passer mon premier ordre",
   },
 

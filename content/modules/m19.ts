@@ -43,6 +43,11 @@ export const m19: Module = {
         "**La combinaison gagnante** — solide + secteur porteur + fossé protégé.",
       ],
     },
+    objectives: [
+      "Repérer les vents porteurs et contraires d'un secteur avec la vue de l'aigle (top-down).",
+      "Identifier le « fossé » qui protège durablement une entreprise de ses concurrents, avec la vue de la fourmi (bottom-up).",
+      "Combiner performance, secteur porteur et fossé pour juger si l'avenir d'une entreprise est bien orienté.",
+    ],
     cta: "Chausser les deux paires de lunettes",
   },
 

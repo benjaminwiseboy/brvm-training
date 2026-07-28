@@ -47,6 +47,11 @@ export const m16: Module = {
         "**Le PER** — est-elle chère ou bon marché par rapport au marché ?",
       ],
     },
+    objectives: [
+      "Vérifier qu'une entreprise gagne vraiment de l'argent avant de vous fier au prix affiché.",
+      "Calculer le rendement et le PER pour juger si une action est chère ou bon marché.",
+      "Choisir l'entreprise adaptée à votre stratégie (rente ou croissance) plutôt que celle qui séduit le plus.",
+    ],
     cta: "Regarder sous le capot",
   },
 

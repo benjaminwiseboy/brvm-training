@@ -55,6 +55,11 @@ export const m21: Module = {
         "**Prix** — PER 11, PBR 1,2 : sous la règle de Graham et sous la moyenne du marché.",
       ],
     },
+    objectives: [
+      "Mener une analyse complète, seul, du portrait d'une entreprise jusqu'au verdict d'achat.",
+      "Relier performance, perspectives et prix pour décider avec méthode plutôt qu'avec vos émotions face au bruit du marché.",
+      "Vérifier qu'un placement correspond à votre propre stratégie, pas seulement à des fondamentaux au vert.",
+    ],
     cta: "Ouvrir le dossier BDF",
   },
 

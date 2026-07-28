@@ -35,6 +35,11 @@ export const m05: Module = {
         "**La tolérance au risque** — comment réagissez-vous si votre portefeuille baisse ?",
       ],
     },
+    objectives: [
+      "Comprendre pourquoi le « meilleur placement » n'existe pas dans l'absolu, seulement le bon placement pour votre profil.",
+      "Répondre avec sincérité au test de profilage pour situer votre profil parmi les 4 bandes (Prudent à Audacieux).",
+      "Traduire votre profil en une répartition concrète actions/obligations, quel que soit le montant investi.",
+    ],
     cta: "Faire le test de profilage",
   },
 

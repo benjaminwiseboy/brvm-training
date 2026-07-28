@@ -49,6 +49,11 @@ export const m18: Module = {
         "**Le résultat net** — la ligne finale, parfois gonflée par de l'exceptionnel.",
       ],
     },
+    objectives: [
+      "Lire le compte de résultat comme une cascade, du chiffre d'affaires (ou du PNB) jusqu'au résultat net.",
+      "Distinguer la vraie performance du métier (résultat d'exploitation) d'un bénéfice gonflé par de l'exceptionnel.",
+      "Suivre la tendance sur 10 ans plutôt qu'un chiffre isolé pour juger si une entreprise est rassurante.",
+    ],
     cta: "Lire la performance comme un analyste",
   },
 

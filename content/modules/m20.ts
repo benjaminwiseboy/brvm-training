@@ -55,6 +55,11 @@ export const m20: Module = {
         "**PER × PBR < 22,5** — un plafond à ne jamais dépasser, pas un feu vert.",
       ],
     },
+    objectives: [
+      "Calculer et interpréter le PER et le PBR pour juger si un prix est raisonnable.",
+      "Appliquer la règle de Graham (PER × PBR < 22,5) comme un plafond à ne jamais dépasser, pas un feu vert d'achat.",
+      "Reconnaître le piège de la valeur : une action pas chère parce que l'entreprise elle-même se dégrade.",
+    ],
     cta: "Apprendre à payer le juste prix",
   },
 

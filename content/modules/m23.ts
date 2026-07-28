@@ -44,6 +44,11 @@ export const m23: Module = {
         "**Les frais** — entrée/sortie visibles, frais de gestion déjà inclus dans la VL.",
       ],
     },
+    objectives: [
+      "Lire une fiche OPCVM au BOC (Valeur Liquidative, catégorie, frais) et savoir ce qu'elle indique vraiment.",
+      "Choisir la catégorie de fonds (Actions, Obligations, Diversifié, Monétaire) adaptée à votre profil de risque.",
+      "Comprendre ce que vous déléguez, et ce que vous perdez en contrôle, en investissant via un OPCVM.",
+    ],
     cta: "Découvrir les OPCVM",
   },
 

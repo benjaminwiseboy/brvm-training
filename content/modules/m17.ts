@@ -50,6 +50,11 @@ export const m17: Module = {
         "**La zone géographique et le capital** — diversification et taille.",
       ],
     },
+    objectives: [
+      "Dresser le portrait d'une entreprise avant d'ouvrir ses comptes : activité, actionnaires, ancienneté, zone, capital.",
+      "Repérer les signaux de solidité, comme la longévité et un actionnariat de référence rassurant.",
+      "Éviter d'investir dans une entreprise dont vous ne pouvez pas résumer le métier en une phrase.",
+    ],
     cta: "Dresser le portrait d'une entreprise",
   },
 

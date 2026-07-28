@@ -43,6 +43,11 @@ export const m26: Module = {
         "**Le rééquilibrage** — une action pèse trop lourd dans votre allocation.",
       ],
     },
+    objectives: [
+      "Distinguer les bonnes raisons de vendre (objectif atteint, thèse cassée, rééquilibrage) des mauvaises (peur, ennui, rumeur).",
+      "Reconnaître qu'une baisse de prix, seule, ne justifie jamais une vente si l'entreprise n'a pas changé.",
+      "Se poser les 2 bonnes questions avant de vendre : l'entreprise a-t-elle changé ? Mon plan a-t-il changé ?",
+    ],
     cta: "Apprendre à sortir",
   },
 

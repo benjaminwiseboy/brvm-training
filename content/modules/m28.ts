@@ -90,6 +90,11 @@ export const m28: Module = {
         "Les investisseurs étrangers retirent leurs capitaux d'un coup.",
       ],
     },
+    objectives: [
+      "Reconnaître qu'une baisse de marché ne change pas les fondamentaux d'une entreprise solide.",
+      "Distinguer les 3 réactions possibles face à un krach (La Fuite, L'Autruche, Le Loup) et leurs vraies conséquences.",
+      "Transformer une baisse en opportunité grâce au DCA et aux ordres à cours limité, plutôt que la subir.",
+    ],
     cta: "Affronter le krach",
   },
 

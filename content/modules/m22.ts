@@ -44,6 +44,11 @@ export const m22: Module = {
         "**Les frais** — intermédiation, droits de garde, bourse en ligne : le forfait peut coûter cher sur les petits montants.",
       ],
     },
+    objectives: [
+      "Savoir ce qu'est une SGI et les documents nécessaires pour ouvrir un compte-titres, même depuis la diaspora.",
+      "Choisir sa SGI selon 3 critères concrets : la plateforme en ligne, la qualité du conseil, le montant minimum.",
+      "Calculer l'impact réel des frais (pourcentage vs forfait) sur de petits montants investis régulièrement.",
+    ],
     cta: "Ouvrir mon compte-titres",
   },
 

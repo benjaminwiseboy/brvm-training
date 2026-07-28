@@ -49,6 +49,11 @@ export const m25: Module = {
         "**L'IRC (obligations)** — souvent pris en charge par l'État pour les nationaux/résidents.",
       ],
     },
+    objectives: [
+      "Comprendre pourquoi vos dividendes nets ne demandent aucune démarche fiscale supplémentaire.",
+      "Savoir que la plus-value boursière des particuliers est, le plus souvent, totalement exonérée dans l'UEMOA.",
+      "Distinguer les 3 impôts (IRVM, plus-value, IRC) pour ne pas vous laisser piéger par une fausse alerte fiscale.",
+    ],
     cta: "Découvrir ma fiscalité",
   },
 

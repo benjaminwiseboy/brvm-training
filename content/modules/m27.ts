@@ -45,6 +45,11 @@ export const m27: Module = {
         "**Dr Koné, 45 ans** — débordé, veut déléguer entièrement.",
       ],
     },
+    objectives: [
+      "Relier le bon placement (action, obligation, OPCVM) au profil et à l'objectif de chaque investisseur.",
+      "Justifier pourquoi un même placement peut être excellent pour l'un et inadapté pour l'autre.",
+      "Mobiliser toute la chaîne Profil → Stratégie → Analyse → Bon produit face à un cas concret.",
+    ],
     cta: "Passer le grand oral",
   },
 
