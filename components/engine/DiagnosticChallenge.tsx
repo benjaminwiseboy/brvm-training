@@ -65,7 +65,7 @@ export function DiagnosticChallenge({
   return (
     <div className={styles.wrap}>
       <div className={styles.sectionHead}>
-        <div className={styles.kicker}>Section 2 · {challenge.kicker}</div>
+        <div className={styles.kicker}>{challenge.kicker}</div>
         <h2 className={styles.title}>{renderMarkup(challenge.title)}</h2>
         <p className={styles.instruction}>{renderMarkup(challenge.instruction)}</p>
       </div>

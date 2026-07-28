@@ -48,7 +48,7 @@ export function Bilan({
 
     return (
       <div className={styles.wrap}>
-        <p className={styles.eyebrow}>Section 3 · Votre profil</p>
+        <p className={styles.eyebrow}>Votre profil</p>
 
         {band && (
           <div className={styles.lessonHl}>
@@ -70,7 +70,7 @@ export function Bilan({
   if (!feedback.perfect || !feedback.imperfect) {
     return (
       <div className={styles.wrap}>
-        <p className={styles.eyebrow}>Section 3 · La Leçon</p>
+        <p className={styles.eyebrow}>La Leçon</p>
 
         {feedback.headline && (
           <div className={styles.lessonHl}>
@@ -110,7 +110,7 @@ export function Bilan({
 
   return (
     <div className={styles.wrap}>
-      <p className={styles.eyebrow}>Section 3 · Le Bilan</p>
+      <p className={styles.eyebrow}>Le Bilan</p>
 
       <div className={`${styles.scorecard} ${perfect ? styles.isWin : styles.isSoft}`}>
         <div className={styles.ring}>
