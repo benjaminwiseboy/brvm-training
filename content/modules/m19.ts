@@ -1,112 +1,118 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 19 — Défi de synthèse : analyser une
-   entreprise de A à Z. Capstone de fin de Phase 3 (le bloc Graham
-   au complet, appliqué à un cas fictif « Banque du Fleuve »).
-   Barème NON standard (§4 : « Défi de synthèse (capstone) | 3 |
-   +50 000 | −10 000 ») : le plus haut de toute la Phase 3.
-   ÉCHELLE DE STATUT 5 PALIERS (décision produit explicite, revue
-   finale — NE PAS « corriger » en revenant à 🥇) : le champ `status`
-   représente une échelle qui GRIMPE le long de l'ordre des modules
-   (🥉 M01 → 🥈 M05 → 🥇 M09 → 🎓 M19-M25 → 💎 M26), lue par
-   `deriveStatus(doneCount)` qui prend le `status` du module courant
-   (index = nombre de modules terminés, clampé au dernier). Pour éviter
-   toute régression 🎓→🥇 (flicker pire que le trou d'origine), M19 à
-   M25 portent TOUS 🎓 « L'Analyste Confirmé » et M26 porte 💎 « Le
-   Loup de la BRVM ». Ce champ `status` PERSISTANT est distinct du
-   badge de complétion PONCTUEL `feedback.perfect.icon`/`.title` (qui
-   célèbre une seule fois la réussite de CE module) : les deux
-   réutilisent volontairement le même emoji+libellé 🎓 « L'Analyste
-   Confirmé », ce n'est pas un doublon à dédupliquer. Le .txt d'origine
-   avait deux lignes en tête — « Statut actuel : 🥇 » et « Badge à
-   débloquer : 🎓 » — mais le statut affiché suit désormais l'échelle
-   ci-dessus, pas la ligne littérale du .txt.
-   6 questions, 3 options chacune (Q5 lettrées A/B/C dans le .txt) ;
-   6 explications verbatim, une par « Pilier ». Le paragraphe de
-   clôture « Transition — Fin de la Phase 3 » est replié dans le
-   `.note` de la 6ᵉ (dernière) explication, comme M04 pour la fin de
-   Phase 1 — PAS une 7ᵉ entrée synthétique.
-   `feedback.explanations.length` = 6 = `challenge.questions.length`.
-   Formule entre backticks du .txt (`PER × PBR`) convertie en **gras**.
+   Contenu du Module 19 — Graham (3/4) : les perspectives
+   (top-down & bottom-up).
+   Barème NON standard (§4 : « Graham 2 Perspectives | 3 | +25 000 |
+   −5 000 »).
+   RESTRUCTURATION DE L'EXPLICATION (wrinkle documentée dans le brief
+   de cette tâche) : le Défi a 4 questions (les 3 mini-questions
+   numérotées de la Partie A + la question de la Partie B), mais la
+   source ne fournit que 2 paragraphes d'explication : un paragraphe
+   « Top-Down » qui couvre les 3 événements de la Partie A (séparés
+   par des flèches « → »), et un paragraphe « Bottom-Up » pour la
+   Partie B. Le paragraphe Top-Down est éclaté en 3 explanations
+   distinctes (une par événement numéroté, chacune reprenant
+   verbatim sa propre clause) ; le paragraphe Bottom-Up devient la
+   4ᵉ explanation. La nuance finale *(« personne ne prédit l'avenir
+   à 100 %... »)* est repliée dans le `.note` de cette 4ᵉ (dernière)
+   explanation. `feedback.explanations.length` = 4 = questions.length.
    ============================================================= */
 export const m19: Module = {
   code: "M19",
   index: 19,
-  totalModules: 26,
-  title: "Défi de synthèse : analyser une entreprise de A à Z",
+  totalModules: 28,
+  title: "Graham (3/4) : les perspectives (top-down & bottom-up)",
   phase: "Phase 3 · L'Analyse",
-  status: { emoji: "🎓", label: "L'Analyste Confirmé" },
-  reward: 50000,
+  status: { emoji: "🥇", label: "L'Analyste Stratège" },
+  reward: 25000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 19",
-    headline: "L'examen de passage : votre dossier complet.",
+    headline: "Deux paires de lunettes pour juger l'avenir.",
     lead:
-      "Portrait, performance, perspectives, prix, BOC : vous maîtrisez chaque pilier séparément. Place au vrai test — assembler les 5 en un seul verdict, sur une entreprise fictive construite pour ressembler à une vraie valeur BRVM.",
+      "Le compte de résultat, c'est le passé. En achetant une action, vous achetez son futur. Pour le juger, on chausse deux paires de lunettes complémentaires : la vue de l'**aigle** (top-down) et la vue de la **fourmi** (bottom-up).",
     card: {
-      label: "Le dossier complet",
-      title: "Portrait → Performance → Perspectives → Prix → Verdict",
-      hint: "Passez chaque pilier au crible, comme un vrai analyste :",
+      label: "Les deux lunettes de l'analyste",
+      title: "Top-down (l'aigle) & bottom-up (la fourmi)",
+      hint: "Deux angles complémentaires pour juger l'avenir :",
       rules: [
-        "**BANQUE DU FLEUVE (BDF)** — 33 ans, banque de détail, 4 pays.",
-        "**Performance** — PNB, exploitation et net en hausse régulière depuis 10 ans.",
-        "**Prix** — PER 11, PBR 1,2 : sous la règle de Graham et sous la moyenne du marché.",
+        "**Top-down 🦅** — de l'économie régionale au secteur, puis à l'entreprise : vents porteurs ou contraires ?",
+        "**Bottom-up 🐜** — l'entreprise de près : possède-t-elle un « fossé » durable face à ses concurrents ?",
+        "**La combinaison gagnante** — solide + secteur porteur + fossé protégé.",
       ],
     },
-    cta: "Ouvrir le dossier BDF",
+    cta: "Chausser les deux paires de lunettes",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "L'examen de passage",
+      title: "On conduit en regardant la route",
       blocks: [
-        { kind: "text", value: "Vous savez dresser un portrait, lire une performance, sonder les perspectives, juger un prix, décrypter le BOC. On assemble tout." },
-        { kind: "text", value: "**Objectif : décideriez-vous d'acheter cette action pour du long terme ?** Passez chaque pilier au crible." },
-        { kind: "text", value: "(Entreprise fictive, construite pour ressembler à une vraie valeur BRVM.)" },
+        { kind: "text", value: "Le compte de résultat, c'est le **passé** de l'entreprise. Or, en achetant une action, vous achetez son **futur**. Une entreprise magnifique hier peut être menacée demain." },
+        { kind: "text", value: "Pour juger l'avenir, on chausse **deux paires de lunettes** complémentaires." },
       ],
     },
     {
-      title: "📁 Bloc 1 : le Portrait",
+      title: "Lunettes Top-Down : la vue de l'aigle 🦅",
       blocks: [
-        { kind: "text", value: "**BANQUE DU FLEUVE (BDF)** · Création : 1992 (33 ans) · Banque de détail." },
-        { kind: "text", value: "Actionnaires : Atlantic Financial Group **58 %**, État **12 %**, flottant 30 %." },
-        { kind: "text", value: "Zone : Sénégal, Côte d'Ivoire, Mali, Bénin (4 pays). Compartiment Principal · Secteur Services Financiers." },
-      ],
-    },
-    {
-      title: "📁 Bloc 2 : la Performance (10 ans, Md FCFA)",
-      blocks: [
+        { kind: "text", value: "Comme un aigle qui plane haut dans le ciel puis fond vers sa proie, on part du grand tableau et on descend, étape par étape :" },
         {
           kind: "list",
           items: [
-            "**PNB** : 45 → 95 (hausse régulière)",
-            "**Résultat d'exploitation** : 12 → 26 (hausse régulière)",
-            "**Résultat net** : 8 → 18 (positif chaque année)",
-            "**Dividende** : versé **chaque année** depuis 10 ans.",
+            "**L'économie de l'UEMOA** — la croissance, l'inflation et les taux de la BCEAO (la Banque Centrale des États de l'Afrique de l'Ouest, la banque centrale de la région) donnent le climat général.",
+            "**Les matières premières** (cacao, coton, or, pétrole) — elles font vivre une grande partie des entreprises de la région ; leur cours mondial pèse lourd.",
+            "**Le secteur** — lequel profite (ou souffre) du contexte ? (7 secteurs BRVM : Télécoms, Services Financiers, Consommation Discrétionnaire, Consommation de Base, Industriels, Énergie, Services Publics.)",
+            "**Enfin l'entreprise elle-même.**",
+          ],
+        },
+        { kind: "text", value: "Objectif : repérer les **vents porteurs** (un secteur en plein essor) et les **vents contraires** (un secteur menacé)." },
+      ],
+    },
+    {
+      title: "Lunettes Bottom-Up : la vue de la fourmi 🐜",
+      blocks: [
+        { kind: "text", value: "À l'inverse, comme une fourmi au ras du sol, on regarde l'entreprise de tout près, sans se soucier du contexte. La question clé : **possède-t-elle un « fossé » ?**" },
+        { kind: "text", value: "Un fossé, c'est un avantage **durable** qui la protège de ses concurrents, comme les douves d'un château. Par exemple :" },
+        {
+          kind: "list",
+          items: [
+            "une **position dominante** (une grosse part de marché),",
+            "un **réseau difficile à copier** (les antennes d'un opérateur télécom, le maillage d'agences d'une banque),",
+            "une **marque forte** à laquelle les clients sont fidèles, ou des **coûts plus bas** que tous ses rivaux.",
           ],
         },
       ],
     },
     {
-      title: "📁 Bloc 3 : les Perspectives",
+      title: "Pourquoi le fossé est vital",
       blocks: [
-        {
-          kind: "list",
-          items: [
-            "Top-down : bancarisation + mobile money en plein essor dans l'UEMOA.",
-            "Bottom-up : **220 agences**, **3 millions de clients**, une **licence mobile money** difficile à copier.",
-          ],
-        },
+        { kind: "text", value: "Une entreprise **sans fossé** se fait grignoter ses bénéfices dès qu'un concurrent agressif arrive et casse les prix." },
+        { kind: "text", value: "Une entreprise **avec un fossé** peut protéger ses marges et ses dividendes dans la durée. C'est ce qui distingue une belle entreprise passagère d'une belle entreprise qui **dure**." },
       ],
     },
     {
-      title: "📁 Bloc 4 : le Prix (relevé au BOC)",
+      title: "La combinaison gagnante",
       blocks: [
-        { kind: "text", value: "Cours : **6 500 FCFA** · **PER : 11** · **PBR : 1,2** · **Rendement net : 6,2 %**." },
-        { kind: "text", value: "(Rappel : PER moyen du marché ≈ 14.) À vous de trancher ! 👇" },
+        { kind: "text", value: "L'idéal réunit les trois : une entreprise **solide** (performance ✓) + dans un secteur **porteur** (top-down ✓) + protégée par un **fossé** (bottom-up ✓)." },
+        { kind: "text", value: "À l'inverse, un beau bilan dans un secteur en déclin, ou sans avantage concurrentiel, reste un pari risqué." },
+      ],
+    },
+    {
+      title: "Où trouver les perspectives ? 📍",
+      blocks: [
+        { kind: "text", value: "Contrairement aux chiffres du passé (dans le rapport annuel), les perspectives se cherchent à plusieurs endroits :" },
+        {
+          kind: "list",
+          items: [
+            "le **rapport d'activité** de l'entreprise (souvent une section « Perspectives » ou « Stratégie »),",
+            "les **médias financiers** : **Sika Finance**, Financial Afrik, la presse économique,",
+            "pour le top-down : les publications de la **BCEAO** et les cours des matières premières,",
+            "les communiqués et l'espace actualités de brvm.org. 👇",
+          ],
+        },
       ],
     },
   ],
@@ -115,71 +121,48 @@ export const m19: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "Le dossier, pilier par pilier",
+    title: "La double vision de l'analyste",
     instruction:
-      "Répondez aux 6 questions dans l'ordre. Chaque erreur coûte 10 000 FCFA. La Q5 (le verdict) est la plus importante ; la Q6 relie l'analyse à votre stratégie.",
-    penaltyPerError: 10000,
-    perfectReward: 50000,
-    // Recopie des options de Q1 en repli neutre (requis par le type) :
-    // chaque question a sa propre liste de boutons.
+      "Partie A — Top-Down : chaque événement est-il un vent porteur ou contraire pour le secteur ? Partie B — Bottom-Up : deux opérateurs télécoms — **Télé-Réseau** (65 % de part de marché, réseau d'antennes bâti sur 20 ans, marque connue) et **NouvelOp** (5 % de part, loue le réseau des autres, casse les prix) — lequel a le « fossé » le plus solide ? (1 erreur = − 5 000 FCFA.)",
+    penaltyPerError: 5000,
+    perfectReward: 25000,
+    // Recopie des options de la Partie A en repli neutre (requis par le
+    // type) : Q4 (Partie B) a sa propre paire de boutons.
     options: [
-      { value: "ca", label: "Le chiffre d'affaires" },
-      { value: "pnb", label: "Le Produit Net Bancaire (PNB)" },
-      { value: "credits", label: "Le total des crédits" },
+      { value: "porteur", label: "Porteur" },
+      { value: "contraire", label: "Contraire" },
     ],
     questions: [
       {
-        prompt: "**Q1 — Portrait.** BDF étant une **banque**, quel indicateur suivre comme « ligne du haut » (équivalent du chiffre d'affaires) ?",
-        answer: "pnb",
+        prompt: "**Partie A · 1.** « Le cacao chute de 30 %. » → pour un **exportateur de cacao** :",
+        answer: "contraire",
         options: [
-          { value: "ca", label: "Le chiffre d'affaires" },
-          { value: "pnb", label: "Le Produit Net Bancaire (PNB)" },
-          { value: "credits", label: "Le total des crédits" },
+          { value: "porteur", label: "Porteur" },
+          { value: "contraire", label: "Contraire" },
         ],
       },
       {
-        prompt: "**Q2 — Performance.** Diagnostic des 3 courbes sur 10 ans ?",
-        answer: "solide",
+        prompt: "**Partie A · 2.** « Le mobile money explose dans l'UEMOA. » → pour **banques & télécoms** :",
+        answer: "porteur",
         options: [
-          { value: "solide", label: "Solide : PNB, exploitation et net montent ensemble." },
-          { value: "suspect", label: "Suspect : le net est gonflé par de l'exceptionnel." },
-          { value: "fragile", label: "Fragile : en dents de scie." },
+          { value: "porteur", label: "Porteur" },
+          { value: "contraire", label: "Contraire" },
         ],
       },
       {
-        prompt: "**Q3 — Perspectives.** BDF a-t-elle un avenir bien orienté ?",
-        answer: "oui",
+        prompt: "**Partie A · 3.** « Le carburant s'envole durablement. » → pour le **transport routier** :",
+        answer: "contraire",
         options: [
-          { value: "oui", label: "Oui : vent porteur (bancarisation) + un fossé solide (réseau, clients, licence)." },
-          { value: "non_declin", label: "Non : secteur en déclin." },
-          { value: "non_aucun", label: "Non : aucun avantage." },
+          { value: "porteur", label: "Porteur" },
+          { value: "contraire", label: "Contraire" },
         ],
       },
       {
-        prompt: "**Q4 — Prix.** Calculez **PER × PBR** et jugez (< 22,5 et vs marché ≈ 14).",
-        answer: "raisonnable",
+        prompt: "**Partie B.** Deux opérateurs télécoms. **Télé-Réseau** : 65 % de part de marché, réseau d'antennes bâti sur 20 ans, marque connue. **NouvelOp** : 5 % de part, loue le réseau des autres, casse les prix. Lequel a le « fossé » le plus solide ?",
+        answer: "tele_reseau",
         options: [
-          { value: "raisonnable", label: "13,2 → sous 22,5 ET sous la moyenne : prix raisonnable, avec marge de sécurité." },
-          { value: "trop_cher", label: "13,2 → trop cher." },
-          { value: "impossible", label: "Impossible à juger." },
-        ],
-      },
-      {
-        prompt: "**Q5 — LE VERDICT.** Ce matin l'action a baissé de **−2 %** et l'indice Services Financiers est dans le rouge. Un collègue dit d'attendre. Votre décision, pour du **long terme** ?",
-        answer: "c",
-        options: [
-          { value: "a", label: "J'attends que ça baisse encore." },
-          { value: "b", label: "Je passe mon chemin." },
-          { value: "c", label: "J'achète : les 3 piliers sont au vert, la baisse du jour n'est que du bruit." },
-        ],
-      },
-      {
-        prompt: "**Q6 — Pour quel investisseur ?** BDF verse 6,2 % de dividende et croît modérément. Elle correspond le mieux à… ?",
-        answer: "rente",
-        options: [
-          { value: "rente", label: "Une stratégie de RENTE (revenu régulier)." },
-          { value: "croissance", label: "Une stratégie de CROISSANCE pure (doublement rapide, sans besoin de cash)." },
-          { value: "peu_importe", label: "Peu importe : une bonne action convient à tout le monde." },
+          { value: "tele_reseau", label: "Télé-Réseau" },
+          { value: "nouvelop", label: "NouvelOp" },
         ],
       },
     ],
@@ -188,52 +171,42 @@ export const m19: Module = {
   // ---- Section 3 : le feedback ----
   feedback: {
     perfect: {
-      icon: "🎓",
-      title: "BADGE DÉBLOQUÉ : L'Analyste Confirmé ! + 50 000 FCFA sur votre portefeuille !",
-      body: "Vous avez mené une analyse complète, seul, du portrait au verdict. Vous décidez avec méthode, pas avec vos émotions.",
+      icon: "🎉",
+      title: "Vision panoramique ! + 25 000 FCFA sur votre portefeuille !",
+      body: "Vous voyez la forêt (le contexte) ET l'arbre (l'entreprise).",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! L'analyse mérite une révision (− 10 000 FCFA par erreur).",
-      body: "Reprenons pilier par pilier.",
+      title: "Aïe ! Angle mort dans votre analyse (− 5 000 FCFA par erreur).",
+      body: "Reprenons les deux lunettes de l'analyste.",
     },
     explanations: [
       {
-        verdict: "PNB",
-        title: "Pilier 1 — PNB",
-        body: "Pour une banque, on suit le **Produit Net Bancaire**, pas le chiffre d'affaires.",
+        verdict: "Contraire",
+        title: "Cacao −30 % : un vent contraire",
+        body: "Cacao −30 % → l'exportateur vend au même volume mais à prix cassé → **contraire**.",
       },
       {
-        verdict: "Solide",
-        title: "Pilier 2 — Performance 🟢",
-        body: "Les 3 courbes montent ensemble, dividende chaque année : pas de piège HAO.",
+        verdict: "Porteur",
+        title: "Mobile money : un vent porteur structurel",
+        body: "Mobile money → plus de clients et de commissions → **porteur** structurel.",
       },
       {
-        verdict: "Oui",
-        title: "Pilier 3 — Perspectives 🟢",
-        body: "Vent porteur (bancarisation, mobile money) + un vrai fossé (agences, clients, licence).",
+        verdict: "Contraire",
+        title: "Carburant en hausse : un vent contraire pour le transport",
+        body: "Carburant en hausse → coût du transport qui explose → **contraire**.",
       },
       {
-        verdict: "13,2 raisonnable",
-        title: "Pilier 4 — Prix 🟢",
-        body: "11 × 1,2 = 13,2, sous 22,5 **et** sous la moyenne (≈ 14). Rendement 6,2 % en prime.",
-      },
-      {
-        verdict: "Bouton C",
-        title: "Pilier 5 — Le verdict",
-        body: "3 feux verts → **on achète (C)**. Le −2 % du jour n'est que du **bruit** ; il ne change rien à une entreprise qu'on garde 10 ans.",
-      },
-      {
-        verdict: "Rente",
-        title: "Pilier 6 — Rente",
-        body: "Dividende 6,2 % + entreprise mature à croissance modérée = profil **rente**. « Une bonne action n'existe pas dans l'absolu — seulement la bonne action pour VOTRE stratégie » (M14).",
-        note: "**La méthode maîtrisée :** Portrait → Performance → Perspectives → Prix → Verdict → Adéquation à votre stratégie. 🏆 **Félicitations, Analyste Confirmé !** La théorie est terminée. Rangez vos lunettes d'analyste, sortez votre pièce d'identité : il est temps d'ouvrir votre VRAI compte.",
+        verdict: "Télé-Réseau",
+        title: "Le fossé de Télé-Réseau",
+        body: "**Télé-Réseau** a un vrai fossé (65 % de marché **et** un réseau que personne ne copie en un jour). NouvelOp n'a qu'une arme, casser les prix, ce qui détruit ses propres marges.",
+        note: "Nuance : personne ne prédit l'avenir à 100 %. On met les probabilités de son côté.",
       },
     ],
   },
 
   next: {
-    label: "Passer à la Phase 4 : ouvrir mon compte et acheter pour de vrai !",
+    label: "Bonne entreprise, bel avenir… reste LA question : à quel prix ?",
     target: "Module 20",
   },
 };

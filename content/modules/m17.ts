@@ -1,118 +1,105 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 17 — Graham (3/4) : les perspectives
-   (top-down & bottom-up).
-   Barème NON standard (§4 : « Graham 2 Perspectives | 3 | +25 000 |
-   −5 000 »).
-   RESTRUCTURATION DE L'EXPLICATION (wrinkle documentée dans le brief
-   de cette tâche) : le Défi a 4 questions (les 3 mini-questions
-   numérotées de la Partie A + la question de la Partie B), mais la
-   source ne fournit que 2 paragraphes d'explication : un paragraphe
-   « Top-Down » qui couvre les 3 événements de la Partie A (séparés
-   par des flèches « → »), et un paragraphe « Bottom-Up » pour la
-   Partie B. Le paragraphe Top-Down est éclaté en 3 explanations
-   distinctes (une par événement numéroté, chacune reprenant
-   verbatim sa propre clause) ; le paragraphe Bottom-Up devient la
-   4ᵉ explanation. La nuance finale *(« personne ne prédit l'avenir
-   à 100 %... »)* est repliée dans le `.note` de cette 4ᵉ (dernière)
-   explanation. `feedback.explanations.length` = 4 = questions.length.
+   Contenu du Module 17 — Graham (1/4) : le portrait de l'entreprise.
+   Premier des 4 modules du bloc Graham (M17-M20) + capstone M21 —
+   « le cœur » de la formation. Titre du .txt sans le préfixe « M17 — »
+   (déjà porté par `code`), même convention que m12/m13/m14.
+   Barème NON standard (§4 : « Graham 1a Portrait | 3 | +20 000 |
+   −5 000 ») : ici ça coïncide avec le standard Phase 3, mais reste
+   documenté car les 4 modules suivants (M18-M21) ont chacun un
+   barème différent — voir leurs commentaires respectifs.
+   Emphases *italique* à un seul astérisque du .txt (ex. « *n'achetez
+   pas une action, achetez une entreprise.* », les parenthèses
+   « (sa performance) » etc., et l'astuce de la Slide 4) : le type
+   Block ne supporte que **gras** (splitMarkup, lib/format.ts) —
+   astérisques simples retirés, texte conservé tel quel.
+   Défi = quiz à 3 questions ; chaque question a sa propre paire/
+   triplet de boutons (mécanisme M03/M11/M14/M15).
+   L'explication du .txt liste 3 puces dans un ordre différent de
+   l'ordre des questions (40 ans+actionnariat, puis 3 pays, puis
+   activité compréhensible) : réordonnées ici pour suivre Q1→Q2→Q3
+   (3 pays / 40 ans+actionnariat / activité compréhensible), aucune
+   phrase perdue ni inventée. Le paragraphe de clôture « Le portrait
+   ne remplace pas... » est replié dans le `.note` de la 3ᵉ (dernière)
+   explication, même convention que M04/M15/M16 (jamais une 4ᵉ entrée
+   synthétique — cf. `feedback.explanations.length === questions.length`).
    ============================================================= */
 export const m17: Module = {
   code: "M17",
   index: 17,
-  totalModules: 26,
-  title: "Graham (3/4) : les perspectives (top-down & bottom-up)",
+  totalModules: 28,
+  title: "Graham (1/4) : le portrait de l'entreprise",
   phase: "Phase 3 · L'Analyse",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
-  reward: 25000,
+  reward: 20000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 17",
-    headline: "Deux paires de lunettes pour juger l'avenir.",
+    headline: "Avant les chiffres, qui est cette entreprise ?",
     lead:
-      "Le compte de résultat, c'est le passé. En achetant une action, vous achetez son futur. Pour le juger, on chausse deux paires de lunettes complémentaires : la vue de l'**aigle** (top-down) et la vue de la **fourmi** (bottom-up).",
+      "Vous allez apprendre à analyser comme **Benjamin Graham**, le mentor de Warren Buffett. Sa règle d'or : n'achetez pas une action, achetez une **entreprise** — et tout commence, avant même les comptes, par son **portrait**.",
     card: {
-      label: "Les deux lunettes de l'analyste",
-      title: "Top-down (l'aigle) & bottom-up (la fourmi)",
-      hint: "Deux angles complémentaires pour juger l'avenir :",
+      label: "La carte d'identité de l'analyste",
+      title: "Nom, activité, actionnaires, zone, capital",
+      hint: "5 éléments à noter avant d'ouvrir les comptes :",
       rules: [
-        "**Top-down 🦅** — de l'économie régionale au secteur, puis à l'entreprise : vents porteurs ou contraires ?",
-        "**Bottom-up 🐜** — l'entreprise de près : possède-t-elle un « fossé » durable face à ses concurrents ?",
-        "**La combinaison gagnante** — solide + secteur porteur + fossé protégé.",
+        "**Le nom, la date de création et l'activité** — que vend-elle, en une phrase ?",
+        "**Les actionnaires principaux** — qui tient le volant ?",
+        "**La zone géographique et le capital** — diversification et taille.",
       ],
     },
-    cta: "Chausser les deux paires de lunettes",
+    cta: "Dresser le portrait d'une entreprise",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "On conduit en regardant la route",
+      title: "La méthode Graham",
       blocks: [
-        { kind: "text", value: "Le compte de résultat, c'est le **passé** de l'entreprise. Or, en achetant une action, vous achetez son **futur**. Une entreprise magnifique hier peut être menacée demain." },
-        { kind: "text", value: "Pour juger l'avenir, on chausse **deux paires de lunettes** complémentaires." },
+        { kind: "lead", value: "Nous allons analyser comme **Benjamin Graham**, le « père de l'investissement dans la valeur » et le mentor de Warren Buffett. Sa règle d'or : n'achetez pas une action, achetez une entreprise." },
+        { kind: "text", value: "Avant d'acheter, il pose 3 questions, dans l'ordre : (1) est-ce une **bonne entreprise** ? (sa performance) (2) va-t-elle **le rester** ? (ses perspectives) (3) le **prix** est-il raisonnable ? (sa valorisation)" },
+        { kind: "text", value: "Mais tout commence par une question plus simple : **qui est cette entreprise ?**" },
       ],
     },
     {
-      title: "Lunettes Top-Down : la vue de l'aigle 🦅",
+      title: "La carte d'identité avant l'entretien",
       blocks: [
-        { kind: "text", value: "Comme un aigle qui plane haut dans le ciel puis fond vers sa proie, on part du grand tableau et on descend, étape par étape :" },
+        { kind: "text", value: "On n'embauche personne — et on ne lui confie pas son argent — sans savoir qui il est. Avant les chiffres, dressez le **portrait** de l'entreprise. Les 3 premiers éléments à noter :" },
         {
           kind: "list",
           items: [
-            "**L'économie de l'UEMOA** — la croissance, l'inflation et les taux de la BCEAO (la Banque Centrale des États de l'Afrique de l'Ouest, la banque centrale de la région) donnent le climat général.",
-            "**Les matières premières** (cacao, coton, or, pétrole) — elles font vivre une grande partie des entreprises de la région ; leur cours mondial pèse lourd.",
-            "**Le secteur** — lequel profite (ou souffre) du contexte ? (7 secteurs BRVM : Télécoms, Services Financiers, Consommation Discrétionnaire, Consommation de Base, Industriels, Énergie, Services Publics.)",
-            "**Enfin l'entreprise elle-même.**",
-          ],
-        },
-        { kind: "text", value: "Objectif : repérer les **vents porteurs** (un secteur en plein essor) et les **vents contraires** (un secteur menacé)." },
-      ],
-    },
-    {
-      title: "Lunettes Bottom-Up : la vue de la fourmi 🐜",
-      blocks: [
-        { kind: "text", value: "À l'inverse, comme une fourmi au ras du sol, on regarde l'entreprise de tout près, sans se soucier du contexte. La question clé : **possède-t-elle un « fossé » ?**" },
-        { kind: "text", value: "Un fossé, c'est un avantage **durable** qui la protège de ses concurrents, comme les douves d'un château. Par exemple :" },
-        {
-          kind: "list",
-          items: [
-            "une **position dominante** (une grosse part de marché),",
-            "un **réseau difficile à copier** (les antennes d'un opérateur télécom, le maillage d'agences d'une banque),",
-            "une **marque forte** à laquelle les clients sont fidèles, ou des **coûts plus bas** que tous ses rivaux.",
+            "**Le nom et la date de création** — une entreprise qui existe depuis 40 ans a déjà traversé des crises et prouvé sa solidité ; une toute jeune a moins de recul.",
+            "**L'activité** — que vend-elle, concrètement ? Si vous ne pouvez pas résumer son métier en une phrase, méfiance : on ne juge bien que ce qu'on comprend.",
+            "**Les actionnaires principaux** — qui tient le volant de l'entreprise ? Un grand groupe solide ou l'État aux commandes rassurent : ce sont eux qui veillent à sa bonne gestion.",
           ],
         },
       ],
     },
     {
-      title: "Pourquoi le fossé est vital",
+      title: "La carte d'identité (suite)",
       blocks: [
-        { kind: "text", value: "Une entreprise **sans fossé** se fait grignoter ses bénéfices dès qu'un concurrent agressif arrive et casse les prix." },
-        { kind: "text", value: "Une entreprise **avec un fossé** peut protéger ses marges et ses dividendes dans la durée. C'est ce qui distingue une belle entreprise passagère d'une belle entreprise qui **dure**." },
-      ],
-    },
-    {
-      title: "La combinaison gagnante",
-      blocks: [
-        { kind: "text", value: "L'idéal réunit les trois : une entreprise **solide** (performance ✓) + dans un secteur **porteur** (top-down ✓) + protégée par un **fossé** (bottom-up ✓)." },
-        { kind: "text", value: "À l'inverse, un beau bilan dans un secteur en déclin, ou sans avantage concurrentiel, reste un pari risqué." },
-      ],
-    },
-    {
-      title: "Où trouver les perspectives ? 📍",
-      blocks: [
-        { kind: "text", value: "Contrairement aux chiffres du passé (dans le rapport annuel), les perspectives se cherchent à plusieurs endroits :" },
         {
           kind: "list",
           items: [
-            "le **rapport d'activité** de l'entreprise (souvent une section « Perspectives » ou « Stratégie »),",
-            "les **médias financiers** : **Sika Finance**, Financial Afrik, la presse économique,",
-            "pour le top-down : les publications de la **BCEAO** et les cours des matières premières,",
-            "les communiqués et l'espace actualités de brvm.org. 👇",
+            "**La zone géographique** — opère-t-elle dans un seul pays (tous ses œufs dans le même panier) ou dans plusieurs (activité plus diversifiée) ? Si un pays va mal, les autres peuvent compenser.",
+            "**Le capital** — la taille de l'entreprise et le nombre d'actions en circulation. Cela vous dit si vous avez affaire à un géant ou à une petite valeur.",
           ],
         },
+      ],
+    },
+    {
+      title: "Où trouver le portrait ?",
+      blocks: [
+        { kind: "text", value: "Sur la **fiche société de brvm.org**, chaque entreprise cotée a sa page d'identité. L'ouvrir, c'est votre tout premier réflexe d'analyste." },
+        { kind: "text", value: "(Astuce : c'est aussi ce qu'un bon outil de suivi devrait vous afficher d'un coup d'œil.)" },
+      ],
+    },
+    {
+      title: "Entraînons-nous",
+      blocks: [
+        { kind: "lead", value: "Entraînons-nous. 👇" },
       ],
     },
   ],
@@ -121,48 +108,43 @@ export const m17: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "La double vision de l'analyste",
+    title: "Lire la carte d'identité",
     instruction:
-      "Partie A — Top-Down : chaque événement est-il un vent porteur ou contraire pour le secteur ? Partie B — Bottom-Up : deux opérateurs télécoms — **Télé-Réseau** (65 % de part de marché, réseau d'antennes bâti sur 20 ans, marque connue) et **NouvelOp** (5 % de part, loue le réseau des autres, casse les prix) — lequel a le « fossé » le plus solide ? (1 erreur = − 5 000 FCFA.)",
+      "Voici la fiche d'une entreprise cotée. **🏢 Carte d'identité — AgriBénin SA** — Création : 1985 (40 ans) · Activité : production et exportation d'huile de palme et de coton · Actionnaires : Groupe Agro-Ouest (55 %), État du Bénin (20 %), public (25 %) · Zone : Bénin, Togo, Burkina Faso · Capital : 10 milliards FCFA, 2 millions d'actions. (1 erreur = − 5 000 FCFA.)",
     penaltyPerError: 5000,
-    perfectReward: 25000,
-    // Recopie des options de la Partie A en repli neutre (requis par le
-    // type) : Q4 (Partie B) a sa propre paire de boutons.
+    perfectReward: 20000,
+    // Recopie des options de Q1 en repli neutre (requis par le type) :
+    // chaque question a sa propre paire/triplet de boutons.
     options: [
-      { value: "porteur", label: "Porteur" },
-      { value: "contraire", label: "Contraire" },
+      { value: "1", label: "1" },
+      { value: "3", label: "3" },
+      { value: "8", label: "8" },
     ],
     questions: [
       {
-        prompt: "**Partie A · 1.** « Le cacao chute de 30 %. » → pour un **exportateur de cacao** :",
-        answer: "contraire",
+        prompt: "**Q1 :** Dans combien de pays l'entreprise est-elle présente ?",
+        answer: "3",
         options: [
-          { value: "porteur", label: "Porteur" },
-          { value: "contraire", label: "Contraire" },
+          { value: "1", label: "1" },
+          { value: "3", label: "3" },
+          { value: "8", label: "8" },
         ],
       },
       {
-        prompt: "**Partie A · 2.** « Le mobile money explose dans l'UEMOA. » → pour **banques & télécoms** :",
-        answer: "porteur",
+        prompt: "**Q2 :** Quel élément rassure le plus sur sa **solidité** ?",
+        answer: "quarante_ans",
         options: [
-          { value: "porteur", label: "Porteur" },
-          { value: "contraire", label: "Contraire" },
+          { value: "capital", label: "Son capital divisé en 2 millions d'actions." },
+          { value: "quarante_ans", label: "Ses 40 ans d'existence + un grand groupe et l'État comme actionnaires de référence." },
+          { value: "export", label: "Le fait qu'elle exporte de l'huile de palme." },
         ],
       },
       {
-        prompt: "**Partie A · 3.** « Le carburant s'envole durablement. » → pour le **transport routier** :",
-        answer: "contraire",
+        prompt: "**Q3 :** Un ami vous conseille une action « qui va exploser », mais il ne sait pas expliquer ce que fait l'entreprise. Le bon réflexe ?",
+        answer: "investis_pas",
         options: [
-          { value: "porteur", label: "Porteur" },
-          { value: "contraire", label: "Contraire" },
-        ],
-      },
-      {
-        prompt: "**Partie B.** Deux opérateurs télécoms. **Télé-Réseau** : 65 % de part de marché, réseau d'antennes bâti sur 20 ans, marque connue. **NouvelOp** : 5 % de part, loue le réseau des autres, casse les prix. Lequel a le « fossé » le plus solide ?",
-        answer: "tele_reseau",
-        options: [
-          { value: "tele_reseau", label: "Télé-Réseau" },
-          { value: "nouvelop", label: "NouvelOp" },
+          { value: "achete_quand_meme", label: "J'achète quand même, tant que ça monte." },
+          { value: "investis_pas", label: "Je n'investis pas : on n'investit que dans une entreprise dont on comprend le métier." },
         ],
       },
     ],
@@ -172,41 +154,36 @@ export const m17: Module = {
   feedback: {
     perfect: {
       icon: "🎉",
-      title: "Vision panoramique ! + 25 000 FCFA sur votre portefeuille !",
-      body: "Vous voyez la forêt (le contexte) ET l'arbre (l'entreprise).",
+      title: "Portrait maîtrisé ! + 20 000 FCFA sur votre portefeuille !",
+      body: "Vous cadrez une entreprise avant même d'ouvrir ses comptes. Le réflexe des pros.",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! Angle mort dans votre analyse (− 5 000 FCFA par erreur).",
-      body: "Reprenons les deux lunettes de l'analyste.",
+      title: "Aïe ! Le portrait mérite un second regard (− 5 000 FCFA par erreur).",
+      body: "Reprenons les points clés du portrait.",
     },
     explanations: [
       {
-        verdict: "Contraire",
-        title: "Cacao −30 % : un vent contraire",
-        body: "Cacao −30 % → l'exportateur vend au même volume mais à prix cassé → **contraire**.",
+        verdict: "3 pays",
+        title: "Présence dans 3 pays",
+        body: "**Présence dans 3 pays** = activité un peu diversifiée : si un pays connaît une mauvaise année, les autres compensent.",
       },
       {
-        verdict: "Porteur",
-        title: "Mobile money : un vent porteur structurel",
-        body: "Mobile money → plus de clients et de commissions → **porteur** structurel.",
+        verdict: "40 ans + actionnariat solide",
+        title: "Longévité et actionnariat de référence",
+        body: "**Longévité (40 ans) + actionnariat de référence solide** = une entreprise installée, au pilotage cadré. Le plus fort signal de stabilité.",
       },
       {
-        verdict: "Contraire",
-        title: "Carburant en hausse : un vent contraire pour le transport",
-        body: "Carburant en hausse → coût du transport qui explose → **contraire**.",
-      },
-      {
-        verdict: "Télé-Réseau",
-        title: "Le fossé de Télé-Réseau",
-        body: "**Télé-Réseau** a un vrai fossé (65 % de marché **et** un réseau que personne ne copie en un jour). NouvelOp n'a qu'une arme, casser les prix, ce qui détruit ses propres marges.",
-        note: "Nuance : personne ne prédit l'avenir à 100 %. On met les probabilités de son côté.",
+        verdict: "Je n'investis pas",
+        title: "Comprendre le métier avant d'investir",
+        body: "**Activité compréhensible** : si vous ne comprenez pas comment l'entreprise gagne sa vie, vous ne pourrez jamais juger si elle va bien. **On n'investit jamais à l'aveugle.**",
+        note: "Le portrait ne remplace pas l'analyse des chiffres, mais il donne une **vue d'ensemble** et fait déjà remonter des signaux (bons ou mauvais).",
       },
     ],
   },
 
   next: {
-    label: "Bonne entreprise, bel avenir… reste LA question : à quel prix ?",
+    label: "Je sais QUI est l'entreprise. Gagne-t-elle vraiment de l'argent ?",
     target: "Module 18",
   },
 };

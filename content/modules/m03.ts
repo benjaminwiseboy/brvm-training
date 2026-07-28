@@ -11,7 +11,7 @@ import type { Module } from "@/lib/types";
 export const m03: Module = {
   code: "M03",
   index: 3,
-  totalModules: 26,
+  totalModules: 28,
   title: "Les gains : comment gagne-t-on de l'argent ?",
   phase: "Phase 1 · Fondations",
   status: { emoji: "🥉", label: "L'Épargnant Livret A" },

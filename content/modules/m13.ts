@@ -1,125 +1,103 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 13 — Les obligations en profondeur.
-   Approfondit l'obligation vue simplement au M04 (« Les produits »)
-   — mention repliée dans hero.lead (seule synthèse créative admise).
-   Barème NON standard (§4 : « Obligations en profondeur | 3 |
-   +25 000 | −5 000 ») : perfectReward 25000 / penaltyPerError 5000,
-   PAS le 20000/5000 par défaut de la Phase 3.
-   Formules/noms entre backticks du .txt (`ÉTAT DU SÉNÉGAL 6,50 %
-   2025-2032`) convertis en **gras**, même convention que m08/m12.
-   Emphases *italique* à un seul astérisque (ex. « *C'est le plus
-   courant pour les États.* », « *Bon à savoir : ... ACD.* ») : le
-   type Block ne supporte que **gras** (voir lib/format.ts,
-   splitMarkup ne reconnaît que `**...**`) — astérisques simples
-   retirés, texte conservé tel quel (aucun mot perdu ni inventé).
-   Défi = quiz à 4 questions ; chaque question a sa propre paire de
-   boutons (mécanisme M03/M09/M12), le tableau de l'obligation du
-   BOC (Section 2 du .txt) replié verbatim dans challenge.instruction.
-   RESTRUCTURATION DE L'EXPLICATION (voir rapport de tâche) : la
-   source ne fournit PAS 4 paragraphes séparés mais un bloc combiné
-   « Le grand choix : In Fine vs Amortissement » (couvrant Q2 ET Q3),
-   un paragraphe « Le coupon couru » (Q4), et AUCUN paragraphe dédié
-   à Q1 (sa lecture n'est explicitée qu'à la Slide 6, « carte
-   d'identité »). Les 4 explanations ci-dessous répartissent chaque
-   phrase sourcée vers la question qu'elle éclaire réellement,
-   parfois en dupliquant une phrase-pivot (« Aucun n'est meilleur »),
-   sans jamais inventer un fait absent du .txt. L'aside finale
-   « Bon à savoir : ACD » est repliée dans le `.note` de la 4ᵉ
-   (dernière) explanation, jamais en 5ᵉ entrée synthétique.
+   Contenu du Module 13 — Le BOC avancé (2/3) : lire une ligne
+   d'action.
+   Défi = quiz à 3 questions, boutons déjà réels dans le .txt
+   (2 ou 3 options selon la question — Q3 n'a que 2 boutons dans
+   la source, conservé tel quel). Ligne réelle d'Ecobank (ETIT,
+   17/07/2026), repliée verbatim dans `challenge.instruction`
+   (pas de kind « table » dans `Block`/`QuizChallenge`).
+   Le .txt ne donne pas de 2ᵉ ligne de corps pour le feedback
+   « imperfect » (seulement le titre) : un court « Reprenons. » est
+   ajouté (même repli que M12), le champ `body` étant requis par
+   le type.
+   Barème Phase 3 standard (§4) : +20 000 / −5 000.
    ============================================================= */
 export const m13: Module = {
   code: "M13",
   index: 13,
-  totalModules: 26,
-  title: "Les obligations en profondeur",
+  totalModules: 28,
+  title: "Le BOC avancé (2/3) : lire une ligne d'action",
   phase: "Phase 3 · L'Analyse",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
-  reward: 25000,
+  reward: 20000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 13",
-    headline: "Vous devenez le banquier.",
+    headline: "Une ligne d'action, plusieurs heures de la journée.",
     lead:
-      "Vous approfondissez ici l'obligation déjà vue simplement au M04. Jusqu'ici, vous achetiez des petits morceaux d'entreprises (des actions) ; avec une obligation, vous changez de rôle : vous devenez **celui qui prête**, contre un intérêt régulier (le coupon) et la promesse de récupérer **tout** votre capital à une date connue d'avance.",
+      "Cours précédent, ouverture, clôture, cours de référence… chaque colonne de prix raconte un moment précis de la journée. Et une variation du jour ne dit jamais tout sur le climat de l'année.",
     card: {
-      label: "Le vocabulaire du prêteur",
-      title: "Nominal, coupon, coupon couru, remboursement",
-      hint: "4 notions pour lire une obligation comme un banquier :",
+      label: "Lire une ligne comme un pro",
+      title: "Les prix, le disjoncteur, la météo",
+      hint: "3 pièges à éviter sur la ligne d'une action :",
       rules: [
-        "**Le nominal** — la somme prêtée (souvent 10 000 FCFA), rendue intégralement à la fin.",
-        "**Le coupon** — l'intérêt régulier qu'on vous verse pour vous remercier de prêter.",
-        "**Le coupon couru** — la part d'intérêts à rembourser si vous achetez en cours d'année.",
-        "**Le mode de remboursement** — In Fine (tout à la fin) ou Amortissement (progressif).",
+        "**Les colonnes de prix** — précédent, ouverture, clôture : chacune raconte un moment de la journée.",
+        "**Le disjoncteur des ± 7,5 %** — la limite de sécurité calculée sur le cours de référence.",
+        "**La météo vs le climat** — ne jamais confondre la variation du jour et celle de l'année.",
       ],
     },
-    cta: "Devenir le banquier",
+    cta: "Décoder une vraie ligne d'action",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "Vous devenez le banquier",
+      title: "Zoomons sur une seule action",
       blocks: [
-        { kind: "text", value: "Jusqu'ici, vous achetiez des petits morceaux d'entreprises (des actions). Avec une **obligation**, vous changez de rôle : vous devenez **celui qui prête**." },
-        { kind: "text", value: "C'est simple : vous prêtez votre argent (le plus souvent à un État, comme celui du Sénégal), il vous verse un intérêt régulier, puis vous rend **tout** votre argent à une date connue d'avance. C'est le placement le plus tranquille de la bourse — vous êtes le prêteur, pas le joueur." },
+        { kind: "text", value: "Vous savez lire la météo générale du marché (M12). Descendons maintenant sur **une seule action**. Sa ligne dans le BOC a plusieurs colonnes de prix — pas de panique, chacune raconte simplement **un moment de la journée**." },
       ],
     },
     {
-      title: "Le nominal & le coupon (la somme prêtée & les intérêts)",
+      title: "Les prix, comme les heures d'une journée",
       blocks: [
+        { kind: "text", value: "Imaginez une journée au marché :" },
         {
           kind: "list",
           items: [
-            "**La valeur nominale**, c'est le montant d'**un « billet » de prêt** : souvent **10 000 FCFA**. C'est aussi la somme exacte qu'on vous rendra à la fin.",
-            "**Le coupon**, c'est l'**intérêt** qu'on vous verse pour vous remercier de prêter. Il a un taux (ex. 6,50 %) et une fréquence : **A** = une fois par an · **S** = deux fois par an · **T** = quatre fois par an.",
-          ],
-        },
-        { kind: "text", value: "**Exemple :** 6,50 % de 10 000, ça fait **650 FCFA** d'intérêt par an, dans votre poche." },
-      ],
-    },
-    {
-      title: "Le coupon couru (arriver en cours de route) 🥭",
-      blocks: [
-        { kind: "text", value: "Imaginez un **manguier** qui donne ses fruits une fois par an. Si vous le rachetez **6 mois avant la récolte**, les fruits ont déjà à moitié poussé grâce à l'ancien propriétaire — normal de lui rembourser sa part." },
-        { kind: "text", value: "C'est exactement le **coupon couru** : en achetant une obligation en cours d'année, vous remboursez au vendeur les intérêts déjà « poussés » depuis le dernier versement. Rassurez-vous : vous récupérerez **tout** le coupon à la prochaine récolte." },
-      ],
-    },
-    {
-      title: "Les modes de remboursement : comment on vous rend l'argent 🔑",
-      blocks: [
-        { kind: "text", value: "La colonne « Type Amort » du BOC dit **comment** on vous rend votre capital. Imaginez que vous prêtez 10 000 FCFA à un ami :" },
-        {
-          kind: "list",
-          items: [
-            "**IF (In Fine)** — il vous verse les intérêts chaque année, et vous rend **tout d'un coup, à la fin**.",
-            "**AC (Amortissement Constant)** — il vous rembourse **par petites tranches égales**, chaque année (comme on rembourse un crédit).",
-            "**ACD (Constant Différé)** — pareil que AC, mais il commence par **ne payer que les intérêts** pendant quelques années, puis rembourse par tranches. C'est le plus courant pour les États.",
-            "**AD (Dégressif)** — il rembourse **beaucoup au début**, puis de moins en moins (rare).",
+            "**Cours précédent** — le prix d'**hier** soir. C'est le point de comparaison : a-t-on monté ou baissé depuis ?",
+            "**Ouverture** — le prix à **l'ouverture des portes** ce matin. Il donne l'ambiance de début de journée.",
+            "**Clôture** — le prix à **la fermeture**, le soir. C'est LE prix qui vous intéresse : votre ordre de demain se fera à peu près à ce niveau.",
           ],
         },
       ],
     },
     {
-      title: "Pourquoi ce choix change tout",
+      title: "Le cours de référence & le « disjoncteur » des ± 7,5 %",
       blocks: [
-        {
-          kind: "list",
-          items: [
-            "**In Fine :** votre argent « travaille » en entier jusqu'au bout → vous gagnez **plus d'intérêts en tout**, mais il reste **bloqué** jusqu'à la fin.",
-            "**Amortissement (AC / ACD) :** votre argent vous **revient petit à petit** → plus disponible et moins risqué, mais comme la somme prêtée diminue, vous gagnez **moins d'intérêts** au total.",
-          ],
-        },
-        { kind: "text", value: "Aucun n'est meilleur : voulez-vous **le maximum d'intérêts** (In Fine) ou **récupérer votre argent progressivement** (Amortissement) ?" },
+        { kind: "text", value: "**En clair :** le cours de référence est le prix « de base » que la BRVM fixe pour le lendemain (souvent égal à la clôture)." },
+        { kind: "text", value: "**À quoi il sert :** à poser une **limite de sécurité**. En une seule journée, une action ne peut ni monter ni baisser de plus de **± 7,5 %** par rapport à ce prix de base." },
+        { kind: "text", value: "**L'image :** c'est un **disjoncteur électrique**. Quand le courant s'affole, le disjoncteur saute pour éviter l'incendie. Ici, si une action s'emballe, la règle des 7,5 % « coupe le courant » pour la journée, le temps que tout le monde se calme. Impossible, donc, qu'une simple rumeur fasse chuter votre action de 40 % en un jour." },
       ],
     },
     {
-      title: "Décoder le nom d'une obligation",
+      title: "Le piège n°1 : la météo du jour vs le climat de l'année ⚠️",
       blocks: [
-        { kind: "text", value: "**ÉTAT DU SÉNÉGAL 6,50 % 2025-2032** se lit comme une carte d'identité : **qui emprunte** (l'État du Sénégal) · **le taux d'intérêt** (6,50 %) · **l'année de départ et de fin** (2025 → 2032)." },
-        { kind: "text", value: "Quelques sigles d'emprunteurs : **TPCI** (Trésor de Côte d'Ivoire), **TPBF** (Burkina), **TPBJ** (Bénin), **TPTG** (Togo), **TPNE** (Niger), **EOM / EOS** (États du Mali / Sénégal). 👇" },
+        { kind: "text", value: "Le BOC donne DEUX variations : celle **du jour** et celle **de l'année**. Ne les confondez jamais — c'est la différence entre **la météo d'aujourd'hui** et **le climat de l'année**." },
+        { kind: "text", value: "Exemple réel — Ecobank (ETIT), le 17/07/2026 :" },
+        {
+          kind: "list",
+          items: [
+            "Aujourd'hui (la météo) : **−6,85 %** — une journée de pluie.",
+            "Sur l'année (le climat) : **+195,65 %** 🚀 — l'action a presque **triplé** !",
+          ],
+        },
+        { kind: "callout", tone: "warn", value: "Le débutant voit la pluie du jour et prend peur. L'investisseur avisé sait qu'une journée de pluie ne change rien à un climat magnifique. **On juge une action sur son climat, pas sur la météo d'un jour.**" },
+      ],
+    },
+    {
+      title: "Le volume : y a-t-il foule ? (rappel)",
+      blocks: [
+        { kind: "text", value: "Comme au M11, le **volume** = le nombre de titres échangés dans la journée = **l'affluence** du marché. Plus il y a de monde, plus c'est facile d'acheter ou de revendre sans faire bouger le prix." },
+        { kind: "text", value: "**Exemple :** ce jour-là, ETIT a échangé **1 662 045 titres** (une cohue !), contre seulement **1 944** pour Sonatel. La colonne Valeur (113 millions de FCFA pour ETIT) mesure la même affluence, mais en argent." },
+      ],
+    },
+    {
+      title: "À vous de lire une vraie ligne 👇",
+      blocks: [
+        { kind: "lead", value: "À vous de lire une vraie ligne. 👇" },
       ],
     },
   ],
@@ -128,48 +106,44 @@ export const m13: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "Décoder une obligation",
+    title: "Décoder les mouvements",
     instruction:
-      "Voici une obligation d'État telle qu'au BOC : **ÉTAT DU SÉNÉGAL 6,50 % 2025-2032** — Nominal : 10 000 FCFA · Coupon : 650 FCFA net · Périodicité : Annuelle (A) · Type Amort : ACD. (1 erreur = − 5 000 FCFA.)",
+      "Ligne réelle d'Ecobank (ETIT), 17/07/2026 — Cours précédent : 73 · Ouverture : 68 · Clôture : 68 · Cours de référence : 68. Variation du jour : −6,85 % · Variation sur l'année : +195,65 %. Volume : 1 662 045 titres · Valeur : 113 073 294 FCFA. (1 erreur = − 5 000 FCFA.)",
     penaltyPerError: 5000,
-    perfectReward: 25000,
+    perfectReward: 20000,
     // Recopie des options de Q1 en repli neutre (requis par le type) :
-    // chaque question a sa propre paire de boutons.
+    // chaque question a sa propre paire/triplet de boutons, verbatim
+    // depuis le .txt source (Q3 n'a que 2 boutons dans la source).
     options: [
-      { value: "taux_echeance", label: "Le taux d'intérêt annuel, et l'année où l'on vous rend votre capital (échéance)." },
-      { value: "prix_creation", label: "Le prix de l'obligation, et l'année de création." },
+      { value: "raison", label: "Il a raison, l'action s'effondre." },
+      { value: "meteo", label: "Ce n'est que la météo du jour ; sur l'année (le climat), l'action fait +195,65 %. Pas de panique." },
+      { value: "impossible", label: "Impossible à dire." },
     ],
     questions: [
       {
-        prompt: "**Q1 :** Que signifient « 6,50 % » et « 2032 » ?",
-        answer: "taux_echeance",
+        prompt: "Votre beau-frère voit « −6,85 % », panique et veut tout vendre. La bonne lecture ?",
+        answer: "meteo",
         options: [
-          { value: "taux_echeance", label: "Le taux d'intérêt annuel, et l'année où l'on vous rend votre capital (échéance)." },
-          { value: "prix_creation", label: "Le prix de l'obligation, et l'année de création." },
+          { value: "raison", label: "Il a raison, l'action s'effondre." },
+          { value: "meteo", label: "Ce n'est que la météo du jour ; sur l'année (le climat), l'action fait +195,65 %. Pas de panique." },
+          { value: "impossible", label: "Impossible à dire." },
         ],
       },
       {
-        prompt: "**Q2 :** Un investisseur veut **récupérer une partie de son argent chaque année**. Quel mode ?",
-        answer: "amortissement",
+        prompt: "Quel prix sert de base au « disjoncteur » des ± 7,5 % de la prochaine séance ?",
+        answer: "reference",
         options: [
-          { value: "in_fine", label: "In Fine (IF)" },
-          { value: "amortissement", label: "Amortissement Constant (AC ou ACD)" },
+          { value: "ouverture", label: "L'ouverture" },
+          { value: "reference", label: "Le cours de référence" },
+          { value: "precedent", label: "Le cours précédent" },
         ],
       },
       {
-        prompt: "**Q3 :** À montant et taux identiques, quel mode rapporte le **plus d'intérêts au total** ?",
-        answer: "in_fine",
+        prompt: "Avec 1 662 045 titres échangés, que peut-on dire d'ETIT ce jour-là ?",
+        answer: "liquide",
         options: [
-          { value: "in_fine", label: "In Fine (IF)" },
-          { value: "amortissement", label: "Amortissement Constant (AC)" },
-        ],
-      },
-      {
-        prompt: "**Q4 :** Vous achetez l'obligation **6 mois** après le dernier coupon. Que se passe-t-il ?",
-        answer: "coupon_couru",
-        options: [
-          { value: "rien", label: "Rien de plus, le prix affiché suffit." },
-          { value: "coupon_couru", label: "Vous remboursez au vendeur le « coupon couru » (sa part de fruits déjà poussés), récupéré au coupon suivant." },
+          { value: "peu", label: "Peu échangée, difficile à revendre." },
+          { value: "liquide", label: "Très liquide (grosse affluence) : facile à acheter ou revendre." },
         ],
       },
     ],
@@ -179,41 +153,35 @@ export const m13: Module = {
   feedback: {
     perfect: {
       icon: "🎉",
-      title: "Vous parlez la langue des obligations ! + 25 000 FCFA sur votre portefeuille !",
-      body: "Nominal, coupon, coupon couru, mode de remboursement : le vocabulaire des obligations n'a plus de secret pour vous.",
+      title: "Lecture chirurgicale ! + 20 000 FCFA sur votre portefeuille !",
+      body: "Ni les colonnes de prix, ni le rouge d'une seule journée ne vous piègent plus.",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! Une colonne obligataire vous a échappé (− 5 000 FCFA par erreur).",
-      body: "Reprenons les mécanismes clés avant de continuer.",
+      title: "Aïe ! Un prix vous a échappé (− 5 000 FCFA par erreur).",
+      body: "Reprenons.",
     },
     explanations: [
       {
-        verdict: "Taux annuel + échéance",
-        title: "Décoder la carte d'identité de l'obligation",
-        body: "**ÉTAT DU SÉNÉGAL 6,50 % 2025-2032** se lit comme une carte d'identité : qui emprunte (l'État du Sénégal) · **le taux d'intérêt** (6,50 %) · **l'année de départ et de fin** (2025 → 2032).",
+        verdict: "La météo du jour vs le climat",
+        title: "La météo vs le climat.",
+        body: "Une baisse de −6,85 % en un jour, c'est une averse : ça ne dit **rien** sur la solidité de l'entreprise. Sur l'année, ETIT a fait **+195,65 %**. On regarde toujours le **climat** (la tendance longue), pas la pluie d'un jour.",
       },
       {
-        verdict: "Amortissement Constant",
-        title: "L'Amortissement vous rend votre argent petit à petit",
-        body: "**Amortissement Constant :** on vous rend 2 500 de capital chaque année ; l'intérêt baisse avec la somme qui reste due (600, 450, 300, 150). Total des intérêts : **1 500 FCFA**, mais vous récupérez votre argent au fil du temps — plus disponible et moins risqué.",
+        verdict: "Le cours de référence",
+        title: "Le disjoncteur.",
+        body: "La limite des ± 7,5 % se calcule à partir du **cours de référence** : c'est le garde-fou anti-panique de la BRVM.",
       },
       {
-        verdict: "In Fine",
-        title: "L'In Fine rapporte plus d'intérêts au total",
-        body: "**In Fine :** 600 FCFA d'intérêt chaque année, et vos 10 000 reviennent **en une fois à la fin**. Total des intérêts : 4 × 600 = **2 400 FCFA**. In Fine rapporte plus d'intérêts, car l'argent travaille en entier jusqu'au bout ; aucun des deux modes n'est « meilleur » — ça dépend de votre besoin.",
-      },
-      {
-        verdict: "Coupon couru",
-        title: "Le coupon couru, une question de justice",
-        body: "**Le coupon couru** est simplement une question de justice : chacun (ancien et nouveau propriétaire) touche sa part de fruits.",
-        note: "Bon à savoir : la plupart des obligations d'État de la BRVM sont en **ACD**.",
+        verdict: "Très liquide",
+        title: "L'affluence.",
+        body: "Beaucoup de titres échangés = marché animé = on entre et on sort facilement. Un volume minuscule est un signal de prudence.",
       },
     ],
   },
 
   next: {
-    label: "Je maîtrise les obligations ! Passons à l'analyse d'une action.",
+    label: "Je sais lire les mouvements. Passons aux colonnes de l'analyste.",
     target: "Module 14",
   },
 };

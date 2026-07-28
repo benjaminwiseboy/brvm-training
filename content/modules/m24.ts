@@ -1,92 +1,86 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 24 — Quand vendre ses titres (l'art de la
-   sortie). Phase 5 « Suivi & maîtrise ».
-   Barème standard Phase 5 (Bareme harmonise.txt §4 : « Quand
-   vendre | Phase 5 | +25 000 | −5 000 ») : perfectReward 25000 /
-   penaltyPerError 5000 / reward 25000 — confirmé par le propre
-   texte du .txt (« + 25 000 FCFA » / « − 5 000 FCFA par erreur »).
-   Défi « Vendre ou garder ? » à 5 cas : `challenge.questions` a
-   donc 5 entrées, et `feedback.explanations` AUSSI 5 entrées.
-   Seul le numéro de chaque cas est en gras dans le .txk (« **1.** »,
-   pas la phrase entière) : gras reproduit à l'identique sur les
-   prompts, sans ajout ni perte (règle de non-altération du gras).
-   La « leçon » de clôture (les 2 questions à se poser avant de
-   vendre) est repliée dans le `.note` de la 5ᵉ (dernière)
-   explication, comme M04/M19/M23 — PAS une 6ᵉ entrée synthétique.
-   Italiques simples du .txt (*l'entreprise a-t-elle changé ?*, etc.)
-   non supportées par renderMarkup : converties en texte normal.
+   Contenu du Module 24 — Passer votre premier ordre. Phase 4
+   « Passage à l'action ».
+   Barème standard Phase 4 (Bareme harmonise.txt §4 : « Phase 4 —
+   Action | +20 000 | −5 000 ») : perfectReward 20000 /
+   penaltyPerError 5000 / reward 20000 — confirmé par le propre
+   texte du .txt (« + 20 000 FCFA » / « − 5 000 FCFA »).
+   Défi = quiz à UNE SEULE question (3 boutons) : `challenge.questions`
+   a donc 1 seule entrée, et `feedback.explanations` AUSSI 1 seule
+   entrée (la mécanique du carnet d'ordres et son résultat chiffré
+   sont un seul raisonnement, combiné dans un seul `body`, comme
+   M16/M22). La « règle d'or à la BRVM » de conclusion est repliée
+   dans le `.note` de cette explication unique.
+   Métaphore du grand marché d'Adjamé/Dantokpa (négociation, carnet
+   d'ordres) préservée verbatim, comme demandé par le brief.
    ============================================================= */
 export const m24: Module = {
   code: "M24",
   index: 24,
-  totalModules: 26,
-  title: "Quand vendre ses titres (l'art de la sortie)",
-  phase: "Phase 5 · Suivi & maîtrise",
+  totalModules: 28,
+  title: "Passer votre premier ordre",
+  phase: "Phase 4 · Passage à l'action",
   status: { emoji: "🎓", label: "L'Analyste Confirmé" },
-  reward: 25000,
+  reward: 20000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 24",
-    headline: "Acheter est facile, vendre est un art.",
+    headline: "La bourse, c'est le grand marché : on négocie.",
     lead:
-      "Tout le monde sait acheter. Savoir **quand vendre** — et surtout **ne pas** vendre — sépare l'investisseur discipliné de celui qui s'agite pour rien. **On ne vend pas parce que le PRIX a bougé. On vend parce que quelque chose a changé dans l'ENTREPRISE ou dans VOTRE plan.**",
+      "Comme au grand marché d'Adjamé ou de Dantokpa, la bourse n'a pas de prix fixe : pour acheter, il faut qu'un autre investisseur accepte de vendre. Le **carnet d'ordres** met face à face acheteurs et vendeurs, et deux types d'ordres vous permettent d'y participer.",
     card: {
-      label: "Avant de cliquer « vendre »",
-      title: "3 bonnes raisons, et les pièges à éviter",
-      hint: "On ne vend jamais sur un coup de tête :",
+      label: "Les 2 types d'ordres",
+      title: "Cours limité vs marché",
+      hint: "Le réflexe qui protège votre budget, et celui qui va vite :",
       rules: [
-        "**Votre objectif est atteint** — le plan a marché, vous encaissez.",
-        "**La thèse s'est cassée** — les fondamentaux se sont dégradés durablement.",
-        "**Le rééquilibrage** — une action pèse trop lourd dans votre allocation.",
+        "**L'ordre à cours limité 🛡️** — vous fixez un prix maximum, vous maîtrisez votre budget.",
+        "**L'ordre au marché 🚀** — aucun prix fixé, exécution immédiate, mais risque de payer plus cher.",
       ],
     },
-    cta: "Apprendre à sortir",
+    cta: "Passer mon premier ordre",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "Acheter est facile, vendre est un art",
+      title: "Comment parler au marché",
       blocks: [
-        { kind: "text", value: "Tout le monde sait acheter. Savoir **quand vendre** — et surtout **ne pas** vendre — sépare l'investisseur discipliné de celui qui s'agite pour rien." },
-        { kind: "callout", tone: "highlight", value: "On ne vend pas parce que le PRIX a bougé. On vend parce que quelque chose a changé dans l'ENTREPRISE ou dans VOTRE plan." },
-        { kind: "text", value: "Vous ne vendriez pas votre maison juste parce que celle du voisin s'est bradée un jour, n'est-ce pas ? Une action, c'est pareil." },
+        { kind: "text", value: "La bourse n'est pas un supermarché à prix fixes. C'est comme le grand marché d'Adjamé ou de Dantokpa : **on négocie**. Pour acheter, il faut qu'un autre investisseur accepte de vendre." },
       ],
     },
     {
-      title: "✅ Les 3 bonnes raisons de vendre",
+      title: "Le carnet d'ordres",
       blocks: [
+        { kind: "text", value: "C'est le tableau qui met face à face les **acheteurs** et les **vendeurs**. Pour y participer, vous avez principalement **2 types d'ordres**." },
+      ],
+    },
+    {
+      title: "L'ordre à cours limité 🛡️ (le stratège)",
+      blocks: [
+        { kind: "text", value: "Vous fixez un **prix maximum** : « j'achète, mais pas au-dessus de 5 000 FCFA ». C'est le réflexe du bon acheteur au marché : vous avez une somme en tête, et vous ne payez pas un franc de plus." },
         {
           kind: "list",
           items: [
-            "**Votre objectif est atteint** (ou vous avez besoin de l'argent) — le plan a marché, vous encaissez.",
-            "**La thèse s'est cassée** — les fondamentaux se sont dégradés durablement (bénéfices en chute, dividende coupé, avantage perdu).",
-            "**Le rééquilibrage** — une action pèse trop lourd, vous en vendez une partie pour revenir à votre allocation cible.",
+            "Avantage : aucune mauvaise surprise, vous maîtrisez votre budget (et vos ratios).",
+            "Risque : si personne ne vend à ce prix, votre ordre n'est pas exécuté.",
           ],
         },
       ],
     },
     {
-      title: "❌ Les mauvaises raisons (les pièges)",
+      title: "L'ordre au marché 🚀 (le pressé)",
       blocks: [
+        { kind: "text", value: "Vous ne fixez **aucun prix** : « achetez tout de suite, peu importe le coût ». C'est foncer tête baissée : très rapide, mais on peut le payer cher." },
         {
           kind: "list",
           items: [
-            "**La peur / la panique** (un krach) — vendre transforme une baisse temporaire en perte définitive.",
-            "**L'ennui, l'impatience** — « ça ne bouge pas assez vite » n'est pas une raison.",
-            "**« Prendre ses petits bénéfices » trop tôt** — couper une excellente entreprise pour +10 %.",
-            "**Une rumeur** — « mon cousin a dit… » → non.",
+            "Avantage : vous obtenez vos actions immédiatement.",
+            "Risque : vous pouvez payer **beaucoup plus cher** que prévu, surtout si l'action est peu liquide. Voyons pourquoi. 👇",
           ],
         },
-      ],
-    },
-    {
-      title: "Un mot sur l'impôt",
-      blocks: [
-        { kind: "text", value: "À la BRVM, la plus-value des particuliers est généralement **exonérée** : vendre ne coûte pas d'impôt. Mais vendre souvent coûte des **frais** et vous prive des intérêts composés et des dividendes futurs. **Le temps reste votre allié.**" },
       ],
     },
   ],
@@ -95,34 +89,20 @@ export const m24: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "Vendre ou garder ?",
-    instruction: "Pour chaque situation, VENDRE ou GARDER ? (1 erreur = − 5 000 FCFA.)",
+    title: "Le carnet d'ordres",
+    instruction:
+      "Action fictive « Afri-Transport ». Clôture d'hier (BOC) : 4 000 FCFA. Vous voulez 15 actions ce matin. Le carnet d'ordres (les vendeurs) : Vendeur n°1, 5 actions à 4 050 FCFA. Vendeur n°2, 10 actions à 4 300 FCFA. Votre action : pressé, vous passez un ordre « au marché » pour 15 actions d'un coup. (1 erreur = − 5 000 FCFA.)",
     penaltyPerError: 5000,
-    perfectReward: 25000,
+    perfectReward: 20000,
     options: [
-      { value: "vendre", label: "Vendre" },
-      { value: "garder", label: "Garder" },
+      { value: "force_hier", label: "Il force les vendeurs à me vendre à 4 000 (le prix d'hier)." },
+      { value: "cascade", label: "Il prend les 5 premières à 4 050, puis les 10 suivantes à 4 300 → mon budget moyen explose." },
+      { value: "annule", label: "Il annule mon ordre, car aucun vendeur n'a 15 actions d'un coup." },
     ],
     questions: [
       {
-        prompt: "**1.** Le marché chute de 15 % par panique. Vos entreprises restent solides.",
-        answer: "garder",
-      },
-      {
-        prompt: "**2.** Votre projet (la retraite) prévu dans votre plan commence dans 2 mois.",
-        answer: "vendre",
-      },
-      {
-        prompt: "**3.** Une de vos entreprises voit ses bénéfices s'effondrer 3 ans de suite, coupe son dividende, perd son marché.",
-        answer: "vendre",
-      },
-      {
-        prompt: "**4.** Une bonne action a pris +12 % en 3 mois ; vous vous ennuyez et voulez « prendre vos bénéfices ».",
-        answer: "garder",
-      },
-      {
-        prompt: "**5.** Un ami jure qu'une de vos actions va s'effondrer, sans preuve, alors que ses résultats sont excellents.",
-        answer: "garder",
+        prompt: "**Question : que fait le système, et quel en est le résultat ?**",
+        answer: "cascade",
       },
     ],
   },
@@ -131,46 +111,26 @@ export const m24: Module = {
   feedback: {
     perfect: {
       icon: "🎉",
-      title: "Sang-froid d'acier ! + 25 000 FCFA sur votre portefeuille !",
-      body: "Vous ne vendez que pour de bonnes raisons, jamais sous le coup de l'émotion.",
+      title: "Excellente vision du marché ! + 20 000 FCFA sur votre portefeuille !",
+      body: "Vous avez évité le piège classique des marchés peu liquides.",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! Une main trop nerveuse sur le bouton « vendre » (− 5 000 FCFA par erreur).",
-      body: "Reprenons chaque situation.",
+      title: "Aïe ! Le marché vous a fait payer le prix fort (− 5 000 FCFA).",
+      body: "Reprenons la mécanique de l'ordre « au marché ».",
     },
     explanations: [
       {
-        verdict: "Garder",
-        title: "Le prix a bougé, pas l'entreprise",
-        body: "Une panique est temporaire. On ne vend jamais par peur.",
-      },
-      {
-        verdict: "Vendre",
-        title: "Objectif atteint",
-        body: "C'est le plan prévu. Vous encaissez pour votre projet.",
-      },
-      {
-        verdict: "Vendre",
-        title: "La thèse s'est cassée",
-        body: "Ce n'est plus l'entreprise que vous aviez analysée.",
-      },
-      {
-        verdict: "Garder",
-        title: "L'ennui n'est pas une stratégie",
-        body: "Couper une excellente entreprise pour +12 %, c'est rater les +100 % futurs.",
-      },
-      {
-        verdict: "Garder",
-        title: "Une rumeur ne vaut rien",
-        body: "Une rumeur ne vaut rien face à de bons résultats. On décide sur des faits.",
-        note: "**La leçon :** avant de vendre, deux questions — l'entreprise a-t-elle changé ? et mon plan a-t-il changé ? Si non aux deux, on **garde**.",
+        verdict: "Il prend les 5 premières à 4 050, puis les 10 suivantes à 4 300",
+        title: "La mécanique de l'ordre « au marché »",
+        body: "Le système « mange » les lignes du carnet, de la moins chère à la plus chère, jusqu'à votre quantité. 1. Il prend les 5 actions à 4 050. 2. Il lui en faut 10 de plus → il prend celles à 4 300. 3. Il accepte, car vous n'avez mis aucune limite. **Résultat :** vous pensiez payer ~4 000, vous vous retrouvez avec des actions à 4 300.",
+        note: "**La règle d'or à la BRVM :** le marché est parfois peu liquide. **Utilisez TOUJOURS l'ordre à cours limité.** Avec une limite à 4 100, vous auriez eu les 5 premières, et votre ordre aurait sagement attendu le reste à bon prix. Vous restez maître de votre argent.",
       },
     ],
   },
 
   next: {
-    label: "Je sais quand sortir ! Dernière validation avant l'épreuve finale.",
+    label: "Je protège mes ordres ! Au fait, que réclame l'État sur mes gains ?",
     target: "Module 25",
   },
 };

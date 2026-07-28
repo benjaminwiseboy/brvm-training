@@ -9,7 +9,7 @@ import type { Module } from "@/lib/types";
 export const m01: Module = {
   code: "M01",
   index: 1,
-  totalModules: 26,
+  totalModules: 28,
   title: "Démystifier la Bourse et la BRVM",
   phase: "Phase 1 · Fondations",
   status: { emoji: "🥉", label: "L'Épargnant Livret A" },

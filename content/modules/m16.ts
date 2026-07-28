@@ -1,118 +1,92 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 16 — Graham (2/4) : la performance (lire le
-   compte de résultat).
-   Barème NON standard (§4 : « Graham 1b Performance | 3 | +30 000 |
-   −10 000 ») : perfectReward 30000 / penaltyPerError 10000 — PAS le
-   20000/5000 par défaut de la Phase 3.
-   RESTRUCTURATION DE L'EXPLICATION (wrinkle documentée dans le
-   brief de cette tâche) : le Défi n'a que 2 questions, mais la
-   source décrit 4 profils A/B/C/D dans son explication. Répartition :
-   - Explanation 1 (Q1, « quel profil est le plus performant ? ») =
-     les 4 puces A/B/C/D combinées en un seul corps — juger A exige
-     de le contraster avec B/C/D.
-   - Explanation 2 (Q2, « que révèle le Profil D ? ») = focus sur la
-     seule puce D (chevauchement volontaire avec l'explanation 1, pas
-     une duplication problématique — Q2 porte spécifiquement sur D).
-   Le paragraphe de clôture « Deux leçons d'or » + la parenthèse
-   « (Pour une banque, on suit le PNB.) » sont repliés dans le `.note`
-   de l'explanation 2 (la dernière), jamais en 3ᵉ entrée synthétique.
-   `feedback.explanations.length` = 2 = `challenge.questions.length`.
-   Parenthèse italique *(Hors Activités Ordinaires)* et la question
-   d'analyste en italique (Slide 4) : astérisques simples retirés,
-   texte conservé (splitMarkup, lib/format.ts, ne reconnaît que
-   **gras**).
+   Contenu du Module 16 — Analyse fondamentale : les bases.
+   Premiers réflexes d'analyse, avant la méthode Graham approfondie
+   (M17+) — mention repliée dans hero.lead (seule synthèse créative
+   admise).
+   Module HORS barème (§4), comme M06/M07 : on reprend les chiffres
+   propres du .txt — perfectReward 20000 ("+ 20 000 FCFA") mais
+   penaltyPerError 10000 ("− 10 000 FCFA", PAS le 5 000 habituel :
+   une seule question à forts enjeux, pas les 4 habituelles).
+   Défi = quiz à UNE SEULE question (2 boutons, A/B) : le .txt n'a
+   qu'une question dans sa Section 2. `challenge.questions` a donc
+   1 seule entrée, et `feedback.explanations` AUSSI 1 seule entrée
+   (les 2 raisons — rendement 9,5 % et PER 7 — justifient le même
+   verdict : combinées dans un seul `body`, pas éclatées en 2
+   explications). L'aside « A est-elle mauvaise ? Pas du tout !... »
+   et la phrase « La leçon d'or... » sont repliées dans le `.note`
+   de cette explication unique.
+   Emphase *italique* à un seul astérisque du .txt (« pour *votre*
+   stratégie ») : le type Block ne supporte que **gras** (voir
+   lib/format.ts) — astérisques simples retirés, mot conservé tel
+   quel (aucun mot perdu ni inventé).
    ============================================================= */
 export const m16: Module = {
   code: "M16",
   index: 16,
-  totalModules: 26,
-  title: "Graham (2/4) : la performance (lire le compte de résultat)",
+  totalModules: 28,
+  title: "Analyse fondamentale : les bases",
   phase: "Phase 3 · L'Analyse",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
-  reward: 30000,
+  reward: 20000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 16",
-    headline: "Le bénéfice ne dit pas tout : d'où vient-il ?",
+    headline: "Regardez sous le capot avant d'acheter.",
     lead:
-      "Le compte de résultat se lit comme une **cascade**, du chiffre d'affaires jusqu'au résultat net. Mais un bénéfice final flatteur peut cacher un piège : d'où vient-il vraiment ?",
+      "Vous savez lire le prix d'une action, mais ce prix ne dit pas tout. Avant la méthode Graham approfondie (M17 et suivants), voici vos premiers réflexes d'analyste : 3 vérifications simples, comme un check-up avant d'acheter une **voiture d'occasion**.",
     card: {
-      label: "La cascade du compte de résultat",
-      title: "CA → Exploitation → Net",
-      hint: "Trois lignes à suivre, du haut vers le bas :",
+      label: "Les 3 vérifs avant d'acheter",
+      title: "Résultat net, rendement, PER",
+      hint: "On oublie les rumeurs et on vérifie 3 choses simples :",
       rules: [
-        "**Le chiffre d'affaires** — tout l'argent encaissé (le PNB pour une banque).",
-        "**Le résultat d'exploitation** — ce qui reste une fois le métier payé : la vraie performance.",
-        "**Le résultat net** — la ligne finale, parfois gonflée par de l'exceptionnel.",
+        "**Le résultat net** — l'entreprise gagne-t-elle vraiment de l'argent ?",
+        "**Le rendement** — combien elle vous « paie de loyer » chaque année.",
+        "**Le PER** — est-elle chère ou bon marché par rapport au marché ?",
       ],
     },
-    cta: "Lire la performance comme un analyste",
+    cta: "Regarder sous le capot",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "Gagne-t-elle vraiment de l'argent ?",
+      title: "Regarder sous le capot",
       blocks: [
-        { kind: "text", value: "Vous avez le portrait. Passons à sa **performance financière** : elle se lit dans un document, le **compte de résultat** (publié chaque année dans le rapport annuel, sur brvm.org)." },
+        { kind: "text", value: "Vous savez lire le prix d'une action. Mais ce prix ne dit pas tout : une action à 2 000 FCFA peut être **hors de prix**, et une à 50 000 une **excellente affaire**." },
+        { kind: "text", value: "C'est comme une **voiture d'occasion** : le prix affiché ne suffit pas, il faut **regarder sous le capot** avant d'acheter." },
+        { kind: "text", value: "On vérifie 3 choses simples — et on oublie les rumeurs (« mon cousin m'a dit que ça va monter »)." },
       ],
     },
     {
-      title: "Le compte de résultat, c'est une cascade 🍽️",
+      title: "Vérif n°1 : est-ce qu'elle gagne de l'argent ? (le résultat net)",
       blocks: [
-        { kind: "text", value: "Imaginez un restaurant. L'argent « descend » de haut en bas, étage par étage :" },
+        { kind: "text", value: "Achèteriez-vous une **boutique** qui perd de l'argent chaque année ? Sûrement pas." },
+        { kind: "text", value: "Pour une entreprise, c'est pareil : on regarde le **résultat net** — le bénéfice une fois tout payé. Si elle enchaîne les pertes année après année, **on fuit**, même si l'action a l'air « pas chère »." },
+      ],
+    },
+    {
+      title: "Vérif n°2 : combien elle me « paie de loyer » ? (le rendement)",
+      blocks: [
+        { kind: "text", value: "Rappel du M14 : le **rendement**, c'est le « loyer » de l'action — ce qu'elle vous verse en dividendes chaque année, en pourcentage de son prix." },
+        { kind: "text", value: "À la BRVM, un bon loyer se situe entre **7 et 10 %**." },
+        { kind: "callout", tone: "warn", value: "⚠️ Méfiez-vous du loyer « trop beau » : un rendement de 15 % peut cacher un piège (l'entreprise distribue tout son argent et ne garde rien pour grandir)." },
+      ],
+    },
+    {
+      title: "Vérif n°3 : est-elle chère ? (le PER)",
+      blocks: [
+        { kind: "text", value: "Rappel du M14 : le **PER**, c'est le nombre d'années pour « rembourser » le prix, comme quand on achète une boutique." },
         {
           kind: "list",
           items: [
-            "**Le chiffre d'affaires** = tout l'argent encaissé en vendant ses plats.",
-            "**Le résultat d'exploitation** = ce qui reste une fois payés les cuisiniers, les ingrédients, le loyer. ⭐ **C'est la vraie performance du métier.**",
+            "**PER 8** → environ 8 ans : attractif.",
+            "**PER 25** → 25 ans : cher (le marché parie sur une forte croissance).",
           ],
         },
-        { kind: "text", value: "On continue la cascade au slide suivant." },
-      ],
-    },
-    {
-      title: "La cascade (suite), jusqu'au résultat net",
-      blocks: [
-        {
-          kind: "list",
-          items: [
-            "**Le résultat financier** = les gains liés aux placements du restaurant (ex. les intérêts de son épargne). C'est **annexe** à son métier.",
-            "**Le résultat HAO** (Hors Activités Ordinaires) = un gain **exceptionnel**, qui ne se reproduira pas (ex. la vente de son vieux camion).",
-            "**Le résultat net** = tout additionné, la toute dernière ligne : le bénéfice final.",
-          ],
-        },
-      ],
-    },
-    {
-      title: "Le piège du résultat net ⚠️",
-      blocks: [
-        { kind: "text", value: "Un restaurant peut afficher un **beau résultat net** cette année… mais seulement parce qu'il a **vendu son camion** (un gain HAO, exceptionnel). L'an prochain, plus de camion à vendre — et on découvre que son cœur de métier gagnait à peine de l'argent." },
-        { kind: "text", value: "👉 D'où LA question de l'analyste : le bénéfice vient-il vraiment du métier (le résultat d'exploitation), ou d'un coup de chance ponctuel ?" },
-      ],
-    },
-    {
-      title: "Cas des banques : le PNB",
-      blocks: [
-        { kind: "text", value: "Attention : une **banque** n'a pas de « chiffre d'affaires » classique. Son métier, c'est l'argent lui-même : elle encaisse des intérêts sur les crédits qu'elle accorde, mais en **reverse** sur les dépôts de ses clients." },
-        { kind: "text", value: "On regarde donc le **Produit Net Bancaire (PNB)** : ce qu'elle **garde vraiment** (marge d'intérêt + commissions + gains de marché)." },
-        { kind: "text", value: "👉 Pour une banque, remplacez mentalement « chiffre d'affaires » par « PNB »." },
-      ],
-    },
-    {
-      title: "La bonne méthode : la tendance sur 10 ans",
-      blocks: [
-        { kind: "text", value: "Un chiffre isolé ne veut rien dire. Le réflexe d'analyste : tracer sur **10 ans** trois courbes — le chiffre d'affaires (ou le PNB), le résultat d'exploitation et le résultat net." },
-        {
-          kind: "list",
-          items: [
-            "Des courbes qui **montent régulièrement** = une entreprise performante et rassurante.",
-            "Des courbes en **dents de scie** = imprévisible, plus risqué. 👇",
-          ],
-        },
+        { kind: "text", value: "À la BRVM, un PER classique tourne autour de **8-12** (moyenne du marché ≈ 14). À vous de juger ! 👇" },
       ],
     },
   ],
@@ -121,38 +95,19 @@ export const m16: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "Interpréter les courbes sur 10 ans",
+    title: "Étude de cas comparative",
     instruction:
-      "Quatre entreprises, chacune avec 3 courbes sur 10 ans (chiffre d'affaires / résultat d'exploitation / résultat net, en milliards FCFA). **📈 Profil A** — CA : 40 → 90 · Exploitation : 6 → 15 · Net : 4 → 11 (tout monte régulièrement). **📈 Profil B** — CA : 40 → 100 · Exploitation : 8 → 5 · Net : 6 → 4 (le CA grimpe, le reste baisse). **📈 Profil C** — tout en dents de scie (aucune tendance). **📈 Profil D** — CA : 50 → 48 · Exploitation : 10 → 4 · Net : 6 → 12 (le net monte, le cœur de métier s'effondre). (1 erreur = − 10 000 FCFA.)",
+      "Vous appliquez une stratégie de **rente** (revenu sûr et immédiat). Observez ces deux entreprises. **Entreprise A — « Agro-Star »** : secteur agriculture (nouvelle entreprise) · résultat net fortement en hausse (+30 % l'an dernier) · PER 19 · Rendement 2 %. **Entreprise B — « Banque Panafricaine »** : secteur banque (installée depuis 30 ans) · résultat net stable (+2 % l'an dernier) · PER 7 · Rendement 9,5 %. (1 erreur = − 10 000 FCFA.)",
     penaltyPerError: 10000,
-    perfectReward: 30000,
-    // Recopie des options de Q1 en repli neutre (requis par le type) :
-    // chaque question a sa propre liste de boutons.
+    perfectReward: 20000,
     options: [
-      { value: "a", label: "A" },
-      { value: "b", label: "B" },
-      { value: "c", label: "C" },
-      { value: "d", label: "D" },
+      { value: "a", label: "L'Entreprise A (Agro-Star)" },
+      { value: "b", label: "L'Entreprise B (Banque Panafricaine)" },
     ],
     questions: [
       {
-        prompt: "**Q1 :** Quel profil est le plus **performant et rassurant** pour le long terme ?",
-        answer: "a",
-        options: [
-          { value: "a", label: "A" },
-          { value: "b", label: "B" },
-          { value: "c", label: "C" },
-          { value: "d", label: "D" },
-        ],
-      },
-      {
-        prompt: "**Q2 :** Dans le Profil D, le net monte alors que l'exploitation s'effondre. Que révèle-t-il ?",
-        answer: "alerte",
-        options: [
-          { value: "performante", label: "L'entreprise est très performante." },
-          { value: "alerte", label: "Le net est porté par de l'exceptionnel (HAO) ou du financier, pas par le cœur de métier. Signal d'alerte." },
-          { value: "erreur", label: "Une erreur comptable, à ignorer." },
-        ],
+        prompt: "**Question : pour votre stratégie de rente, laquelle achetez-vous en priorité ?**",
+        answer: "b",
       },
     ],
   },
@@ -161,31 +116,26 @@ export const m16: Module = {
   feedback: {
     perfect: {
       icon: "🎉",
-      title: "Lecture d'expert ! + 30 000 FCFA sur votre portefeuille !",
-      body: "Vous ne regardez plus seulement la ligne du bas : vous savez d'où vient vraiment le bénéfice.",
+      title: "Bravo, l'analyste ! + 20 000 FCFA sur votre portefeuille !",
+      body: "Vous avez compris le piège : l'entreprise qui grandit le plus vite n'est pas la bonne cible pour votre stratégie.",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! Une courbe vous a trompé (− 10 000 FCFA par erreur).",
-      body: "Reprenons la lecture des 4 profils.",
+      title: "Aïe ! Ce choix coûte cher (− 10 000 FCFA).",
+      body: "Vous vous êtes laissé éblouir par la croissance de A, en oubliant votre objectif : la rente.",
     },
     explanations: [
       {
-        verdict: "Profil A",
-        title: "Les 4 profils, comparés",
-        body: "**Profil A — la championne ✅** : les 3 courbes montent ensemble. Performante et prévisible. **Profil B — la fausse croissance ⚠️** : elle vend plus (40 → 100) mais gagne moins (exploitation 8 → 5) — autrement dit, elle gagne de moins en moins sur chaque vente. **Profil C — montagnes russes ⚠️** : imprévisible, difficile à évaluer. **Profil D — le mirage 🚨** : le net grimpe (6 → 12) mais le cœur de métier s'effondre (10 → 4). Le net n'est gonflé que par de l'exceptionnel. Danger.",
-      },
-      {
-        verdict: "Porté par l'exceptionnel (HAO/financier) — signal d'alerte",
-        title: "Le mirage du Profil D",
-        body: "**Profil D — le mirage 🚨** : le net grimpe (6 → 12) mais le cœur de métier s'effondre (10 → 4). Le net n'est gonflé que par de l'exceptionnel. Danger.",
-        note: "**Deux leçons d'or :** le **résultat d'exploitation** est le vrai juge de la performance (c'est lui qui dit si le métier gagne de l'argent) ; et la **tendance sur 10 ans** compte plus que le chiffre d'une seule année. (Pour une banque, on suit le PNB.)",
+        verdict: "Entreprise B",
+        title: "Pourquoi B, pour la rente",
+        body: "**Rendement 9,5 %** : un gros « loyer », tout de suite. A (2 %) garde son argent pour se développer, elle vous paie très peu. **PER 7** : B est bon marché (7 ans pour se rembourser). A a un PER de 19 : le marché a déjà anticipé sa croissance, l'action est chère.",
+        note: "**A est-elle mauvaise ?** Pas du tout ! C'est une **action de croissance**. Pour un profil audacieux visant des plus-values dans 10 ans, A serait un excellent choix. **La leçon d'or :** une « bonne action » dans l'absolu n'existe pas. Il n'y a que la bonne action **pour votre stratégie** (M06 / M07).",
       },
     ],
   },
 
   next: {
-    label: "Performante… mais son avenir est-il assuré ?",
+    label: "J'ai les premiers réflexes ! Allons plus loin avec la méthode Graham.",
     target: "Module 17",
   },
 };

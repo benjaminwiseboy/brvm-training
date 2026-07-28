@@ -1,24 +1,24 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 11 — Le BOC avancé (2/3) : lire une ligne
-   d'action.
-   Défi = quiz à 3 questions, boutons déjà réels dans le .txt
-   (2 ou 3 options selon la question — Q3 n'a que 2 boutons dans
-   la source, conservé tel quel). Ligne réelle d'Ecobank (ETIT,
-   17/07/2026), repliée verbatim dans `challenge.instruction`
-   (pas de kind « table » dans `Block`/`QuizChallenge`).
-   Le .txt ne donne pas de 2ᵉ ligne de corps pour le feedback
-   « imperfect » (seulement le titre) : un court « Reprenons. » est
-   ajouté (même repli que M10), le champ `body` étant requis par
-   le type.
+   Contenu du Module 11 — Lire le BOC : l'essentiel.
+   Première étape de la Phase 3 « L'Analyse ». Défi = quiz à 3
+   questions ; le .txt source décrit une interaction « clic sur la
+   bonne case du tableau, sinon un QCM » — on prend le repli QCM
+   explicitement prévu par la source, avec pour distracteurs les
+   AUTRES valeurs de la même colonne du tableau du BOC (mêmes
+   3 lignes SNTS/BOAC/CIE pour les 3 questions) → chaque question a
+   sa propre paire d'options (mécanisme M03/M06/M07). Le tableau du
+   BOC (Section 2 du .txt) n'a pas d'équivalent "table" dans
+   `Block`/`QuizChallenge` (pas de kind dédié) : ses valeurs sont
+   repliées, verbatim, dans `challenge.instruction`.
    Barème Phase 3 standard (§4) : +20 000 / −5 000.
    ============================================================= */
 export const m11: Module = {
   code: "M11",
   index: 11,
-  totalModules: 26,
-  title: "Le BOC avancé (2/3) : lire une ligne d'action",
+  totalModules: 28,
+  title: "Lire le BOC : l'essentiel",
   phase: "Phase 3 · L'Analyse",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
   reward: 20000,
@@ -26,78 +26,71 @@ export const m11: Module = {
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 11",
-    headline: "Une ligne d'action, plusieurs heures de la journée.",
+    headline: "Le grand tableau d'affichage de la bourse.",
     lead:
-      "Cours précédent, ouverture, clôture, cours de référence… chaque colonne de prix raconte un moment précis de la journée. Et une variation du jour ne dit jamais tout sur le climat de l'année.",
+      "Le BOC (Bulletin Officiel de la Cote) ressemble à un tableau vertigineux de chiffres. Bonne nouvelle : pour investir sereinement, **3 colonnes suffisent** — le prix, l'affluence, le loyer.",
     card: {
-      label: "Lire une ligne comme un pro",
-      title: "Les prix, le disjoncteur, la météo",
-      hint: "3 pièges à éviter sur la ligne d'une action :",
+      label: "Vos 3 réflexes de lecture",
+      title: "Prix, affluence, loyer",
+      hint: "Ignorez les dizaines d'autres colonnes, concentrez-vous sur :",
       rules: [
-        "**Les colonnes de prix** — précédent, ouverture, clôture : chacune raconte un moment de la journée.",
-        "**Le disjoncteur des ± 7,5 %** — la limite de sécurité calculée sur le cours de référence.",
-        "**La météo vs le climat** — ne jamais confondre la variation du jour et celle de l'année.",
+        "**Le prix (cours de clôture)** — ce que vous paierez si vous achetez demain.",
+        "**L'affluence (volume)** — combien de titres s'échangent, pour savoir si vous pourrez revendre.",
+        "**Le loyer (dividende)** — combien l'action vous versera, et à quelle date.",
       ],
     },
-    cta: "Décoder une vraie ligne d'action",
+    cta: "Ouvrir le grand tableau d'affichage",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "Zoomons sur une seule action",
+      title: "Le BOC, le grand tableau d'affichage",
       blocks: [
-        { kind: "text", value: "Vous savez lire la météo générale du marché (M10). Descendons maintenant sur **une seule action**. Sa ligne dans le BOC a plusieurs colonnes de prix — pas de panique, chacune raconte simplement **un moment de la journée**." },
-      ],
-    },
-    {
-      title: "Les prix, comme les heures d'une journée",
-      blocks: [
-        { kind: "text", value: "Imaginez une journée au marché :" },
         {
-          kind: "list",
-          items: [
-            "**Cours précédent** — le prix d'**hier** soir. C'est le point de comparaison : a-t-on monté ou baissé depuis ?",
-            "**Ouverture** — le prix à **l'ouverture des portes** ce matin. Il donne l'ambiance de début de journée.",
-            "**Clôture** — le prix à **la fermeture**, le soir. C'est LE prix qui vous intéresse : votre ordre de demain se fera à peu près à ce niveau.",
-          ],
+          kind: "text",
+          value:
+            "Le **BOC** (Bulletin Officiel de la Cote) est le document officiel que la BRVM publie chaque soir de bourse. Voyez-le comme le **grand tableau d'affichage** de la bourse : tout ce qui s'est passé dans la journée y est écrit — les prix, les quantités échangées, les dividendes à venir. C'est là qu'on va chercher l'info avant d'acheter.",
         },
       ],
     },
     {
-      title: "Le cours de référence & le « disjoncteur » des ± 7,5 %",
+      title: "Un tableau qui fait peur ? Pas grave",
       blocks: [
-        { kind: "text", value: "**En clair :** le cours de référence est le prix « de base » que la BRVM fixe pour le lendemain (souvent égal à la clôture)." },
-        { kind: "text", value: "**À quoi il sert :** à poser une **limite de sécurité**. En une seule journée, une action ne peut ni monter ni baisser de plus de **± 7,5 %** par rapport à ce prix de base." },
-        { kind: "text", value: "**L'image :** c'est un **disjoncteur électrique**. Quand le courant s'affole, le disjoncteur saute pour éviter l'incendie. Ici, si une action s'emballe, la règle des 7,5 % « coupe le courant » pour la journée, le temps que tout le monde se calme. Impossible, donc, qu'une simple rumeur fasse chuter votre action de 40 % en un jour." },
+        { kind: "text", value: "À première vue, le BOC ressemble à un immense tableau de chiffres, avec des dizaines de colonnes — de quoi donner le vertige." },
+        { kind: "text", value: "Rassurez-vous : c'est comme un journal. Personne ne lit toutes les pages ! Pour investir tranquillement, **3 colonnes suffisent**. On les regarde une par une." },
       ],
     },
     {
-      title: "Le piège n°1 : la météo du jour vs le climat de l'année ⚠️",
+      title: "Colonne 1 : le prix (le cours de clôture) 💵",
       blocks: [
-        { kind: "text", value: "Le BOC donne DEUX variations : celle **du jour** et celle **de l'année**. Ne les confondez jamais — c'est la différence entre **la météo d'aujourd'hui** et **le climat de l'année**." },
-        { kind: "text", value: "Exemple réel — Ecobank (ETIT), le 17/07/2026 :" },
-        {
-          kind: "list",
-          items: [
-            "Aujourd'hui (la météo) : **−6,85 %** — une journée de pluie.",
-            "Sur l'année (le climat) : **+195,65 %** 🚀 — l'action a presque **triplé** !",
-          ],
-        },
-        { kind: "callout", tone: "warn", value: "Le débutant voit la pluie du jour et prend peur. L'investisseur avisé sait qu'une journée de pluie ne change rien à un climat magnifique. **On juge une action sur son climat, pas sur la météo d'un jour.**" },
+        { kind: "text", value: "**En clair :** c'est le prix affiché sur « l'étiquette » de l'action à la fermeture — le dernier prix auquel elle s'est vendue dans la journée." },
+        { kind: "text", value: "**Pourquoi ça compte :** c'est ce que vous paierez, ou presque, si vous achetez demain." },
+        { kind: "text", value: "**Exemple :** BOA Côte d'Ivoire a fini la journée à **6 200 FCFA**. Vous voulez 10 actions ? Prévoyez environ **62 000 FCFA** (avant les frais)." },
       ],
     },
     {
-      title: "Le volume : y a-t-il foule ? (rappel)",
+      title: "Colonne 2 : le volume (y a-t-il foule ?) 🔄",
       blocks: [
-        { kind: "text", value: "Comme au M09, le **volume** = le nombre de titres échangés dans la journée = **l'affluence** du marché. Plus il y a de monde, plus c'est facile d'acheter ou de revendre sans faire bouger le prix." },
-        { kind: "text", value: "**Exemple :** ce jour-là, ETIT a échangé **1 662 045 titres** (une cohue !), contre seulement **1 944** pour Sonatel. La colonne Valeur (113 millions de FCFA pour ETIT) mesure la même affluence, mais en argent." },
+        { kind: "text", value: "**En clair :** le volume, c'est le nombre d'actions qui ont changé de main dans la journée. Une image simple : c'est **l'affluence du marché**." },
+        { kind: "text", value: "**Pourquoi ça compte :** dans un marché **animé** (beaucoup de monde), vous trouvez toujours quelqu'un pour vous vendre une action ou vous racheter la vôtre. Dans un marché **désert**, vous risquez de rester planté : personne pour reprendre vos titres le jour où vous voudrez sortir." },
+        { kind: "text", value: "**Exemple :** Sonatel a échangé **45 200 titres** aujourd'hui — la foule des grands jours, vous entrez et sortez quand vous voulez. Une action qui n'échange que 5 titres par jour, elle, est à éviter pour débuter." },
       ],
     },
     {
-      title: "À vous de lire une vraie ligne 👇",
+      title: "Colonne 3 : le dividende (le « loyer » de l'action) 🎁",
       blocks: [
-        { kind: "lead", value: "À vous de lire une vraie ligne. 👇" },
+        { kind: "text", value: "**En clair :** le dividende, c'est la part des bénéfices que l'entreprise vous verse en cash. Une image : c'est comme un **loyer** — vous possédez l'action, et elle vous « paie un loyer » chaque année." },
+        { kind: "text", value: "**Pourquoi ça compte :** le BOC vous dit **à l'avance** combien vous toucherez, et à quelle date." },
+        { kind: "text", value: "**Exemple :** CIE versera **250 FCFA par action** le 10/06/2026. Avec 100 actions, ça fait **25 000 FCFA** de cash — net d'impôt." },
+        { kind: "text", value: "(Rappel du M03 : il faut détenir l'action avant sa « date de détachement » pour y avoir droit.)" },
+      ],
+    },
+    {
+      title: "À vous de jouer",
+      blocks: [
+        { kind: "lead", value: "Vous avez les 3 réflexes : **le prix, l'affluence (volume), le loyer (dividende)**." },
+        { kind: "text", value: "Place à la chasse au trésor. 👇" },
       ],
     },
   ],
@@ -106,44 +99,45 @@ export const m11: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "Décoder les mouvements",
+    title: "La chasse au trésor",
     instruction:
-      "Ligne réelle d'Ecobank (ETIT), 17/07/2026 — Cours précédent : 73 · Ouverture : 68 · Clôture : 68 · Cours de référence : 68. Variation du jour : −6,85 % · Variation sur l'année : +195,65 %. Volume : 1 662 045 titres · Valeur : 113 073 294 FCFA. (1 erreur = − 5 000 FCFA.)",
+      "Observez cet extrait du BOC (données fictives, structure réelle) et retrouvez les infos demandées. **SNTS — SONATEL SÉNÉGAL** : cours clôture 18 500 · volume 45 200 · dividende net 1 500 · paiement 15/05/2026. **BOAC — BOA CÔTE D'IVOIRE** : cours clôture 6 200 · volume 12 000 · dividende net 620 · paiement 22/04/2026. **CIE — CIE CÔTE D'IVOIRE** : cours clôture 1 950 · volume 3 500 · dividende net 250 · paiement 10/06/2026. (1 erreur = − 5 000 FCFA.)",
     penaltyPerError: 5000,
     perfectReward: 20000,
-    // Recopie des options de Q1 en repli neutre (requis par le type) :
-    // chaque question a sa propre paire/triplet de boutons, verbatim
-    // depuis le .txt source (Q3 n'a que 2 boutons dans la source).
+    // Recopie des options de la Mission 1 en repli neutre (requis par le
+    // type) : chaque question ci-dessous fournit ses propres distracteurs,
+    // tirés des autres valeurs de la même colonne du tableau du BOC.
     options: [
-      { value: "raison", label: "Il a raison, l'action s'effondre." },
-      { value: "meteo", label: "Ce n'est que la météo du jour ; sur l'année (le climat), l'action fait +195,65 %. Pas de panique." },
-      { value: "impossible", label: "Impossible à dire." },
+      { value: "18500", label: "18 500" },
+      { value: "6200", label: "6 200" },
+      { value: "1950", label: "1 950" },
     ],
     questions: [
       {
-        prompt: "Votre beau-frère voit « −6,85 % », panique et veut tout vendre. La bonne lecture ?",
-        answer: "meteo",
+        prompt: "**Mission 1 — Le prix :** vous voulez acheter BOA Côte d'Ivoire. À quel prix l'action a-t-elle terminé la journée ?",
+        answer: "6200",
         options: [
-          { value: "raison", label: "Il a raison, l'action s'effondre." },
-          { value: "meteo", label: "Ce n'est que la météo du jour ; sur l'année (le climat), l'action fait +195,65 %. Pas de panique." },
-          { value: "impossible", label: "Impossible à dire." },
+          { value: "18500", label: "18 500" },
+          { value: "6200", label: "6 200" },
+          { value: "1950", label: "1 950" },
         ],
       },
       {
-        prompt: "Quel prix sert de base au « disjoncteur » des ± 7,5 % de la prochaine séance ?",
-        answer: "reference",
+        prompt: "**Mission 2 — L'affluence :** combien de titres Sonatel ont été échangés dans la journée ?",
+        answer: "45200",
         options: [
-          { value: "ouverture", label: "L'ouverture" },
-          { value: "reference", label: "Le cours de référence" },
-          { value: "precedent", label: "Le cours précédent" },
+          { value: "45200", label: "45 200" },
+          { value: "12000", label: "12 000" },
+          { value: "3500", label: "3 500" },
         ],
       },
       {
-        prompt: "Avec 1 662 045 titres échangés, que peut-on dire d'ETIT ce jour-là ?",
-        answer: "liquide",
+        prompt: "**Mission 3 — Le loyer :** quelle entreprise versera exactement 250 FCFA par action ?",
+        answer: "CIE",
         options: [
-          { value: "peu", label: "Peu échangée, difficile à revendre." },
-          { value: "liquide", label: "Très liquide (grosse affluence) : facile à acheter ou revendre." },
+          { value: "SNTS", label: "SNTS — Sonatel Sénégal" },
+          { value: "BOAC", label: "BOAC — BOA Côte d'Ivoire" },
+          { value: "CIE", label: "CIE — CIE Côte d'Ivoire" },
         ],
       },
     ],
@@ -153,35 +147,36 @@ export const m11: Module = {
   feedback: {
     perfect: {
       icon: "🎉",
-      title: "Lecture chirurgicale ! + 20 000 FCFA sur votre portefeuille !",
-      body: "Ni les colonnes de prix, ni le rouge d'une seule journée ne vous piègent plus.",
+      title: "Coup de maître ! + 20 000 FCFA sur votre portefeuille !",
+      body: "Vous venez de dompter le document le plus impressionnant de la bourse.",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! Un prix vous a échappé (− 5 000 FCFA par erreur).",
-      body: "Reprenons.",
+      title: "Aïe ! Lecture trop rapide (− 5 000 FCFA par erreur).",
+      body: "Un mauvais clic, c'est lire la mauvaise ligne du tableau d'affichage. Reprenons.",
     },
     explanations: [
       {
-        verdict: "La météo du jour vs le climat",
-        title: "La météo vs le climat.",
-        body: "Une baisse de −6,85 % en un jour, c'est une averse : ça ne dit **rien** sur la solidité de l'entreprise. Sur l'année, ETIT a fait **+195,65 %**. On regarde toujours le **climat** (la tendance longue), pas la pluie d'un jour.",
+        verdict: "6 200",
+        title: "Le prix",
+        body: "BOA a fini à **6 200**, c'est ce que vous paierez à l'achat.",
       },
       {
-        verdict: "Le cours de référence",
-        title: "Le disjoncteur.",
-        body: "La limite des ± 7,5 % se calcule à partir du **cours de référence** : c'est le garde-fou anti-panique de la BRVM.",
+        verdict: "45 200",
+        title: "L'affluence (volume)",
+        body: "Sonatel a échangé **45 200** titres : la foule, donc facile à revendre.",
       },
       {
-        verdict: "Très liquide",
-        title: "L'affluence.",
-        body: "Beaucoup de titres échangés = marché animé = on entre et on sort facilement. Un volume minuscule est un signal de prudence.",
+        verdict: "CIE",
+        title: "Le loyer (dividende)",
+        body: "**CIE** verse 250 FCFA/action : le meilleur repère pour la stratégie de rente.",
+        note: "Rassurez-vous : les dizaines d'autres colonnes (limites de fluctuation, PER, capitalisation…) servent surtout aux analystes. On les découvre justement dans les 3 modules suivants, en douceur.",
       },
     ],
   },
 
   next: {
-    label: "Je sais lire les mouvements. Passons aux colonnes de l'analyste.",
+    label: "Je lis l'essentiel ! Passons à la lecture avancée du BOC.",
     target: "Module 12",
   },
 };

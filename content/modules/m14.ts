@@ -1,32 +1,24 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 14 — Analyse fondamentale : les bases.
-   Premiers réflexes d'analyse, avant la méthode Graham approfondie
-   (M15+) — mention repliée dans hero.lead (seule synthèse créative
-   admise).
-   Module HORS barème (§4), comme M06/M07 : on reprend les chiffres
-   propres du .txt — perfectReward 20000 ("+ 20 000 FCFA") mais
-   penaltyPerError 10000 ("− 10 000 FCFA", PAS le 5 000 habituel :
-   une seule question à forts enjeux, pas les 4 habituelles).
-   Défi = quiz à UNE SEULE question (2 boutons, A/B) : le .txt n'a
-   qu'une question dans sa Section 2. `challenge.questions` a donc
-   1 seule entrée, et `feedback.explanations` AUSSI 1 seule entrée
-   (les 2 raisons — rendement 9,5 % et PER 7 — justifient le même
-   verdict : combinées dans un seul `body`, pas éclatées en 2
-   explications). L'aside « A est-elle mauvaise ? Pas du tout !... »
-   et la phrase « La leçon d'or... » sont repliées dans le `.note`
-   de cette explication unique.
-   Emphase *italique* à un seul astérisque du .txt (« pour *votre*
-   stratégie ») : le type Block ne supporte que **gras** (voir
-   lib/format.ts) — astérisques simples retirés, mot conservé tel
-   quel (aucun mot perdu ni inventé).
+   Contenu du Module 14 — Le BOC avancé (3/3) : les colonnes de
+   l'analyste.
+   Défi = quiz à 3 questions. Q1 (3 boutons) et Q2 (2 boutons)
+   reprennent verbatim les boutons déjà réels du .txt. Q3 était un
+   [Champ de saisie] libre (« ____ % ») dans la source : converti
+   en QCM avec des distracteurs d'ordre de grandeur plausibles
+   (0,6 % / 6 % / 60 %), même logique que la conversion numérique
+   de M03 (Task 14) — décision explicite du brief de cette tâche.
+   Formules entre backticks du .txt (`PER = …`, `Rendement = …`,
+   `capitalisation = …`) converties en **gras** dans le texte des
+   slides, comme dans m08.ts (`CMP = …`).
+   Barème Phase 3 standard (§4) : +20 000 / −5 000.
    ============================================================= */
 export const m14: Module = {
   code: "M14",
   index: 14,
-  totalModules: 26,
-  title: "Analyse fondamentale : les bases",
+  totalModules: 28,
+  title: "Le BOC avancé (3/3) : les colonnes de l'analyste",
   phase: "Phase 3 · L'Analyse",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
   reward: 20000,
@@ -34,59 +26,67 @@ export const m14: Module = {
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 14",
-    headline: "Regardez sous le capot avant d'acheter.",
+    headline: "Le BOC calcule déjà l'analyse pour vous.",
     lead:
-      "Vous savez lire le prix d'une action, mais ce prix ne dit pas tout. Avant la méthode Graham approfondie (M15 et suivants), voici vos premiers réflexes d'analyste : 3 vérifications simples, comme un check-up avant d'acheter une **voiture d'occasion**.",
+      "PER, rendement net, dividende, capitalisation : ces colonnes ont l'air techniques, mais chacune se lit avec une image du quotidien — une boutique, un loyer, un verger, un supermarché.",
     card: {
-      label: "Les 3 vérifs avant d'acheter",
-      title: "Résultat net, rendement, PER",
-      hint: "On oublie les rumeurs et on vérifie 3 choses simples :",
+      label: "Les 3 colonnes de l'analyste",
+      title: "PER, rendement, capitalisation",
+      hint: "3 indicateurs déjà calculés pour vous, à lire simplement :",
       rules: [
-        "**Le résultat net** — l'entreprise gagne-t-elle vraiment de l'argent ?",
-        "**Le rendement** — combien elle vous « paie de loyer » chaque année.",
-        "**Le PER** — est-elle chère ou bon marché par rapport au marché ?",
+        "**Le PER** — en combien d'années votre « boutique » se rembourse.",
+        "**Le rendement net** — le « loyer » que l'action vous verse chaque année.",
+        "**La capitalisation** — la taille de l'entreprise : géant ou petite boutique ?",
       ],
     },
-    cta: "Regarder sous le capot",
+    cta: "Lire le BOC comme un analyste",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "Regarder sous le capot",
+      title: "Le BOC vous mâche le travail",
       blocks: [
-        { kind: "text", value: "Vous savez lire le prix d'une action. Mais ce prix ne dit pas tout : une action à 2 000 FCFA peut être **hors de prix**, et une à 50 000 une **excellente affaire**." },
-        { kind: "text", value: "C'est comme une **voiture d'occasion** : le prix affiché ne suffit pas, il faut **regarder sous le capot** avant d'acheter." },
-        { kind: "text", value: "On vérifie 3 choses simples — et on oublie les rumeurs (« mon cousin m'a dit que ça va monter »)." },
+        { kind: "text", value: "Vous savez lire les prix et les mouvements. Encore mieux : le BOC calcule pour vous certains **indicateurs d'analyste**. Voyons les 3 colonnes qui vous aident vraiment à décider — avec, à chaque fois, une image simple du quotidien." },
       ],
     },
     {
-      title: "Vérif n°1 : est-ce qu'elle gagne de l'argent ? (le résultat net)",
+      title: "Le PER : « en combien d'années je récupère ma mise ? »",
       blocks: [
-        { kind: "text", value: "Achèteriez-vous une **boutique** qui perd de l'argent chaque année ? Sûrement pas." },
-        { kind: "text", value: "Pour une entreprise, c'est pareil : on regarde le **résultat net** — le bénéfice une fois tout payé. Si elle enchaîne les pertes année après année, **on fuit**, même si l'action a l'air « pas chère »." },
+        { kind: "text", value: "**L'image :** imaginez que vous achetez une **boutique**. Elle vous coûte 8 millions et rapporte 1 million de bénéfice par an. En combien d'années votre boutique se rembourse-t-elle ? **8 ans.** Ce chiffre « 8 », c'est le PER." },
+        { kind: "text", value: "Pour une action : **PER = Cours ÷ bénéfice par action**. Plus il est **bas**, plus vite vous « récupérez votre mise » — donc moins l'action est chère." },
+        { kind: "text", value: "**Exemple réel :** Sonatel a un PER de **7,74** (≈ 8 ans) et Ecobank **3,56** : bon marché ! (La moyenne du marché est ≈ 14.) Une action à PER 30 mettrait 30 ans à se rembourser : beaucoup plus chère." },
       ],
     },
     {
-      title: "Vérif n°2 : combien elle me « paie de loyer » ? (le rendement)",
+      title: "Le rendement net : le « loyer » de votre action 🏠",
       blocks: [
-        { kind: "text", value: "Rappel du M12 : le **rendement**, c'est le « loyer » de l'action — ce qu'elle vous verse en dividendes chaque année, en pourcentage de son prix." },
-        { kind: "text", value: "À la BRVM, un bon loyer se situe entre **7 et 10 %**." },
-        { kind: "callout", tone: "warn", value: "⚠️ Méfiez-vous du loyer « trop beau » : un rendement de 15 % peut cacher un piège (l'entreprise distribue tout son argent et ne garde rien pour grandir)." },
+        { kind: "text", value: "**L'image :** vous achetez un appartement 10 millions, et il vous rapporte 600 000 FCFA de loyer par an. Votre rendement = 600 000 ÷ 10 000 000 = **6 %**." },
+        { kind: "text", value: "Pour une action, c'est exactement pareil : **Rendement = dividende ÷ prix**. C'est le « loyer » que l'action vous verse chaque année, en pourcentage de son prix." },
+        { kind: "text", value: "**Exemple réel :** Sonatel rapporte **5,44 %** (pour 100 000 FCFA investis, ~5 440 FCFA de dividendes par an) ; BOA CI **6,13 %**. À la BRVM, un bon « loyer » se situe souvent entre **6 et 10 %** — bien mieux qu'un livret d'épargne." },
       ],
     },
     {
-      title: "Vérif n°3 : est-elle chère ? (le PER)",
+      title: "Le dividende & la date de détachement ⚠️",
       blocks: [
-        { kind: "text", value: "Rappel du M12 : le **PER**, c'est le nombre d'années pour « rembourser » le prix, comme quand on achète une boutique." },
-        {
-          kind: "list",
-          items: [
-            "**PER 8** → environ 8 ans : attractif.",
-            "**PER 25** → 25 ans : cher (le marché parie sur une forte croissance).",
-          ],
-        },
-        { kind: "text", value: "À la BRVM, un PER classique tourne autour de **8-12** (moyenne du marché ≈ 14). À vous de juger ! 👇" },
+        { kind: "text", value: "Le BOC affiche le **dernier dividende versé** et sa date (ex. Sonatel : 1 740 F le 26 mai 2026)." },
+        { kind: "callout", tone: "warn", value: "**Le piège à connaître :** vous ne touchez le dividende **que si vous détenez l'action AVANT sa date de détachement**. L'acheter le lendemain, c'est comme arriver au verger **après** la récolte : les fruits sont déjà partis." },
+        { kind: "text", value: "La page « Opérations en cours » du BOC annonce les prochains versements (ex. SOLIBRA : 2 127 F le 30/07/2026)." },
+        { kind: "callout", tone: "info", value: "💡 Le montant affiché est **net** : l'impôt (IRVM, ~12 %) est déjà prélevé — le cash arrive propre sur votre compte." },
+      ],
+    },
+    {
+      title: "La capitalisation : géant ou petite boutique ?",
+      blocks: [
+        { kind: "text", value: "**En clair :** **capitalisation = prix de l'action × nombre d'actions**. C'est la valeur de toute l'entreprise en bourse — autrement dit, sa **taille**." },
+        { kind: "text", value: "**L'image :** c'est la différence entre une **grande chaîne de supermarchés** (grosse capitalisation : solide, facile à acheter et à revendre) et une **petite boutique de quartier** (petite capitalisation : plus fragile, parfois difficile à revendre)." },
+        { kind: "text", value: "**À noter :** le BOC affiche surtout la capitalisation **de tout le marché** (18 434 milliards de FCFA au 17/07/2026) ; pour une société précise, vous la calculez vous-même." },
+      ],
+    },
+    {
+      title: "À vous de lire l'analyste 👇",
+      blocks: [
+        { kind: "lead", value: "À vous de lire l'analyste. 👇" },
       ],
     },
   ],
@@ -95,19 +95,44 @@ export const m14: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "Étude de cas comparative",
+    title: "Lire comme un analyste",
     instruction:
-      "Vous appliquez une stratégie de **rente** (revenu sûr et immédiat). Observez ces deux entreprises. **Entreprise A — « Agro-Star »** : secteur agriculture (nouvelle entreprise) · résultat net fortement en hausse (+30 % l'an dernier) · PER 19 · Rendement 2 %. **Entreprise B — « Banque Panafricaine »** : secteur banque (installée depuis 30 ans) · résultat net stable (+2 % l'an dernier) · PER 7 · Rendement 9,5 %. (1 erreur = − 10 000 FCFA.)",
-    penaltyPerError: 10000,
+      "Colonnes d'analyse de Sonatel (données réelles) — PER : 7,74 · Rendement net : 5,44 % · Dernier dividende : 1 740 FCFA (payé le 26 mai 2026). (1 erreur = − 5 000 FCFA.)",
+    penaltyPerError: 5000,
     perfectReward: 20000,
+    // Recopie des options de Q1 en repli neutre (requis par le type) :
+    // chaque question a sa propre paire/triplet de boutons.
     options: [
-      { value: "a", label: "L'Entreprise A (Agro-Star)" },
-      { value: "b", label: "L'Entreprise B (Banque Panafricaine)" },
+      { value: "chere", label: "Chère." },
+      { value: "bon_marche", label: "Bon marché : on récupère sa mise deux fois plus vite que la moyenne." },
+      { value: "impossible", label: "Impossible à dire." },
     ],
     questions: [
       {
-        prompt: "**Question : pour votre stratégie de rente, laquelle achetez-vous en priorité ?**",
-        answer: "b",
+        prompt: "Le PER moyen du marché est ≈ 14 (≈ 14 ans pour récupérer sa mise). Avec un PER de **7,74**, Sonatel est plutôt… ?",
+        answer: "bon_marche",
+        options: [
+          { value: "chere", label: "Chère." },
+          { value: "bon_marche", label: "Bon marché : on récupère sa mise deux fois plus vite que la moyenne." },
+          { value: "impossible", label: "Impossible à dire." },
+        ],
+      },
+      {
+        prompt: "Une action détache son dividende demain. Vous l'achetez **après-demain**. Touchez-vous ce dividende ?",
+        answer: "non",
+        options: [
+          { value: "oui", label: "Oui, dès que je possède l'action." },
+          { value: "non", label: "Non : je suis arrivé après la récolte (il fallait la détenir avant le détachement)." },
+        ],
+      },
+      {
+        prompt: "Une action cote **10 000 FCFA** et verse **600 FCFA** net. Quel est son « loyer » (rendement net) ?",
+        answer: "6",
+        options: [
+          { value: "0.6", label: "0,6 %" },
+          { value: "6", label: "6 %" },
+          { value: "60", label: "60 %" },
+        ],
       },
     ],
   },
@@ -116,26 +141,35 @@ export const m14: Module = {
   feedback: {
     perfect: {
       icon: "🎉",
-      title: "Bravo, l'analyste ! + 20 000 FCFA sur votre portefeuille !",
-      body: "Vous avez compris le piège : l'entreprise qui grandit le plus vite n'est pas la bonne cible pour votre stratégie.",
+      title: "Vous lisez le BOC comme un pro ! + 20 000 FCFA sur votre portefeuille !",
+      body: "Prix, « loyer », dividende, détachement : plus aucune colonne ne vous résiste.",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! Ce choix coûte cher (− 10 000 FCFA).",
-      body: "Vous vous êtes laissé éblouir par la croissance de A, en oubliant votre objectif : la rente.",
+      title: "Aïe ! Une colonne vous a échappé (− 5 000 FCFA par erreur).",
+      body: "Reprenons.",
     },
     explanations: [
       {
-        verdict: "Entreprise B",
-        title: "Pourquoi B, pour la rente",
-        body: "**Rendement 9,5 %** : un gros « loyer », tout de suite. A (2 %) garde son argent pour se développer, elle vous paie très peu. **PER 7** : B est bon marché (7 ans pour se rembourser). A a un PER de 19 : le marché a déjà anticipé sa croissance, l'action est chère.",
-        note: "**A est-elle mauvaise ?** Pas du tout ! C'est une **action de croissance**. Pour un profil audacieux visant des plus-values dans 10 ans, A serait un excellent choix. **La leçon d'or :** une « bonne action » dans l'absolu n'existe pas. Il n'y a que la bonne action **pour votre stratégie** (M06 / M07).",
+        verdict: "Bon marché",
+        title: "Le PER, c'est le nombre d'années pour se rembourser.",
+        body: "7,74 face à ≈ 14, c'est **deux fois plus rapide** que la moyenne : Sonatel est bon marché (à condition que les fondamentaux suivent — on le verra avec Graham).",
+      },
+      {
+        verdict: "Non (arrivé après la récolte)",
+        title: "La récolte du dividende.",
+        body: "Le dividende revient à celui qui détient l'action **la veille** du détachement. Acheter juste après = arriver après la récolte, pas de fruits cette année.",
+      },
+      {
+        verdict: "6 % (600 ÷ 10 000 × 100)",
+        title: "Le « loyer » est un simple pourcentage.",
+        body: "**600 ÷ 10 000 × 100 = 6 %.** C'est ce que l'action vous rapporte chaque année, comme un loyer.",
       },
     ],
   },
 
   next: {
-    label: "J'ai les premiers réflexes ! Allons plus loin avec la méthode Graham.",
+    label: "Je maîtrise tout le BOC ! Approfondissons un produit clé : les obligations.",
     target: "Module 15",
   },
 };

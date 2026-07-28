@@ -16,7 +16,7 @@ import type { Module } from "@/lib/types";
 export const m06: Module = {
   code: "M06",
   index: 6,
-  totalModules: 26,
+  totalModules: 28,
   title: "L'investissement de rente",
   phase: "Phase 2 · La Boussole",
   status: { emoji: "🥈", label: "L'Investisseur Curieux" },

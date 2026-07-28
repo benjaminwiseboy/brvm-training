@@ -17,7 +17,7 @@ import type { Module } from "@/lib/types";
 export const m07: Module = {
   code: "M07",
   index: 7,
-  totalModules: 26,
+  totalModules: 28,
   title: "L'investissement de croissance",
   phase: "Phase 2 · La Boussole",
   status: { emoji: "🥈", label: "L'Investisseur Curieux" },
@@ -239,6 +239,6 @@ export const m07: Module = {
 
   next: {
     label: "J'ai choisi ma stratégie ! Voyons le super-pouvoir qui la décuple : la régularité.",
-    target: "Module 08",
+    target: "Module 10",
   },
 };

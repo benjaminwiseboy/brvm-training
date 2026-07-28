@@ -1,26 +1,29 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 22 — Passer votre premier ordre. Phase 4
-   « Passage à l'action ».
+   Contenu du Module 22 — Ouvrir son compte SGI (et comprendre
+   les frais). Première étape de la Phase 4 « Passage à l'action ».
    Barème standard Phase 4 (Bareme harmonise.txt §4 : « Phase 4 —
    Action | +20 000 | −5 000 ») : perfectReward 20000 /
    penaltyPerError 5000 / reward 20000 — confirmé par le propre
    texte du .txt (« + 20 000 FCFA » / « − 5 000 FCFA »).
-   Défi = quiz à UNE SEULE question (3 boutons) : `challenge.questions`
-   a donc 1 seule entrée, et `feedback.explanations` AUSSI 1 seule
-   entrée (la mécanique du carnet d'ordres et son résultat chiffré
-   sont un seul raisonnement, combiné dans un seul `body`, comme
-   M14/M20). La « règle d'or à la BRVM » de conclusion est repliée
-   dans le `.note` de cette explication unique.
-   Métaphore du grand marché d'Adjamé/Dantokpa (négociation, carnet
-   d'ordres) préservée verbatim, comme demandé par le brief.
+   Défi = quiz à UNE SEULE question (2 boutons, Courtier A/B) :
+   `challenge.questions` a donc 1 seule entrée, et
+   `feedback.explanations` AUSSI 1 seule entrée (les deux calculs —
+   1 % vs forfait — justifient le même verdict, combinés dans un
+   seul `body`, comme M16). La « Règle d'or » de conclusion est
+   repliée dans le `.note` de cette explication unique.
+   GARDE-FOU commercial (signalé par le brief de cette tâche) :
+   aucun nom réel de SGI n'est utilisé nulle part dans ce fichier —
+   les placeholders génériques du .txt (« Courtier A », « Courtier
+   B ») sont conservés tels quels, y compris dans les labels de
+   boutons du défi.
    ============================================================= */
 export const m22: Module = {
   code: "M22",
   index: 22,
-  totalModules: 26,
-  title: "Passer votre premier ordre",
+  totalModules: 28,
+  title: "Ouvrir son compte SGI (et comprendre les frais)",
   phase: "Phase 4 · Passage à l'action",
   status: { emoji: "🎓", label: "L'Analyste Confirmé" },
   reward: 20000,
@@ -28,59 +31,95 @@ export const m22: Module = {
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 22",
-    headline: "La bourse, c'est le grand marché : on négocie.",
+    headline: "Le sésame pour investir : votre compte SGI.",
     lead:
-      "Comme au grand marché d'Adjamé ou de Dantokpa, la bourse n'a pas de prix fixe : pour acheter, il faut qu'un autre investisseur accepte de vendre. Le **carnet d'ordres** met face à face acheteurs et vendeurs, et deux types d'ordres vous permettent d'y participer.",
+      "La théorie est finie. Pour acheter vos premières actions, il vous faut un compte chez une **SGI** (Société de Gestion et d'Intermédiation) — votre courtier. C'est presque aussi simple qu'un compte bancaire, souvent faisable en ligne, et ouvert à la diaspora.",
     card: {
-      label: "Les 2 types d'ordres",
-      title: "Cours limité vs marché",
-      hint: "Le réflexe qui protège votre budget, et celui qui va vite :",
+      label: "Avant d'ouvrir un compte",
+      title: "3 critères pour choisir sa SGI, et les frais à surveiller",
+      hint: "Toutes les SGI donnent accès à la même bourse. Ce qui change :",
       rules: [
-        "**L'ordre à cours limité 🛡️** — vous fixez un prix maximum, vous maîtrisez votre budget.",
-        "**L'ordre au marché 🚀** — aucun prix fixé, exécution immédiate, mais risque de payer plus cher.",
+        "**La plateforme en ligne** — pouvoir passer vos ordres vous-même, depuis votre téléphone.",
+        "**Le conseil** — de vraies études d'entreprise, pas juste l'actualité déjà lue dans le BOC.",
+        "**Les frais** — intermédiation, droits de garde, bourse en ligne : le forfait peut coûter cher sur les petits montants.",
       ],
     },
-    cta: "Passer mon premier ordre",
+    cta: "Ouvrir mon compte-titres",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "Comment parler au marché",
+      title: "Le sésame pour investir",
       blocks: [
-        { kind: "text", value: "La bourse n'est pas un supermarché à prix fixes. C'est comme le grand marché d'Adjamé ou de Dantokpa : **on négocie**. Pour acheter, il faut qu'un autre investisseur accepte de vendre." },
+        { kind: "text", value: "La théorie est finie. Pour acheter vos premières actions, il faut un compte chez une **SGI** (Société de Gestion et d'Intermédiation) — c'est votre **courtier**, l'intermédiaire par lequel passent tous vos ordres." },
       ],
     },
     {
-      title: "Le carnet d'ordres",
+      title: "Est-ce compliqué ? Non.",
       blocks: [
-        { kind: "text", value: "C'est le tableau qui met face à face les **acheteurs** et les **vendeurs**. Pour y participer, vous avez principalement **2 types d'ordres**." },
-      ],
-    },
-    {
-      title: "L'ordre à cours limité 🛡️ (le stratège)",
-      blocks: [
-        { kind: "text", value: "Vous fixez un **prix maximum** : « j'achète, mais pas au-dessus de 5 000 FCFA ». C'est le réflexe du bon acheteur au marché : vous avez une somme en tête, et vous ne payez pas un franc de plus." },
+        { kind: "text", value: "C'est presque aussi simple qu'ouvrir un compte bancaire, et souvent faisable en ligne. Il faut généralement réunir :" },
         {
           kind: "list",
           items: [
-            "Avantage : aucune mauvaise surprise, vous maîtrisez votre budget (et vos ratios).",
-            "Risque : si personne ne vend à ce prix, votre ordre n'est pas exécuté.",
+            "une pièce d'identité valide,",
+            "un justificatif de domicile,",
+            "deux photos d'identité.",
           ],
         },
       ],
     },
     {
-      title: "L'ordre au marché 🚀 (le pressé)",
+      title: "Vous vivez à l'étranger ? La diaspora aussi ! 🌍",
       blocks: [
-        { kind: "text", value: "Vous ne fixez **aucun prix** : « achetez tout de suite, peu importe le coût ». C'est foncer tête baissée : très rapide, mais on peut le payer cher." },
+        { kind: "text", value: "Idée reçue à casser : **vous n'avez PAS besoin d'être sur le territoire du pays, ni d'en être citoyen**, pour ouvrir votre compte-titres." },
+        { kind: "text", value: "Depuis la diaspora, vous pouvez parfaitement ouvrir un compte dans une SGI de Côte d'Ivoire (ou d'un autre pays de l'UEMOA), souvent **entièrement à distance, en ligne**. La bourse régionale est ouverte à tous." },
+        { kind: "callout", tone: "info", value: "Vérifiez simplement la liste des justificatifs : certaines SGI ont des modalités adaptées aux non-résidents." },
+      ],
+    },
+    {
+      title: "Choisir la bonne SGI : 3 critères",
+      blocks: [
+        { kind: "text", value: "Toutes les SGI donnent accès à la même bourse. Ce qui les distingue vraiment :" },
         {
           kind: "list",
           items: [
-            "Avantage : vous obtenez vos actions immédiatement.",
-            "Risque : vous pouvez payer **beaucoup plus cher** que prévu, surtout si l'action est peu liquide. Voyons pourquoi. 👇",
+            "**La plateforme en ligne** — pouvoir passer vos ordres vous-même, depuis votre téléphone. Fuyez celles qui obligent à se déplacer ou à tout faire par mail : vous perdriez des occasions en attendant qu'un employé traite votre demande.",
+            "**Le conseil** — publie-t-elle de vraies **études d'entreprise** qui aident à décider ? Beaucoup se contentent de répéter l'actualité, que vous savez déjà lire dans le BOC : ça, ce n'est pas du conseil.",
+            "**Le montant minimum d'ouverture** — ce n'est pas un frais (c'est votre argent, que vous investirez), mais un minimum trop élevé (ex. 2 millions) vous bloque l'entrée. Choisissez-en un adapté à votre budget.",
           ],
         },
+      ],
+    },
+    {
+      title: "Les frais (1/2) : l'intermédiation",
+      blocks: [
+        { kind: "text", value: "C'est la commission que prend la SGI **à chaque fois** qu'elle achète ou vend pour vous — un peu comme les frais du mobile money." },
+        {
+          kind: "list",
+          items: [
+            "Le plus souvent : un **pourcentage** (~1 % du montant).",
+          ],
+        },
+        { kind: "callout", tone: "warn", value: "⚠️ Certaines ajoutent un **forfait minimum** (ex. 1 000 FCFA par ordre). C'est un piège pour les petits montants : sur un ordre de 25 000 FCFA, 1 000 F de frais = **4 %** ! (on le calcule dans le défi)." },
+      ],
+    },
+    {
+      title: "Les frais (2/2) : garde & bourse en ligne",
+      blocks: [
+        {
+          kind: "list",
+          items: [
+            "**Les droits de garde** : un petit frais **annuel** que la SGI prélève pour **conserver vos titres** en sécurité (~0,27 %/an de la valeur de votre portefeuille). Plus votre portefeuille grossit, plus ils augmentent.",
+            "**Les frais de bourse en ligne** : l'accès à la plateforme. **Gratuit** chez beaucoup de SGI, mais **payant** chez d'autres (~1 000 FCFA/mois) — à vérifier avant de choisir.",
+          ],
+        },
+      ],
+    },
+    {
+      title: "Le piège le plus courant : le forfait",
+      blocks: [
+        { kind: "text", value: "Si vous investissez de petites sommes chaque mois, un mauvais choix de frais peut détruire votre rendement avant même de commencer. Faisons le calcul. 👇" },
       ],
     },
   ],
@@ -89,20 +128,19 @@ export const m22: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "Le carnet d'ordres",
+    title: "Le calcul des frais",
     instruction:
-      "Action fictive « Afri-Transport ». Clôture d'hier (BOC) : 4 000 FCFA. Vous voulez 15 actions ce matin. Le carnet d'ordres (les vendeurs) : Vendeur n°1, 5 actions à 4 050 FCFA. Vendeur n°2, 10 actions à 4 300 FCFA. Votre action : pressé, vous passez un ordre « au marché » pour 15 actions d'un coup. (1 erreur = − 5 000 FCFA.)",
+      "Vous investissez 25 000 FCFA/mois (DCA). Deux SGI. **Courtier A — au pourcentage :** 1 % par transaction. **Courtier B — au forfait :** 1 000 FCFA fixes minimum par transaction. (1 erreur = − 5 000 FCFA.)",
     penaltyPerError: 5000,
     perfectReward: 20000,
     options: [
-      { value: "force_hier", label: "Il force les vendeurs à me vendre à 4 000 (le prix d'hier)." },
-      { value: "cascade", label: "Il prend les 5 premières à 4 050, puis les 10 suivantes à 4 300 → mon budget moyen explose." },
-      { value: "annule", label: "Il annule mon ordre, car aucun vendeur n'a 15 actions d'un coup." },
+      { value: "a", label: "Courtier A (1 %)" },
+      { value: "b", label: "Courtier B (1 000 FCFA fixes)" },
     ],
     questions: [
       {
-        prompt: "**Question : que fait le système, et quel en est le résultat ?**",
-        answer: "cascade",
+        prompt: "**Question : pour 25 000 FCFA/mois, quelle SGI vous coûte le moins cher ?**",
+        answer: "a",
       },
     ],
   },
@@ -111,26 +149,26 @@ export const m22: Module = {
   feedback: {
     perfect: {
       icon: "🎉",
-      title: "Excellente vision du marché ! + 20 000 FCFA sur votre portefeuille !",
-      body: "Vous avez évité le piège classique des marchés peu liquides.",
+      title: "Calcul parfait ! + 20 000 FCFA sur votre portefeuille !",
+      body: "Vous venez de sauver votre capital de l'appétit de certains courtiers.",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! Le marché vous a fait payer le prix fort (− 5 000 FCFA).",
-      body: "Reprenons la mécanique de l'ordre « au marché ».",
+      title: "Aïe ! Les frais fixes ont englouti votre capital (− 5 000 FCFA).",
+      body: "Reprenons le calcul.",
     },
     explanations: [
       {
-        verdict: "Il prend les 5 premières à 4 050, puis les 10 suivantes à 4 300",
-        title: "La mécanique de l'ordre « au marché »",
-        body: "Le système « mange » les lignes du carnet, de la moins chère à la plus chère, jusqu'à votre quantité. 1. Il prend les 5 actions à 4 050. 2. Il lui en faut 10 de plus → il prend celles à 4 300. 3. Il accepte, car vous n'avez mis aucune limite. **Résultat :** vous pensiez payer ~4 000, vous vous retrouvez avec des actions à 4 300.",
-        note: "**La règle d'or à la BRVM :** le marché est parfois peu liquide. **Utilisez TOUJOURS l'ordre à cours limité.** Avec une limite à 4 100, vous auriez eu les 5 premières, et votre ordre aurait sagement attendu le reste à bon prix. Vous restez maître de votre argent.",
+        verdict: "Courtier A",
+        title: "Le calcul, pourcentage vs forfait",
+        body: "**Courtier A (1 %)** : 1 % de 25 000 = **250 FCFA**. **Courtier B (forfait)** : **1 000 FCFA**, soit `1000 ÷ 25000 = **4 %** de frais immédiats !` Avec le Courtier B, votre action devrait monter de 4 % **rien que pour rembourser les frais**.",
+        note: "**Règle d'or :** pour de **petites sommes** régulières, fuyez les forfaits, privilégiez le pourcentage. Le forfait n'avantage que les très gros montants ponctuels.",
       },
     ],
   },
 
   next: {
-    label: "Je protège mes ordres ! Au fait, que réclame l'État sur mes gains ?",
+    label: "Mon compte est prêt. Et si je préfère déléguer ?",
     target: "Module 23",
   },
 };

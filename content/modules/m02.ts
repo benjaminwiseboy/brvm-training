@@ -8,7 +8,7 @@ import type { Module } from "@/lib/types";
 export const m02: Module = {
   code: "M02",
   index: 2,
-  totalModules: 26,
+  totalModules: 28,
   title: "Sécurité financière : les 3 règles d'or",
   phase: "Phase 1 · Fondations",
   status: { emoji: "🥉", label: "L'Épargnant Livret A" },
@@ -74,7 +74,7 @@ export const m02: Module = {
       title: "Alors, combien investir ?",
       blocks: [
         { kind: "text", value: "Ce qu'il vous reste **après** avoir : (1) payé l'essentiel, (2) constitué votre fonds d'urgence, (3) mis de côté vos projets proches." },
-        { kind: "text", value: "Ce surplus, investissez-le **régulièrement** (la magie de la régularité, on la verra au M08)." },
+        { kind: "text", value: "Ce surplus, investissez-le **régulièrement** (la magie de la régularité, on la verra au M10)." },
       ],
     },
   ],

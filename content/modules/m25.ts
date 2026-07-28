@@ -1,88 +1,93 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 25 — Simulations finales : le grand oral de
-   l'investisseur. Validation transversale de Phase 5, juste avant
-   le Boss (M26).
-   Barème NON standard (§4 : « Simulations finales (validation) |
-   Phase 5 | +40 000 | −10 000 ») : le plus haut de la Phase 5,
-   tier « capstone », confirmé par le propre texte du .txt
-   (« + 40 000 FCFA » / « − 10 000 FCFA par erreur »).
-   Défi à 4 questions, CHACUNE avec son propre jeu de boutons (les
-   libellés diffèrent d'une question à l'autre — 3 investisseurs +
-   1 question de synthèse) : les options du niveau `challenge`
-   reprennent celles de Q1 en repli neutre (requis par le type
-   QuizChallenge), comme M19/M21. `feedback.explanations.length` = 4
-   = `challenge.questions.length` (1 par investisseur + la leçon
-   finale, qui EST la 4ᵉ question du .txt elle-même — pas une entrée
-   de clôture synthétique ajoutée en trop : c'est le .txt qui
-   structure sa Q4 comme la leçon).
-   Le paragraphe de clôture (« Vous maîtrisez toute la chaîne… ») est
-   replié dans le `.note` de cette 4ᵉ explication, comme M04/M19.
+   Contenu du Module 25 — Garder ce qu'on gagne (la fiscalité).
+   Ouverture de la Phase 5 « Suivi & maîtrise ».
+   Barème standard Phase 5 (Bareme harmonise.txt §4 : « 10.
+   Fiscalité | Phase 5 | +15 000 | −5 000 ») : perfectReward 15000 /
+   penaltyPerError 5000 / reward 15000 — confirmé par le propre
+   texte du .txt (« + 15 000 FCFA » / « − 5 000 FCFA par erreur »).
+   Slide 2 (taux IRVM par pays) rendue en `list` plutôt qu'en
+   `countries` : le bloc `countries` (BlockRenderer) affiche ses
+   items en texte brut SANS passer par renderMarkup — le gras des
+   taux (« ~12 % », etc.) y serait donc perdu. `list` préserve le
+   gras et convient mieux à une énumération pays→taux qu'à une
+   simple liste de noms de pays (usage réservé à `countries`, ex.
+   M01).
+   Défi = vrai/faux à 2 affirmations : `challenge.questions` a donc
+   2 entrées, et `feedback.explanations` AUSSI 2 entrées (règle
+   stricte de correspondance). Le rappel de prudence final (« La
+   fiscalité évolue ») est replié dans le `.note` de la 2ᵉ (dernière)
+   explication, comme M04/M21 — PAS une 3ᵉ entrée synthétique.
+   Italiques simples (*…*) du .txt non supportées par renderMarkup
+   (lib/format.ts ne segmente que le `**gras**`) : converties en
+   texte normal ou en gras selon l'emphase voulue, jamais laissées
+   telles quelles.
    ============================================================= */
 export const m25: Module = {
   code: "M25",
   index: 25,
-  totalModules: 26,
-  title: "Simulations finales : le grand oral de l'investisseur",
+  totalModules: 28,
+  title: "Garder ce qu'on gagne (la fiscalité)",
   phase: "Phase 5 · Suivi & maîtrise",
   status: { emoji: "🎓", label: "L'Analyste Confirmé" },
-  reward: 40000,
+  reward: 15000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 25",
-    headline: "Le grand oral de l'investisseur.",
+    headline: "Garder ce qu'on gagne : la fiscalité.",
     lead:
-      "Vous avez tout appris : les profils (M05), les stratégies (M06/M07), l'analyse (Phase 3), les produits. Dernière épreuve avant le Boss : **relier le bon placement au bon investisseur.** Il n'existe pas de « bon placement » dans l'absolu — seulement le bon placement pour un profil et un objectif.",
+      "Vos actions ont versé des dividendes et pris de la valeur — combien en garderez-vous vraiment ? Bonne nouvelle : l'UEMOA a mis en place, pour les particuliers, une fiscalité **très avantageuse**, avec une plus-value boursière le plus souvent **totalement exonérée d'impôt**.",
     card: {
-      label: "Le grand oral",
-      title: "3 investisseurs, 4 placements",
-      hint: "Chaque profil a son bon placement :",
+      label: "La fiscalité en un coup d'œil",
+      title: "IRVM, plus-value, IRC",
+      hint: "3 impôts à connaître, du plus fréquent au plus rare :",
       rules: [
-        "**Mariam, 62 ans** — veut un revenu régulier et aucune grosse secousse.",
-        "**Yao, 28 ans** — vise la croissance maximale, accepte la volatilité.",
-        "**Dr Koné, 45 ans** — débordé, veut déléguer entièrement.",
+        "**L'IRVM (dividendes)** — prélevé à la source, déjà payé quand l'argent arrive : ~12 % en Côte d'Ivoire, 12,5 % au Burkina, 7 % au Niger, 4 % au Bénin.",
+        "**La plus-value** — pour les particuliers, généralement totalement exonérée dans la zone UEMOA.",
+        "**L'IRC (obligations)** — souvent pris en charge par l'État pour les nationaux/résidents.",
       ],
     },
-    cta: "Passer le grand oral",
+    cta: "Découvrir ma fiscalité",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "Le bon placement pour la bonne personne",
+      title: "L'État et votre portefeuille",
       blocks: [
-        { kind: "text", value: "Vous avez tout appris : les profils (M05), les stratégies (M06/M07), l'analyse (Phase 3), les produits." },
-        { kind: "text", value: "Dernière épreuve : **relier le bon placement au bon investisseur.**" },
-        { kind: "callout", tone: "info", value: "Rappel : il n'existe pas de « bon placement » dans l'absolu — seulement le bon placement pour un profil et un objectif." },
+        { kind: "text", value: "Vos actions ont versé des dividendes et pris de la valeur. La grande question : **combien dois-je aux impôts ?**" },
+        { kind: "text", value: "Bonne nouvelle : l'UEMOA a mis en place une fiscalité **très avantageuse** pour les particuliers." },
       ],
     },
     {
-      title: "Les 3 investisseurs 👥",
+      title: "L'impôt sur les dividendes (IRVM)",
       blocks: [
+        { kind: "text", value: "L'IRVM est prélevé **à la source** — comme votre salaire, qui arrive déjà net d'impôt sur votre compte. Quand vous voyez le « dividende net » au BOC, l'impôt est donc déjà payé. Aucune démarche à faire." },
+        { kind: "text", value: "Son taux **varie selon le pays**. Vérifiez celui de votre pays :" },
         {
           kind: "list",
           items: [
-            "**Mariam, 62 ans** — bientôt à la retraite : veut un **revenu régulier** et **aucune grosse secousse**.",
-            "**Yao, 28 ans** — horizon très long : vise la **croissance maximale**, accepte la volatilité.",
-            "**Dr Koné, 45 ans** — médecin débordé : veut **déléguer entièrement**.",
+            "**Côte d'Ivoire** : ~12 %",
+            "**Burkina Faso** : 12,5 %",
+            "**Niger** : 7 %",
+            "**Bénin** : 4 %",
           ],
         },
       ],
     },
     {
-      title: "Les 4 placements 🧺",
+      title: "L'impôt sur les plus-values : la super nouvelle 🎉",
       blocks: [
-        {
-          kind: "list",
-          items: [
-            "**A — Action « Banque Mature »** : PER 9, rendement 6,5 %, gros dividende, croissance modérée.",
-            "**B — Action « Tech-Croissance »** : PER 22, aucun dividende, forte expansion.",
-            "**C — OPCVM Diversifié** : panier géré par des pros.",
-            "**D — Obligation d'État 6,5 %** : coupon fixe, capital garanti à l'échéance.",
-          ],
-        },
+        { kind: "callout", tone: "highlight", value: "Dans la zone UEMOA, la plus-value boursière des **particuliers** (personnes physiques, non professionnels) est, dans la grande majorité des cas, **totalement exonérée d'impôt** !" },
+        { kind: "text", value: "(En France, ce serait ~30 %.)" },
+      ],
+    },
+    {
+      title: "L'impôt sur les obligations (IRC)",
+      blocks: [
+        { kind: "text", value: "Les intérêts d'obligations peuvent être soumis à l'IRC (~4 %). Mais quand vous prêtez à un État de l'UEMOA en tant que **national/résident**, l'intérêt est souvent servi **net d'impôt** (l'État prend l'IRC à sa charge)." },
       ],
     },
   ],
@@ -91,52 +96,22 @@ export const m25: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "Conseillez trois investisseurs",
-    instruction: "Chaque bonne réponse rapporte gros. (1 erreur = − 10 000 FCFA.)",
-    penaltyPerError: 10000,
-    perfectReward: 40000,
-    // Recopie des options de Q1 en repli neutre (requis par le type) :
-    // chaque question a sa propre liste de boutons.
+    title: "Vrai ou faux fiscal",
+    instruction: "Vrai ou faux ? (1 erreur = − 5 000 FCFA.)",
+    penaltyPerError: 5000,
+    perfectReward: 15000,
     options: [
-      { value: "b", label: "B — Tech-Croissance" },
-      { value: "d", label: "D — Obligation d'État" },
-      { value: "peu_importe", label: "Peu importe." },
+      { value: "vrai", label: "Vrai" },
+      { value: "faux", label: "Faux" },
     ],
     questions: [
       {
-        prompt: "**Q1 — Pour Mariam** (revenu + sécurité, pas de secousses) :",
-        answer: "d",
-        options: [
-          { value: "b", label: "B — Tech-Croissance" },
-          { value: "d", label: "D — Obligation d'État" },
-          { value: "peu_importe", label: "Peu importe." },
-        ],
+        prompt: "**Affirmation 1 :** « Koffi a reçu 50 000 FCFA de dividendes nets de Sonatel. S'il utilise cet argent, il devra aller aux impôts le déclarer et payer une taxe en plus. »",
+        answer: "faux",
       },
       {
-        prompt: "**Q2 — Pour Yao** (jeune, croissance max, accepte la volatilité) :",
-        answer: "b",
-        options: [
-          { value: "d", label: "D — Obligation" },
-          { value: "b", label: "B — Tech-Croissance" },
-          { value: "monetaire", label: "Un monétaire sans risque." },
-        ],
-      },
-      {
-        prompt: "**Q3 — Pour Dr Koné** (débordé, veut déléguer) :",
-        answer: "c",
-        options: [
-          { value: "seul", label: "Analyser et acheter lui-même 10 actions" },
-          { value: "c", label: "C — OPCVM Diversifié" },
-          { value: "rien", label: "Ne rien faire." },
-        ],
-      },
-      {
-        prompt: "**Q4 — La leçon :** pourquoi le placement B est parfait pour Yao mais mauvais pour Mariam ?",
-        answer: "profil",
-        options: [
-          { value: "absolu", label: "Parce que B est un mauvais placement dans l'absolu." },
-          { value: "profil", label: "Parce qu'un placement se juge selon le profil et l'objectif : volatil et sans revenu, B ne convient pas à une retraitée prudente, mais colle au jeune Yao." },
-        ],
+        prompt: "**Affirmation 2 :** « Amina a acheté des actions BOA pour 1 M. Cinq ans plus tard, elles valent 3 M. En vendant, l'État lui prélèvera 20 à 30 % sur sa plus-value de 2 M. »",
+        answer: "faux",
       },
     ],
   },
@@ -145,41 +120,31 @@ export const m25: Module = {
   feedback: {
     perfect: {
       icon: "🎉",
-      title: "Grand oral réussi haut la main ! + 40 000 FCFA sur votre portefeuille !",
-      body: "Vous adaptez le placement à la personne, comme un vrai conseiller. Il ne reste qu'à prouver votre sang-froid…",
+      title: "Impôts maîtrisés ! + 15 000 FCFA sur votre portefeuille !",
+      body: "Vous avez compris le paradis fiscal qu'est l'investissement boursier pour les particuliers de la région.",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! Un mauvais conseil (− 10 000 FCFA par erreur).",
-      body: "La clé : toujours partir du besoin de la personne.",
+      title: "Aïe ! Pénalité administrative (− 5 000 FCFA par erreur).",
+      body: "Reprenons ce que dit vraiment la loi fiscale.",
     },
     explanations: [
       {
-        verdict: "D — Obligation d'État",
-        title: "Mariam → D",
-        body: "Revenu régulier + zéro secousse → l'obligation (coupon fixe, capital garanti). (L'action bancaire A serait un second choix, mais plus volatile.)",
+        verdict: "Faux",
+        title: "Les dividendes sont gérés « à la source »",
+        body: "L'État a déjà prélevé sa part avant que l'argent n'arrive. Les 50 000 FCFA de Koffi sont 100 % à lui — aucune démarche.",
       },
       {
-        verdict: "B — Tech-Croissance",
-        title: "Yao → B",
-        body: "Jeune, horizon long, cherche la performance → une action de croissance. Une obligation le « brimerait ».",
-      },
-      {
-        verdict: "C — OPCVM Diversifié",
-        title: "Dr Koné → C",
-        body: "Aucun temps → l'OPCVM géré par des pros, sans rien analyser.",
-      },
-      {
-        verdict: "Le profil et l'objectif",
-        title: "La leçon",
-        body: "B n'est ni bon ni mauvais dans l'absolu. Parfait pour Yao, inadapté pour Mariam. On part toujours du profil et de l'objectif.",
-        note: "Vous maîtrisez toute la chaîne : **Profil → Stratégie → Analyse → Bon produit.**",
+        verdict: "Faux",
+        title: "La plus-value des particuliers n'est (souvent) pas taxée",
+        body: "Contrairement à l'immobilier, la plus-value boursière des personnes physiques est exonérée dans la plupart des pays de l'UEMOA. Un avantage massif pour faire grossir son capital.",
+        note: "⚠️ **La fiscalité évolue :** vérifiez toujours la loi de finances de votre pays, ou demandez à votre SGI.",
       },
     ],
   },
 
   next: {
-    label: "Je suis prêt pour l'épreuve finale : le Boss !",
+    label: "Je garde mes gains ! Mais quand faut-il vendre ?",
     target: "Module 26",
   },
 };

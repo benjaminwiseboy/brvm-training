@@ -14,7 +14,7 @@ import type { Module } from "@/lib/types";
 export const m04: Module = {
   code: "M04",
   index: 4,
-  totalModules: 26,
+  totalModules: 28,
   title: "Les produits : ce qu'on achète à la BRVM",
   phase: "Phase 1 · Fondations",
   status: { emoji: "🥉", label: "L'Épargnant Livret A" },

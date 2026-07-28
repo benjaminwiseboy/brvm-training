@@ -1,24 +1,26 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 12 — Le BOC avancé (3/3) : les colonnes de
-   l'analyste.
-   Défi = quiz à 3 questions. Q1 (3 boutons) et Q2 (2 boutons)
-   reprennent verbatim les boutons déjà réels du .txt. Q3 était un
-   [Champ de saisie] libre (« ____ % ») dans la source : converti
-   en QCM avec des distracteurs d'ordre de grandeur plausibles
-   (0,6 % / 6 % / 60 %), même logique que la conversion numérique
-   de M03 (Task 14) — décision explicite du brief de cette tâche.
-   Formules entre backticks du .txt (`PER = …`, `Rendement = …`,
-   `capitalisation = …`) converties en **gras** dans le texte des
-   slides, comme dans m08.ts (`CMP = …`).
+   Contenu du Module 12 — Le BOC avancé (1/3) : indices,
+   compartiments & secteurs.
+   Défi = quiz à 3 questions ; les données du haut du BOC (indices,
+   PER sectoriels) sont déjà présentées dans le .txt sous forme
+   compacte (« Composite +38,40 %/an · … ») — repliées verbatim
+   dans `challenge.instruction`. Q1/Q2/Q3 ont chacune 3 boutons
+   déjà réels dans le .txt (pas de conversion numérique nécessaire) ;
+   options par question quand même utilisées, car les 3 paires
+   diffèrent d'une question à l'autre (précédent M03/M06/M07).
+   Le .txt ne donne pas de 2ᵉ ligne de corps pour le feedback
+   « imperfect » (seulement le titre) : un court « Reprenons. » est
+   ajouté, dans le ton terse déjà utilisé ailleurs (M06/M07), le
+   champ `body` étant requis par le type.
    Barème Phase 3 standard (§4) : +20 000 / −5 000.
    ============================================================= */
 export const m12: Module = {
   code: "M12",
   index: 12,
-  totalModules: 26,
-  title: "Le BOC avancé (3/3) : les colonnes de l'analyste",
+  totalModules: 28,
+  title: "Le BOC avancé (1/3) : indices, compartiments & secteurs",
   phase: "Phase 3 · L'Analyse",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
   reward: 20000,
@@ -26,67 +28,100 @@ export const m12: Module = {
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 12",
-    headline: "Le BOC calcule déjà l'analyse pour vous.",
+    headline: "La météo du marché, en un coup d'œil.",
     lead:
-      "PER, rendement net, dividende, capitalisation : ces colonnes ont l'air techniques, mais chacune se lit avec une image du quotidien — une boutique, un loyer, un verger, un supermarché.",
+      "Avant de choisir une action, un investisseur avisé regarde d'abord le haut du BOC : les **indices**. Ce sont les « notes moyennes » qui résument, en un seul chiffre, comment se porte le marché — ou une famille d'entreprises.",
     card: {
-      label: "Les 3 colonnes de l'analyste",
-      title: "PER, rendement, capitalisation",
-      hint: "3 indicateurs déjà calculés pour vous, à lire simplement :",
+      label: "Le bulletin météo du marché",
+      title: "Indices, compartiments, secteurs",
+      hint: "3 repères pour situer une action dans son contexte :",
       rules: [
-        "**Le PER** — en combien d'années votre « boutique » se rembourse.",
-        "**Le rendement net** — le « loyer » que l'action vous verse chaque année.",
-        "**La capitalisation** — la taille de l'entreprise : géant ou petite boutique ?",
+        "**Les indices** — Composite, BRVM 30, Prestige : la « note moyenne » d'un groupe d'entreprises.",
+        "**Les compartiments** — Prestige, Principal, Croissance : le classement par taille et solidité.",
+        "**Les secteurs** — 7 familles de métiers, chacune avec sa propre norme (PER, rendement…).",
       ],
     },
-    cta: "Lire le BOC comme un analyste",
+    cta: "Regarder la météo du marché",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "Le BOC vous mâche le travail",
+      title: "D'abord, regarder la météo",
       blocks: [
-        { kind: "text", value: "Vous savez lire les prix et les mouvements. Encore mieux : le BOC calcule pour vous certains **indicateurs d'analyste**. Voyons les 3 colonnes qui vous aident vraiment à décider — avec, à chaque fois, une image simple du quotidien." },
+        { kind: "text", value: "Avant de choisir une action précise, un investisseur avisé jette un œil au **haut du BOC**. C'est comme un marin : avant de sortir en mer, il regarde d'abord si la mer est calme ou agitée." },
+        { kind: "text", value: "Ce « bulletin météo » du marché, ce sont les **indices**. Commençons par comprendre ce que c'est, tout simplement." },
       ],
     },
     {
-      title: "Le PER : « en combien d'années je récupère ma mise ? »",
+      title: "Un indice, c'est quoi ? La note moyenne de la classe 🎓",
       blocks: [
-        { kind: "text", value: "**L'image :** imaginez que vous achetez une **boutique**. Elle vous coûte 8 millions et rapporte 1 million de bénéfice par an. En combien d'années votre boutique se rembourse-t-elle ? **8 ans.** Ce chiffre « 8 », c'est le PER." },
-        { kind: "text", value: "Pour une action : **PER = Cours ÷ bénéfice par action**. Plus il est **bas**, plus vite vous « récupérez votre mise » — donc moins l'action est chère." },
-        { kind: "text", value: "**Exemple réel :** Sonatel a un PER de **7,74** (≈ 8 ans) et Ecobank **3,56** : bon marché ! (La moyenne du marché est ≈ 14.) Une action à PER 30 mettrait 30 ans à se rembourser : beaucoup plus chère." },
+        { kind: "text", value: "Imaginez une classe de 47 élèves. Plutôt que de regarder la note de chaque élève une par une, le maître calcule **la moyenne de la classe** : un seul chiffre qui résume comment tout le monde s'en sort." },
+        { kind: "text", value: "Un **indice boursier**, c'est exactement ça. Au lieu de suivre les 47 entreprises de la BRVM une par une, on calcule leur **« note moyenne »**. Si cette moyenne monte, c'est que, dans l'ensemble, les entreprises se portent bien." },
+        { kind: "text", value: "Le **BRVM Composite**, c'est la note moyenne de **toutes** les entreprises cotées." },
       ],
     },
     {
-      title: "Le rendement net : le « loyer » de votre action 🏠",
+      title: "Pourquoi l'indice affiche « 478 » ? Le point de départ",
       blocks: [
-        { kind: "text", value: "**L'image :** vous achetez un appartement 10 millions, et il vous rapporte 600 000 FCFA de loyer par an. Votre rendement = 600 000 ÷ 10 000 000 = **6 %**." },
-        { kind: "text", value: "Pour une action, c'est exactement pareil : **Rendement = dividende ÷ prix**. C'est le « loyer » que l'action vous verse chaque année, en pourcentage de son prix." },
-        { kind: "text", value: "**Exemple réel :** Sonatel rapporte **5,44 %** (pour 100 000 FCFA investis, ~5 440 FCFA de dividendes par an) ; BOA CI **6,13 %**. À la BRVM, un bon « loyer » se situe souvent entre **6 et 10 %** — bien mieux qu'un livret d'épargne." },
+        { kind: "text", value: "Le jour où l'on crée un indice, on décide de mettre le compteur à **100** — comme le **kilomètre zéro** au départ d'une route." },
+        { kind: "text", value: "Aujourd'hui, le Composite affiche **478**. La traduction est toute simple : ce qui valait **100** au départ vaut aujourd'hui **478**. Donc le marché a été **multiplié par presque 5** depuis le début." },
+        { kind: "text", value: "Autre image : au départ, un panier contenant un petit morceau de chaque entreprise coûtait **100 FCFA**. Aujourd'hui, le même panier coûte **478 FCFA**." },
+        { kind: "callout", tone: "highlight", value: "👉 Mais au quotidien, le chiffre exact compte peu. Ce qu'on regarde, c'est **de combien il a bougé** : **+38,40 % sur l'année**, ça veut dire que « la classe » a gagné 38 % en moyenne cette année." },
       ],
     },
     {
-      title: "Le dividende & la date de détachement ⚠️",
+      title: "Trois « moyennes » plutôt qu'une",
       blocks: [
-        { kind: "text", value: "Le BOC affiche le **dernier dividende versé** et sa date (ex. Sonatel : 1 740 F le 26 mai 2026)." },
-        { kind: "callout", tone: "warn", value: "**Le piège à connaître :** vous ne touchez le dividende **que si vous détenez l'action AVANT sa date de détachement**. L'acheter le lendemain, c'est comme arriver au verger **après** la récolte : les fruits sont déjà partis." },
-        { kind: "text", value: "La page « Opérations en cours » du BOC annonce les prochains versements (ex. SOLIBRA : 2 127 F le 30/07/2026)." },
-        { kind: "callout", tone: "info", value: "💡 Le montant affiché est **net** : l'impôt (IRVM, ~12 %) est déjà prélevé — le cash arrive propre sur votre compte." },
+        { kind: "text", value: "La BRVM calcule trois notes moyennes, pour trois groupes différents :" },
+        {
+          kind: "list",
+          items: [
+            "**BRVM Composite (478)** — la moyenne de **TOUTE la classe** (toutes les entreprises).",
+            "**BRVM 30 (228)** — la moyenne des **30 élèves les plus actifs** (les 30 actions les plus échangées). Un baromètre plus stable, centré sur les grandes entreprises.",
+            "**BRVM Prestige (175)** — la moyenne de **l'élite** : les entreprises du compartiment le plus exigeant.",
+          ],
+        },
       ],
     },
     {
-      title: "La capitalisation : géant ou petite boutique ?",
+      title: "Compartiments & secteurs : deux façons de ranger",
       blocks: [
-        { kind: "text", value: "**En clair :** **capitalisation = prix de l'action × nombre d'actions**. C'est la valeur de toute l'entreprise en bourse — autrement dit, sa **taille**." },
-        { kind: "text", value: "**L'image :** c'est la différence entre une **grande chaîne de supermarchés** (grosse capitalisation : solide, facile à acheter et à revendre) et une **petite boutique de quartier** (petite capitalisation : plus fragile, parfois difficile à revendre)." },
-        { kind: "text", value: "**À noter :** le BOC affiche surtout la capitalisation **de tout le marché** (18 434 milliards de FCFA au 17/07/2026) ; pour une société précise, vous la calculez vous-même." },
+        { kind: "text", value: "On range aussi les entreprises comme dans un championnat de foot et un annuaire des métiers :" },
+        {
+          kind: "list",
+          items: [
+            "Par **compartiment** (comme les divisions d'un championnat) : **Prestige** = la première division, les 12 plus grands « clubs », les plus solides et les plus suivis ; **Principal** = les 35 suivants ; **Croissance** = les jeunes clubs qui montent. Pour débuter, les valeurs « Prestige » sont plutôt rassurantes.",
+            "Par **secteur** (comme les familles de métiers) : 7 en tout — Télécoms, Services Financiers, Consommation Discrétionnaire, Consommation de Base, Industriels, Énergie, Services Publics. Chaque famille a sa propre note moyenne → vous voyez tout de suite **quel métier a le vent en poupe**.",
+          ],
+        },
       ],
     },
     {
-      title: "À vous de lire l'analyste 👇",
+      title: "À quoi ça sert ? Le thermomètre et le bulletin de notes",
       blocks: [
-        { kind: "lead", value: "À vous de lire l'analyste. 👇" },
+        {
+          kind: "list",
+          items: [
+            "**Le thermomètre** : le marché est-il de bonne humeur aujourd'hui ? S'il baisse en général, pas étonnant que VOS actions baissent aussi — elles suivent souvent le mouvement du groupe.",
+            "**Le bulletin de notes (le juge de vos résultats)** : avez-vous fait mieux ou moins bien que « la classe » ? Exemple : vous avez gagné **+25 %** cette année — bravo ! Mais si la moyenne de la classe (le Composite) a fait **+38 %**, vous êtes **en dessous de la moyenne**. Vous auriez gagné plus en achetant simplement « toute la classe » (un fonds qui copie l'indice).",
+          ],
+        },
+      ],
+    },
+    {
+      title: "Le secret des dividendes : l'arbre ET les fruits 🍎",
+      blocks: [
+        { kind: "text", value: "Le BOC affiche deux versions de l'indice :" },
+        {
+          kind: "list",
+          items: [
+            "Le **Composite** (+38,40 %) — il ne compte que la hausse des **prix** : l'arbre qui grandit.",
+            "Le **Composite Total Return** (+42,69 %) — il compte **en plus** les **dividendes** : les fruits que vous avez récoltés en chemin.",
+          ],
+        },
+        { kind: "text", value: "L'écart (~4 points) montre qu'à la BRVM, les fruits (dividendes) comptent presque autant que la croissance de l'arbre. Ne les oubliez jamais." },
+        { kind: "callout", tone: "info", value: "(Tout en bas du BOC, deux repères utiles : le PER moyen ≈ 14 — un indicateur « cher / pas cher » détaillé avec Graham — et le rendement moyen ~6 %. Le reste, ce sont des outils de pros : ignorez-les pour l'instant.) 👇" },
       ],
     },
   ],
@@ -95,43 +130,45 @@ export const m12: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "Lire comme un analyste",
+    title: "Lire le tableau de bord",
     instruction:
-      "Colonnes d'analyse de Sonatel (données réelles) — PER : 7,74 · Rendement net : 5,44 % · Dernier dividende : 1 740 FCFA (payé le 26 mai 2026). (1 erreur = − 5 000 FCFA.)",
+      "🌡️ **Indices :** Composite **+38,40 %**/an · Composite **Total Return +42,69 %**/an. 📊 **PER par secteur :** Conso de Base **10,31** · Services Financiers **15,61** · Conso Discrétionnaire **38,58**. (1 erreur = − 5 000 FCFA.)",
     penaltyPerError: 5000,
     perfectReward: 20000,
     // Recopie des options de Q1 en repli neutre (requis par le type) :
-    // chaque question a sa propre paire/triplet de boutons.
+    // chaque question a sa propre paire/triplet de boutons, verbatim
+    // depuis le .txt source.
     options: [
-      { value: "chere", label: "Chère." },
-      { value: "bon_marche", label: "Bon marché : on récupère sa mise deux fois plus vite que la moyenne." },
-      { value: "impossible", label: "Impossible à dire." },
+      { value: "battu", label: "J'ai battu le marché." },
+      { value: "sous", label: "J'ai bien gagné, mais moins que la moyenne de la classe (sous-performance)." },
+      { value: "perdu", label: "J'ai perdu de l'argent." },
     ],
     questions: [
       {
-        prompt: "Le PER moyen du marché est ≈ 14 (≈ 14 ans pour récupérer sa mise). Avec un PER de **7,74**, Sonatel est plutôt… ?",
-        answer: "bon_marche",
+        prompt: "Le Composite (la note moyenne de la classe) a fait **+38,40 %** sur l'année. Votre portefeuille : **+25 %**. Conclusion ?",
+        answer: "sous",
         options: [
-          { value: "chere", label: "Chère." },
-          { value: "bon_marche", label: "Bon marché : on récupère sa mise deux fois plus vite que la moyenne." },
-          { value: "impossible", label: "Impossible à dire." },
+          { value: "battu", label: "J'ai battu le marché." },
+          { value: "sous", label: "J'ai bien gagné, mais moins que la moyenne de la classe (sous-performance)." },
+          { value: "perdu", label: "J'ai perdu de l'argent." },
         ],
       },
       {
-        prompt: "Une action détache son dividende demain. Vous l'achetez **après-demain**. Touchez-vous ce dividende ?",
-        answer: "non",
+        prompt: "Pourquoi le « Total Return » (+42,69 %) dépasse-t-il le Composite (+38,40 %) ?",
+        answer: "dividendes",
         options: [
-          { value: "oui", label: "Oui, dès que je possède l'action." },
-          { value: "non", label: "Non : je suis arrivé après la récolte (il fallait la détenir avant le détachement)." },
+          { value: "erreur", label: "Une erreur de la BRVM." },
+          { value: "dividendes", label: "Il compte aussi les dividendes (les fruits), pas seulement la hausse des prix (l'arbre)." },
+          { value: "grandes", label: "Il ne compte que les grandes entreprises." },
         ],
       },
       {
-        prompt: "Une action cote **10 000 FCFA** et verse **600 FCFA** net. Quel est son « loyer » (rendement net) ?",
-        answer: "6",
+        prompt: "D'après les PER, quel secteur est le plus **cher** ?",
+        answer: "conso_discretionnaire",
         options: [
-          { value: "0.6", label: "0,6 %" },
-          { value: "6", label: "6 %" },
-          { value: "60", label: "60 %" },
+          { value: "conso_base", label: "Conso de Base (10,31)" },
+          { value: "services_financiers", label: "Services Financiers (15,61)" },
+          { value: "conso_discretionnaire", label: "Conso Discrétionnaire (38,58)" },
         ],
       },
     ],
@@ -141,35 +178,35 @@ export const m12: Module = {
   feedback: {
     perfect: {
       icon: "🎉",
-      title: "Vous lisez le BOC comme un pro ! + 20 000 FCFA sur votre portefeuille !",
-      body: "Prix, « loyer », dividende, détachement : plus aucune colonne ne vous résiste.",
+      title: "Vue d'ensemble maîtrisée ! + 20 000 FCFA sur votre portefeuille !",
+      body: "Vous lisez le marché entier d'un coup d'œil, et vous savez vous comparer à la moyenne de la classe.",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! Une colonne vous a échappé (− 5 000 FCFA par erreur).",
+      title: "Aïe ! Le tableau de bord mérite un second regard (− 5 000 FCFA par erreur).",
       body: "Reprenons.",
     },
     explanations: [
       {
-        verdict: "Bon marché",
-        title: "Le PER, c'est le nombre d'années pour se rembourser.",
-        body: "7,74 face à ≈ 14, c'est **deux fois plus rapide** que la moyenne : Sonatel est bon marché (à condition que les fondamentaux suivent — on le verra avec Graham).",
+        verdict: "Sous-performance",
+        title: "Le benchmark, votre bulletin de notes.",
+        body: "+25 %, c'est bien… mais la classe a fait +38,40 %. Vous êtes donc **sous la moyenne** : suivre toute la classe aurait rapporté plus. On se compare TOUJOURS à l'indice.",
       },
       {
-        verdict: "Non (arrivé après la récolte)",
-        title: "La récolte du dividende.",
-        body: "Le dividende revient à celui qui détient l'action **la veille** du détachement. Acheter juste après = arriver après la récolte, pas de fruits cette année.",
+        verdict: "Les dividendes (les fruits)",
+        title: "L'arbre ET les fruits.",
+        body: "L'écart entre +42,69 % et +38,40 %, ce sont les dividendes (les fruits récoltés). À la BRVM, ils font une grosse part de l'enrichissement.",
       },
       {
-        verdict: "6 % (600 ÷ 10 000 × 100)",
-        title: "Le « loyer » est un simple pourcentage.",
-        body: "**600 ÷ 10 000 × 100 = 6 %.** C'est ce que l'action vous rapporte chaque année, comme un loyer.",
+        verdict: "Conso Discrétionnaire",
+        title: "Chaque famille de métier a sa norme.",
+        body: "La Conso Discrétionnaire (PER 38,58) est bien plus chère que les Services Financiers (15,61). On compare toujours une action à **sa famille (son secteur) et à la moyenne du marché (≈ 14)**.",
       },
     ],
   },
 
   next: {
-    label: "Je maîtrise tout le BOC ! Approfondissons un produit clé : les obligations.",
+    label: "Je connais le marché. Zoomons sur UNE ligne d'action.",
     target: "Module 13",
   },
 };
