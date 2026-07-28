@@ -4,7 +4,7 @@ import { MODULES } from "./registry";
 import type { Module } from "@/lib/types";
 
 const base: Module = {
-  code: "M01", index: 1, totalModules: 26, title: "T", phase: "Phase 1",
+  code: "M01", index: 1, totalModules: 28, title: "T", phase: "Phase 1",
   status: { emoji: "🥉", label: "s" },
   hero: { eyebrow: "e", headline: "h", lead: "l", cta: "c" },
   slides: [{ title: "s", blocks: [{ kind: "text", value: "x" }] }],

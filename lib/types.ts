@@ -46,7 +46,7 @@ export type Feedback = {
 export type Module = {
   code: string;            // "M01"
   index: number;           // 1..26
-  totalModules: 26;
+  totalModules: 28;
   title: string;
   phase: string;           // "Phase 1 · Fondations"
   status: { emoji: string; label: string };

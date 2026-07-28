@@ -33,7 +33,7 @@ export function validateAll(modules: Module[]): string[] {
   for (const m of modules) {
     if (seen.has(m.code)) errs.push(`code dupliqué: ${m.code}`);
     seen.add(m.code);
-    if (m.index < 1 || m.index > 26) errs.push(`${m.code}: index hors [1,26]`);
+    if (m.index < 1 || m.index > 28) errs.push(`${m.code}: index hors [1,28]`);
     errs.push(...validateModule(m));
   }
   return errs;

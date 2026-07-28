@@ -75,7 +75,7 @@ describe("deriveStatus — échelle 5 paliers", () => {
     expect(deriveStatus(8).emoji).toBe("🥇");
     expect(deriveStatus(18).emoji).toBe("🎓");
     expect(deriveStatus(25).emoji).toBe("💎");
-    expect(deriveStatus(26).emoji).toBe("💎"); // clamp post-complétion : persiste
+    expect(deriveStatus(28).emoji).toBe("💎"); // clamp post-complétion : persiste
   });
 });
 

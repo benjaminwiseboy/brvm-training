@@ -6,8 +6,8 @@ import { ProgressCard } from "./ProgressCard";
 import { VaultCard } from "./VaultCard";
 import { ModuleMap } from "./ModuleMap";
 
-// 26 = Module["totalModules"] (lib/types.ts) — nombre total de modules du parcours.
-const TOTAL_MODULES = 26;
+// 28 = Module["totalModules"] (lib/types.ts) — nombre total de modules du parcours.
+const TOTAL_MODULES = 28;
 
 /**
  * Tableau de bord de l'apprenant — assemble, dans l'ordre de
