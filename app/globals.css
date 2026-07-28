@@ -93,6 +93,12 @@ button { font-family: inherit; cursor: pointer; }
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 
+/* Fix (débordement mobile) : porté du POC (styles.css @media 640px), qui
+   réduit déjà la taille de police de base sur mobile — manquait ici. */
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+}
+
 /* ---------- Mouvement réduit ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }

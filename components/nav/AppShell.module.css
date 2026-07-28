@@ -504,14 +504,15 @@
   }
 }
 
-/* Fix (débordement mobile) : `.topWallet` n'avait aucune compression mobile,
-   contrairement à Wallet.module.css (même pilule, utilisée dans le header
-   des pages de module) qui masque déjà le label et réduit la police sous
-   ces mêmes seuils. */
+/* Fix (débordement mobile) : `.topWallet`/`.brand` n'avaient aucune
+   compression mobile, contrairement au POC (styles.css, mêmes seuils
+   640px/400px) qui réduit déjà `.wallet`, `.brand__mark` et masque
+   `.brand__sub` à ces largeurs — repris ici à l'identique plutôt qu'une
+   simple ligne de secours (`flex-wrap`, qui reste en filet). */
 @media (max-width: 640px) {
   .topWallet {
-    gap: 8px;
-    padding: 8px 16px;
+    gap: 0;
+    padding: 7px 14px;
   }
   .topWalletLabel {
     display: none;
@@ -519,9 +520,17 @@
   .topWalletAmount {
     font-size: 15px;
   }
+  .brandMark {
+    width: 36px;
+    height: 36px;
+    font-size: 15px;
+  }
 }
 @media (max-width: 400px) {
   .topWalletAmount {
     font-size: 14px;
+  }
+  .brandSub {
+    display: none;
   }
 }
