@@ -67,15 +67,6 @@ export const m12: Module = {
       ],
     },
     {
-      title: "Pourquoi l'indice affiche « 478 » ? Le point de départ",
-      blocks: [
-        { kind: "text", value: "Le jour où l'on crée un indice, on décide de mettre le compteur à **100** — comme le **kilomètre zéro** au départ d'une route." },
-        { kind: "text", value: "Dans notre exemple, le Composite affiche **478**. La traduction est toute simple : ce qui valait **100** au départ vaut, dans cet exemple, **478**. Donc le marché a été **multiplié par presque 5** depuis le début." },
-        { kind: "text", value: "Autre image : au départ, un panier contenant un petit morceau de chaque entreprise coûtait **100 FCFA**. Dans cet exemple, le même panier coûte **478 FCFA**." },
-        { kind: "callout", tone: "highlight", value: "👉 Mais au quotidien, le chiffre exact compte peu. Ce qu'on regarde, c'est **de combien il a bougé** : **+38,40 % sur l'année**, ça veut dire que « la classe » a gagné 38 % en moyenne cette année." },
-      ],
-    },
-    {
       title: "Trois « moyennes » plutôt qu'une",
       blocks: [
         { kind: "text", value: "La BRVM calcule trois notes moyennes, pour trois groupes différents :" },
@@ -97,6 +88,15 @@ export const m12: Module = {
             ["BRVM Prestige", "175"],
           ],
         },
+      ],
+    },
+    {
+      title: "Pourquoi l'indice affiche « 478 » ? Le point de départ",
+      blocks: [
+        { kind: "text", value: "Le jour où l'on crée un indice, on décide de mettre le compteur à **100** — comme le **kilomètre zéro** au départ d'une route." },
+        { kind: "text", value: "Dans notre exemple, le Composite affiche **478**. La traduction est toute simple : ce qui valait **100** au départ vaut, dans cet exemple, **478**. Donc le marché a été **multiplié par presque 5** depuis le début." },
+        { kind: "text", value: "Autre image : au départ, un panier contenant un petit morceau de chaque entreprise coûtait **100 FCFA**. Dans cet exemple, le même panier coûte **478 FCFA**." },
+        { kind: "callout", tone: "highlight", value: "👉 Mais au quotidien, le chiffre exact compte peu. Ce qu'on regarde, c'est **de combien il a bougé** : **+38,40 % sur l'année**, ça veut dire que « la classe » a gagné 38 % en moyenne cette année." },
       ],
     },
     {
