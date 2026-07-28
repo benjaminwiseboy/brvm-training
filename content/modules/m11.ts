@@ -57,6 +57,12 @@ export const m11: Module = {
           value:
             "Le **BOC** (Bulletin Officiel de la Cote) est le document officiel que la BRVM publie chaque soir de bourse. Voyez-le comme le **grand tableau d'affichage** de la bourse : tout ce qui s'est passé dans la journée y est écrit — les prix, les quantités échangées, les dividendes à venir. C'est là qu'on va chercher l'info avant d'acheter.",
         },
+        {
+          kind: "download",
+          label: "Télécharger un vrai BOC (PDF)",
+          sublabel: "Bulletin officiel de la BRVM du 17/07/2026 · 19 pages",
+          href: "/docs/boc-exemple-brvm.pdf",
+        },
       ],
     },
     {
@@ -74,12 +80,6 @@ export const m11: Module = {
           ],
         },
         { kind: "text", value: "Impressionnant ? Gardez cet extrait en tête : dans les slides suivantes, on décortique une colonne à la fois." },
-        {
-          kind: "download",
-          label: "Télécharger un vrai BOC (PDF)",
-          sublabel: "Bulletin officiel de la BRVM du 17/07/2026 · 19 pages",
-          href: "/docs/boc-exemple-brvm.pdf",
-        },
       ],
     },
     {
