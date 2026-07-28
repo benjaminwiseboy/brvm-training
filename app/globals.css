@@ -29,7 +29,12 @@
 
   /* Or Cauri News (valeur / FCFA / récompense) */
   --or:         #F2B705;
-  --or-deep:    #C99404;
+  /* #C99404 → #8F6407 (Fix P1, critique UX) : utilisé comme couleur de texte
+     (eyebrows/kickers/labels) sur presque tous les écrans du parcours, l'ancienne
+     valeur ne tenait qu'à ~2,4-2,7:1 de contraste sur blanc/carte/or-soft — sous
+     le seuil AA de 4,5:1. #8F6407 tient 4,7-5,3:1 sur ces mêmes fonds tout en
+     restant dans la même famille de teinte dorée. */
+  --or-deep:    #8F6407;
   --gold-soft:  #FDF1C9;
 
   /* Accents chauds & ludiques (pastilles multicolores façon Al Noor) */
