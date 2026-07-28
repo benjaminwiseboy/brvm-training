@@ -1,6 +1,6 @@
 "use client";
 
-import type { Feedback } from "@/lib/types";
+import type { Feedback, QuizChallenge as QuizChallengeData } from "@/lib/types";
 import { renderMarkup } from "@/lib/markup";
 import { money } from "@/lib/format";
 import { ScoreRing } from "./ScoreRing";
@@ -24,6 +24,7 @@ export function Bilan({
   onNext,
   walletTotal,
   diagnostic,
+  quiz,
 }: {
   result: { correct: number; total: number; capitalDelta: number };
   feedback: Feedback;
@@ -42,6 +43,8 @@ export function Bilan({
    * ScoreRing, pas de pastilles capital/portefeuille, juste la bande de
    * profil correspondante. */
   diagnostic?: { points: number; bands: { min: number; max: number; emoji: string; label: string; body: string }[] };
+  /** Chemin quiz (Task revue M03) : permet d'afficher, à côté de chaque explication, la réponse erronée choisie par l'apprenant — pas seulement la bonne réponse. */
+  quiz?: { challenge: QuizChallengeData; answers: (string | null)[] };
 }) {
   if (diagnostic) {
     const band = diagnostic.bands.find((b) => diagnostic.points >= b.min && diagnostic.points <= b.max);
@@ -156,16 +159,29 @@ export function Bilan({
       {feedback.explanations && feedback.explanations.length > 0 && (
         <div className={styles.exps}>
           <h3>Pourquoi ? Les {total} explications</h3>
-          {feedback.explanations.map((e, i) => (
-            <div className={styles.exp} key={i}>
-              <span className={styles.expBadge}>{e.verdict}</span>
-              <div className={styles.expBody}>
-                <p className={styles.expTitle}>{renderMarkup(e.title)}</p>
-                <p className={styles.expText}>{renderMarkup(e.body)}</p>
-                {e.note && <div className={styles.expNote}>{renderMarkup(e.note)}</div>}
+          {feedback.explanations.map((e, i) => {
+            const q = quiz?.challenge.questions[i];
+            const chosenValue = quiz?.answers[i] ?? null;
+            const isWrong = !!q && chosenValue !== null && chosenValue !== q.answer;
+            const chosenLabel = isWrong
+              ? (q!.options ?? quiz!.challenge.options).find((o) => o.value === chosenValue)?.label
+              : undefined;
+            return (
+              <div className={styles.exp} key={i}>
+                <span className={styles.expBadge}>{e.verdict}</span>
+                <div className={styles.expBody}>
+                  <p className={styles.expTitle}>{renderMarkup(e.title)}</p>
+                  <p className={styles.expText}>{renderMarkup(e.body)}</p>
+                  {chosenLabel && (
+                    <p className={styles.expWrong}>
+                      Votre réponse : <strong>{chosenLabel}</strong>
+                    </p>
+                  )}
+                  {e.note && <div className={styles.expNote}>{renderMarkup(e.note)}</div>}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 

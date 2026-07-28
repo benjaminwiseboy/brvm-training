@@ -15,9 +15,9 @@ import { Bilan } from "./Bilan";
 
 type Phase = "intro" | "cours" | "defi" | "bilan";
 
-type Result = { correct: number; total: number; capitalDelta: number };
+type Result = { correct: number; total: number; capitalDelta: number; answers?: (string | null)[] };
 
-const EMPTY_RESULT: Result = { correct: 0, total: 0, capitalDelta: 0 };
+const EMPTY_RESULT: Result = { correct: 0, total: 0, capitalDelta: 0, answers: [] };
 
 // Ordre = index reporté à AppShell pour son stepper de header (cf.
 // lib/navGuard.tsx, useReportModulePhase) — mêmes 4 libellés que
@@ -157,6 +157,11 @@ function ModulePlayerInner({ module }: { module: Module }) {
           feedback={module.feedback}
           onNext={handleNext}
           walletTotal={state.capital}
+          quiz={
+            module.challenge.type === "quiz"
+              ? { challenge: module.challenge, answers: result.answers ?? [] }
+              : undefined
+          }
           diagnostic={
             module.challenge.type === "diagnostic" && diagnosticPoints !== null
               ? { points: diagnosticPoints, bands: module.challenge.bands }

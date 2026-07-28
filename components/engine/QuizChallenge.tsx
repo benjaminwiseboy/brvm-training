@@ -33,7 +33,7 @@ export function QuizChallenge({
   onResult,
 }: {
   challenge: QuizChallengeData;
-  onResult: (r: { correct: number; total: number; capitalDelta: number }) => void;
+  onResult: (r: { correct: number; total: number; capitalDelta: number; answers: (string | null)[] }) => void;
 }) {
   const total = challenge.questions.length;
   const [answers, setAnswers] = useState<(string | null)[]>(() => challenge.questions.map(() => null));
@@ -65,7 +65,7 @@ export function QuizChallenge({
       correct === total ? challenge.perfectReward : -(errors * challenge.penaltyPerError);
 
     setValidated(true); // pure : ne fait que verrouiller l'affichage
-    onResult({ correct, total, capitalDelta }); // effet de bord dans le handler, pas dans l'updater
+    onResult({ correct, total, capitalDelta, answers }); // effet de bord dans le handler, pas dans l'updater
   }
 
   // Avance à l'affirmation suivante, ou valide sur la dernière — même forme
