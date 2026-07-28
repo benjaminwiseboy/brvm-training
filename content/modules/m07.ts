@@ -87,7 +87,7 @@ export const m07: Module = {
         {
           kind: "text",
           value:
-            "En bourse, c'est pareil : certaines actions montent avec le temps. La différence entre le prix d'achat et le prix de revente, c'est la **plus-value** (vue au M03). On achète ces actions dans le but de les revendre plus tard, plus cher.",
+            "En bourse, c'est pareil : certaines actions montent avec le temps. La différence entre le prix d'achat et le prix de revente, c'est la **plus-value** (vue au module 3). On achète ces actions dans le but de les revendre plus tard, plus cher.",
         },
       ],
     },
@@ -134,6 +134,12 @@ export const m07: Module = {
             "lancer un **business**, ou financer un grand **voyage**.",
           ],
         },
+        {
+          kind: "callout",
+          tone: "highlight",
+          value:
+            "La croissance est un **levier** : bien utilisée, elle vous permet d'atteindre ces objectifs **plus vite qu'en épargnant seul(e)** — l'argent qui dort sur un compte ne travaille pas pour vous.",
+        },
       ],
     },
     {
@@ -142,7 +148,7 @@ export const m07: Module = {
         {
           kind: "text",
           value:
-            "Un exemple parlant : épargner 100 000 FCFA/mois pendant 5 ans, cela fait environ **4,8 millions**. Bien placé en stratégie de croissance, ce même effort d'épargne peut fructifier **bien au-delà**.",
+            "Un exemple parlant : épargner 100 000 FCFA/mois pendant 5 ans, sans rendement, cela fait **6 000 000 FCFA**. Bien placé en stratégie de croissance — disons à 12 % par an, une hypothèse, pas une promesse — ce même effort d'épargne peut atteindre environ **8 167 000 FCFA**, soit **plus de 2 millions de gains en plus** sur la même période.",
         },
         {
           kind: "callout",
