@@ -76,7 +76,14 @@ export const m03: Module = {
     {
       title: "À la pratique !",
       blocks: [
-        { kind: "lead", value: "Dividende = cash régulier. Plus-value = le capital qui grossit." },
+        { kind: "lead", value: "Retenez ces deux mécanismes :" },
+        {
+          kind: "list",
+          items: [
+            "🍊 **Dividende** = cash régulier, versé chaque année.",
+            "📈 **Plus-value** = le capital qui grossit, réel seulement le jour où vous vendez.",
+          ],
+        },
         { kind: "text", value: "Voyons si c'est bien clair. 👇" },
       ],
     },
