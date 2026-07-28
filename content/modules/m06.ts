@@ -83,11 +83,6 @@ export const m06: Module = {
       title: "Problème n°1 que la rente résout : financer les études des enfants",
       blocks: [
         {
-          kind: "lead",
-          value:
-            "Voici quelques exemples de problèmes que la rente peut résoudre — pas les seuls, mais parmi les plus fréquents.",
-        },
-        {
           kind: "text",
           value:
             "Vous constituez peu à peu un portefeuille d'actions qui versent de bons dividendes. Chaque année, ces dividendes arrivent sur votre compte et paient la scolarité.",
