@@ -13,6 +13,11 @@
   box-shadow: var(--shadow-lg);
   position: relative;
   overflow: hidden;
+  /* Fix (débordement mobile) : `.hero` est un enfant direct de la grille
+     `.dashMain` (AppShell.module.css) — sans ça, son `min-width` par défaut
+     (`auto`, régi par le contenu non rétréci) peut forcer toute la grille,
+     et donc la page, plus large que le viewport. */
+  min-width: 0;
 }
 .hero::before {
   content: "";

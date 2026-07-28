@@ -10,6 +10,11 @@
    ============================================================= */
 
 .sec {
+  /* Fix (débordement mobile) : `.sec` est un enfant direct de la grille
+     `.dashMain` (AppShell.module.css) — sans ça, son `min-width` par défaut
+     (`auto`, régi par le contenu non rétréci) peut forcer toute la grille,
+     et donc la page, plus large que le viewport. */
+  min-width: 0;
 }
 
 .head {
@@ -37,7 +42,11 @@
   display: grid;
   gap: 20px;
 }
+/* `.phase`/`.mod` ci-dessous : `min-width: 0` (Fix, débordement mobile) —
+   grilles imbriquées (`.map` puis `.mods`), chaque niveau est un enfant
+   direct d'une grille et hérite du même risque que `.sec` plus haut. */
 .phase {
+  min-width: 0;
 }
 .phaseHead {
   display: flex;
@@ -54,8 +63,10 @@
   color: var(--blue-2);
   font-size: 0.96rem;
   flex: 1;
+  min-width: 0;
 }
 .count {
+  flex: none;
   font-family: var(--f-display);
   font-weight: 700;
   font-size: 12px;
@@ -67,6 +78,7 @@
 .mods {
   display: grid;
   gap: 8px;
+  min-width: 0;
 }
 
 .mod {
@@ -78,6 +90,7 @@
   border-radius: 16px;
   padding: 12px 14px;
   text-decoration: none;
+  min-width: 0;
   color: inherit;
   box-shadow: var(--shadow-sm);
 }

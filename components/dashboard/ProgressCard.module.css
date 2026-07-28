@@ -20,6 +20,11 @@
   align-items: center;
   position: relative;
   overflow: hidden;
+  /* Fix (débordement mobile) : `.scorecard` est un enfant direct de la grille
+     `.dashMain` (AppShell.module.css) — sans ça, son `min-width` par défaut
+     (`auto`, régi par le contenu non rétréci) peut forcer toute la grille,
+     et donc la page, plus large que le viewport. */
+  min-width: 0;
 }
 .scorecard::before {
   content: "";
@@ -121,6 +126,15 @@
   .scorecard {
     flex-direction: column;
     text-align: center;
+  }
+  .main {
+    /* `align-items: center` du parent (voulu pour centrer `.ring`, qui a une
+       taille fixe) centre aussi `.main` sur l'axe croisé — devenu l'axe
+       horizontal en `column`. Résultat : `.main` s'auto-dimensionne à son
+       contenu au lieu de remplir la carte, ce qui fausse le point de rupture
+       réel de `.stats` (Fix, débordement mobile) — `.ring` reste centré via
+       `align-items` du parent, seul `.main` doit s'étirer. */
+    align-self: stretch;
   }
   .body {
     max-width: none;

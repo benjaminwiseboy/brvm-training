@@ -8,6 +8,11 @@
    ============================================================= */
 
 .sec {
+  /* Fix (débordement mobile) : `.sec` est un enfant direct de la grille
+     `.dashMain` (AppShell.module.css) — sans ça, son `min-width` par défaut
+     (`auto`, régi par le contenu non rétréci) peut forcer toute la grille,
+     et donc la page, plus large que le viewport. */
+  min-width: 0;
 }
 
 .head {
@@ -45,6 +50,9 @@
   border-radius: var(--radius);
   padding: 14px;
   box-shadow: var(--shadow-sm);
+  /* Fix (débordement mobile) : `.res` est un enfant direct de la grille
+     `.grid` (2 colonnes ≥641px, 1 colonne en dessous). */
+  min-width: 0;
 }
 .ic {
   flex: none;
