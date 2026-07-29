@@ -21,6 +21,10 @@ import type { Module } from "@/lib/types";
    stratégie ») : le type Block ne supporte que **gras** (voir
    lib/format.ts) — astérisques simples retirés, mot conservé tel
    quel (aucun mot perdu ni inventé).
+   Revue post-lancement : 4 slides d'ouverture ajoutées avant
+   « Regarder sous le capot » (définition, contexte historique —
+   Graham/Security Analysis/1934 —, intérêt, concept) ; faits
+   d'histoire financière publics, pas de chiffre BRVM inventé.
    ============================================================= */
 export const m16: Module = {
   code: "M16",
@@ -57,6 +61,44 @@ export const m16: Module = {
 
   // ---- Section 1 : le cours en slides ----
   slides: [
+    {
+      title: "Qu'est-ce que l'analyse fondamentale ?",
+      blocks: [
+        { kind: "lead", value: "Avant de sortir votre calculette, une question simple : qu'est-ce qu'on est en train de faire, au juste ?" },
+        { kind: "text", value: "**L'analyse fondamentale**, c'est étudier une entreprise elle-même — ses comptes, son activité, sa santé financière — pour estimer ce qu'elle **vaut vraiment**, indépendamment de ce que dit son prix en bourse à un instant donné." },
+        { kind: "text", value: "L'idée : le prix affiché et la valeur réelle d'une entreprise sont deux choses différentes. Parfois ils se rejoignent, parfois ils s'écartent — et c'est là que se cachent les bonnes affaires (ou les pièges)." },
+      ],
+    },
+    {
+      title: "Un peu d'histoire : née après un krach",
+      blocks: [
+        { kind: "text", value: "Cette méthode n'est pas nouvelle : elle naît dans les années 1930, aux États-Unis, après le **krach boursier de 1929** — un effondrement qui a ruiné des milliers d'investisseurs qui achetaient sur rumeur, sans jamais regarder les comptes des entreprises." },
+        { kind: "text", value: "Un professeur de l'université Columbia, **Benjamin Graham**, décide de tout reprendre à zéro : avec David Dodd, il publie en 1934 « **Security Analysis** », le premier grand ouvrage à poser des règles rigoureuses pour évaluer une entreprise à partir de faits, pas de rumeurs." },
+        { kind: "callout", tone: "highlight", value: "Son élève le plus célèbre ? **Warren Buffett** — l'un des investisseurs les plus riches au monde, qui applique encore aujourd'hui les principes de son professeur." },
+      ],
+    },
+    {
+      title: "Pourquoi ça vous intéresse",
+      blocks: [
+        { kind: "text", value: "Sans analyse fondamentale, vous investissez au bruit : les rumeurs, les modes, la peur ou l'euphorie du moment. Avec elle, vous gagnez 3 choses :" },
+        {
+          kind: "list",
+          items: [
+            "**Une méthode objective** — comparer deux entreprises sur des faits, pas des impressions.",
+            "**Une protection** — éviter d'acheter une entreprise fragile juste parce que son action est à la mode.",
+            "**Un repère** — savoir si un prix est justifié, trop élevé, ou une opportunité.",
+          ],
+        },
+      ],
+    },
+    {
+      title: "Le concept, en une phrase",
+      blocks: [
+        { kind: "lead", value: "Chaque entreprise a une valeur réelle — et son prix en bourse peut s'en écarter, dans un sens ou dans l'autre." },
+        { kind: "text", value: "L'analyse fondamentale sert à repérer cet écart : une entreprise **solide** vendue **pas cher**, c'est une opportunité ; une entreprise **fragile** vendue **cher**, c'est un piège à éviter." },
+        { kind: "text", value: "Passons à la pratique : voici vos premiers réflexes. 👇" },
+      ],
+    },
     {
       title: "Regarder sous le capot",
       blocks: [

@@ -79,9 +79,18 @@ export const m15: Module = {
           kind: "list",
           items: [
             "**La valeur nominale**, c'est le montant d'**un « billet » de prêt** : souvent **10 000 FCFA**. C'est aussi la somme exacte qu'on vous rendra à la fin.",
-            "**Le coupon**, c'est l'**intérêt** qu'on vous verse pour vous remercier de prêter. Il a un taux (ex. 6,50 %) et une fréquence : **A** = une fois par an · **S** = deux fois par an · **T** = quatre fois par an.",
+            "**Le coupon**, c'est l'**intérêt** qu'on vous verse pour vous remercier de prêter. Il a un taux (ex. 6,50 %) et une fréquence de versement :",
           ],
         },
+        {
+          kind: "list",
+          items: [
+            "**A** — Annuelle : une fois par an.",
+            "**S** — Semestrielle : deux fois par an.",
+            "**T** — Trimestrielle : quatre fois par an.",
+          ],
+        },
+        { kind: "formula", label: "Coupon annuel", value: "Valeur nominale × Taux" },
         { kind: "text", value: "**Exemple :** 6,50 % de 10 000, ça fait **650 FCFA** d'intérêt par an, dans votre poche." },
       ],
     },
@@ -90,6 +99,7 @@ export const m15: Module = {
       blocks: [
         { kind: "text", value: "Imaginez un **manguier** qui donne ses fruits une fois par an. Si vous le rachetez **6 mois avant la récolte**, les fruits ont déjà à moitié poussé grâce à l'ancien propriétaire — normal de lui rembourser sa part." },
         { kind: "text", value: "C'est exactement le **coupon couru** : en achetant une obligation en cours d'année, vous remboursez au vendeur les intérêts déjà « poussés » depuis le dernier versement. Rassurez-vous : vous récupérerez **tout** le coupon à la prochaine récolte." },
+        { kind: "formula", label: "Coupon couru (approximatif)", value: "Coupon annuel × (Jours écoulés ÷ 365)" },
       ],
     },
     {
@@ -104,6 +114,13 @@ export const m15: Module = {
             "**ACD (Constant Différé)** — pareil que AC, mais il commence par **ne payer que les intérêts** pendant quelques années, puis rembourse par tranches. C'est le plus courant pour les États.",
             "**AD (Dégressif)** — il rembourse **beaucoup au début**, puis de moins en moins (rare).",
           ],
+        },
+        { kind: "text", value: "Voici à quoi ressemble une obligation dans le BOC, avec tout ce que vous savez déjà lire :" },
+        {
+          kind: "boctable",
+          caption: "Extrait du BOC · obligation d'État",
+          columns: ["Titre", "Val. nominale", "Coupon net", "Coupon couru (exemple)", "Périodicité", "Type Amort", "Échéance"],
+          rows: [["ÉTAT DU SÉNÉGAL 6,50 % 2025-2032", "10 000 FCFA", "650 FCFA", "325 FCFA", "A", "ACD", "2032"]],
         },
       ],
     },
@@ -123,8 +140,26 @@ export const m15: Module = {
     {
       title: "Décoder le nom d'une obligation",
       blocks: [
-        { kind: "text", value: "**ÉTAT DU SÉNÉGAL 6,50 % 2025-2032** se lit comme une carte d'identité : **qui emprunte** (l'État du Sénégal) · **le taux d'intérêt** (6,50 %) · **l'année de départ et de fin** (2025 → 2032)." },
-        { kind: "text", value: "Quelques sigles d'emprunteurs : **TPCI** (Trésor de Côte d'Ivoire), **TPBF** (Burkina), **TPBJ** (Bénin), **TPTG** (Togo), **TPNE** (Niger), **EOM / EOS** (États du Mali / Sénégal). 👇" },
+        { kind: "text", value: "**ÉTAT DU SÉNÉGAL 6,50 % 2025-2032** se lit comme une carte d'identité :" },
+        {
+          kind: "boctable",
+          caption: "Carte d'identité d'une obligation",
+          columns: ["Qui emprunte", "Taux d'intérêt", "Année de départ", "Année de fin"],
+          rows: [["État du Sénégal", "6,50 %", "2025", "2032"]],
+        },
+        { kind: "text", value: "Quelques sigles d'emprunteurs :" },
+        {
+          kind: "list",
+          items: [
+            "**TPCI** — Trésor de Côte d'Ivoire.",
+            "**TPBF** — Trésor du Burkina Faso.",
+            "**TPBJ** — Trésor du Bénin.",
+            "**TPTG** — Trésor du Togo.",
+            "**TPNE** — Trésor du Niger.",
+            "**EOM / EOS** — État du Mali / État du Sénégal.",
+          ],
+        },
+        { kind: "text", value: "👇" },
       ],
     },
   ],
@@ -134,8 +169,12 @@ export const m15: Module = {
     type: "quiz",
     kicker: "Le Défi",
     title: "Décoder une obligation",
-    instruction:
-      "Voici une obligation d'État telle qu'au BOC : **ÉTAT DU SÉNÉGAL 6,50 % 2025-2032** — Nominal : 10 000 FCFA · Coupon : 650 FCFA net · Périodicité : Annuelle (A) · Type Amort : ACD. (1 erreur = − 5 000 FCFA.)",
+    instruction: "Voici une obligation d'État telle qu'au BOC. Observez-la et répondez. (1 erreur = − 5 000 FCFA.)",
+    table: {
+      caption: "ÉTAT DU SÉNÉGAL 6,50 % 2025-2032",
+      columns: ["Nominal", "Coupon net", "Périodicité", "Type Amort"],
+      rows: [["10 000 FCFA", "650 FCFA", "Annuelle (A)", "ACD"]],
+    },
     penaltyPerError: 5000,
     perfectReward: 25000,
     // Recopie des options de Q1 en repli neutre (requis par le type) :
