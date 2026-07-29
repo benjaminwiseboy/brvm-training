@@ -4,6 +4,8 @@ import { useCallback, useEffect, useState } from "react";
 import type { QuizChallenge as QuizChallengeData } from "@/lib/types";
 import { renderMarkup } from "@/lib/markup";
 import { BocTable } from "./BocTable";
+import { IdCard } from "./IdCard";
+import { ChartTabs } from "./ChartTabs";
 import styles from "./QuizChallenge.module.css";
 
 /**
@@ -108,9 +110,11 @@ export function QuizChallenge({
         <h2 className={styles.title}>{renderMarkup(challenge.title)}</h2>
       </div>
 
-      {challenge.table && (
+      {(challenge.table || challenge.idcard || challenge.chartProfiles) && (
         <div className={styles.tableEmphasis}>
-          <BocTable {...challenge.table} />
+          {challenge.table && <BocTable {...challenge.table} />}
+          {challenge.idcard && <IdCard {...challenge.idcard} />}
+          {challenge.chartProfiles && <ChartTabs profiles={challenge.chartProfiles} />}
         </div>
       )}
 

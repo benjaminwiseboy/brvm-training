@@ -1,9 +1,21 @@
-import type { BocTableData, Module } from "@/lib/types";
+import type { BocTableData, ChartData, IdCardData, Module } from "@/lib/types";
 
 function validateBocTable(tag: string, where: string, table: BocTableData, errs: string[]) {
   if (table.columns.length === 0) errs.push(`${tag}: ${where} sans colonne`);
   table.rows.forEach((row, ri) => {
     if (row.length !== table.columns.length) errs.push(`${tag}: ${where} ligne ${ri + 1} n'a pas le même nombre de cellules que de colonnes`);
+  });
+}
+
+function validateIdCard(tag: string, where: string, card: IdCardData, errs: string[]) {
+  if (card.fields.length === 0) errs.push(`${tag}: ${where} sans champ`);
+}
+
+function validateChart(tag: string, where: string, chart: ChartData, errs: string[]) {
+  if (chart.categories.length === 0) errs.push(`${tag}: ${where} sans catégorie`);
+  if (chart.series.length === 0) errs.push(`${tag}: ${where} sans série`);
+  chart.series.forEach((s) => {
+    if (s.values.length !== chart.categories.length) errs.push(`${tag}: ${where} série "${s.label}" n'a pas autant de valeurs que de catégories`);
   });
 }
 
@@ -18,6 +30,8 @@ export function validateModule(m: Module): string[] {
       if (b.kind === "download" && !b.href) errs.push(`${tag}: bloc de téléchargement (slide ${i + 1}) sans href`);
       if (b.kind === "link" && !b.href) errs.push(`${tag}: bloc de lien (slide ${i + 1}) sans href`);
       if (b.kind === "formula" && !b.value) errs.push(`${tag}: formule (slide ${i + 1}) sans valeur`);
+      if (b.kind === "idcard") validateIdCard(tag, `carte d'identité (slide ${i + 1})`, b, errs);
+      if (b.kind === "chart") validateChart(tag, `graphique (slide ${i + 1})`, b, errs);
     });
   });
   if (m.challenge.type === "quiz") {
@@ -28,6 +42,11 @@ export function validateModule(m: Module): string[] {
       if (!values.has(q.answer)) errs.push(`${tag}: réponse "${q.answer}" absente des options`);
     });
     if (m.challenge.table) validateBocTable(tag, "tableau du défi", m.challenge.table, errs);
+    if (m.challenge.idcard) validateIdCard(tag, "carte d'identité du défi", m.challenge.idcard, errs);
+    if (m.challenge.chartProfiles) {
+      if (m.challenge.chartProfiles.length === 0) errs.push(`${tag}: profils de graphique du défi vides`);
+      m.challenge.chartProfiles.forEach((p) => validateChart(tag, `graphique du défi (profil ${p.key})`, p.data, errs));
+    }
   } else if (m.challenge.type === "diagnostic") {
     if (m.challenge.questions.length === 0) errs.push(`${tag}: diagnostic sans question`);
     m.challenge.questions.forEach((q) => {

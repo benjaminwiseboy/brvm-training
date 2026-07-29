@@ -1,0 +1,36 @@
+/* =============================================================
+   ChartTabs — sélecteur de profil au-dessus d'un TrendChart.
+   ============================================================= */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tab {
+  appearance: none;
+  border: 2px solid var(--line-strong);
+  background: var(--card);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-family: var(--f-display);
+  font-size: 0.92rem;
+  font-weight: 700;
+  transition: border-color 0.18s, background 0.18s, color 0.18s;
+}
+.tab:hover {
+  border-color: var(--blue);
+}
+.tabOn {
+  border-color: var(--blue);
+  background: var(--blue);
+  color: #fff;
+}

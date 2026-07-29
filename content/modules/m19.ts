@@ -14,9 +14,14 @@ import type { Module } from "@/lib/types";
    Partie B. Le paragraphe Top-Down est éclaté en 3 explanations
    distinctes (une par événement numéroté, chacune reprenant
    verbatim sa propre clause) ; le paragraphe Bottom-Up devient la
-   4ᵉ explanation. La nuance finale *(« personne ne prédit l'avenir
-   à 100 %... »)* est repliée dans le `.note` de cette 4ᵉ (dernière)
-   explanation. `feedback.explanations.length` = 4 = questions.length.
+   4ᵉ explanation.
+   Revue post-lancement : Partie A illustrée en tableau, Partie B en
+   `scenario` (plus de prose recopiée dans `instruction`) ; Partie C
+   ajoutée — 2 questions de classification top-down/bottom-up (5ᵉ et
+   6ᵉ questions), avec leurs 2 explanations. La nuance finale
+   *(« personne ne prédit l'avenir à 100 %... »)* est repliée dans le
+   `.note` de la 6ᵉ (dernière) explanation. `feedback.explanations.
+   length` = 6 = questions.length.
    ============================================================= */
 export const m19: Module = {
   code: "M19",
@@ -115,9 +120,10 @@ export const m19: Module = {
             "le **rapport d'activité** de l'entreprise (souvent une section « Perspectives » ou « Stratégie »),",
             "les **médias financiers** : **Sika Finance**, Financial Afrik, la presse économique,",
             "pour le top-down : les publications de la **BCEAO** et les cours des matières premières,",
-            "les communiqués et l'espace actualités de brvm.org. 👇",
+            "les communiqués et l'espace actualités de brvm.org.",
           ],
         },
+        { kind: "callout", tone: "highlight", value: "📬 **Notre recommandation : la newsletter Cauri News.** Chaque édition décrypte l'actualité économique et boursière de l'UEMOA — exactement le type de signaux (vents porteurs, vents contraires, mouvements sectoriels) qui nourrissent votre lecture top-down. Un réflexe simple à prendre : quelques minutes de lecture pour garder une longueur d'avance. 👇" },
       ],
     },
   ],
@@ -127,12 +133,21 @@ export const m19: Module = {
     type: "quiz",
     kicker: "Le Défi",
     title: "La double vision de l'analyste",
-    instruction:
-      "Partie A — Top-Down : chaque événement est-il un vent porteur ou contraire pour le secteur ? Partie B — Bottom-Up : deux opérateurs télécoms — **Télé-Réseau** (65 % de part de marché, réseau d'antennes bâti sur 20 ans, marque connue) et **NouvelOp** (5 % de part, loue le réseau des autres, casse les prix) — lequel a le « fossé » le plus solide ? (1 erreur = − 5 000 FCFA.)",
+    instruction: "Partie A — Top-Down : chaque événement est-il un vent porteur ou contraire pour le secteur ? Partie B — Bottom-Up : lequel des deux opérateurs a le « fossé » le plus solide ? Partie C : à chaque fois, quelle paire de lunettes utilisez-vous ? (1 erreur = − 5 000 FCFA.)",
+    table: {
+      caption: "Partie A · trois événements macro",
+      columns: ["Événement", "Secteur touché"],
+      rows: [
+        ["Le cacao chute de 30 %", "Exportateurs de cacao"],
+        ["Le mobile money explose dans l'UEMOA", "Banques & télécoms"],
+        ["Le carburant s'envole durablement", "Transport routier"],
+      ],
+    },
+    scenario: "Partie B — Deux opérateurs télécoms. **Télé-Réseau** : 65 % de part de marché, réseau d'antennes bâti sur 20 ans, marque connue. **NouvelOp** : 5 % de part, loue le réseau des autres, casse les prix.",
     penaltyPerError: 5000,
     perfectReward: 25000,
     // Recopie des options de la Partie A en repli neutre (requis par le
-    // type) : Q4 (Partie B) a sa propre paire de boutons.
+    // type) : Q4/Q5/Q6 ont chacune leur propre paire de boutons.
     options: [
       { value: "porteur", label: "Porteur" },
       { value: "contraire", label: "Contraire" },
@@ -170,6 +185,22 @@ export const m19: Module = {
           { value: "nouvelop", label: "NouvelOp" },
         ],
       },
+      {
+        prompt: "**Partie C · 1.** Un investisseur part de la croissance de l'UEMOA, descend vers le secteur, puis regarde l'entreprise. Quelle paire de lunettes utilise-t-il ?",
+        answer: "top_down",
+        options: [
+          { value: "top_down", label: "Top-down (l'aigle)" },
+          { value: "bottom_up", label: "Bottom-up (la fourmi)" },
+        ],
+      },
+      {
+        prompt: "**Partie C · 2.** Un investisseur étudie directement la part de marché et le réseau d'une entreprise, sans se soucier de la conjoncture régionale. Quelle paire de lunettes utilise-t-il ?",
+        answer: "bottom_up",
+        options: [
+          { value: "top_down", label: "Top-down (l'aigle)" },
+          { value: "bottom_up", label: "Bottom-up (la fourmi)" },
+        ],
+      },
     ],
   },
 
@@ -205,6 +236,16 @@ export const m19: Module = {
         verdict: "Télé-Réseau",
         title: "Le fossé de Télé-Réseau",
         body: "**Télé-Réseau** a un vrai fossé (65 % de marché **et** un réseau que personne ne copie en un jour). NouvelOp n'a qu'une arme, casser les prix, ce qui détruit ses propres marges.",
+      },
+      {
+        verdict: "Top-down",
+        title: "Partir du grand tableau : top-down",
+        body: "Économie régionale → secteur → entreprise : c'est la vue de **l'aigle**, qui part du contexte pour descendre vers le titre précis.",
+      },
+      {
+        verdict: "Bottom-up",
+        title: "Partir de l'entreprise : bottom-up",
+        body: "Part de marché, réseau, avantage concurrentiel : c'est la vue de **la fourmi**, qui étudie l'entreprise de près, sans se soucier du contexte macro.",
         note: "Nuance : personne ne prédit l'avenir à 100 %. On met les probabilités de son côté.",
       },
     ],

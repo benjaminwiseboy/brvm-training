@@ -129,17 +129,15 @@ export const m17: Module = {
     kicker: "Le Défi",
     title: "Lire la carte d'identité",
     instruction: "Voici la fiche d'une entreprise cotée. Observez-la et répondez. (1 erreur = − 5 000 FCFA.)",
-    table: {
-      caption: "🏢 Carte d'identité — AgriBénin SA",
-      columns: ["Création", "Activité", "Actionnaires", "Zone", "Capital"],
-      rows: [
-        [
-          "1985 (40 ans)",
-          "Production et exportation d'huile de palme et de coton",
-          "Groupe Agro-Ouest (55 %), État du Bénin (20 %), public (25 %)",
-          "Bénin, Togo, Burkina Faso",
-          "10 milliards FCFA, 2 millions d'actions",
-        ],
+    idcard: {
+      icon: "🏢",
+      title: "AgriBénin SA",
+      fields: [
+        { label: "Création", value: "1985 (40 ans)" },
+        { label: "Activité", value: "Production et exportation d'huile de palme et de coton" },
+        { label: "Actionnaires", value: "Groupe Agro-Ouest (55 %), État du Bénin (20 %), public (25 %)" },
+        { label: "Zone", value: "Bénin, Togo, Burkina Faso" },
+        { label: "Capital", value: "10 milliards FCFA, 2 millions d'actions" },
       ],
     },
     penaltyPerError: 5000,

@@ -1,6 +1,8 @@
 import type { Block } from "@/lib/types";
 import { renderMarkup } from "@/lib/markup";
 import { BocTable } from "./BocTable";
+import { IdCard } from "./IdCard";
+import { TrendChart } from "./TrendChart";
 import styles from "./BlockRenderer.module.css";
 
 /**
@@ -85,6 +87,17 @@ export function BlockRenderer({ block }: { block: Block }) {
           {block.label && <div className={styles.formulaLabel}>{block.label}</div>}
           <div className={styles.formulaValue}>{renderMarkup(block.value)}</div>
         </div>
+      );
+
+    case "idcard":
+      return <IdCard icon={block.icon} title={block.title} fields={block.fields} />;
+
+    case "chart":
+      return (
+        <figure>
+          <TrendChart categories={block.categories} series={block.series} unit={block.unit} />
+          {block.caption && <figcaption className={styles.chartCaption}>{block.caption}</figcaption>}
+        </figure>
       );
   }
 }

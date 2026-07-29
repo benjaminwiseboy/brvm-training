@@ -1,0 +1,60 @@
+/* =============================================================
+   IdCard — carte d'identité d'une entreprise : en-tête marine +
+   grille de champs, tout visible d'un coup d'œil (pas de tableau,
+   pas de scroll).
+   ============================================================= */
+
+.card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-sm);
+  background: var(--card);
+}
+
+.head {
+  background: var(--blue-2);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.icon {
+  font-size: 28px;
+  line-height: 1;
+}
+.title {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: #fff;
+  margin: 0;
+}
+
+.body {
+  padding: 18px 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 480px) {
+  .body {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.label {
+  font-family: var(--f-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--or-deep);
+  margin-bottom: 4px;
+}
+.value {
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 0.98rem;
+  line-height: 1.4;
+}

@@ -172,16 +172,28 @@ export const m18: Module = {
           kind: "list",
           items: [
             "Des courbes qui **montent régulièrement** = une entreprise performante et rassurante.",
-            "Des courbes en **dents de scie** = imprévisible, plus risqué. 👇",
+            "Des courbes en **dents de scie** = imprévisible, plus risqué.",
+            "Des courbes qui **déclinent franchement** = signal d'alerte direct. 👇",
           ],
         },
         {
-          kind: "boctable",
-          caption: "Chiffre d'affaires sur 10 ans (exemples fictifs, en milliards FCFA)",
-          columns: ["Profil", "An 1", "An 4", "An 7", "An 10"],
-          rows: [
-            ["Rassurant (progression régulière)", "40", "55", "70", "90"],
-            ["Imprévisible (dents de scie)", "40", "70", "35", "90"],
+          kind: "chart",
+          caption: "Profil rassurant (chiffres fictifs, en milliards FCFA)",
+          categories: ["An 1", "An 3", "An 5", "An 7", "An 10"],
+          series: [
+            { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [40, 50, 65, 78, 90] },
+            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [6, 9, 12, 14, 16] },
+            { label: "Résultat net", kind: "line", color: "gold", values: [4, 6, 9, 11, 13] },
+          ],
+        },
+        {
+          kind: "chart",
+          caption: "Profil en déclin (chiffres fictifs, en milliards FCFA)",
+          categories: ["An 1", "An 3", "An 5", "An 7", "An 10"],
+          series: [
+            { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [90, 85, 75, 60, 50] },
+            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [16, 13, 9, 5, 2] },
+            { label: "Résultat net", kind: "line", color: "clay", values: [13, 10, 6, 2, -1] },
           ],
         },
       ],
@@ -193,8 +205,61 @@ export const m18: Module = {
     type: "quiz",
     kicker: "Le Défi",
     title: "Interpréter les courbes sur 10 ans",
-    instruction:
-      "Quatre entreprises, chacune avec 3 courbes sur 10 ans (chiffre d'affaires / résultat d'exploitation / résultat net, en milliards FCFA). **📈 Profil A** — CA : 40 → 90 · Exploitation : 6 → 15 · Net : 4 → 11 (tout monte régulièrement). **📈 Profil B** — CA : 40 → 100 · Exploitation : 8 → 5 · Net : 6 → 4 (le CA grimpe, le reste baisse). **📈 Profil C** — tout en dents de scie (aucune tendance). **📈 Profil D** — CA : 50 → 48 · Exploitation : 10 → 4 · Net : 6 → 12 (le net monte, le cœur de métier s'effondre). (1 erreur = − 10 000 FCFA.)",
+    instruction: "Quatre entreprises, chacune avec 3 courbes sur 10 ans (chiffre d'affaires, résultat d'exploitation, résultat net). Basculez d'un profil à l'autre et répondez. (1 erreur = − 10 000 FCFA.)",
+    chartProfiles: [
+      {
+        key: "a",
+        label: "Profil A",
+        data: {
+          categories: ["An 1", "An 3", "An 5", "An 7", "An 10"],
+          unit: "milliards FCFA",
+          series: [
+            { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [40, 52, 65, 78, 90] },
+            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [6, 8, 10, 13, 15] },
+            { label: "Résultat net", kind: "line", color: "gold", values: [4, 6, 7, 9, 11] },
+          ],
+        },
+      },
+      {
+        key: "b",
+        label: "Profil B",
+        data: {
+          categories: ["An 1", "An 3", "An 5", "An 7", "An 10"],
+          unit: "milliards FCFA",
+          series: [
+            { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [40, 55, 70, 85, 100] },
+            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [8, 7, 7, 6, 5] },
+            { label: "Résultat net", kind: "line", color: "gold", values: [6, 5, 5, 4, 4] },
+          ],
+        },
+      },
+      {
+        key: "c",
+        label: "Profil C",
+        data: {
+          categories: ["An 1", "An 3", "An 5", "An 7", "An 10"],
+          unit: "milliards FCFA",
+          series: [
+            { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [40, 70, 35, 90, 55] },
+            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [7, 3, 8, 2, 6] },
+            { label: "Résultat net", kind: "line", color: "gold", values: [5, 1, 6, 0, 4] },
+          ],
+        },
+      },
+      {
+        key: "d",
+        label: "Profil D",
+        data: {
+          categories: ["An 1", "An 3", "An 5", "An 7", "An 10"],
+          unit: "milliards FCFA",
+          series: [
+            { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [50, 49, 49, 48, 48] },
+            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [10, 8, 7, 5, 4] },
+            { label: "Résultat net", kind: "line", color: "gold", values: [6, 7, 8, 10, 12] },
+          ],
+        },
+      },
+    ],
     penaltyPerError: 10000,
     perfectReward: 30000,
     // Recopie des options de Q1 en repli neutre (requis par le type) :

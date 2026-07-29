@@ -1,3 +1,22 @@
+export type IdCardData = {
+  icon?: string;
+  title: string;
+  fields: { label: string; value: string }[];
+};
+
+export type ChartSeries = {
+  label: string;
+  kind: "bar" | "line";
+  color: "blue" | "gold" | "pos" | "clay" | "violet" | "teal";
+  values: number[]; // même longueur que ChartData.categories
+};
+
+export type ChartData = {
+  categories: string[];
+  series: ChartSeries[];
+  unit?: string;
+};
+
 export type BocTableData = {
   /** Ex. "Extrait du BOC (données fictives, structure réelle)". */
   caption?: string;
@@ -17,7 +36,9 @@ export type Block =
   | ({ kind: "boctable" } & BocTableData)
   | { kind: "download"; label: string; sublabel?: string; href: string }
   | { kind: "link"; label: string; sublabel?: string; href: string }
-  | { kind: "formula"; label?: string; value: string };
+  | { kind: "formula"; label?: string; value: string }
+  | ({ kind: "idcard" } & IdCardData)
+  | ({ kind: "chart"; caption?: string } & ChartData);
 
 export type Slide = { title: string; blocks: Block[] };
 
@@ -28,6 +49,10 @@ export type QuizChallenge = {
   scenario?: string;
   /** Extrait de BOC affiché en tableau réel, bien mis en valeur au-dessus de `instruction` (Phase 3, M11+) — remplace le repli "valeurs recopiées verbatim dans instruction" des premiers modules Phase 3. */
   table?: BocTableData;
+  /** Carte d'identité (M17+) : alternative à `table` quand l'exemple est un profil à embrasser d'un coup d'œil plutôt qu'une grille de données. */
+  idcard?: IdCardData;
+  /** Graphiques interactifs par profil (M18+) : alternative à `table`/`idcard` — l'apprenant bascule d'un profil à l'autre avant de répondre. */
+  chartProfiles?: { key: string; label: string; data: ChartData }[];
   penaltyPerError: number; perfectReward: number;
   options: { value: string; label: string }[];   // ex. Mythe/Réalité, Feu vert/rouge
   questions: { prompt: string; answer: string; options?: { value: string; label: string }[] }[]; // answer ∈ (options ?? challenge.options).value — per-question override for questions whose correct-answer set differs from the challenge-level shared options (e.g. numeric-amount questions in the same challenge as a percentage question)

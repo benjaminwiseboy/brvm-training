@@ -70,6 +70,13 @@ export const m20: Module = {
       blocks: [
         { kind: "text", value: "Vous avez une entreprise solide (✓), avec de l'avenir (✓). Reste le pilier décisif : **le prix**." },
         { kind: "text", value: "Imaginez le **meilleur téléphone du monde**… vendu 500 000 FCFA alors qu'il en vaut 200 000. Même excellent, c'est une mauvaise affaire. En bourse, c'est pareil :" },
+        {
+          kind: "duo",
+          items: [
+            { side: "Prix payé", value: "500 000 FCFA" },
+            { side: "Valeur réelle", value: "200 000 FCFA — l'écart, c'est ce que vous payez en trop." },
+          ],
+        },
         { kind: "callout", tone: "highlight", value: "« Le prix, c'est ce que vous payez. La valeur, c'est ce que vous recevez. »" },
         { kind: "text", value: "D'où l'idée de Graham : la **marge de sécurité**. Comme un pont qu'on construit pour supporter 30 tonnes alors que les camions n'en pèsent que 10 — on se garde une marge, au cas où. On achète en dessous de la vraie valeur, pour avoir un coussin." },
       ],
@@ -77,13 +84,17 @@ export const m20: Module = {
     {
       title: "Le PER : « en combien d'années je me rembourse ? »",
       blocks: [
-        { kind: "text", value: "Le **PER** (Price Earning Ratio) reprend l'image de la boutique (M14) : **PER = prix ÷ bénéfice par action**. C'est le nombre d'années de bénéfices pour récupérer votre mise." },
+        { kind: "text", value: "Le **PER** (Price Earning Ratio) reprend l'image de la boutique (M14) : c'est le nombre d'années de bénéfices pour récupérer votre mise." },
+        { kind: "formula", label: "PER", value: "Cours ÷ Bénéfice par action" },
         {
-          kind: "list",
-          items: [
-            "**PER 8** → 8 ans : vous payez peu, bon marché.",
-            "**PER 25** → 25 ans : très cher. Le marché parie sur une croissance énorme ; s'il se trompe, la chute fait mal.",
+          kind: "boctable",
+          caption: "Deux PER, deux lectures",
+          columns: ["PER", "Lecture"],
+          rows: [
+            ["8", "8 ans pour se rembourser : vous payez peu, bon marché."],
+            ["25", "25 ans : très cher. Le marché parie sur une croissance énorme ; s'il se trompe, la chute fait mal."],
           ],
+          highlightCols: [0],
         },
       ],
     },
@@ -92,10 +103,14 @@ export const m20: Module = {
       blocks: [
         { kind: "text", value: "Le bon réflexe : se comparer à **la moyenne de la classe** — le PER moyen du marché, ≈ **14** (le BOC le publie)." },
         {
-          kind: "list",
-          items: [
-            "**PER < 8** : franchement bon marché (gare au piège de la valeur, on y vient).",
-            "**8 à 12** : attractif · **12 à 15** : dans la moyenne · **> 20** : cher.",
+          kind: "boctable",
+          caption: "Repères PER (BRVM)",
+          columns: ["PER", "Repère"],
+          rows: [
+            ["< 8", "Franchement bon marché (gare au piège de la valeur)"],
+            ["8 à 12", "Attractif"],
+            ["12 à 15", "Dans la moyenne"],
+            ["> 20", "Cher"],
           ],
         },
       ],
@@ -103,13 +118,18 @@ export const m20: Module = {
     {
       title: "Le PBR : « combien de fois le patrimoine ? » 🏠",
       blocks: [
-        { kind: "text", value: "Autre lunette, le **PBR** (Price to Book Ratio) = **prix ÷ patrimoine par action**. Le patrimoine (« actif net »), c'est tout ce que possède l'entreprise **moins ses dettes** — ce qui resterait si on vendait tout." },
+        { kind: "text", value: "Autre lunette, le **PBR** (Price to Book Ratio). Le patrimoine (« actif net »), c'est tout ce que possède l'entreprise **moins ses dettes** — ce qui resterait si on vendait tout." },
+        { kind: "formula", label: "PBR", value: "Cours ÷ Patrimoine par action" },
         { kind: "text", value: "**L'image :** achèteriez-vous une maison **3 fois le prix de ses murs** ? Le PBR, c'est ce multiple :" },
         {
-          kind: "list",
-          items: [
-            "**PBR < 1** : vous payez **moins** que le patrimoine — une affaire potentielle (vérifiez pourquoi).",
-            "**1 à 1,5** : bon · **1,5 à 3** : ça devient cher · **> 3** : cher.",
+          kind: "boctable",
+          caption: "Repères PBR",
+          columns: ["PBR", "Repère"],
+          rows: [
+            ["< 1", "Vous payez moins que le patrimoine — affaire potentielle (vérifiez pourquoi)"],
+            ["1 à 1,5", "Bon"],
+            ["1,5 à 3", "Ça devient cher"],
+            ["> 3", "Cher"],
           ],
         },
       ],
@@ -117,7 +137,8 @@ export const m20: Module = {
     {
       title: "La règle de Graham (et le piège) ⚠️",
       blocks: [
-        { kind: "callout", tone: "highlight", value: "Un placement prudent respecte : **PER × PBR < 22,5**." },
+        { kind: "text", value: "Un placement prudent respecte :" },
+        { kind: "formula", label: "Règle de Graham", value: "PER × PBR < 22,5" },
         { kind: "callout", tone: "warn", value: "⚠️ Mais attention (calibrage BRVM) : cette règle vient des USA des années 70. Ici, beaucoup d'actions passent facilement le filtre → **22,5 n'est PAS un feu vert d'achat**, juste un « ne payez jamais au-dessus »." },
         { kind: "text", value: "Le vrai danger local, c'est le **piège de la valeur** : une maison pas chère… **parce qu'elle est fissurée** ; une action pas chère… **parce que l'entreprise se dégrade**. **Pas cher ≠ bonne affaire.**" },
       ],
@@ -127,12 +148,16 @@ export const m20: Module = {
       blocks: [
         { kind: "text", value: "Un prix bas ne vaut **que** s'il s'ajoute à la performance (M18) et aux perspectives (M19) :" },
         {
-          kind: "list",
-          items: [
-            "Pas cher **+** solide **+** avenir = 💎 **pépite**.",
-            "Pas cher **+** entreprise pourrie = 🪤 **piège**. 👇",
+          kind: "boctable",
+          caption: "La même équation, deux résultats opposés",
+          columns: ["Prix", "Entreprise", "Résultat"],
+          rows: [
+            ["Pas cher", "Solide + bel avenir", "💎 Pépite"],
+            ["Pas cher", "Fondamentaux qui se dégradent", "🪤 Piège de la valeur"],
           ],
+          highlightCols: [2],
         },
+        { kind: "text", value: "👇" },
       ],
     },
   ],
@@ -142,8 +167,17 @@ export const m20: Module = {
     type: "quiz",
     kicker: "Le Défi",
     title: "Le calculateur et le piège",
-    instruction:
-      "**X — « Banque de l'Union »** — PER 9 · PBR 1,3 · fondamentaux : bénéfices en hausse, dividende régulier, secteur porteur. **Y — « Vieux-Comptoir »** — PER 5 · PBR 0,7 · fondamentaux : bénéfices en baisse 3 ans, dividende coupé, parts perdues. **Z — « Croissance-Tech »** — PER 24 · PBR 2,8 · fondamentaux : forte croissance, aucun dividende. (1 erreur = − 10 000 FCFA.)",
+    instruction: "Observez ces 3 entreprises et répondez. (1 erreur = − 10 000 FCFA.)",
+    table: {
+      caption: "Trois entreprises à évaluer",
+      columns: ["Entreprise", "PER", "PBR", "Fondamentaux"],
+      rows: [
+        ["X — Banque de l'Union", "9", "1,3", "Bénéfices en hausse, dividende régulier, secteur porteur"],
+        ["Y — Vieux-Comptoir", "5", "0,7", "Bénéfices en baisse 3 ans, dividende coupé, parts perdues"],
+        ["Z — Croissance-Tech", "24", "2,8", "Forte croissance, aucun dividende"],
+      ],
+      highlightCols: [1, 2],
+    },
     penaltyPerError: 10000,
     perfectReward: 40000,
     // Recopie des options de Q1 en repli neutre (requis par le type) :
