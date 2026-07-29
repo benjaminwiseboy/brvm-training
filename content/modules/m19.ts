@@ -142,12 +142,7 @@ export const m19: Module = {
     type: "quiz",
     kicker: "Le Défi",
     title: "La double vision de l'analyste",
-    instruction:
-      "2 scénarios, 1 tableau chacun — basculez entre les onglets ci-dessous pour les consulter.\n" +
-      "**Scénario 1** (questions 1 à 3, Tableau A) — pour chaque événement, est-ce un vent porteur ou contraire ?\n" +
-      "**Scénario 2** (question 4, Tableau B) — lequel des 2 opérateurs a le « fossé » le plus solide ?\n" +
-      "**Bilan** (questions 5 et 6) — en regardant ce que vous venez de faire, quelle paire de lunettes avez-vous utilisée ?\n" +
-      "(1 erreur = − 5 000 FCFA.)",
+    instruction: "2 scénarios, 1 tableau chacun — basculez entre les onglets ci-dessous pour les consulter, puis répondez. (1 erreur = − 5 000 FCFA.)",
     tableTabs: [
       {
         key: "1",
@@ -185,7 +180,7 @@ export const m19: Module = {
     ],
     questions: [
       {
-        prompt: "**Scénario 1 · 1 sur 3** (Tableau A). « Le cacao chute de 30 % » → pour un **exportateur de cacao**, c'est un vent :",
+        prompt: "**Scénario 1.** « Le cacao chute de 30 % » → pour un **exportateur de cacao**, c'est un vent :",
         answer: "contraire",
         options: [
           { value: "porteur", label: "Porteur" },
@@ -193,7 +188,7 @@ export const m19: Module = {
         ],
       },
       {
-        prompt: "**Scénario 1 · 2 sur 3** (Tableau A). « Le mobile money explose dans l'UEMOA » → pour **banques & télécoms**, c'est un vent :",
+        prompt: "**Scénario 1.** « Le mobile money explose dans l'UEMOA » → pour **banques & télécoms**, c'est un vent :",
         answer: "porteur",
         options: [
           { value: "porteur", label: "Porteur" },
@@ -201,7 +196,7 @@ export const m19: Module = {
         ],
       },
       {
-        prompt: "**Scénario 1 · 3 sur 3** (Tableau A). « Le carburant s'envole durablement » → pour le **transport routier**, c'est un vent :",
+        prompt: "**Scénario 1.** « Le carburant s'envole durablement » → pour le **transport routier**, c'est un vent :",
         answer: "contraire",
         options: [
           { value: "porteur", label: "Porteur" },
@@ -209,7 +204,7 @@ export const m19: Module = {
         ],
       },
       {
-        prompt: "**Scénario 2** (Tableau B — basculez d'onglet ci-dessus). Entre Télé-Réseau et NouvelOp, lequel a le « fossé » le plus solide ?",
+        prompt: "**Scénario 2.** Entre Télé-Réseau et NouvelOp, lequel a le « fossé » le plus solide ?",
         answer: "tele_reseau",
         options: [
           { value: "tele_reseau", label: "Télé-Réseau" },
@@ -217,7 +212,7 @@ export const m19: Module = {
         ],
       },
       {
-        prompt: "**Bilan · 1 sur 2.** Dans le Scénario 1, pour juger le cacao, le mobile money et le carburant, vous êtes parti de l'économie régionale pour descendre vers le secteur. Quelle paire de lunettes est-ce ?",
+        prompt: "**Bilan.** Dans le Scénario 1, pour juger le cacao, le mobile money et le carburant, vous êtes parti de l'économie régionale pour descendre vers le secteur. Quelle paire de lunettes est-ce ?",
         answer: "top_down",
         options: [
           { value: "top_down", label: "Top-down (l'aigle)" },
@@ -225,7 +220,7 @@ export const m19: Module = {
         ],
       },
       {
-        prompt: "**Bilan · 2 sur 2.** Dans le Scénario 2, pour comparer Télé-Réseau et NouvelOp, vous avez regardé directement leur part de marché et leur réseau, sans vous soucier du contexte régional. Quelle paire de lunettes est-ce ?",
+        prompt: "**Bilan.** Dans le Scénario 2, pour comparer Télé-Réseau et NouvelOp, vous avez regardé directement leur part de marché et leur réseau, sans vous soucier du contexte régional. Quelle paire de lunettes est-ce ?",
         answer: "bottom_up",
         options: [
           { value: "top_down", label: "Top-down (l'aigle)" },
