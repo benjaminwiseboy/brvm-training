@@ -1,5 +1,6 @@
 /* =============================================================
-   ChartTabs — sélecteur de profil au-dessus d'un TrendChart.
+   Tabs — barre d'onglets générique, partagée par ChartTabs (M18) et
+   TableTabs (M19+).
    ============================================================= */
 
 .wrap {

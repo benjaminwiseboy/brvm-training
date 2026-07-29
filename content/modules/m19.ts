@@ -15,13 +15,22 @@ import type { Module } from "@/lib/types";
    distinctes (une par événement numéroté, chacune reprenant
    verbatim sa propre clause) ; le paragraphe Bottom-Up devient la
    4ᵉ explanation.
-   Revue post-lancement : Partie A illustrée en tableau, Partie B en
-   `scenario` (plus de prose recopiée dans `instruction`) ; Partie C
-   ajoutée — 2 questions de classification top-down/bottom-up (5ᵉ et
-   6ᵉ questions), avec leurs 2 explanations. La nuance finale
+   Revue post-lancement (1) : Partie A/B renommées Scénario 1/2,
+   illustrées en tableaux (Tableau A/B) ; Partie C renommée "Bilan" —
+   2 questions de classification top-down/bottom-up (5ᵉ et 6ᵉ
+   questions), avec leurs 2 explanations. La nuance finale
    *(« personne ne prédit l'avenir à 100 %... »)* est repliée dans le
    `.note` de la 6ᵉ (dernière) explanation. `feedback.explanations.
    length` = 6 = questions.length.
+   Revue post-lancement (2) : le tableau du Scénario 1 et l'encart
+   `scenario` du Scénario 2 étaient tous deux affichés en permanence,
+   même pendant les questions du Bilan qui n'en dépendent pas — source
+   de confusion signalée par le user. Remplacés par `tableTabs` (champ
+   dédié, nouveau composant TableTabs — même mécanisme que ChartTabs
+   de m18.ts, factorisé dans components/engine/Tabs.tsx) : un seul
+   tableau visible à la fois, l'apprenant bascule entre "Scénario 1"
+   et "Scénario 2" via onglets. `instruction` explicite quel onglet
+   consulter pour chaque question.
    ============================================================= */
 export const m19: Module = {
   code: "M19",
@@ -134,24 +143,41 @@ export const m19: Module = {
     kicker: "Le Défi",
     title: "La double vision de l'analyste",
     instruction:
-      "3 parties, 6 affirmations au total :\n" +
-      "**Partie A** (questions 1 à 3) — pour chaque événement du tableau ci-dessous, est-ce un vent porteur ou contraire ?\n" +
-      "**Partie B** (question 4) — lequel des 2 opérateurs de l'encart ci-dessous a le « fossé » le plus solide ?\n" +
-      "**Partie C** (questions 5 et 6) — en regardant ce que vous venez de faire en A et B, quelle paire de lunettes avez-vous utilisée ?\n" +
+      "2 scénarios, 1 tableau chacun — basculez entre les onglets ci-dessous pour les consulter.\n" +
+      "**Scénario 1** (questions 1 à 3, Tableau A) — pour chaque événement, est-ce un vent porteur ou contraire ?\n" +
+      "**Scénario 2** (question 4, Tableau B) — lequel des 2 opérateurs a le « fossé » le plus solide ?\n" +
+      "**Bilan** (questions 5 et 6) — en regardant ce que vous venez de faire, quelle paire de lunettes avez-vous utilisée ?\n" +
       "(1 erreur = − 5 000 FCFA.)",
-    table: {
-      caption: "Partie A · trois événements macro",
-      columns: ["Événement", "Secteur touché"],
-      rows: [
-        ["Le cacao chute de 30 %", "Exportateurs de cacao"],
-        ["Le mobile money explose dans l'UEMOA", "Banques & télécoms"],
-        ["Le carburant s'envole durablement", "Transport routier"],
-      ],
-    },
-    scenario: "Partie B — Deux opérateurs télécoms. **Télé-Réseau** : 65 % de part de marché, réseau d'antennes bâti sur 20 ans, marque connue. **NouvelOp** : 5 % de part, loue le réseau des autres, casse les prix.",
+    tableTabs: [
+      {
+        key: "1",
+        label: "Scénario 1",
+        table: {
+          caption: "Tableau A — trois événements macro",
+          columns: ["Événement", "Secteur touché"],
+          rows: [
+            ["Le cacao chute de 30 %", "Exportateurs de cacao"],
+            ["Le mobile money explose dans l'UEMOA", "Banques & télécoms"],
+            ["Le carburant s'envole durablement", "Transport routier"],
+          ],
+        },
+      },
+      {
+        key: "2",
+        label: "Scénario 2",
+        table: {
+          caption: "Tableau B — deux opérateurs télécoms",
+          columns: ["Opérateur", "Part de marché", "Réseau", "Marque"],
+          rows: [
+            ["Télé-Réseau", "65 %", "Bâti sur 20 ans", "Connue"],
+            ["NouvelOp", "5 %", "Loué, pas le sien", "Casse les prix"],
+          ],
+        },
+      },
+    ],
     penaltyPerError: 5000,
     perfectReward: 25000,
-    // Recopie des options de la Partie A en repli neutre (requis par le
+    // Recopie des options du Scénario 1 en repli neutre (requis par le
     // type) : Q4/Q5/Q6 ont chacune leur propre paire de boutons.
     options: [
       { value: "porteur", label: "Porteur" },
@@ -159,7 +185,7 @@ export const m19: Module = {
     ],
     questions: [
       {
-        prompt: "**Partie A · 1 sur 3.** Regardez le tableau ci-dessus. « Le cacao chute de 30 % » → pour un **exportateur de cacao**, c'est un vent :",
+        prompt: "**Scénario 1 · 1 sur 3** (Tableau A). « Le cacao chute de 30 % » → pour un **exportateur de cacao**, c'est un vent :",
         answer: "contraire",
         options: [
           { value: "porteur", label: "Porteur" },
@@ -167,7 +193,7 @@ export const m19: Module = {
         ],
       },
       {
-        prompt: "**Partie A · 2 sur 3.** « Le mobile money explose dans l'UEMOA » → pour **banques & télécoms**, c'est un vent :",
+        prompt: "**Scénario 1 · 2 sur 3** (Tableau A). « Le mobile money explose dans l'UEMOA » → pour **banques & télécoms**, c'est un vent :",
         answer: "porteur",
         options: [
           { value: "porteur", label: "Porteur" },
@@ -175,7 +201,7 @@ export const m19: Module = {
         ],
       },
       {
-        prompt: "**Partie A · 3 sur 3.** « Le carburant s'envole durablement » → pour le **transport routier**, c'est un vent :",
+        prompt: "**Scénario 1 · 3 sur 3** (Tableau A). « Le carburant s'envole durablement » → pour le **transport routier**, c'est un vent :",
         answer: "contraire",
         options: [
           { value: "porteur", label: "Porteur" },
@@ -183,7 +209,7 @@ export const m19: Module = {
         ],
       },
       {
-        prompt: "**Partie B.** Regardez l'encart « Scénario » ci-dessus. Entre Télé-Réseau et NouvelOp, lequel a le « fossé » le plus solide ?",
+        prompt: "**Scénario 2** (Tableau B — basculez d'onglet ci-dessus). Entre Télé-Réseau et NouvelOp, lequel a le « fossé » le plus solide ?",
         answer: "tele_reseau",
         options: [
           { value: "tele_reseau", label: "Télé-Réseau" },
@@ -191,7 +217,7 @@ export const m19: Module = {
         ],
       },
       {
-        prompt: "**Partie C · 1 sur 2.** Dans la Partie A, pour juger le cacao, le mobile money et le carburant, vous êtes parti de l'économie régionale pour descendre vers le secteur. Quelle paire de lunettes est-ce ?",
+        prompt: "**Bilan · 1 sur 2.** Dans le Scénario 1, pour juger le cacao, le mobile money et le carburant, vous êtes parti de l'économie régionale pour descendre vers le secteur. Quelle paire de lunettes est-ce ?",
         answer: "top_down",
         options: [
           { value: "top_down", label: "Top-down (l'aigle)" },
@@ -199,7 +225,7 @@ export const m19: Module = {
         ],
       },
       {
-        prompt: "**Partie C · 2 sur 2.** Dans la Partie B, pour comparer Télé-Réseau et NouvelOp, vous avez regardé directement leur part de marché et leur réseau, sans vous soucier du contexte régional. Quelle paire de lunettes est-ce ?",
+        prompt: "**Bilan · 2 sur 2.** Dans le Scénario 2, pour comparer Télé-Réseau et NouvelOp, vous avez regardé directement leur part de marché et leur réseau, sans vous soucier du contexte régional. Quelle paire de lunettes est-ce ?",
         answer: "bottom_up",
         options: [
           { value: "top_down", label: "Top-down (l'aigle)" },
@@ -239,17 +265,17 @@ export const m19: Module = {
       },
       {
         verdict: "Télé-Réseau",
-        title: "Le fossé de Télé-Réseau",
+        title: "Tableau B : le fossé de Télé-Réseau",
         body: "**Télé-Réseau** a un vrai fossé (65 % de marché **et** un réseau que personne ne copie en un jour). NouvelOp n'a qu'une arme, casser les prix, ce qui détruit ses propres marges.",
       },
       {
         verdict: "Top-down",
-        title: "La Partie A, c'était du top-down",
+        title: "Le Scénario 1, c'était du top-down",
         body: "Économie régionale → secteur → entreprise : c'est la vue de **l'aigle**, qui part du contexte pour descendre vers le titre précis. C'est exactement ce que vous avez fait pour juger le cacao, le mobile money et le carburant.",
       },
       {
         verdict: "Bottom-up",
-        title: "La Partie B, c'était du bottom-up",
+        title: "Le Scénario 2, c'était du bottom-up",
         body: "Part de marché, réseau, avantage concurrentiel : c'est la vue de **la fourmi**, qui étudie l'entreprise de près, sans se soucier du contexte macro. C'est exactement ce que vous avez fait pour comparer Télé-Réseau et NouvelOp.",
         note: "Nuance : personne ne prédit l'avenir à 100 %. On met les probabilités de son côté.",
       },

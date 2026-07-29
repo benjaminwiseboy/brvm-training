@@ -53,6 +53,8 @@ export type QuizChallenge = {
   idcard?: IdCardData;
   /** Graphiques interactifs par profil (M18+) : alternative à `table`/`idcard` — l'apprenant bascule d'un profil à l'autre avant de répondre. */
   chartProfiles?: { key: string; label: string; data: ChartData }[];
+  /** Tableaux interactifs par scénario (M19+) : alternative à `table` quand il faut comparer 2 exemples distincts sans tout empiler à l'écran. */
+  tableTabs?: { key: string; label: string; table: BocTableData }[];
   penaltyPerError: number; perfectReward: number;
   options: { value: string; label: string }[];   // ex. Mythe/Réalité, Feu vert/rouge
   questions: { prompt: string; answer: string; options?: { value: string; label: string }[] }[]; // answer ∈ (options ?? challenge.options).value — per-question override for questions whose correct-answer set differs from the challenge-level shared options (e.g. numeric-amount questions in the same challenge as a percentage question)
