@@ -15,7 +15,8 @@ export type Block =
   | { kind: "list"; items: string[] }
   | { kind: "countries"; items: string[] }
   | ({ kind: "boctable" } & BocTableData)
-  | { kind: "download"; label: string; sublabel?: string; href: string };
+  | { kind: "download"; label: string; sublabel?: string; href: string }
+  | { kind: "formula"; label?: string; value: string };
 
 export type Slide = { title: string; blocks: Block[] };
 

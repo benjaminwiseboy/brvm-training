@@ -162,3 +162,26 @@
   font-weight: 800;
   color: var(--blue);
 }
+
+.formula {
+  background: var(--blue-2);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  text-align: center;
+}
+.formulaLabel {
+  font-family: var(--f-display);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--or);
+  margin-bottom: 8px;
+}
+.formulaValue {
+  font-family: var(--f-display);
+  font-size: clamp(1.15rem, 3.4vw, 1.5rem);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.01em;
+}

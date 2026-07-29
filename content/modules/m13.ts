@@ -52,7 +52,13 @@ export const m13: Module = {
     {
       title: "Zoomons sur une seule action",
       blocks: [
-        { kind: "text", value: "Vous savez lire la météo générale du marché (M12). Descendons maintenant sur **une seule action**. Sa ligne dans le BOC a plusieurs colonnes de prix — pas de panique, chacune raconte simplement **un moment de la journée**." },
+        { kind: "text", value: "Vous savez lire la météo générale du marché (module 12). Descendons maintenant sur **une seule action**. Sa ligne dans le BOC a plusieurs colonnes de prix — pas de panique, chacune raconte simplement **un moment de la journée**. Voici un exemple réel, qu'on décortique colonne par colonne dans les slides suivantes :" },
+        {
+          kind: "boctable",
+          caption: "Ligne réelle d'Ecobank (ETIT) · BOC du 17/07/2026",
+          columns: ["Cours précédent", "Ouverture", "Clôture", "Cours de référence", "Var. jour", "Var. année", "Volume", "Valeur"],
+          rows: [["73", "68", "68", "68", "−6,85 %", "+195,65 %", "1 662 045", "113 073 294 FCFA"]],
+        },
       ],
     },
     {
@@ -75,6 +81,7 @@ export const m13: Module = {
         { kind: "text", value: "**En clair :** le cours de référence est le prix « de base » que la BRVM fixe pour le lendemain (souvent égal à la clôture)." },
         { kind: "text", value: "**À quoi il sert :** à poser une **limite de sécurité**. En une seule journée, une action ne peut ni monter ni baisser de plus de **± 7,5 %** par rapport à ce prix de base." },
         { kind: "text", value: "**L'image :** c'est un **disjoncteur électrique**. Quand le courant s'affole, le disjoncteur saute pour éviter l'incendie. Ici, si une action s'emballe, la règle des 7,5 % « coupe le courant » pour la journée, le temps que tout le monde se calme. Impossible, donc, qu'une simple rumeur fasse chuter votre action de 40 % en un jour." },
+        { kind: "callout", tone: "highlight", value: "**Une spécificité de la BRVM, et une vraie sécurité pour vous :** contrairement à d'autres marchés (actions américaines sans limite, cryptomonnaies…) où un titre peut perdre 50 %, 90 % voire tomber à zéro en une seule séance, **ce disjoncteur rend ça impossible ici**. Vous ne pouvez jamais perdre tout votre argent d'un coup sur une action à la BRVM : au pire, − 7,5 % par jour, jamais plus." },
       ],
     },
     {
@@ -83,20 +90,32 @@ export const m13: Module = {
         { kind: "text", value: "Le BOC donne DEUX variations : celle **du jour** et celle **de l'année**. Ne les confondez jamais — c'est la différence entre **la météo d'aujourd'hui** et **le climat de l'année**." },
         { kind: "text", value: "Exemple réel — Ecobank (ETIT), le 17/07/2026 :" },
         {
-          kind: "list",
-          items: [
-            "Aujourd'hui (la météo) : **−6,85 %** — une journée de pluie.",
-            "Sur l'année (le climat) : **+195,65 %** 🚀 — l'action a presque **triplé** !",
+          kind: "boctable",
+          caption: "Ecobank (ETIT) · deux lectures de la même action",
+          columns: ["Période", "Variation"],
+          rows: [
+            ["Aujourd'hui (la météo)", "−6,85 %"],
+            ["Sur l'année (le climat)", "+195,65 % 🚀"],
           ],
         },
+        { kind: "text", value: "Une journée de pluie… mais l'action a presque **triplé** sur l'année !" },
         { kind: "callout", tone: "warn", value: "Le débutant voit la pluie du jour et prend peur. L'investisseur avisé sait qu'une journée de pluie ne change rien à un climat magnifique. **On juge une action sur son climat, pas sur la météo d'un jour.**" },
       ],
     },
     {
       title: "Le volume : y a-t-il foule ? (rappel)",
       blocks: [
-        { kind: "text", value: "Comme au M11, le **volume** = le nombre de titres échangés dans la journée = **l'affluence** du marché. Plus il y a de monde, plus c'est facile d'acheter ou de revendre sans faire bouger le prix." },
-        { kind: "text", value: "**Exemple :** ce jour-là, ETIT a échangé **1 662 045 titres** (une cohue !), contre seulement **1 944** pour Sonatel. La colonne Valeur (113 millions de FCFA pour ETIT) mesure la même affluence, mais en argent." },
+        { kind: "text", value: "Comme au **module 11**, le **volume** = le nombre de titres échangés dans la journée = **l'affluence** du marché. Plus il y a de monde, plus c'est facile d'acheter ou de revendre sans faire bouger le prix." },
+        { kind: "text", value: "**Exemple :** ce jour-là, ETIT a échangé une cohue de titres, contre beaucoup moins pour Sonatel. La colonne Valeur mesure la même affluence, mais en argent :" },
+        {
+          kind: "boctable",
+          caption: "BOC du 17/07/2026 · affluence de deux actions",
+          columns: ["Titre", "Volume (titres)", "Valeur échangée"],
+          rows: [
+            ["ETIT — Ecobank Trans. Incorp. TG", "1 662 045", "113 073 294 FCFA"],
+            ["SNTS — Sonatel SN", "1 944", "62 480 935 FCFA"],
+          ],
+        },
       ],
     },
     {

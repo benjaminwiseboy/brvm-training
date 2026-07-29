@@ -66,5 +66,13 @@ export function BlockRenderer({ block }: { block: Block }) {
           <span className={styles.downloadArrow} aria-hidden="true">↓</span>
         </a>
       );
+
+    case "formula":
+      return (
+        <div className={styles.formula}>
+          {block.label && <div className={styles.formulaLabel}>{block.label}</div>}
+          <div className={styles.formulaValue}>{renderMarkup(block.value)}</div>
+        </div>
+      );
   }
 }

@@ -55,7 +55,40 @@ export const m12: Module = {
       title: "D'abord, regarder la météo",
       blocks: [
         { kind: "text", value: "Avant de choisir une action précise, un investisseur avisé jette un œil au **haut du BOC**. C'est comme un marin : avant de sortir en mer, il regarde d'abord si la mer est calme ou agitée." },
-        { kind: "text", value: "Ce « bulletin météo » du marché, ce sont les **indices**. Commençons par comprendre ce que c'est, tout simplement." },
+        { kind: "text", value: "Ce « bulletin météo » du marché, ce sont les **indices**. Voici, inspiré d'un vrai BOC, ce qu'on y trouve : les indices, les compartiments et les secteurs. Pas de panique — on décortique chaque tableau juste après." },
+        {
+          kind: "boctable",
+          caption: "Les indices (inspiré d'un vrai BOC)",
+          columns: ["Indice", "Niveau", "Var. annuelle"],
+          rows: [
+            ["BRVM Composite", "478,53", "+38,40 %"],
+            ["BRVM 30", "227,70", "+36,97 %"],
+            ["BRVM Prestige", "175,04", "+21,34 %"],
+          ],
+        },
+        {
+          kind: "boctable",
+          caption: "Les compartiments",
+          columns: ["Compartiment", "Nb de sociétés", "Niveau"],
+          rows: [
+            ["BRVM-Prestige", "12", "175,04"],
+            ["BRVM-Principal", "35", "362,87"],
+          ],
+        },
+        {
+          kind: "boctable",
+          caption: "Les secteurs (PER moyen)",
+          columns: ["Secteur", "PER moyen"],
+          rows: [
+            ["Télécommunications", "10,72"],
+            ["Consommation Discrétionnaire", "38,58"],
+            ["Services Financiers", "15,61"],
+            ["Consommation de Base", "10,31"],
+            ["Industriels", "23,11"],
+            ["Énergie", "18,27"],
+            ["Services Publics", "20,91"],
+          ],
+        },
       ],
     },
     {
@@ -118,6 +151,29 @@ export const m12: Module = {
           items: ["Télécoms", "Services Financiers", "Consommation Discrétionnaire", "Consommation de Base", "Industriels", "Énergie", "Services Publics"],
         },
         { kind: "text", value: "Chaque famille a sa propre note moyenne → vous voyez tout de suite **quel métier a le vent en poupe**." },
+        {
+          kind: "boctable",
+          caption: "Extrait du BOC · indices par compartiment",
+          columns: ["Compartiment", "Nb de sociétés", "Niveau"],
+          rows: [
+            ["BRVM-Prestige", "12", "175,04"],
+            ["BRVM-Principal", "35", "362,87"],
+          ],
+        },
+        {
+          kind: "boctable",
+          caption: "Extrait du BOC · indices sectoriels (PER moyen)",
+          columns: ["Secteur", "PER moyen"],
+          rows: [
+            ["Télécommunications", "10,72"],
+            ["Consommation Discrétionnaire", "38,58"],
+            ["Services Financiers", "15,61"],
+            ["Consommation de Base", "10,31"],
+            ["Industriels", "23,11"],
+            ["Énergie", "18,27"],
+            ["Services Publics", "20,91"],
+          ],
+        },
       ],
     },
     {
@@ -156,7 +212,8 @@ export const m12: Module = {
           ],
           highlightCols: [1],
         },
-        { kind: "callout", tone: "info", value: "(Tout en bas du BOC, deux repères utiles : le PER moyen ≈ 14 — un indicateur « cher / pas cher » détaillé au **module 20**, avec Graham — et le rendement moyen ~6 %. Le reste, ce sont des outils de pros : ignorez-les pour l'instant.) 👇" },
+        { kind: "text", value: "Sur le tableau des secteurs vu plus tôt, l'info qui compte vraiment pour juger un secteur, c'est son **PER**. PER veut dire **Price Earning Ratio** (« cours sur bénéfice ») : plus il est bas, moins vous payez cher pour chaque FCFA de bénéfice de l'entreprise. On le détaille en profondeur au **module 14**, puis on s'en sert pour calculer un juste prix au **module 20** (avec Graham)." },
+        { kind: "callout", tone: "info", value: "(Tout en bas du BOC, un dernier repère utile : le rendement moyen du marché ≈ 6 %. Le reste, ce sont des outils de pros : ignorez-les pour l'instant.) 👇" },
       ],
     },
   ],

@@ -52,39 +52,94 @@ export const m14: Module = {
     {
       title: "Le BOC vous mâche le travail",
       blocks: [
-        { kind: "text", value: "Vous savez lire les prix et les mouvements. Encore mieux : le BOC calcule pour vous certains **indicateurs d'analyste**. Voyons les 3 colonnes qui vous aident vraiment à décider — avec, à chaque fois, une image simple du quotidien." },
+        { kind: "text", value: "Vous savez lire les prix et les mouvements. Encore mieux : le BOC calcule pour vous certains **indicateurs d'analyste**. Voyons les 3 colonnes qui vous aident vraiment à décider — avec, à chaque fois, une image simple du quotidien. Voici un exemple réel, qu'on décortique colonne par colonne :" },
+        {
+          kind: "boctable",
+          caption: "Colonnes d'analyse de Sonatel (données réelles)",
+          columns: ["PER", "Rendement net", "Dernier dividende", "Date de paiement"],
+          rows: [["7,74", "5,44 %", "1 740 FCFA", "26/05/2026"]],
+        },
       ],
     },
     {
       title: "Le PER : « en combien d'années je récupère ma mise ? »",
       blocks: [
         { kind: "text", value: "**L'image :** imaginez que vous achetez une **boutique**. Elle vous coûte 8 millions et rapporte 1 million de bénéfice par an. En combien d'années votre boutique se rembourse-t-elle ? **8 ans.** Ce chiffre « 8 », c'est le PER." },
-        { kind: "text", value: "Pour une action : **PER = Cours ÷ bénéfice par action**. Plus il est **bas**, plus vite vous « récupérez votre mise » — donc moins l'action est chère." },
-        { kind: "text", value: "**Exemple réel :** Sonatel a un PER de **7,74** (≈ 8 ans) et Ecobank **3,56** : bon marché ! (La moyenne du marché est ≈ 14.) Une action à PER 30 mettrait 30 ans à se rembourser : beaucoup plus chère." },
+        { kind: "text", value: "Pour une action, la formule est la même idée :" },
+        { kind: "formula", label: "PER", value: "Cours ÷ Bénéfice par action" },
+        { kind: "text", value: "Plus il est **bas**, plus vite vous « récupérez votre mise » — donc moins l'action est chère." },
+        { kind: "text", value: "**Exemple réel :**" },
+        {
+          kind: "boctable",
+          caption: "PER · plus c'est bas, moins c'est cher",
+          columns: ["Action", "PER", "Lecture"],
+          rows: [
+            ["Sonatel", "7,74", "≈ 8 ans pour se rembourser"],
+            ["Ecobank", "3,56", "Bon marché"],
+            ["Moyenne du marché", "≈ 14", "Repère"],
+          ],
+          highlightCols: [1],
+        },
+        { kind: "text", value: "Une action à PER 30 mettrait 30 ans à se rembourser : beaucoup plus chère." },
       ],
     },
     {
       title: "Le rendement net : le « loyer » de votre action 🏠",
       blocks: [
         { kind: "text", value: "**L'image :** vous achetez un appartement 10 millions, et il vous rapporte 600 000 FCFA de loyer par an. Votre rendement = 600 000 ÷ 10 000 000 = **6 %**." },
-        { kind: "text", value: "Pour une action, c'est exactement pareil : **Rendement = dividende ÷ prix**. C'est le « loyer » que l'action vous verse chaque année, en pourcentage de son prix." },
-        { kind: "text", value: "**Exemple réel :** Sonatel rapporte **5,44 %** (pour 100 000 FCFA investis, ~5 440 FCFA de dividendes par an) ; BOA CI **6,13 %**. À la BRVM, un bon « loyer » se situe souvent entre **6 et 10 %** — bien mieux qu'un livret d'épargne." },
+        { kind: "text", value: "Pour une action, c'est exactement pareil :" },
+        { kind: "formula", label: "Rendement net", value: "Dividende ÷ Cours" },
+        { kind: "text", value: "C'est le « loyer » que l'action vous verse chaque année, en pourcentage de son prix." },
+        { kind: "text", value: "**Exemple réel :**" },
+        {
+          kind: "boctable",
+          caption: "Rendement net · le « loyer » annuel de l'action",
+          columns: ["Action", "Rendement net"],
+          rows: [
+            ["Sonatel", "5,44 %"],
+            ["BOA Côte d'Ivoire", "6,13 %"],
+          ],
+          highlightCols: [1],
+        },
+        { kind: "text", value: "À la BRVM, un bon « loyer » se situe souvent entre **6 et 10 %** — bien mieux qu'un livret d'épargne." },
       ],
     },
     {
       title: "Le dividende & la date de détachement ⚠️",
       blocks: [
-        { kind: "text", value: "Le BOC affiche le **dernier dividende versé** et sa date (ex. Sonatel : 1 740 F le 26 mai 2026)." },
+        { kind: "text", value: "Le BOC affiche le **dernier dividende versé** et sa date, et une page « Opérations en cours » annonce les prochains versements :" },
+        {
+          kind: "boctable",
+          caption: "Extrait du BOC · dividendes",
+          columns: ["Émetteur", "Dividende net", "Date", "Statut"],
+          rows: [
+            ["Sonatel", "1 740 FCFA", "26/05/2026", "Déjà versé"],
+            ["Solibra", "2 127 FCFA", "30/07/2026", "À venir"],
+            ["CIE Côte d'Ivoire", "234 FCFA", "28/07/2026", "À venir"],
+          ],
+        },
         { kind: "callout", tone: "warn", value: "**Le piège à connaître :** vous ne touchez le dividende **que si vous détenez l'action AVANT sa date de détachement**. L'acheter le lendemain, c'est comme arriver au verger **après** la récolte : les fruits sont déjà partis." },
-        { kind: "text", value: "La page « Opérations en cours » du BOC annonce les prochains versements (ex. SOLIBRA : 2 127 F le 30/07/2026)." },
         { kind: "callout", tone: "info", value: "💡 Le montant affiché est **net** : l'impôt (IRVM, ~12 %) est déjà prélevé — le cash arrive propre sur votre compte." },
       ],
     },
     {
       title: "La capitalisation : géant ou petite boutique ?",
       blocks: [
-        { kind: "text", value: "**En clair :** **capitalisation = prix de l'action × nombre d'actions**. C'est la valeur de toute l'entreprise en bourse — autrement dit, sa **taille**." },
+        { kind: "text", value: "**En clair :** c'est la valeur de toute l'entreprise en bourse — autrement dit, sa **taille**." },
+        { kind: "formula", label: "Capitalisation boursière", value: "Cours de l'action × Nombre d'actions" },
         { kind: "text", value: "**L'image :** c'est la différence entre une **grande chaîne de supermarchés** (grosse capitalisation : solide, facile à acheter et à revendre) et une **petite boutique de quartier** (petite capitalisation : plus fragile, parfois difficile à revendre)." },
+        { kind: "text", value: "**Exemple (chiffres fictifs) :**" },
+        {
+          kind: "boctable",
+          caption: "Capitalisation · un exemple",
+          columns: ["Élément", "Valeur"],
+          rows: [
+            ["Cours de l'action", "10 000 FCFA"],
+            ["Nombre d'actions en circulation", "1 000 000"],
+            ["Capitalisation boursière", "10 000 000 000 FCFA"],
+          ],
+          highlightCols: [1],
+        },
         { kind: "text", value: "**À noter :** le BOC affiche surtout la capitalisation **de tout le marché** (18 434 milliards de FCFA au 17/07/2026) ; pour une société précise, vous la calculez vous-même." },
       ],
     },
