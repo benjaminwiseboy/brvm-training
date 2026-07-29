@@ -179,7 +179,7 @@ export const m18: Module = {
         {
           kind: "chart",
           caption: "Profil rassurant (chiffres fictifs, en milliards FCFA)",
-          categories: ["An 1", "An 3", "An 5", "An 7", "An 10"],
+          categories: ["2016", "2018", "2020", "2022", "2025"],
           series: [
             { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [40, 50, 65, 78, 90] },
             { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [6, 9, 12, 14, 16] },
@@ -189,7 +189,7 @@ export const m18: Module = {
         {
           kind: "chart",
           caption: "Profil en déclin (chiffres fictifs, en milliards FCFA)",
-          categories: ["An 1", "An 3", "An 5", "An 7", "An 10"],
+          categories: ["2016", "2018", "2020", "2022", "2025"],
           series: [
             { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [90, 85, 75, 60, 50] },
             { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [16, 13, 9, 5, 2] },
@@ -211,7 +211,7 @@ export const m18: Module = {
         key: "a",
         label: "Profil A",
         data: {
-          categories: ["An 1", "An 3", "An 5", "An 7", "An 10"],
+          categories: ["2016", "2018", "2020", "2022", "2025"],
           unit: "milliards FCFA",
           series: [
             { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [40, 52, 65, 78, 90] },
@@ -224,7 +224,7 @@ export const m18: Module = {
         key: "b",
         label: "Profil B",
         data: {
-          categories: ["An 1", "An 3", "An 5", "An 7", "An 10"],
+          categories: ["2016", "2018", "2020", "2022", "2025"],
           unit: "milliards FCFA",
           series: [
             { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [40, 55, 70, 85, 100] },
@@ -237,7 +237,7 @@ export const m18: Module = {
         key: "c",
         label: "Profil C",
         data: {
-          categories: ["An 1", "An 3", "An 5", "An 7", "An 10"],
+          categories: ["2016", "2018", "2020", "2022", "2025"],
           unit: "milliards FCFA",
           series: [
             { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [40, 70, 35, 90, 55] },
@@ -250,7 +250,7 @@ export const m18: Module = {
         key: "d",
         label: "Profil D",
         data: {
-          categories: ["An 1", "An 3", "An 5", "An 7", "An 10"],
+          categories: ["2016", "2018", "2020", "2022", "2025"],
           unit: "milliards FCFA",
           series: [
             { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [50, 49, 49, 48, 48] },

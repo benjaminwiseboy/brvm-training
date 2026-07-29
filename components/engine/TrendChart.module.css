@@ -49,9 +49,23 @@
   stroke-width: 1;
 }
 
+.gridLine {
+  stroke: var(--line);
+  stroke-width: 1;
+  stroke-dasharray: 2 3;
+}
+
 .axisX {
   font-family: var(--f-display);
   font-size: 8.5px;
+  font-weight: 700;
+  fill: var(--ink-soft);
+}
+
+.axisYLeft,
+.axisYRight {
+  font-family: var(--f-display);
+  font-size: 8px;
   font-weight: 700;
   fill: var(--ink-soft);
 }

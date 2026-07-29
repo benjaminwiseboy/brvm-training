@@ -133,7 +133,12 @@ export const m19: Module = {
     type: "quiz",
     kicker: "Le Défi",
     title: "La double vision de l'analyste",
-    instruction: "Partie A — Top-Down : chaque événement est-il un vent porteur ou contraire pour le secteur ? Partie B — Bottom-Up : lequel des deux opérateurs a le « fossé » le plus solide ? Partie C : à chaque fois, quelle paire de lunettes utilisez-vous ? (1 erreur = − 5 000 FCFA.)",
+    instruction:
+      "3 parties, 6 affirmations au total :\n" +
+      "**Partie A** (questions 1 à 3) — pour chaque événement du tableau ci-dessous, est-ce un vent porteur ou contraire ?\n" +
+      "**Partie B** (question 4) — lequel des 2 opérateurs de l'encart ci-dessous a le « fossé » le plus solide ?\n" +
+      "**Partie C** (questions 5 et 6) — en regardant ce que vous venez de faire en A et B, quelle paire de lunettes avez-vous utilisée ?\n" +
+      "(1 erreur = − 5 000 FCFA.)",
     table: {
       caption: "Partie A · trois événements macro",
       columns: ["Événement", "Secteur touché"],
@@ -154,7 +159,7 @@ export const m19: Module = {
     ],
     questions: [
       {
-        prompt: "**Partie A · 1.** « Le cacao chute de 30 %. » → pour un **exportateur de cacao** :",
+        prompt: "**Partie A · 1 sur 3.** Regardez le tableau ci-dessus. « Le cacao chute de 30 % » → pour un **exportateur de cacao**, c'est un vent :",
         answer: "contraire",
         options: [
           { value: "porteur", label: "Porteur" },
@@ -162,7 +167,7 @@ export const m19: Module = {
         ],
       },
       {
-        prompt: "**Partie A · 2.** « Le mobile money explose dans l'UEMOA. » → pour **banques & télécoms** :",
+        prompt: "**Partie A · 2 sur 3.** « Le mobile money explose dans l'UEMOA » → pour **banques & télécoms**, c'est un vent :",
         answer: "porteur",
         options: [
           { value: "porteur", label: "Porteur" },
@@ -170,7 +175,7 @@ export const m19: Module = {
         ],
       },
       {
-        prompt: "**Partie A · 3.** « Le carburant s'envole durablement. » → pour le **transport routier** :",
+        prompt: "**Partie A · 3 sur 3.** « Le carburant s'envole durablement » → pour le **transport routier**, c'est un vent :",
         answer: "contraire",
         options: [
           { value: "porteur", label: "Porteur" },
@@ -178,7 +183,7 @@ export const m19: Module = {
         ],
       },
       {
-        prompt: "**Partie B.** Deux opérateurs télécoms. **Télé-Réseau** : 65 % de part de marché, réseau d'antennes bâti sur 20 ans, marque connue. **NouvelOp** : 5 % de part, loue le réseau des autres, casse les prix. Lequel a le « fossé » le plus solide ?",
+        prompt: "**Partie B.** Regardez l'encart « Scénario » ci-dessus. Entre Télé-Réseau et NouvelOp, lequel a le « fossé » le plus solide ?",
         answer: "tele_reseau",
         options: [
           { value: "tele_reseau", label: "Télé-Réseau" },
@@ -186,7 +191,7 @@ export const m19: Module = {
         ],
       },
       {
-        prompt: "**Partie C · 1.** Un investisseur part de la croissance de l'UEMOA, descend vers le secteur, puis regarde l'entreprise. Quelle paire de lunettes utilise-t-il ?",
+        prompt: "**Partie C · 1 sur 2.** Dans la Partie A, pour juger le cacao, le mobile money et le carburant, vous êtes parti de l'économie régionale pour descendre vers le secteur. Quelle paire de lunettes est-ce ?",
         answer: "top_down",
         options: [
           { value: "top_down", label: "Top-down (l'aigle)" },
@@ -194,7 +199,7 @@ export const m19: Module = {
         ],
       },
       {
-        prompt: "**Partie C · 2.** Un investisseur étudie directement la part de marché et le réseau d'une entreprise, sans se soucier de la conjoncture régionale. Quelle paire de lunettes utilise-t-il ?",
+        prompt: "**Partie C · 2 sur 2.** Dans la Partie B, pour comparer Télé-Réseau et NouvelOp, vous avez regardé directement leur part de marché et leur réseau, sans vous soucier du contexte régional. Quelle paire de lunettes est-ce ?",
         answer: "bottom_up",
         options: [
           { value: "top_down", label: "Top-down (l'aigle)" },
@@ -239,13 +244,13 @@ export const m19: Module = {
       },
       {
         verdict: "Top-down",
-        title: "Partir du grand tableau : top-down",
-        body: "Économie régionale → secteur → entreprise : c'est la vue de **l'aigle**, qui part du contexte pour descendre vers le titre précis.",
+        title: "La Partie A, c'était du top-down",
+        body: "Économie régionale → secteur → entreprise : c'est la vue de **l'aigle**, qui part du contexte pour descendre vers le titre précis. C'est exactement ce que vous avez fait pour juger le cacao, le mobile money et le carburant.",
       },
       {
         verdict: "Bottom-up",
-        title: "Partir de l'entreprise : bottom-up",
-        body: "Part de marché, réseau, avantage concurrentiel : c'est la vue de **la fourmi**, qui étudie l'entreprise de près, sans se soucier du contexte macro.",
+        title: "La Partie B, c'était du bottom-up",
+        body: "Part de marché, réseau, avantage concurrentiel : c'est la vue de **la fourmi**, qui étudie l'entreprise de près, sans se soucier du contexte macro. C'est exactement ce que vous avez fait pour comparer Télé-Réseau et NouvelOp.",
         note: "Nuance : personne ne prédit l'avenir à 100 %. On met les probabilités de son côté.",
       },
     ],

@@ -68,6 +68,8 @@
   color: var(--ink-soft);
   margin: 0 0 22px;
   font-weight: 600;
+  white-space: pre-line;
+  line-height: 1.5;
 }
 
 /* Fait ressortir l'extrait de BOC au-dessus de l'instruction : cadre or,
