@@ -16,6 +16,7 @@ export function validateModule(m: Module): string[] {
     s.blocks?.forEach((b) => {
       if (b.kind === "boctable") validateBocTable(tag, `tableau (slide ${i + 1})`, b, errs);
       if (b.kind === "download" && !b.href) errs.push(`${tag}: bloc de téléchargement (slide ${i + 1}) sans href`);
+      if (b.kind === "link" && !b.href) errs.push(`${tag}: bloc de lien (slide ${i + 1}) sans href`);
       if (b.kind === "formula" && !b.value) errs.push(`${tag}: formule (slide ${i + 1}) sans valeur`);
     });
   });

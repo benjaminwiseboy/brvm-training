@@ -143,8 +143,16 @@ export const m16: Module = {
     type: "quiz",
     kicker: "Le Défi",
     title: "Étude de cas comparative",
-    instruction:
-      "Vous appliquez une stratégie de **rente** (revenu sûr et immédiat). Observez ces deux entreprises. **Entreprise A — « Agro-Star »** : secteur agriculture (nouvelle entreprise) · résultat net fortement en hausse (+30 % l'an dernier) · PER 19 · Rendement 2 %. **Entreprise B — « Banque Panafricaine »** : secteur banque (installée depuis 30 ans) · résultat net stable (+2 % l'an dernier) · PER 7 · Rendement 9,5 %. (1 erreur = − 10 000 FCFA.)",
+    instruction: "Vous appliquez une stratégie de **rente** (revenu sûr et immédiat). Observez ces deux entreprises et répondez. (1 erreur = − 10 000 FCFA.)",
+    table: {
+      caption: "Étude de cas · deux entreprises",
+      columns: ["Entreprise", "Secteur", "Résultat net", "PER", "Rendement"],
+      rows: [
+        ["A — Agro-Star", "Agriculture (nouvelle entreprise)", "+30 % l'an dernier", "19", "2 %"],
+        ["B — Banque Panafricaine", "Banque (installée depuis 30 ans)", "+2 % l'an dernier", "7", "9,5 %"],
+      ],
+      highlightCols: [3, 4],
+    },
     penaltyPerError: 10000,
     perfectReward: 20000,
     options: [

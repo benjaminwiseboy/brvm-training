@@ -23,6 +23,11 @@ import type { Module } from "@/lib/types";
    d'analyste en italique (Slide 4) : astérisques simples retirés,
    texte conservé (splitMarkup, lib/format.ts, ne reconnaît que
    **gras**).
+   Revue post-lancement : lien brvm.org + PDF réel (états financiers
+   Sonatel 2025) sur la Slide 1 ; illustrations (boctable/duo) sur
+   chaque slide restante, avec un même exemple chiffré fictif filé
+   sur les Slides 2-4 (100M CA → 20M exploitation → 26M net, puis le
+   piège du camion vendu une seule fois).
    ============================================================= */
 export const m18: Module = {
   code: "M18",
@@ -63,6 +68,18 @@ export const m18: Module = {
       title: "Gagne-t-elle vraiment de l'argent ?",
       blocks: [
         { kind: "text", value: "Vous avez le portrait. Passons à sa **performance financière** : elle se lit dans un document, le **compte de résultat** (publié chaque année dans le rapport annuel, sur brvm.org)." },
+        {
+          kind: "link",
+          label: "Ouvrir les rapports des sociétés cotées",
+          sublabel: "brvm.org · rapports annuels et états financiers",
+          href: "https://www.brvm.org/fr/rapports-societes-cotees",
+        },
+        {
+          kind: "download",
+          label: "Télécharger un vrai compte de résultat (PDF)",
+          sublabel: "États financiers 2025 · Sonatel — exemple réel",
+          href: "/docs/sonatel-etats-financiers-2025.pdf",
+        },
       ],
     },
     {
@@ -75,6 +92,17 @@ export const m18: Module = {
             "**Le chiffre d'affaires** = tout l'argent encaissé en vendant ses plats.",
             "**Le résultat d'exploitation** = ce qui reste une fois payés les cuisiniers, les ingrédients, le loyer. ⭐ **C'est la vraie performance du métier.**",
           ],
+        },
+        {
+          kind: "boctable",
+          caption: "Exemple (chiffres fictifs)",
+          columns: ["Ligne", "Montant"],
+          rows: [
+            ["Chiffre d'affaires", "100 000 000 FCFA"],
+            ["− Coûts du métier (cuisiniers, ingrédients, loyer)", "− 80 000 000 FCFA"],
+            ["= Résultat d'exploitation", "20 000 000 FCFA"],
+          ],
+          highlightCols: [1],
         },
         { kind: "text", value: "On continue la cascade au slide suivant." },
       ],
@@ -90,12 +118,34 @@ export const m18: Module = {
             "**Le résultat net** = tout additionné, la toute dernière ligne : le bénéfice final.",
           ],
         },
+        {
+          kind: "boctable",
+          caption: "Suite de l'exemple (chiffres fictifs)",
+          columns: ["Ligne", "Montant"],
+          rows: [
+            ["Résultat d'exploitation", "20 000 000 FCFA"],
+            ["+ Résultat financier (intérêts de l'épargne)", "+ 1 000 000 FCFA"],
+            ["+ Résultat HAO (vente du vieux camion)", "+ 5 000 000 FCFA"],
+            ["= Résultat net", "26 000 000 FCFA"],
+          ],
+          highlightCols: [1],
+        },
       ],
     },
     {
       title: "Le piège du résultat net ⚠️",
       blocks: [
         { kind: "text", value: "Un restaurant peut afficher un **beau résultat net** cette année… mais seulement parce qu'il a **vendu son camion** (un gain HAO, exceptionnel). L'an prochain, plus de camion à vendre — et on découvre que son cœur de métier gagnait à peine de l'argent." },
+        {
+          kind: "boctable",
+          caption: "Le piège, illustré (suite de l'exemple)",
+          columns: ["Année", "Résultat d'exploitation", "Résultat HAO", "Résultat net"],
+          rows: [
+            ["Cette année", "20 000 000 FCFA", "+ 5 000 000 FCFA (vente du camion)", "26 000 000 FCFA"],
+            ["L'an prochain", "20 000 000 FCFA", "0 FCFA (plus de camion)", "20 000 000 FCFA"],
+          ],
+          highlightCols: [3],
+        },
         { kind: "text", value: "👉 D'où LA question de l'analyste : le bénéfice vient-il vraiment du métier (le résultat d'exploitation), ou d'un coup de chance ponctuel ?" },
       ],
     },
@@ -104,6 +154,13 @@ export const m18: Module = {
       blocks: [
         { kind: "text", value: "Attention : une **banque** n'a pas de « chiffre d'affaires » classique. Son métier, c'est l'argent lui-même : elle encaisse des intérêts sur les crédits qu'elle accorde, mais en **reverse** sur les dépôts de ses clients." },
         { kind: "text", value: "On regarde donc le **Produit Net Bancaire (PNB)** : ce qu'elle **garde vraiment** (marge d'intérêt + commissions + gains de marché)." },
+        {
+          kind: "duo",
+          items: [
+            { side: "Entreprise classique", value: "Chiffre d'affaires → Résultat d'exploitation → Résultat net" },
+            { side: "Banque", value: "**PNB** (marge d'intérêt + commissions + gains de marché) → Résultat d'exploitation → Résultat net" },
+          ],
+        },
         { kind: "text", value: "👉 Pour une banque, remplacez mentalement « chiffre d'affaires » par « PNB »." },
       ],
     },
@@ -116,6 +173,15 @@ export const m18: Module = {
           items: [
             "Des courbes qui **montent régulièrement** = une entreprise performante et rassurante.",
             "Des courbes en **dents de scie** = imprévisible, plus risqué. 👇",
+          ],
+        },
+        {
+          kind: "boctable",
+          caption: "Chiffre d'affaires sur 10 ans (exemples fictifs, en milliards FCFA)",
+          columns: ["Profil", "An 1", "An 4", "An 7", "An 10"],
+          rows: [
+            ["Rassurant (progression régulière)", "40", "55", "70", "90"],
+            ["Imprévisible (dents de scie)", "40", "70", "35", "90"],
           ],
         },
       ],

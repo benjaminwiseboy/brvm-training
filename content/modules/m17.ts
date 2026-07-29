@@ -64,7 +64,15 @@ export const m17: Module = {
       title: "La méthode Graham",
       blocks: [
         { kind: "lead", value: "Nous allons analyser comme **Benjamin Graham**, le « père de l'investissement dans la valeur » et le mentor de Warren Buffett. Sa règle d'or : n'achetez pas une action, achetez une entreprise." },
-        { kind: "text", value: "Avant d'acheter, il pose 3 questions, dans l'ordre : (1) est-ce une **bonne entreprise** ? (sa performance) (2) va-t-elle **le rester** ? (ses perspectives) (3) le **prix** est-il raisonnable ? (sa valorisation)" },
+        { kind: "text", value: "Avant d'acheter, il pose 3 questions, dans l'ordre :" },
+        {
+          kind: "list",
+          items: [
+            "**Est-ce une bonne entreprise ?** (sa performance)",
+            "**Va-t-elle le rester ?** (ses perspectives)",
+            "**Le prix est-il raisonnable ?** (sa valorisation)",
+          ],
+        },
         { kind: "text", value: "Mais tout commence par une question plus simple : **qui est cette entreprise ?**" },
       ],
     },
@@ -98,6 +106,12 @@ export const m17: Module = {
       title: "Où trouver le portrait ?",
       blocks: [
         { kind: "text", value: "Sur la **fiche société de brvm.org**, chaque entreprise cotée a sa page d'identité. L'ouvrir, c'est votre tout premier réflexe d'analyste." },
+        {
+          kind: "link",
+          label: "Ouvrir les fiches sociétés cotées",
+          sublabel: "brvm.org · liste des entreprises cotées",
+          href: "https://www.brvm.org/fr/emetteurs/societes-cotees",
+        },
         { kind: "text", value: "(Astuce : c'est aussi ce qu'un bon outil de suivi devrait vous afficher d'un coup d'œil.)" },
       ],
     },
@@ -114,8 +128,20 @@ export const m17: Module = {
     type: "quiz",
     kicker: "Le Défi",
     title: "Lire la carte d'identité",
-    instruction:
-      "Voici la fiche d'une entreprise cotée. **🏢 Carte d'identité — AgriBénin SA** — Création : 1985 (40 ans) · Activité : production et exportation d'huile de palme et de coton · Actionnaires : Groupe Agro-Ouest (55 %), État du Bénin (20 %), public (25 %) · Zone : Bénin, Togo, Burkina Faso · Capital : 10 milliards FCFA, 2 millions d'actions. (1 erreur = − 5 000 FCFA.)",
+    instruction: "Voici la fiche d'une entreprise cotée. Observez-la et répondez. (1 erreur = − 5 000 FCFA.)",
+    table: {
+      caption: "🏢 Carte d'identité — AgriBénin SA",
+      columns: ["Création", "Activité", "Actionnaires", "Zone", "Capital"],
+      rows: [
+        [
+          "1985 (40 ans)",
+          "Production et exportation d'huile de palme et de coton",
+          "Groupe Agro-Ouest (55 %), État du Bénin (20 %), public (25 %)",
+          "Bénin, Togo, Burkina Faso",
+          "10 milliards FCFA, 2 millions d'actions",
+        ],
+      ],
+    },
     penaltyPerError: 5000,
     perfectReward: 20000,
     // Recopie des options de Q1 en repli neutre (requis par le type) :
