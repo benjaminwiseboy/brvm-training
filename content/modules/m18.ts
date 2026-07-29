@@ -182,8 +182,8 @@ export const m18: Module = {
           categories: ["2016", "2018", "2020", "2022", "2025"],
           series: [
             { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [40, 50, 65, 78, 90] },
-            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [6, 9, 12, 14, 16] },
-            { label: "Résultat net", kind: "line", color: "gold", values: [4, 6, 9, 11, 13] },
+            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [12, 16, 20, 24, 28] },
+            { label: "Résultat net", kind: "line", color: "gold", values: [9, 12, 15, 18, 21] },
           ],
         },
         {
@@ -192,8 +192,8 @@ export const m18: Module = {
           categories: ["2016", "2018", "2020", "2022", "2025"],
           series: [
             { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [90, 85, 75, 60, 50] },
-            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [16, 13, 9, 5, 2] },
-            { label: "Résultat net", kind: "line", color: "clay", values: [13, 10, 6, 2, -1] },
+            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [28, 22, 16, 9, 4] },
+            { label: "Résultat net", kind: "line", color: "clay", values: [20, 14, 8, 2, -4] },
           ],
         },
       ],
@@ -215,8 +215,8 @@ export const m18: Module = {
           unit: "milliards FCFA",
           series: [
             { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [40, 52, 65, 78, 90] },
-            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [6, 8, 10, 13, 15] },
-            { label: "Résultat net", kind: "line", color: "gold", values: [4, 6, 7, 9, 11] },
+            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [10, 14, 18, 23, 28] },
+            { label: "Résultat net", kind: "line", color: "gold", values: [7, 10, 13, 17, 21] },
           ],
         },
       },
@@ -228,8 +228,8 @@ export const m18: Module = {
           unit: "milliards FCFA",
           series: [
             { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [40, 55, 70, 85, 100] },
-            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [8, 7, 7, 6, 5] },
-            { label: "Résultat net", kind: "line", color: "gold", values: [6, 5, 5, 4, 4] },
+            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [20, 17, 14, 10, 7] },
+            { label: "Résultat net", kind: "line", color: "gold", values: [15, 12, 10, 7, 5] },
           ],
         },
       },
@@ -241,8 +241,8 @@ export const m18: Module = {
           unit: "milliards FCFA",
           series: [
             { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [40, 70, 35, 90, 55] },
-            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [7, 3, 8, 2, 6] },
-            { label: "Résultat net", kind: "line", color: "gold", values: [5, 1, 6, 0, 4] },
+            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [14, 6, 16, 4, 12] },
+            { label: "Résultat net", kind: "line", color: "gold", values: [10, 2, 12, 0, 8] },
           ],
         },
       },
@@ -254,8 +254,8 @@ export const m18: Module = {
           unit: "milliards FCFA",
           series: [
             { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [50, 49, 49, 48, 48] },
-            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [10, 8, 7, 5, 4] },
-            { label: "Résultat net", kind: "line", color: "gold", values: [6, 7, 8, 10, 12] },
+            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [18, 14, 11, 7, 5] },
+            { label: "Résultat net", kind: "line", color: "gold", values: [10, 12, 14, 17, 20] },
           ],
         },
       },
@@ -309,12 +309,12 @@ export const m18: Module = {
       {
         verdict: "Profil A",
         title: "Les 4 profils, comparés",
-        body: "**Profil A — la championne ✅** : les 3 courbes montent ensemble. Performante et prévisible. **Profil B — la fausse croissance ⚠️** : elle vend plus (40 → 100) mais gagne moins (exploitation 8 → 5) — autrement dit, elle gagne de moins en moins sur chaque vente. **Profil C — montagnes russes ⚠️** : imprévisible, difficile à évaluer. **Profil D — le mirage 🚨** : le net grimpe (6 → 12) mais le cœur de métier s'effondre (10 → 4). Le net n'est gonflé que par de l'exceptionnel. Danger.",
+        body: "**Profil A — la championne ✅** : les 3 courbes montent ensemble. Performante et prévisible. **Profil B — la fausse croissance ⚠️** : elle vend plus (40 → 100) mais gagne moins (exploitation 20 → 7) — autrement dit, elle gagne de moins en moins sur chaque vente. **Profil C — montagnes russes ⚠️** : imprévisible, difficile à évaluer. **Profil D — le mirage 🚨** : le net grimpe (10 → 20) mais le cœur de métier s'effondre (18 → 5). Le net n'est gonflé que par de l'exceptionnel. Danger.",
       },
       {
         verdict: "Porté par l'exceptionnel (HAO/financier) — signal d'alerte",
         title: "Le mirage du Profil D",
-        body: "**Profil D — le mirage 🚨** : le net grimpe (6 → 12) mais le cœur de métier s'effondre (10 → 4). Le net n'est gonflé que par de l'exceptionnel. Danger.",
+        body: "**Profil D — le mirage 🚨** : le net grimpe (10 → 20) mais le cœur de métier s'effondre (18 → 5). Le net n'est gonflé que par de l'exceptionnel. Danger.",
         note: "**Deux leçons d'or :** le **résultat d'exploitation** est le vrai juge de la performance (c'est lui qui dit si le métier gagne de l'argent) ; et la **tendance sur 10 ans** compte plus que le chiffre d'une seule année. (Pour une banque, on suit le PNB.)",
       },
     ],
