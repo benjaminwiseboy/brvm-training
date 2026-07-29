@@ -1,139 +1,127 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 16 — Analyse fondamentale : les bases.
-   Premiers réflexes d'analyse, avant la méthode Graham approfondie
-   (M17+) — mention repliée dans hero.lead (seule synthèse créative
-   admise).
-   Module HORS barème (§4), comme M06/M07 : on reprend les chiffres
-   propres du .txt — perfectReward 20000 ("+ 20 000 FCFA") mais
-   penaltyPerError 10000 ("− 10 000 FCFA", PAS le 5 000 habituel :
-   une seule question à forts enjeux, pas les 4 habituelles).
-   Défi = quiz à UNE SEULE question (2 boutons, A/B) : le .txt n'a
-   qu'une question dans sa Section 2. `challenge.questions` a donc
-   1 seule entrée, et `feedback.explanations` AUSSI 1 seule entrée
-   (les 2 raisons — rendement 9,5 % et PER 7 — justifient le même
-   verdict : combinées dans un seul `body`, pas éclatées en 2
-   explications). L'aside « A est-elle mauvaise ? Pas du tout !... »
-   et la phrase « La leçon d'or... » sont repliées dans le `.note`
-   de cette explication unique.
-   Emphase *italique* à un seul astérisque du .txt (« pour *votre*
-   stratégie ») : le type Block ne supporte que **gras** (voir
-   lib/format.ts) — astérisques simples retirés, mot conservé tel
-   quel (aucun mot perdu ni inventé).
-   Revue post-lancement : 4 slides d'ouverture ajoutées avant
-   « Regarder sous le capot » (définition, contexte historique —
-   Graham/Security Analysis/1934 —, intérêt, concept) ; faits
-   d'histoire financière publics, pas de chiffre BRVM inventé.
+   Contenu du Module 16 — Le BOC avancé (2/3) : lire une ligne
+   d'action.
+   Défi = quiz à 3 questions, boutons déjà réels dans le .txt
+   (2 ou 3 options selon la question — Q3 n'a que 2 boutons dans
+   la source, conservé tel quel). Ligne réelle d'Ecobank (ETIT,
+   17/07/2026), rendue en vrai tableau (champ `table`, cf. revue
+   post-lancement) plutôt que repliée en prose.
+   Le .txt ne donne pas de 2ᵉ ligne de corps pour le feedback
+   « imperfect » (seulement le titre) : un court « Reprenons. » est
+   ajouté (même repli que M15), le champ `body` étant requis par
+   le type.
+   Barème Phase 3 standard (§4) : +20 000 / −5 000.
    ============================================================= */
 export const m16: Module = {
   code: "M16",
   index: 16,
   totalModules: 28,
-  title: "Analyse fondamentale : les bases",
-  phase: "Phase 3 · L'Analyse",
+  title: "Le BOC avancé (2/3) : lire une ligne d'action",
+  phase: "Phase 4 · L'Analyse",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
   reward: 20000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 16",
-    headline: "Regardez sous le capot avant d'acheter.",
+    headline: "Une ligne d'action, plusieurs heures de la journée.",
     lead:
-      "Vous savez lire le prix d'une action, mais ce prix ne dit pas tout. Avant la méthode Graham approfondie (M17 et suivants), voici vos premiers réflexes d'analyste : 3 vérifications simples, comme un check-up avant d'acheter une **voiture d'occasion**.",
+      "Cours précédent, ouverture, clôture, cours de référence… chaque colonne de prix raconte un moment précis de la journée. Et une variation du jour ne dit jamais tout sur le climat de l'année.",
     card: {
-      label: "Les 3 vérifs avant d'acheter",
-      title: "Résultat net, rendement, PER",
-      hint: "On oublie les rumeurs et on vérifie 3 choses simples :",
+      label: "Lire une ligne comme un pro",
+      title: "Les prix, le disjoncteur, la météo",
+      hint: "3 pièges à éviter sur la ligne d'une action :",
       rules: [
-        "**Le résultat net** — l'entreprise gagne-t-elle vraiment de l'argent ?",
-        "**Le rendement** — combien elle vous « paie de loyer » chaque année.",
-        "**Le PER** — est-elle chère ou bon marché par rapport au marché ?",
+        "**Les colonnes de prix** — précédent, ouverture, clôture : chacune raconte un moment de la journée.",
+        "**Le disjoncteur des ± 7,5 %** — la limite de sécurité calculée sur le cours de référence.",
+        "**La météo vs le climat** — ne jamais confondre la variation du jour et celle de l'année.",
       ],
     },
     objectives: [
-      "Vérifier qu'une entreprise gagne vraiment de l'argent avant de vous fier au prix affiché.",
-      "Calculer le rendement et le PER pour juger si une action est chère ou bon marché.",
-      "Choisir l'entreprise adaptée à votre stratégie (rente ou croissance) plutôt que celle qui séduit le plus.",
+      "Distinguer les colonnes de prix d'une ligne d'action : cours précédent, ouverture, clôture, cours de référence.",
+      "Comprendre le rôle du « disjoncteur » des ± 7,5 % et le prix sur lequel il se calcule.",
+      "Ne plus confondre la variation du jour et la tendance de l'année avant de juger une action.",
     ],
-    cta: "Regarder sous le capot",
+    cta: "Décoder une vraie ligne d'action",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "Qu'est-ce que l'analyse fondamentale ?",
+      title: "Zoomons sur une seule action",
       blocks: [
-        { kind: "lead", value: "Avant de sortir votre calculette, une question simple : qu'est-ce qu'on est en train de faire, au juste ?" },
-        { kind: "text", value: "**L'analyse fondamentale**, c'est étudier une entreprise elle-même — ses comptes, son activité, sa santé financière — pour estimer ce qu'elle **vaut vraiment**, indépendamment de ce que dit son prix en bourse à un instant donné." },
-        { kind: "text", value: "L'idée : le prix affiché et la valeur réelle d'une entreprise sont deux choses différentes. Parfois ils se rejoignent, parfois ils s'écartent — et c'est là que se cachent les bonnes affaires (ou les pièges)." },
+        { kind: "text", value: "Vous savez lire la météo générale du marché (module 15). Descendons maintenant sur **une seule action**. Sa ligne dans le BOC a plusieurs colonnes de prix — pas de panique, chacune raconte simplement **un moment de la journée**. Voici un exemple réel, qu'on décortique colonne par colonne dans les slides suivantes :" },
+        {
+          kind: "boctable",
+          caption: "Ligne réelle d'Ecobank (ETIT) · BOC du 17/07/2026",
+          columns: ["Cours précédent", "Ouverture", "Clôture", "Cours de référence", "Var. jour", "Var. année", "Volume", "Valeur"],
+          rows: [["73", "68", "68", "68", "−6,85 %", "+195,65 %", "1 662 045", "113 073 294 FCFA"]],
+        },
       ],
     },
     {
-      title: "Un peu d'histoire : née après un krach",
+      title: "Les prix, comme les heures d'une journée",
       blocks: [
-        { kind: "text", value: "Cette méthode n'est pas nouvelle : elle naît dans les années 1930, aux États-Unis, après le **krach boursier de 1929** — un effondrement qui a ruiné des milliers d'investisseurs qui achetaient sur rumeur, sans jamais regarder les comptes des entreprises." },
-        { kind: "text", value: "Un professeur de l'université Columbia, **Benjamin Graham**, décide de tout reprendre à zéro : avec David Dodd, il publie en 1934 « **Security Analysis** », le premier grand ouvrage à poser des règles rigoureuses pour évaluer une entreprise à partir de faits, pas de rumeurs." },
-        { kind: "callout", tone: "highlight", value: "Son élève le plus célèbre ? **Warren Buffett** — l'un des investisseurs les plus riches au monde, qui applique encore aujourd'hui les principes de son professeur." },
-      ],
-    },
-    {
-      title: "Pourquoi ça vous intéresse",
-      blocks: [
-        { kind: "text", value: "Sans analyse fondamentale, vous investissez au bruit : les rumeurs, les modes, la peur ou l'euphorie du moment. Avec elle, vous gagnez 3 choses :" },
+        { kind: "text", value: "Imaginez une journée au marché :" },
         {
           kind: "list",
           items: [
-            "**Une méthode objective** — comparer deux entreprises sur des faits, pas des impressions.",
-            "**Une protection** — éviter d'acheter une entreprise fragile juste parce que son action est à la mode.",
-            "**Un repère** — savoir si un prix est justifié, trop élevé, ou une opportunité.",
+            "**Cours précédent** — le prix d'**hier** soir. C'est le point de comparaison : a-t-on monté ou baissé depuis ?",
+            "**Ouverture** — le prix à **l'ouverture des portes** ce matin. Il donne l'ambiance de début de journée.",
+            "**Clôture** — le prix à **la fermeture**, le soir. C'est LE prix qui vous intéresse : votre ordre de demain se fera à peu près à ce niveau.",
           ],
         },
       ],
     },
     {
-      title: "Le concept, en une phrase",
+      title: "Le cours de référence & le « disjoncteur » des ± 7,5 %",
       blocks: [
-        { kind: "lead", value: "Chaque entreprise a une valeur réelle — et son prix en bourse peut s'en écarter, dans un sens ou dans l'autre." },
-        { kind: "text", value: "L'analyse fondamentale sert à repérer cet écart : une entreprise **solide** vendue **pas cher**, c'est une opportunité ; une entreprise **fragile** vendue **cher**, c'est un piège à éviter." },
-        { kind: "text", value: "Passons à la pratique : voici vos premiers réflexes. 👇" },
+        { kind: "text", value: "**En clair :** le cours de référence est le prix « de base » que la BRVM fixe pour le lendemain (souvent égal à la clôture)." },
+        { kind: "text", value: "**À quoi il sert :** à poser une **limite de sécurité**. En une seule journée, une action ne peut ni monter ni baisser de plus de **± 7,5 %** par rapport à ce prix de base." },
+        { kind: "text", value: "**L'image :** c'est un **disjoncteur électrique**. Quand le courant s'affole, le disjoncteur saute pour éviter l'incendie. Ici, si une action s'emballe, la règle des 7,5 % « coupe le courant » pour la journée, le temps que tout le monde se calme. Impossible, donc, qu'une simple rumeur fasse chuter votre action de 40 % en un jour." },
+        { kind: "callout", tone: "highlight", value: "**Une spécificité de la BRVM, et une vraie sécurité pour vous :** contrairement à d'autres marchés (actions américaines sans limite, cryptomonnaies…) où un titre peut perdre 50 %, 90 % voire tomber à zéro en une seule séance, **ce disjoncteur rend ça impossible ici**. Vous ne pouvez jamais perdre tout votre argent d'un coup sur une action à la BRVM : au pire, − 7,5 % par jour, jamais plus." },
       ],
     },
     {
-      title: "Regarder sous le capot",
+      title: "Le piège n°1 : la météo du jour vs le climat de l'année ⚠️",
       blocks: [
-        { kind: "text", value: "Vous savez lire le prix d'une action. Mais ce prix ne dit pas tout : une action à 2 000 FCFA peut être **hors de prix**, et une à 50 000 une **excellente affaire**." },
-        { kind: "text", value: "C'est comme une **voiture d'occasion** : le prix affiché ne suffit pas, il faut **regarder sous le capot** avant d'acheter." },
-        { kind: "text", value: "On vérifie 3 choses simples — et on oublie les rumeurs (« mon cousin m'a dit que ça va monter »)." },
-      ],
-    },
-    {
-      title: "Vérif n°1 : est-ce qu'elle gagne de l'argent ? (le résultat net)",
-      blocks: [
-        { kind: "text", value: "Achèteriez-vous une **boutique** qui perd de l'argent chaque année ? Sûrement pas." },
-        { kind: "text", value: "Pour une entreprise, c'est pareil : on regarde le **résultat net** — le bénéfice une fois tout payé. Si elle enchaîne les pertes année après année, **on fuit**, même si l'action a l'air « pas chère »." },
-      ],
-    },
-    {
-      title: "Vérif n°2 : combien elle me « paie de loyer » ? (le rendement)",
-      blocks: [
-        { kind: "text", value: "Rappel du M14 : le **rendement**, c'est le « loyer » de l'action — ce qu'elle vous verse en dividendes chaque année, en pourcentage de son prix." },
-        { kind: "text", value: "À la BRVM, un bon loyer se situe entre **7 et 10 %**." },
-        { kind: "callout", tone: "warn", value: "⚠️ Méfiez-vous du loyer « trop beau » : un rendement de 15 % peut cacher un piège (l'entreprise distribue tout son argent et ne garde rien pour grandir)." },
-      ],
-    },
-    {
-      title: "Vérif n°3 : est-elle chère ? (le PER)",
-      blocks: [
-        { kind: "text", value: "Rappel du M14 : le **PER**, c'est le nombre d'années pour « rembourser » le prix, comme quand on achète une boutique." },
+        { kind: "text", value: "Le BOC donne DEUX variations : celle **du jour** et celle **de l'année**. Ne les confondez jamais — c'est la différence entre **la météo d'aujourd'hui** et **le climat de l'année**." },
+        { kind: "text", value: "Exemple réel — Ecobank (ETIT), le 17/07/2026 :" },
         {
-          kind: "list",
-          items: [
-            "**PER 8** → environ 8 ans : attractif.",
-            "**PER 25** → 25 ans : cher (le marché parie sur une forte croissance).",
+          kind: "boctable",
+          caption: "Ecobank (ETIT) · deux lectures de la même action",
+          columns: ["Période", "Variation"],
+          rows: [
+            ["Aujourd'hui (la météo)", "−6,85 %"],
+            ["Sur l'année (le climat)", "+195,65 % 🚀"],
           ],
         },
-        { kind: "text", value: "À la BRVM, un PER classique tourne autour de **8-12** (moyenne du marché ≈ 14). À vous de juger ! 👇" },
+        { kind: "text", value: "Une journée de pluie… mais l'action a presque **triplé** sur l'année !" },
+        { kind: "callout", tone: "warn", value: "Le débutant voit la pluie du jour et prend peur. L'investisseur avisé sait qu'une journée de pluie ne change rien à un climat magnifique. **On juge une action sur son climat, pas sur la météo d'un jour.**" },
+      ],
+    },
+    {
+      title: "Le volume : y a-t-il foule ? (rappel)",
+      blocks: [
+        { kind: "text", value: "Comme au **module 14**, le **volume** = le nombre de titres échangés dans la journée = **l'affluence** du marché. Plus il y a de monde, plus c'est facile d'acheter ou de revendre sans faire bouger le prix." },
+        { kind: "text", value: "**Exemple :** ce jour-là, ETIT a échangé une cohue de titres, contre beaucoup moins pour Sonatel. La colonne Valeur mesure la même affluence, mais en argent :" },
+        {
+          kind: "boctable",
+          caption: "BOC du 17/07/2026 · affluence de deux actions",
+          columns: ["Titre", "Volume (titres)", "Valeur échangée"],
+          rows: [
+            ["ETIT — Ecobank Trans. Incorp. TG", "1 662 045", "113 073 294 FCFA"],
+            ["SNTS — Sonatel SN", "1 944", "62 480 935 FCFA"],
+          ],
+        },
+      ],
+    },
+    {
+      title: "À vous de lire une vraie ligne 👇",
+      blocks: [
+        { kind: "lead", value: "À vous de lire une vraie ligne. 👇" },
       ],
     },
   ],
@@ -142,27 +130,50 @@ export const m16: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "Étude de cas comparative",
-    instruction: "Vous appliquez une stratégie de **rente** (revenu sûr et immédiat). Observez ces deux entreprises et répondez. (1 erreur = − 10 000 FCFA.)",
+    title: "Décoder les mouvements",
+    instruction: "Voici une vraie ligne d'action, telle qu'elle apparaît dans le BOC. Observez-la et répondez. (1 erreur = − 5 000 FCFA.)",
     table: {
-      caption: "Étude de cas · deux entreprises",
-      columns: ["Entreprise", "Secteur", "Résultat net", "PER", "Rendement"],
-      rows: [
-        ["A — Agro-Star", "Agriculture (nouvelle entreprise)", "+30 % l'an dernier", "19", "2 %"],
-        ["B — Banque Panafricaine", "Banque (installée depuis 30 ans)", "+2 % l'an dernier", "7", "9,5 %"],
-      ],
-      highlightCols: [3, 4],
+      caption: "Ligne réelle d'Ecobank (ETIT) · BOC du 17/07/2026",
+      columns: ["Cours précédent", "Ouverture", "Clôture", "Cours de référence", "Var. jour", "Var. année", "Volume", "Valeur"],
+      rows: [["73", "68", "68", "68", "−6,85 %", "+195,65 %", "1 662 045", "113 073 294 FCFA"]],
+      highlightCols: [4, 5],
     },
-    penaltyPerError: 10000,
+    penaltyPerError: 5000,
     perfectReward: 20000,
+    // Recopie des options de Q1 en repli neutre (requis par le type) :
+    // chaque question a sa propre paire/triplet de boutons, verbatim
+    // depuis le .txt source (Q3 n'a que 2 boutons dans la source).
     options: [
-      { value: "a", label: "L'Entreprise A (Agro-Star)" },
-      { value: "b", label: "L'Entreprise B (Banque Panafricaine)" },
+      { value: "raison", label: "Il a raison, l'action s'effondre." },
+      { value: "meteo", label: "Ce n'est que la météo du jour ; sur l'année (le climat), l'action fait +195,65 %. Pas de panique." },
+      { value: "impossible", label: "Impossible à dire." },
     ],
     questions: [
       {
-        prompt: "**Question : pour votre stratégie de rente, laquelle achetez-vous en priorité ?**",
-        answer: "b",
+        prompt: "Votre beau-frère voit « −6,85 % », panique et veut tout vendre. La bonne lecture ?",
+        answer: "meteo",
+        options: [
+          { value: "raison", label: "Il a raison, l'action s'effondre." },
+          { value: "meteo", label: "Ce n'est que la météo du jour ; sur l'année (le climat), l'action fait +195,65 %. Pas de panique." },
+          { value: "impossible", label: "Impossible à dire." },
+        ],
+      },
+      {
+        prompt: "Quel prix sert de base au « disjoncteur » des ± 7,5 % de la prochaine séance ?",
+        answer: "reference",
+        options: [
+          { value: "ouverture", label: "L'ouverture" },
+          { value: "reference", label: "Le cours de référence" },
+          { value: "precedent", label: "Le cours précédent" },
+        ],
+      },
+      {
+        prompt: "Avec 1 662 045 titres échangés, que peut-on dire d'ETIT ce jour-là ?",
+        answer: "liquide",
+        options: [
+          { value: "peu", label: "Peu échangée, difficile à revendre." },
+          { value: "liquide", label: "Très liquide (grosse affluence) : facile à acheter ou revendre." },
+        ],
       },
     ],
   },
@@ -171,26 +182,35 @@ export const m16: Module = {
   feedback: {
     perfect: {
       icon: "🎉",
-      title: "Bravo, l'analyste ! + 20 000 FCFA sur votre portefeuille !",
-      body: "Vous avez compris le piège : l'entreprise qui grandit le plus vite n'est pas la bonne cible pour votre stratégie.",
+      title: "Lecture chirurgicale ! + 20 000 FCFA sur votre portefeuille !",
+      body: "Ni les colonnes de prix, ni le rouge d'une seule journée ne vous piègent plus.",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! Ce choix coûte cher (− 10 000 FCFA).",
-      body: "Vous vous êtes laissé éblouir par la croissance de A, en oubliant votre objectif : la rente.",
+      title: "Aïe ! Un prix vous a échappé (− 5 000 FCFA par erreur).",
+      body: "Reprenons.",
     },
     explanations: [
       {
-        verdict: "Entreprise B",
-        title: "Pourquoi B, pour la rente",
-        body: "**Rendement 9,5 %** : un gros « loyer », tout de suite. A (2 %) garde son argent pour se développer, elle vous paie très peu. **PER 7** : B est bon marché (7 ans pour se rembourser). A a un PER de 19 : le marché a déjà anticipé sa croissance, l'action est chère.",
-        note: "**A est-elle mauvaise ?** Pas du tout ! C'est une **action de croissance**. Pour un profil audacieux visant des plus-values dans 10 ans, A serait un excellent choix. **La leçon d'or :** une « bonne action » dans l'absolu n'existe pas. Il n'y a que la bonne action **pour votre stratégie** (M06 / M07).",
+        verdict: "La météo du jour vs le climat",
+        title: "La météo vs le climat.",
+        body: "Une baisse de −6,85 % en un jour, c'est une averse : ça ne dit **rien** sur la solidité de l'entreprise. Sur l'année, ETIT a fait **+195,65 %**. On regarde toujours le **climat** (la tendance longue), pas la pluie d'un jour.",
+      },
+      {
+        verdict: "Le cours de référence",
+        title: "Le disjoncteur.",
+        body: "La limite des ± 7,5 % se calcule à partir du **cours de référence** : c'est le garde-fou anti-panique de la BRVM.",
+      },
+      {
+        verdict: "Très liquide",
+        title: "L'affluence.",
+        body: "Beaucoup de titres échangés = marché animé = on entre et on sort facilement. Un volume minuscule est un signal de prudence.",
       },
     ],
   },
 
   next: {
-    label: "J'ai les premiers réflexes ! Allons plus loin avec la méthode Graham.",
+    label: "Je sais lire les mouvements. Passons aux colonnes de l'analyste.",
     target: "Module 17",
   },
 };

@@ -1,124 +1,137 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 11 — Lire le BOC : l'essentiel.
-   Première étape de la Phase 3 « L'Analyse ». Défi = quiz à 3
-   questions ; le .txt source décrit une interaction « clic sur la
-   bonne case du tableau, sinon un QCM » — on prend le repli QCM
-   explicitement prévu par la source, avec pour distracteurs les
-   AUTRES valeurs de la même colonne du tableau du BOC (mêmes
-   3 lignes SNTS/BOAC/CIE pour les 3 questions) → chaque question a
-   sa propre paire d'options (mécanisme M03/M06/M07). Le tableau du
-   BOC (Section 2 du .txt) est rendu en vrai tableau HTML (kind
-   "boctable" côté slide, champ `table` côté défi) — cf. revue
-   post-lancement : plus de valeurs repliées en prose.
-   Barème Phase 3 standard (§4) : +20 000 / −5 000.
+   Contenu du Module 11 — Ouvrir son compte SGI (et comprendre
+   les frais). Première étape de la Phase 3 « Passage à l'action ».
+   Revue post-lancement : ce bloc (ex-Phase 4, M22-M24) est désormais
+   placé juste après la Phase 2 (Boussole) plutôt qu'après la Phase
+   3/4 « L'Analyse » — quick win voulu par le user pour que
+   l'apprenant ouvre un vrai compte tôt dans le parcours, sur la base
+   de son plan (M09), sans attendre la fin du bloc analytique. Toute
+   référence à une théorie d'analyse déjà acquise (BOC, Graham) a été
+   retirée de ce fichier en conséquence.
+   Barème standard Phase 4 (Bareme harmonise.txt §4 : « Phase 4 —
+   Action | +20 000 | −5 000 ») : perfectReward 20000 /
+   penaltyPerError 5000 / reward 20000 — confirmé par le propre
+   texte du .txt (« + 20 000 FCFA » / « − 5 000 FCFA »).
+   Défi = quiz à UNE SEULE question (2 boutons, Courtier A/B) :
+   `challenge.questions` a donc 1 seule entrée, et
+   `feedback.explanations` AUSSI 1 seule entrée (les deux calculs —
+   1 % vs forfait — justifient le même verdict, combinés dans un
+   seul `body`, comme M19). La « Règle d'or » de conclusion est
+   repliée dans le `.note` de cette explication unique.
+   GARDE-FOU commercial (signalé par le brief de cette tâche) :
+   aucun nom réel de SGI n'est utilisé nulle part dans ce fichier —
+   les placeholders génériques du .txt (« Courtier A », « Courtier
+   B ») sont conservés tels quels, y compris dans les labels de
+   boutons du défi.
    ============================================================= */
 export const m11: Module = {
   code: "M11",
   index: 11,
   totalModules: 28,
-  title: "Lire le BOC : l'essentiel",
-  phase: "Phase 3 · L'Analyse",
+  title: "Ouvrir son compte SGI (et comprendre les frais)",
+  phase: "Phase 3 · Passage à l'action",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
   reward: 20000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 11",
-    headline: "Le grand tableau d'affichage de la bourse.",
+    headline: "Le sésame pour investir : votre compte SGI.",
     lead:
-      "Le BOC (Bulletin Officiel de la Cote) ressemble à un tableau vertigineux de chiffres. Bonne nouvelle : pour investir sereinement, **3 colonnes suffisent** — le prix, l'affluence, le loyer.",
+      "Vous avez votre plan d'investissement (M09). Pour enfin pouvoir l'exécuter, il vous faut un compte chez une **SGI** (Société de Gestion et d'Intermédiation) — votre courtier. C'est presque aussi simple qu'un compte bancaire, souvent faisable en ligne, et ouvert à la diaspora.",
     card: {
-      label: "Vos 3 réflexes de lecture",
-      title: "Prix, affluence, loyer",
-      hint: "Ignorez les dizaines d'autres colonnes, concentrez-vous sur :",
+      label: "Avant d'ouvrir un compte",
+      title: "3 critères pour choisir sa SGI, et les frais à surveiller",
+      hint: "Toutes les SGI donnent accès à la même bourse. Ce qui change :",
       rules: [
-        "**Le prix (cours de clôture)** — ce que vous paierez si vous achetez demain.",
-        "**L'affluence (volume)** — combien de titres s'échangent, pour savoir si vous pourrez revendre.",
-        "**Le loyer (dividende)** — combien l'action vous versera, et à quelle date.",
+        "**La plateforme en ligne** — pouvoir passer vos ordres vous-même, depuis votre téléphone.",
+        "**Le conseil** — de vraies études d'entreprise, pas juste l'actualité générale déjà vue partout.",
+        "**Les frais** — intermédiation, droits de garde, bourse en ligne : le forfait peut coûter cher sur les petits montants.",
       ],
     },
     objectives: [
-      "Reconnaître la structure d'un extrait du BOC, sans paniquer devant le nombre de colonnes.",
-      "Repérer les 3 colonnes essentielles pour débuter : le prix, le volume, le dividende.",
-      "Lire une ligne réelle du bulletin et en tirer une décision concrète.",
+      "Savoir ce qu'est une SGI et les documents nécessaires pour ouvrir un compte-titres, même depuis la diaspora.",
+      "Choisir sa SGI selon 3 critères concrets : la plateforme en ligne, la qualité du conseil, le montant minimum.",
+      "Calculer l'impact réel des frais (pourcentage vs forfait) sur de petits montants investis régulièrement.",
     ],
-    cta: "Ouvrir le grand tableau d'affichage",
+    cta: "Ouvrir mon compte-titres",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "Le BOC, le grand tableau d'affichage",
+      title: "Le sésame pour investir",
       blocks: [
-        {
-          kind: "text",
-          value:
-            "Le **BOC** (Bulletin Officiel de la Cote) est le document officiel que la BRVM publie chaque soir de bourse. Voyez-le comme le **grand tableau d'affichage** de la bourse : tout ce qui s'est passé dans la journée y est écrit — les prix, les quantités échangées, les dividendes à venir. C'est là qu'on va chercher l'info avant d'acheter.",
-        },
-        {
-          kind: "download",
-          label: "Télécharger un vrai BOC (PDF)",
-          sublabel: "Bulletin officiel de la BRVM du 17/07/2026 · 19 pages",
-          href: "/docs/boc-exemple-brvm.pdf",
-        },
+        { kind: "text", value: "Vous avez votre plan. Pour enfin pouvoir l'exécuter, il faut un compte chez une **SGI** (Société de Gestion et d'Intermédiation) — c'est votre **courtier**, l'intermédiaire par lequel passent tous vos ordres." },
       ],
     },
     {
-      title: "Voici à quoi ressemble un extrait du BOC",
+      title: "Est-ce compliqué ? Non.",
       blocks: [
-        { kind: "text", value: "Avant d'aller plus loin, regardons un vrai extrait (données fictives, structure réelle) — trois lignes, avec les colonnes qu'on va apprendre à lire ensemble :" },
+        { kind: "text", value: "C'est presque aussi simple qu'ouvrir un compte bancaire, et souvent faisable en ligne. Il faut généralement réunir :" },
         {
-          kind: "boctable",
-          caption: "Extrait du BOC · séance du jour (données fictives, structure réelle)",
-          columns: ["Valeur", "Cours clôture", "Volume", "Dividende net", "Date paiement"],
-          rows: [
-            ["SNTS — SONATEL SÉNÉGAL", "18 500", "45 200", "1 500", "15/05/2026"],
-            ["BOAC — BOA CÔTE D'IVOIRE", "6 200", "12 000", "620", "22/04/2026"],
-            ["CIE — CIE CÔTE D'IVOIRE", "1 950", "3 500", "250", "10/06/2026"],
+          kind: "list",
+          items: [
+            "une pièce d'identité valide,",
+            "un justificatif de domicile,",
+            "deux photos d'identité.",
           ],
         },
-        { kind: "text", value: "Impressionnant ? Gardez cet extrait en tête : dans les slides suivantes, on décortique une colonne à la fois." },
       ],
     },
     {
-      title: "Un tableau qui fait peur ? Pas grave",
+      title: "Vous vivez à l'étranger ? La diaspora aussi ! 🌍",
       blocks: [
-        { kind: "text", value: "À première vue, le BOC ressemble à un immense tableau de chiffres, avec des dizaines de colonnes — de quoi donner le vertige." },
-        { kind: "text", value: "Rassurez-vous : c'est comme un journal. Personne ne lit toutes les pages ! Pour investir tranquillement, **3 colonnes suffisent**. On les regarde une par une." },
+        { kind: "text", value: "Idée reçue à casser : **vous n'avez PAS besoin d'être sur le territoire du pays, ni d'en être citoyen**, pour ouvrir votre compte-titres." },
+        { kind: "text", value: "Depuis la diaspora, vous pouvez parfaitement ouvrir un compte dans une SGI de Côte d'Ivoire (ou d'un autre pays de l'UEMOA), souvent **entièrement à distance, en ligne**. La bourse régionale est ouverte à tous." },
+        { kind: "callout", tone: "info", value: "Vérifiez simplement la liste des justificatifs : certaines SGI ont des modalités adaptées aux non-résidents." },
       ],
     },
     {
-      title: "Colonne 1 : le prix (le cours de clôture) 💵",
+      title: "Choisir la bonne SGI : 3 critères",
       blocks: [
-        { kind: "text", value: "**En clair :** c'est le prix affiché sur « l'étiquette » de l'action à la fermeture — le dernier prix auquel elle s'est vendue dans la journée." },
-        { kind: "text", value: "**Pourquoi ça compte :** c'est ce que vous paierez, ou presque, si vous achetez demain." },
-        { kind: "text", value: "**Exemple :** BOA Côte d'Ivoire a fini la journée à **6 200 FCFA**. Vous voulez 10 actions ? Prévoyez environ **62 000 FCFA** (avant les frais)." },
+        { kind: "text", value: "Toutes les SGI donnent accès à la même bourse. Ce qui les distingue vraiment :" },
+        {
+          kind: "list",
+          items: [
+            "**La plateforme en ligne** — pouvoir passer vos ordres vous-même, depuis votre téléphone. Fuyez celles qui obligent à se déplacer ou à tout faire par mail : vous perdriez des occasions en attendant qu'un employé traite votre demande.",
+            "**Le conseil** — publie-t-elle de vraies **études d'entreprise** qui aident à décider ? Beaucoup se contentent de répéter l'actualité générale : ça, ce n'est pas du conseil. (Vous apprendrez à repérer une vraie étude sérieuse un peu plus loin dans la formation.)",
+            "**Le montant minimum d'ouverture** — ce n'est pas un frais (c'est votre argent, que vous investirez), mais un minimum trop élevé (ex. 2 millions) vous bloque l'entrée. Choisissez-en un adapté à votre budget.",
+          ],
+        },
       ],
     },
     {
-      title: "Colonne 2 : le volume (y a-t-il foule ?) 🔄",
+      title: "Les frais (1/2) : l'intermédiation",
       blocks: [
-        { kind: "text", value: "**En clair :** le volume, c'est le nombre d'actions qui ont changé de main dans la journée. Une image simple : c'est **l'affluence du marché**." },
-        { kind: "text", value: "**Pourquoi ça compte :** dans un marché **animé** (beaucoup de monde), vous trouvez toujours quelqu'un pour vous vendre une action ou vous racheter la vôtre. Dans un marché **désert**, vous risquez de rester planté : personne pour reprendre vos titres le jour où vous voudrez sortir." },
-        { kind: "text", value: "**Exemple :** Sonatel a échangé **45 200 titres** aujourd'hui — la foule des grands jours, vous entrez et sortez quand vous voulez. Une action qui n'échange que 5 titres par jour, elle, est à éviter pour débuter." },
+        { kind: "text", value: "C'est la commission que prend la SGI **à chaque fois** qu'elle achète ou vend pour vous — un peu comme les frais du mobile money." },
+        {
+          kind: "list",
+          items: [
+            "Le plus souvent : un **pourcentage** (~1 % du montant).",
+          ],
+        },
+        { kind: "callout", tone: "warn", value: "⚠️ Certaines ajoutent un **forfait minimum** (ex. 1 000 FCFA par ordre). C'est un piège pour les petits montants : sur un ordre de 25 000 FCFA, 1 000 F de frais = **4 %** ! (on le calcule dans le défi)." },
       ],
     },
     {
-      title: "Colonne 3 : le dividende (le « loyer » de l'action) 🎁",
+      title: "Les frais (2/2) : garde & bourse en ligne",
       blocks: [
-        { kind: "text", value: "**En clair :** le dividende, c'est la part des bénéfices que l'entreprise vous verse en cash. Une image : c'est comme un **loyer** — vous possédez l'action, et elle vous « paie un loyer » chaque année." },
-        { kind: "text", value: "**Pourquoi ça compte :** le BOC vous dit **à l'avance** combien vous toucherez, et à quelle date." },
-        { kind: "text", value: "**Exemple :** CIE versera **250 FCFA par action** le 10/06/2026. Avec 100 actions, ça fait **25 000 FCFA** de cash — net d'impôt." },
-        { kind: "text", value: "(Rappel du M03 : il faut détenir l'action avant sa « date de détachement » pour y avoir droit.)" },
+        {
+          kind: "list",
+          items: [
+            "**Les droits de garde** : un petit frais **annuel** que la SGI prélève pour **conserver vos titres** en sécurité (~0,27 %/an de la valeur de votre portefeuille). Plus votre portefeuille grossit, plus ils augmentent.",
+            "**Les frais de bourse en ligne** : l'accès à la plateforme. **Gratuit** chez beaucoup de SGI, mais **payant** chez d'autres (~1 000 FCFA/mois) — à vérifier avant de choisir.",
+          ],
+        },
       ],
     },
     {
-      title: "À vous de jouer",
+      title: "Le piège le plus courant : le forfait",
       blocks: [
-        { kind: "lead", value: "Vous avez les 3 réflexes : **le prix, l'affluence (volume), le loyer (dividende)**." },
-        { kind: "text", value: "Place à la chasse au trésor. 👇" },
+        { kind: "text", value: "Si vous investissez de petites sommes chaque mois, un mauvais choix de frais peut détruire votre rendement avant même de commencer. Faisons le calcul. 👇" },
       ],
     },
   ],
@@ -127,54 +140,19 @@ export const m11: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "La chasse au trésor",
-    instruction: "Observez cet extrait du BOC et retrouvez les infos demandées. (1 erreur = − 5 000 FCFA.)",
-    table: {
-      caption: "Extrait du BOC · séance du jour (données fictives, structure réelle)",
-      columns: ["Valeur", "Cours clôture", "Volume", "Dividende net", "Date paiement"],
-      rows: [
-        ["SNTS — SONATEL SÉNÉGAL", "18 500", "45 200", "1 500", "15/05/2026"],
-        ["BOAC — BOA CÔTE D'IVOIRE", "6 200", "12 000", "620", "22/04/2026"],
-        ["CIE — CIE CÔTE D'IVOIRE", "1 950", "3 500", "250", "10/06/2026"],
-      ],
-    },
+    title: "Le calcul des frais",
+    instruction:
+      "Vous investissez 25 000 FCFA/mois (DCA). Deux SGI. **Courtier A — au pourcentage :** 1 % par transaction. **Courtier B — au forfait :** 1 000 FCFA fixes minimum par transaction. (1 erreur = − 5 000 FCFA.)",
     penaltyPerError: 5000,
     perfectReward: 20000,
-    // Recopie des options de la Mission 1 en repli neutre (requis par le
-    // type) : chaque question ci-dessous fournit ses propres distracteurs,
-    // tirés des autres valeurs de la même colonne du tableau du BOC.
     options: [
-      { value: "18500", label: "18 500" },
-      { value: "6200", label: "6 200" },
-      { value: "1950", label: "1 950" },
+      { value: "a", label: "Courtier A (1 %)" },
+      { value: "b", label: "Courtier B (1 000 FCFA fixes)" },
     ],
     questions: [
       {
-        prompt: "**Mission 1 — Le prix :** vous voulez acheter BOA Côte d'Ivoire. À quel prix l'action a-t-elle terminé la journée ?",
-        answer: "6200",
-        options: [
-          { value: "18500", label: "18 500" },
-          { value: "6200", label: "6 200" },
-          { value: "1950", label: "1 950" },
-        ],
-      },
-      {
-        prompt: "**Mission 2 — L'affluence :** combien de titres Sonatel ont été échangés dans la journée ?",
-        answer: "45200",
-        options: [
-          { value: "45200", label: "45 200" },
-          { value: "12000", label: "12 000" },
-          { value: "3500", label: "3 500" },
-        ],
-      },
-      {
-        prompt: "**Mission 3 — Le loyer :** quelle entreprise versera exactement 250 FCFA par action ?",
-        answer: "CIE",
-        options: [
-          { value: "SNTS", label: "SNTS — Sonatel Sénégal" },
-          { value: "BOAC", label: "BOAC — BOA Côte d'Ivoire" },
-          { value: "CIE", label: "CIE — CIE Côte d'Ivoire" },
-        ],
+        prompt: "**Question : pour 25 000 FCFA/mois, quelle SGI vous coûte le moins cher ?**",
+        answer: "a",
       },
     ],
   },
@@ -183,36 +161,26 @@ export const m11: Module = {
   feedback: {
     perfect: {
       icon: "🎉",
-      title: "Coup de maître ! + 20 000 FCFA sur votre portefeuille !",
-      body: "Vous venez de dompter le document le plus impressionnant de la bourse.",
+      title: "Calcul parfait ! + 20 000 FCFA sur votre portefeuille !",
+      body: "Vous venez de sauver votre capital de l'appétit de certains courtiers.",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! Lecture trop rapide (− 5 000 FCFA par erreur).",
-      body: "Un mauvais clic, c'est lire la mauvaise ligne du tableau d'affichage. Reprenons.",
+      title: "Aïe ! Les frais fixes ont englouti votre capital (− 5 000 FCFA).",
+      body: "Reprenons le calcul.",
     },
     explanations: [
       {
-        verdict: "6 200",
-        title: "Le prix",
-        body: "BOA a fini à **6 200**, c'est ce que vous paierez à l'achat.",
-      },
-      {
-        verdict: "45 200",
-        title: "L'affluence (volume)",
-        body: "Sonatel a échangé **45 200** titres : la foule, donc facile à revendre.",
-      },
-      {
-        verdict: "CIE",
-        title: "Le loyer (dividende)",
-        body: "**CIE** verse 250 FCFA/action : le meilleur repère pour la stratégie de rente.",
-        note: "Rassurez-vous : les dizaines d'autres colonnes (limites de fluctuation, PER, capitalisation…) servent surtout aux analystes. On les découvre justement dans les 3 modules suivants, en douceur.",
+        verdict: "Courtier A",
+        title: "Le calcul, pourcentage vs forfait",
+        body: "**Courtier A (1 %)** : 1 % de 25 000 = **250 FCFA**. **Courtier B (forfait)** : **1 000 FCFA**, soit `1000 ÷ 25000 = **4 %** de frais immédiats !` Avec le Courtier B, votre action devrait monter de 4 % **rien que pour rembourser les frais**.",
+        note: "**Règle d'or :** pour de **petites sommes** régulières, fuyez les forfaits, privilégiez le pourcentage. Le forfait n'avantage que les très gros montants ponctuels.",
       },
     ],
   },
 
   next: {
-    label: "Je lis l'essentiel ! Passons à la lecture avancée du BOC.",
+    label: "Mon compte est prêt. Et si je préfère déléguer ?",
     target: "Module 12",
   },
 };

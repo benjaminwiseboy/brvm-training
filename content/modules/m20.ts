@@ -1,163 +1,124 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 20 — Graham (4/4) : payer le juste prix
-   (PER, PBR & la règle de Graham).
-   Barème NON standard (§4 : « Graham 3 Prix | 3 | +40 000 | −10 000 »).
-   REFRAMING DE Q1 (wrinkle documentée dans le brief de cette tâche) :
-   la source présente Q1 comme des « [Cases à cocher] » (multi-select
-   sur X/Y/Z), mais `QuizChallenge.questions[].answer` est une chaîne
-   unique comparée à UNE option — le moteur ne supporte aucune
-   sélection multiple simultanée (et en ajouter une est hors scope
-   de cette tâche de contenu). Même famille d'adaptation que la
-   conversion numérique de M03 et M14 (reformuler en QCM à choix
-   unique avec des options plausibles) : Q1 devient un choix unique
-   sur l'ÉNONCÉ COMBINÉ (« lesquelles passent le filtre ? » → 4
-   options : "X et Y" / "X, Y et Z" / "Seulement Z" / "Aucune des
-   trois"), réponse correcte = "X et Y" (X = 9×1,3 = 11,7 ✓, Y =
-   5×0,7 = 3,5 ✓, Z = 24×2,8 = 67,2 ✗). Q2 reste un quiz normal à
-   choix unique (mécanisme `options` par question, comme M14/M15).
-   Formule entre backticks du .txt (`PER × PBR < 22,5`) convertie en
-   **gras**, même convention que m08/m12/m13.
-   Explications (2, un par question) : Explanation 1 (Q1) = la ligne
-   « Le calcul » (X/Y/Z) ; Explanation 2 (Q2) = les 3 puces
-   qualitatives (X la pépite / Y le piège / Z la qualité surpayée).
-   « La leçon d'or des 3 piliers » ET le paragraphe de transition
-   « Fin du bloc Analyse fondamentale » (avec sa question « Prêt pour
-   l'examen de passage ? ») sont tous deux repliés dans le `.note` de
-   l'explanation 2 (la dernière) — décision documentée ici, plutôt
-   qu'une 3ᵉ entrée synthétique (garde `explanations.length` = 2 =
-   `questions.length`). C'est une version plus modeste de la
-   transition de fin de phase déjà vue en M04/M21.
+   Contenu du Module 20 — Graham (1/4) : le portrait de l'entreprise.
+   Premier des 4 modules du bloc Graham (M20-M23) + capstone M24 —
+   « le cœur » de la formation. Titre du .txt sans le préfixe « M20 — »
+   (déjà porté par `code`), même convention que m15/m16/m17.
+   Barème NON standard (§4 : « Graham 1a Portrait | 3 | +20 000 |
+   −5 000 ») : ici ça coïncide avec le standard Phase 3, mais reste
+   documenté car les 4 modules suivants (M21-M24) ont chacun un
+   barème différent — voir leurs commentaires respectifs.
+   Emphases *italique* à un seul astérisque du .txt (ex. « *n'achetez
+   pas une action, achetez une entreprise.* », les parenthèses
+   « (sa performance) » etc., et l'astuce de la Slide 4) : le type
+   Block ne supporte que **gras** (splitMarkup, lib/format.ts) —
+   astérisques simples retirés, texte conservé tel quel.
+   Défi = quiz à 3 questions ; chaque question a sa propre paire/
+   triplet de boutons (mécanisme M03/M14/M17/M18).
+   L'explication du .txt liste 3 puces dans un ordre différent de
+   l'ordre des questions (40 ans+actionnariat, puis 3 pays, puis
+   activité compréhensible) : réordonnées ici pour suivre Q1→Q2→Q3
+   (3 pays / 40 ans+actionnariat / activité compréhensible), aucune
+   phrase perdue ni inventée. Le paragraphe de clôture « Le portrait
+   ne remplace pas... » est replié dans le `.note` de la 3ᵉ (dernière)
+   explication, même convention que M04/M18/M19 (jamais une 4ᵉ entrée
+   synthétique — cf. `feedback.explanations.length === questions.length`).
    ============================================================= */
 export const m20: Module = {
   code: "M20",
   index: 20,
   totalModules: 28,
-  title: "Graham (4/4) : payer le juste prix (PER, PBR & la règle de Graham)",
-  phase: "Phase 3 · L'Analyse",
+  title: "Graham (1/4) : le portrait de l'entreprise",
+  phase: "Phase 4 · L'Analyse",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
-  reward: 40000,
+  reward: 20000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 20",
-    headline: "Le prix, le dernier pilier — et le plus décisif.",
+    headline: "Avant les chiffres, qui est cette entreprise ?",
     lead:
-      "Même la meilleure entreprise, achetée trop cher, peut être un mauvais placement. Avec le PER, le PBR et la règle de Graham (**PER × PBR < 22,5**), vous apprenez à payer le juste prix — et à repérer le piège de la valeur.",
+      "Vous allez apprendre à analyser comme **Benjamin Graham**, le mentor de Warren Buffett. Sa règle d'or : n'achetez pas une action, achetez une **entreprise** — et tout commence, avant même les comptes, par son **portrait**.",
     card: {
-      label: "Payer le juste prix",
-      title: "PER, PBR & la règle de Graham",
-      hint: "3 outils pour juger un prix, jamais seuls :",
+      label: "La carte d'identité de l'analyste",
+      title: "Nom, activité, actionnaires, zone, capital",
+      hint: "5 éléments à noter avant d'ouvrir les comptes :",
       rules: [
-        "**Le PER** — le nombre d'années de bénéfices pour se rembourser.",
-        "**Le PBR** — combien de fois le patrimoine de l'entreprise vous payez.",
-        "**PER × PBR < 22,5** — un plafond à ne jamais dépasser, pas un feu vert.",
+        "**Le nom, la date de création et l'activité** — que vend-elle, en une phrase ?",
+        "**Les actionnaires principaux** — qui tient le volant ?",
+        "**La zone géographique et le capital** — diversification et taille.",
       ],
     },
     objectives: [
-      "Calculer et interpréter le PER et le PBR pour juger si un prix est raisonnable.",
-      "Appliquer la règle de Graham (PER × PBR < 22,5) comme un plafond à ne jamais dépasser, pas un feu vert d'achat.",
-      "Reconnaître le piège de la valeur : une action pas chère parce que l'entreprise elle-même se dégrade.",
+      "Dresser le portrait d'une entreprise avant d'ouvrir ses comptes : activité, actionnaires, ancienneté, zone, capital.",
+      "Repérer les signaux de solidité, comme la longévité et un actionnariat de référence rassurant.",
+      "Éviter d'investir dans une entreprise dont vous ne pouvez pas résumer le métier en une phrase.",
     ],
-    cta: "Apprendre à payer le juste prix",
+    cta: "Dresser le portrait d'une entreprise",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "La meilleure entreprise peut être un mauvais achat",
+      title: "La méthode Graham",
       blocks: [
-        { kind: "text", value: "Vous avez une entreprise solide (✓), avec de l'avenir (✓). Reste le pilier décisif : **le prix**." },
-        { kind: "text", value: "Imaginez le **meilleur téléphone du monde**… vendu 500 000 FCFA alors qu'il en vaut 200 000. Même excellent, c'est une mauvaise affaire. En bourse, c'est pareil :" },
+        { kind: "lead", value: "Nous allons analyser comme **Benjamin Graham**, le « père de l'investissement dans la valeur » et le mentor de Warren Buffett. Sa règle d'or : n'achetez pas une action, achetez une entreprise." },
+        { kind: "text", value: "Avant d'acheter, il pose 3 questions, dans l'ordre :" },
         {
-          kind: "duo",
+          kind: "list",
           items: [
-            { side: "Prix payé", value: "500 000 FCFA" },
-            { side: "Valeur réelle", value: "200 000 FCFA — l'écart, c'est ce que vous payez en trop." },
+            "**Est-ce une bonne entreprise ?** (sa performance)",
+            "**Va-t-elle le rester ?** (ses perspectives)",
+            "**Le prix est-il raisonnable ?** (sa valorisation)",
           ],
         },
-        { kind: "callout", tone: "highlight", value: "« Le prix, c'est ce que vous payez. La valeur, c'est ce que vous recevez. »" },
-        { kind: "text", value: "D'où l'idée de Graham : la **marge de sécurité**. Comme un pont qu'on construit pour supporter 30 tonnes alors que les camions n'en pèsent que 10 — on se garde une marge, au cas où. On achète en dessous de la vraie valeur, pour avoir un coussin." },
+        { kind: "text", value: "Mais tout commence par une question plus simple : **qui est cette entreprise ?**" },
       ],
     },
     {
-      title: "Le PER : « en combien d'années je me rembourse ? »",
+      title: "La carte d'identité avant l'entretien",
       blocks: [
-        { kind: "text", value: "Le **PER** (Price Earning Ratio) reprend l'image de la boutique (M14) : c'est le nombre d'années de bénéfices pour récupérer votre mise." },
-        { kind: "formula", label: "PER", value: "Cours ÷ Bénéfice par action" },
+        { kind: "text", value: "On n'embauche personne — et on ne lui confie pas son argent — sans savoir qui il est. Avant les chiffres, dressez le **portrait** de l'entreprise. Les 3 premiers éléments à noter :" },
         {
-          kind: "boctable",
-          caption: "Deux PER, deux lectures",
-          columns: ["PER", "Lecture"],
-          rows: [
-            ["8", "8 ans pour se rembourser : vous payez peu, bon marché."],
-            ["25", "25 ans : très cher. Le marché parie sur une croissance énorme ; s'il se trompe, la chute fait mal."],
+          kind: "list",
+          items: [
+            "**Le nom et la date de création** — une entreprise qui existe depuis 40 ans a déjà traversé des crises et prouvé sa solidité ; une toute jeune a moins de recul.",
+            "**L'activité** — que vend-elle, concrètement ? Si vous ne pouvez pas résumer son métier en une phrase, méfiance : on ne juge bien que ce qu'on comprend.",
+            "**Les actionnaires principaux** — qui tient le volant de l'entreprise ? Un grand groupe solide ou l'État aux commandes rassurent : ce sont eux qui veillent à sa bonne gestion.",
           ],
-          highlightCols: [0],
         },
       ],
     },
     {
-      title: "Quel PER est bon ? (repères BRVM)",
+      title: "La carte d'identité (suite)",
       blocks: [
-        { kind: "text", value: "Le bon réflexe : se comparer à **la moyenne de la classe** — le PER moyen du marché, ≈ **14** (le BOC le publie)." },
         {
-          kind: "boctable",
-          caption: "Repères PER (BRVM)",
-          columns: ["PER", "Repère"],
-          rows: [
-            ["< 8", "Franchement bon marché (gare au piège de la valeur)"],
-            ["8 à 12", "Attractif"],
-            ["12 à 15", "Dans la moyenne"],
-            ["> 20", "Cher"],
+          kind: "list",
+          items: [
+            "**La zone géographique** — opère-t-elle dans un seul pays (tous ses œufs dans le même panier) ou dans plusieurs (activité plus diversifiée) ? Si un pays va mal, les autres peuvent compenser.",
+            "**Le capital** — la taille de l'entreprise et le nombre d'actions en circulation. Cela vous dit si vous avez affaire à un géant ou à une petite valeur.",
           ],
         },
       ],
     },
     {
-      title: "Le PBR : « combien de fois le patrimoine ? » 🏠",
+      title: "Où trouver le portrait ?",
       blocks: [
-        { kind: "text", value: "Autre lunette, le **PBR** (Price to Book Ratio). Le patrimoine (« actif net »), c'est tout ce que possède l'entreprise **moins ses dettes** — ce qui resterait si on vendait tout." },
-        { kind: "formula", label: "PBR", value: "Cours ÷ Patrimoine par action" },
-        { kind: "text", value: "**L'image :** achèteriez-vous une maison **3 fois le prix de ses murs** ? Le PBR, c'est ce multiple :" },
+        { kind: "text", value: "Sur la **fiche société de brvm.org**, chaque entreprise cotée a sa page d'identité. L'ouvrir, c'est votre tout premier réflexe d'analyste." },
         {
-          kind: "boctable",
-          caption: "Repères PBR",
-          columns: ["PBR", "Repère"],
-          rows: [
-            ["< 1", "Vous payez moins que le patrimoine — affaire potentielle (vérifiez pourquoi)"],
-            ["1 à 1,5", "Bon"],
-            ["1,5 à 3", "Ça devient cher"],
-            ["> 3", "Cher"],
-          ],
+          kind: "link",
+          label: "Ouvrir les fiches sociétés cotées",
+          sublabel: "brvm.org · liste des entreprises cotées",
+          href: "https://www.brvm.org/fr/emetteurs/societes-cotees",
         },
+        { kind: "text", value: "(Astuce : c'est aussi ce qu'un bon outil de suivi devrait vous afficher d'un coup d'œil.)" },
       ],
     },
     {
-      title: "La règle de Graham (et le piège) ⚠️",
+      title: "Entraînons-nous",
       blocks: [
-        { kind: "text", value: "Un placement prudent respecte :" },
-        { kind: "formula", label: "Règle de Graham", value: "PER × PBR < 22,5" },
-        { kind: "callout", tone: "warn", value: "⚠️ Mais attention (calibrage BRVM) : cette règle vient des USA des années 70. Ici, beaucoup d'actions passent facilement le filtre → **22,5 n'est PAS un feu vert d'achat**, juste un « ne payez jamais au-dessus »." },
-        { kind: "text", value: "Le vrai danger local, c'est le **piège de la valeur** : une maison pas chère… **parce qu'elle est fissurée** ; une action pas chère… **parce que l'entreprise se dégrade**. **Pas cher ≠ bonne affaire.**" },
-      ],
-    },
-    {
-      title: "La synthèse des 3 piliers",
-      blocks: [
-        { kind: "text", value: "Un prix bas ne vaut **que** s'il s'ajoute à la performance (M18) et aux perspectives (M19) :" },
-        {
-          kind: "boctable",
-          caption: "La même équation, deux résultats opposés",
-          columns: ["Prix", "Entreprise", "Résultat"],
-          rows: [
-            ["Pas cher", "Solide + bel avenir", "💎 Pépite"],
-            ["Pas cher", "Fondamentaux qui se dégradent", "🪤 Piège de la valeur"],
-          ],
-          highlightCols: [2],
-        },
-        { kind: "text", value: "👇" },
+        { kind: "lead", value: "Entraînons-nous. 👇" },
       ],
     },
   ],
@@ -166,46 +127,53 @@ export const m20: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "Le calculateur et le piège",
-    instruction: "Observez ces 3 entreprises et répondez. (1 erreur = − 10 000 FCFA.)",
-    table: {
-      caption: "Trois entreprises à évaluer",
-      columns: ["Entreprise", "PER", "PBR", "Fondamentaux"],
-      rows: [
-        ["X — Banque de l'Union", "9", "1,3", "Bénéfices en hausse, dividende régulier, secteur porteur"],
-        ["Y — Vieux-Comptoir", "5", "0,7", "Bénéfices en baisse 3 ans, dividende coupé, parts perdues"],
-        ["Z — Croissance-Tech", "24", "2,8", "Forte croissance, aucun dividende"],
+    title: "Lire la carte d'identité",
+    instruction: "Voici la fiche d'une entreprise cotée. Observez-la et répondez. (1 erreur = − 5 000 FCFA.)",
+    idcard: {
+      icon: "🏢",
+      title: "AgriBénin SA",
+      fields: [
+        { label: "Création", value: "1985 (40 ans)" },
+        { label: "Activité", value: "Production et exportation d'huile de palme et de coton" },
+        { label: "Actionnaires", value: "Groupe Agro-Ouest (55 %), État du Bénin (20 %), public (25 %)" },
+        { label: "Zone", value: "Bénin, Togo, Burkina Faso" },
+        { label: "Capital", value: "10 milliards FCFA, 2 millions d'actions" },
       ],
-      highlightCols: [1, 2],
     },
-    penaltyPerError: 10000,
-    perfectReward: 40000,
+    penaltyPerError: 5000,
+    perfectReward: 20000,
     // Recopie des options de Q1 en repli neutre (requis par le type) :
-    // Q2 a sa propre liste de boutons.
+    // chaque question a sa propre paire/triplet de boutons.
     options: [
-      { value: "xy", label: "X et Y" },
-      { value: "xyz", label: "X, Y et Z" },
-      { value: "z", label: "Seulement Z" },
-      { value: "none", label: "Aucune des trois" },
+      { value: "1", label: "1" },
+      { value: "3", label: "3" },
+      { value: "8", label: "8" },
     ],
     questions: [
       {
-        prompt: "Calculez **PER × PBR** pour les 3 entreprises. Lesquelles respectent la règle de Graham (**< 22,5**) ?",
-        answer: "xy",
+        prompt: "**Q1 :** Dans combien de pays l'entreprise est-elle présente ?",
+        answer: "3",
         options: [
-          { value: "xy", label: "X et Y" },
-          { value: "xyz", label: "X, Y et Z" },
-          { value: "z", label: "Seulement Z" },
-          { value: "none", label: "Aucune des trois" },
+          { value: "1", label: "1" },
+          { value: "3", label: "3" },
+          { value: "8", label: "8" },
         ],
       },
       {
-        prompt: "**Q2 :** Vous cherchez un placement **solide de long terme**. Laquelle achetez-vous ?",
-        answer: "x",
+        prompt: "**Q2 :** Quel élément rassure le plus sur sa **solidité** ?",
+        answer: "quarante_ans",
         options: [
-          { value: "x", label: "X" },
-          { value: "y", label: "Y (la moins chère !)" },
-          { value: "z", label: "Z" },
+          { value: "capital", label: "Son capital divisé en 2 millions d'actions." },
+          { value: "quarante_ans", label: "Ses 40 ans d'existence + un grand groupe et l'État comme actionnaires de référence." },
+          { value: "export", label: "Le fait qu'elle exporte de l'huile de palme." },
+        ],
+      },
+      {
+        prompt: "**Q3 :** Un ami vous conseille une action « qui va exploser », mais il ne sait pas expliquer ce que fait l'entreprise. Le bon réflexe ?",
+        answer: "investis_pas",
+        options: [
+          { value: "achete_quand_meme", label: "J'achète quand même, tant que ça monte." },
+          { value: "investis_pas", label: "Je n'investis pas : on n'investit que dans une entreprise dont on comprend le métier." },
         ],
       },
     ],
@@ -215,31 +183,36 @@ export const m20: Module = {
   feedback: {
     perfect: {
       icon: "🎉",
-      title: "Maître analyste ! + 40 000 FCFA sur votre portefeuille !",
-      body: "Vous avez évité les deux pièges opposés : la fausse bonne affaire et la qualité surpayée.",
+      title: "Portrait maîtrisé ! + 20 000 FCFA sur votre portefeuille !",
+      body: "Vous cadrez une entreprise avant même d'ouvrir ses comptes. Le réflexe des pros.",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! Un pilier vous a échappé (− 10 000 FCFA par erreur).",
-      body: "Reprenons le calcul et les fondamentaux.",
+      title: "Aïe ! Le portrait mérite un second regard (− 5 000 FCFA par erreur).",
+      body: "Reprenons les points clés du portrait.",
     },
     explanations: [
       {
-        verdict: "X et Y",
-        title: "Le calcul PER × PBR",
-        body: "**Le calcul :** X = 9 × 1,3 = **11,7** ✓ · Y = 5 × 0,7 = **3,5** ✓ · Z = 24 × 2,8 = **67,2** ✗.",
+        verdict: "3 pays",
+        title: "Présence dans 3 pays",
+        body: "**Présence dans 3 pays** = activité un peu diversifiée : si un pays connaît une mauvaise année, les autres compensent.",
       },
       {
-        verdict: "Entreprise X",
-        title: "X, Y et Z : la pépite, le piège, la qualité surpayée",
-        body: "**X = la pépite.** Passe le prix (11,7) **ET** solide **ET** secteur porteur. Les 3 feux au vert. **Y = le piège de la valeur.** La moins chère (3,5)… mais la maison est fissurée (bénéfices en chute, dividende coupé). Le prix bas ne compense JAMAIS une entreprise qui décline. **Z = la qualité surpayée.** À 67,2, vous payez 24 ans de bénéfices d'avance : aucune marge de sécurité.",
-        note: "**La leçon d'or des 3 piliers :** on achète quand **Performance 🟢 + Perspectives 🟢 + Prix 🟢** sont alignés. Un seul feu rouge → on passe son chemin. 🏆 **Vous savez analyser une entreprise comme un professionnel.** Performance, perspectives, prix : plus de secret. Prêt pour l'examen de passage ?",
+        verdict: "40 ans + actionnariat solide",
+        title: "Longévité et actionnariat de référence",
+        body: "**Longévité (40 ans) + actionnariat de référence solide** = une entreprise installée, au pilotage cadré. Le plus fort signal de stabilité.",
+      },
+      {
+        verdict: "Je n'investis pas",
+        title: "Comprendre le métier avant d'investir",
+        body: "**Activité compréhensible** : si vous ne comprenez pas comment l'entreprise gagne sa vie, vous ne pourrez jamais juger si elle va bien. **On n'investit jamais à l'aveugle.**",
+        note: "Le portrait ne remplace pas l'analyse des chiffres, mais il donne une **vue d'ensemble** et fait déjà remonter des signaux (bons ou mauvais).",
       },
     ],
   },
 
   next: {
-    label: "Je relève le défi final de l'analyste !",
+    label: "Je sais QUI est l'entreprise. Gagne-t-elle vraiment de l'argent ?",
     target: "Module 21",
   },
 };

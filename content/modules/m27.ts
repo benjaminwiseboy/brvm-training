@@ -12,13 +12,13 @@ import type { Module } from "@/lib/types";
    libellés diffèrent d'une question à l'autre — 3 investisseurs +
    1 question de synthèse) : les options du niveau `challenge`
    reprennent celles de Q1 en repli neutre (requis par le type
-   QuizChallenge), comme M21/M23. `feedback.explanations.length` = 4
+   QuizChallenge), comme M24/M12. `feedback.explanations.length` = 4
    = `challenge.questions.length` (1 par investisseur + la leçon
    finale, qui EST la 4ᵉ question du .txt elle-même — pas une entrée
    de clôture synthétique ajoutée en trop : c'est le .txt qui
    structure sa Q4 comme la leçon).
    Le paragraphe de clôture (« Vous maîtrisez toute la chaîne… ») est
-   replié dans le `.note` de cette 4ᵉ explication, comme M04/M21.
+   replié dans le `.note` de cette 4ᵉ explication, comme M04/M24.
    ============================================================= */
 export const m27: Module = {
   code: "M27",

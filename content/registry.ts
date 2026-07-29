@@ -68,8 +68,8 @@ export const PHASES: PhaseDef[] = [
     ],
     futureNote: "📄 Téléchargement de votre plan en PDF — bientôt disponible",
   },
-  { name: "Phase 3 · L'Analyse", badge: "🥇", codes: ["M11","M12","M13","M14","M15","M16","M17","M18","M19","M20","M21"], recap: [] },
-  { name: "Phase 4 · Passage à l'action", badge: "🥇", codes: ["M22","M23","M24"], recap: [] },
+  { name: "Phase 3 · Passage à l'action", badge: "🥇", codes: ["M11","M12","M13"], recap: [] },
+  { name: "Phase 4 · L'Analyse", badge: "🥇", codes: ["M14","M15","M16","M17","M18","M19","M20","M21","M22","M23","M24"], recap: [] },
   { name: "Phase 5 · Suivi & maîtrise", badge: "💎", codes: ["M25","M26","M27","M28"], recap: [] },
 ];
 

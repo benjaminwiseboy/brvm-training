@@ -14,7 +14,7 @@ import type { Module } from "@/lib/types";
    prompts, sans ajout ni perte (règle de non-altération du gras).
    La « leçon » de clôture (les 2 questions à se poser avant de
    vendre) est repliée dans le `.note` de la 5ᵉ (dernière)
-   explication, comme M04/M21/M25 — PAS une 6ᵉ entrée synthétique.
+   explication, comme M04/M24/M25 — PAS une 6ᵉ entrée synthétique.
    Italiques simples du .txt (*l'entreprise a-t-elle changé ?*, etc.)
    non supportées par renderMarkup : converties en texte normal.
    ============================================================= */

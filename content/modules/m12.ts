@@ -1,219 +1,112 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 12 — Le BOC avancé (1/3) : indices,
-   compartiments & secteurs.
-   Défi = quiz à 3 questions ; les données du haut du BOC (indices,
-   PER sectoriels) sont rendues en vrai tableau (champ `table`,
-   cf. revue post-lancement) plutôt que repliées en prose dans
-   `challenge.instruction`. Q1/Q2/Q3 ont chacune 3 boutons
-   déjà réels dans le .txt (pas de conversion numérique nécessaire) ;
-   options par question quand même utilisées, car les 3 paires
-   diffèrent d'une question à l'autre (précédent M03/M06/M07).
-   Le .txt ne donne pas de 2ᵉ ligne de corps pour le feedback
-   « imperfect » (seulement le titre) : un court « Reprenons. » est
-   ajouté, dans le ton terse déjà utilisé ailleurs (M06/M07), le
-   champ `body` étant requis par le type.
-   Barème Phase 3 standard (§4) : +20 000 / −5 000.
+   Contenu du Module 12 — Les OPCVM en pratique (déléguer
+   intelligemment). Phase 3 « Passage à l'action ».
+   Barème standard Phase 4 (Bareme harmonise.txt §4 : « Phase 4 —
+   Action | +20 000 | −5 000 ») : perfectReward 20000 /
+   penaltyPerError 5000 / reward 20000 — confirmé par le propre
+   texte du .txt (« + 20 000 FCFA » / « − 5 000 FCFA »).
+   Défi à 4 questions : contrairement à M21/M22 (restructuration
+   nécessaire), ici le mapping est 1:1 — le .txt liste ses 4
+   réponses attendues dans le même ordre (Q1 VL, Q2 catégorie/profil,
+   Q3 frais, Q4 performance passée) ET son explication détaillée a
+   exactement 4 puces dans le même ordre. Aucune fusion ni
+   éclatement nécessaire : `feedback.explanations.length` = 4 =
+   `challenge.questions.length`.
+   Chaque question a son propre jeu de boutons (options par
+   question) car les libellés diffèrent d'une question à l'autre ;
+   les options du niveau `challenge` reprennent celles de Q1 en
+   repli neutre (requis par le type QuizChallenge), comme M21/M24.
    ============================================================= */
 export const m12: Module = {
   code: "M12",
   index: 12,
   totalModules: 28,
-  title: "Le BOC avancé (1/3) : indices, compartiments & secteurs",
-  phase: "Phase 3 · L'Analyse",
+  title: "Les OPCVM en pratique (déléguer intelligemment)",
+  phase: "Phase 3 · Passage à l'action",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
   reward: 20000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 12",
-    headline: "La météo du marché, en un coup d'œil.",
+    headline: "Le pilote automatique de la bourse.",
     lead:
-      "Avant de choisir une action, un investisseur avisé regarde d'abord le haut du BOC : les **indices**. Ce sont les « notes moyennes » qui résument, en un seul chiffre, comment se porte le marché — ou une famille d'entreprises.",
+      "Souvenez-vous de Seydou, le chirurgien pressé (M04). Sa solution, c'est l'**OPCVM** : un panier de titres géré par des professionnels. Vous achetez une **part** du panier, et la diversification comme le suivi sont faits pour vous — moyennant des frais, et un vrai abandon de contrôle.",
     card: {
-      label: "Le bulletin météo du marché",
-      title: "Indices, compartiments, secteurs",
-      hint: "3 repères pour situer une action dans son contexte :",
+      label: "Ce qu'il faut savoir avant de déléguer",
+      title: "VL, catégories, frais",
+      hint: "Trois choses à maîtriser pour choisir un fonds :",
       rules: [
-        "**Les indices** — Composite, BRVM 30, Prestige : la « note moyenne » d'un groupe d'entreprises.",
-        "**Les compartiments** — Prestige, Principal, Croissance : le classement par taille et solidité.",
-        "**Les secteurs** — 7 familles de métiers, chacune avec sa propre norme (PER, rendement…).",
+        "**La Valeur Liquidative (VL)** — le prix d'une part, votre thermomètre de performance.",
+        "**La catégorie** — Actions, Obligations, Diversifié, Monétaire : le niveau de risque du panier.",
+        "**Les frais** — entrée/sortie visibles, frais de gestion déjà inclus dans la VL.",
       ],
     },
     objectives: [
-      "Comprendre ce que mesure un indice boursier, et lire les niveaux du Composite, du BRVM 30 et du Prestige.",
-      "Distinguer les 3 compartiments (Prestige, Principal, Croissance) et les 7 secteurs de la cote.",
-      "Se servir de l'indice comme d'un thermomètre du marché et comme d'un bulletin de notes pour votre propre portefeuille.",
+      "Lire une fiche OPCVM au BOC (Valeur Liquidative, catégorie, frais) et savoir ce qu'elle indique vraiment.",
+      "Choisir la catégorie de fonds (Actions, Obligations, Diversifié, Monétaire) adaptée à votre profil de risque.",
+      "Comprendre ce que vous déléguez, et ce que vous perdez en contrôle, en investissant via un OPCVM.",
     ],
-    cta: "Regarder la météo du marché",
+    cta: "Découvrir les OPCVM",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "D'abord, regarder la météo",
+      title: "Le pilote automatique de la bourse",
       blocks: [
-        { kind: "text", value: "Avant de choisir une action précise, un investisseur avisé jette un œil au **haut du BOC**. C'est comme un marin : avant de sortir en mer, il regarde d'abord si la mer est calme ou agitée." },
-        { kind: "text", value: "Ce « bulletin météo » du marché, ce sont les **indices**. Voici, inspiré d'un vrai BOC, ce qu'on y trouve : les indices, les compartiments et les secteurs. Pas de panique — on décortique chaque tableau juste après." },
-        {
-          kind: "boctable",
-          caption: "Les indices (inspiré d'un vrai BOC)",
-          columns: ["Indice", "Niveau", "Var. annuelle"],
-          rows: [
-            ["BRVM Composite", "478,53", "+38,40 %"],
-            ["BRVM 30", "227,70", "+36,97 %"],
-            ["BRVM Prestige", "175,04", "+21,34 %"],
-          ],
-        },
-        {
-          kind: "boctable",
-          caption: "Les compartiments",
-          columns: ["Compartiment", "Nb de sociétés", "Niveau"],
-          rows: [
-            ["BRVM-Prestige", "12", "175,04"],
-            ["BRVM-Principal", "35", "362,87"],
-          ],
-        },
-        {
-          kind: "boctable",
-          caption: "Les secteurs (PER moyen)",
-          columns: ["Secteur", "PER moyen"],
-          rows: [
-            ["Télécommunications", "10,72"],
-            ["Consommation Discrétionnaire", "38,58"],
-            ["Services Financiers", "15,61"],
-            ["Consommation de Base", "10,31"],
-            ["Industriels", "23,11"],
-            ["Énergie", "18,27"],
-            ["Services Publics", "20,91"],
-          ],
-        },
+        { kind: "text", value: "Souvenez-vous de Seydou, le chirurgien pressé (M04). Sa solution, c'est l'**OPCVM** : un panier de titres géré par des professionnels (une SGO, Société de Gestion d'OPCVM). Vous achetez une **part** du panier, et la diversification comme le suivi sont faits pour vous." },
       ],
     },
     {
-      title: "Un indice, c'est quoi ? La note moyenne de la classe 🎓",
-      blocks: [
-        { kind: "text", value: "Imaginez une classe de 47 élèves. Plutôt que de regarder la note de chaque élève une par une, le maître calcule **la moyenne de la classe** : un seul chiffre qui résume comment tout le monde s'en sort." },
-        { kind: "text", value: "Un **indice boursier**, c'est exactement ça. Au lieu de suivre les 47 entreprises de la BRVM une par une, on calcule leur **« note moyenne »**. Si cette moyenne monte, c'est que, dans l'ensemble, les entreprises se portent bien." },
-        { kind: "text", value: "Le **BRVM Composite**, c'est la note moyenne de **toutes** les entreprises cotées." },
-      ],
-    },
-    {
-      title: "Trois « moyennes » plutôt qu'une",
-      blocks: [
-        { kind: "text", value: "La BRVM calcule trois notes moyennes, pour trois groupes différents :" },
-        {
-          kind: "list",
-          items: [
-            "**BRVM Composite (478)** — la moyenne de **TOUTE la classe** (toutes les entreprises).",
-            "**BRVM 30 (228)** — la moyenne des **30 élèves les plus actifs** (les 30 actions les plus échangées). Un baromètre plus stable, centré sur les grandes entreprises.",
-            "**BRVM Prestige (175)** — la moyenne de **l'élite** : les entreprises du compartiment le plus exigeant.",
-          ],
-        },
-        {
-          kind: "boctable",
-          caption: "Exemple réel de ce qu'on retrouve en haut du BOC",
-          columns: ["Indice", "Niveau"],
-          rows: [
-            ["BRVM Composite", "478"],
-            ["BRVM 30", "228"],
-            ["BRVM Prestige", "175"],
-          ],
-        },
-      ],
-    },
-    {
-      title: "Pourquoi l'indice affiche « 478 » ? Le point de départ",
-      blocks: [
-        { kind: "text", value: "Le jour où l'on crée un indice, on décide de mettre le compteur à **100** — comme le **kilomètre zéro** au départ d'une route." },
-        { kind: "text", value: "Dans notre exemple, le Composite affiche **478**. La traduction est toute simple : ce qui valait **100** au départ vaut, dans cet exemple, **478**. Donc le marché a été **multiplié par presque 5** depuis le début." },
-        { kind: "text", value: "Autre image : au départ, un panier contenant un petit morceau de chaque entreprise coûtait **100 FCFA**. Dans cet exemple, le même panier coûte **478 FCFA**." },
-        { kind: "callout", tone: "highlight", value: "👉 Mais au quotidien, le chiffre exact compte peu. Ce qu'on regarde, c'est **de combien il a bougé** : **+38,40 % sur l'année**, ça veut dire que « la classe » a gagné 38 % en moyenne cette année." },
-      ],
-    },
-    {
-      title: "Compartiments & secteurs : deux façons de ranger",
-      blocks: [
-        { kind: "text", value: "On range aussi les entreprises comme dans un championnat de foot et un annuaire des métiers :" },
-        { kind: "text", value: "Par **compartiment** (comme les divisions d'un championnat) :" },
-        {
-          kind: "list",
-          items: [
-            "**Prestige** — la première division : les 12 plus grands « clubs », les plus solides et les plus suivis. Pour débuter, plutôt rassurant.",
-            "**Principal** — les 35 « clubs » suivants.",
-            "**Croissance** — les jeunes « clubs » qui montent.",
-          ],
-        },
-        { kind: "text", value: "Par **secteur** (comme les familles de métiers), 7 en tout :" },
-        {
-          kind: "countries",
-          items: ["Télécoms", "Services Financiers", "Consommation Discrétionnaire", "Consommation de Base", "Industriels", "Énergie", "Services Publics"],
-        },
-        { kind: "text", value: "Chaque famille a sa propre note moyenne → vous voyez tout de suite **quel métier a le vent en poupe**." },
-        {
-          kind: "boctable",
-          caption: "Extrait du BOC · indices par compartiment",
-          columns: ["Compartiment", "Nb de sociétés", "Niveau"],
-          rows: [
-            ["BRVM-Prestige", "12", "175,04"],
-            ["BRVM-Principal", "35", "362,87"],
-          ],
-        },
-        {
-          kind: "boctable",
-          caption: "Extrait du BOC · indices sectoriels (PER moyen)",
-          columns: ["Secteur", "PER moyen"],
-          rows: [
-            ["Télécommunications", "10,72"],
-            ["Consommation Discrétionnaire", "38,58"],
-            ["Services Financiers", "15,61"],
-            ["Consommation de Base", "10,31"],
-            ["Industriels", "23,11"],
-            ["Énergie", "18,27"],
-            ["Services Publics", "20,91"],
-          ],
-        },
-      ],
-    },
-    {
-      title: "À quoi ça sert ? Le thermomètre et le bulletin de notes",
+      title: "Les 3 façons d'investir en bourse",
       blocks: [
         {
           kind: "list",
           items: [
-            "**Le thermomètre** : le marché est-il de bonne humeur aujourd'hui ? S'il baisse en général, pas étonnant que VOS actions baissent aussi — elles suivent souvent le mouvement du groupe.",
-            "**Le bulletin de notes (le juge de vos résultats)** : avez-vous fait mieux ou moins bien que « la classe » ? Exemple : vous avez gagné **+25 %** cette année — bravo ! Mais si la moyenne de la classe (le Composite) a fait **+38 %**, vous êtes **en dessous de la moyenne**. Vous auriez gagné plus en achetant simplement « toute la classe » (un fonds qui copie l'indice).",
+            "**Gestion libre** — vous choisissez vous-même chaque action (ce qu'on apprendra à faire un peu plus loin dans la formation).",
+            "**Gestion sous mandat** — vous avez un portefeuille à votre nom, mais c'est la SGI qui le gère pour vous, selon un mandat.",
+            "**Gestion collective (l'OPCVM)** — pas de portefeuille à votre nom : vous achetez des **parts** d'un panier commun à des milliers d'épargnants. C'est notre sujet ici.",
           ],
         },
       ],
     },
     {
-      title: "Le secret des dividendes : l'arbre ET les fruits 🍎",
+      title: "La Valeur Liquidative (VL)",
       blocks: [
-        { kind: "text", value: "Le BOC affiche deux versions de l'indice :" },
+        { kind: "text", value: "C'est LE chiffre à connaître : la **Valeur Liquidative**, c'est le **prix d'une part** du fonds. Vous achetez et vendez à ce prix." },
+        { kind: "text", value: "Elle est recalculée régulièrement : quand le panier prend de la valeur, la VL monte ; quand il baisse, elle baisse. C'est votre thermomètre de performance." },
+      ],
+    },
+    {
+      title: "Les catégories : que contient le panier ?",
+      blocks: [
+        { kind: "text", value: "Le BOC classe chaque fonds par catégorie, ce qui indique son niveau de risque. À vous de choisir selon votre profil (M05) :" },
         {
           kind: "list",
           items: [
-            "Le **Composite** (+38,40 %) — il ne compte que la hausse des **prix** : l'arbre qui grandit.",
-            "Le **Composite Total Return** (+42,69 %) — il compte **en plus** les **dividendes** : les fruits que vous avez récoltés en chemin.",
+            "**A (Actions)** — investit surtout en actions : **potentiel élevé, mais volatil**. Pour les profils audacieux.",
+            "**OMLT / OCT (Obligations)** — investit en obligations (moyen/long ou court terme) : **plus sûr et régulier**. Pour les prudents.",
+            "**D (Diversifié)** — un mélange d'actions et d'obligations : **équilibré**.",
+            "**M (Monétaire)** — placements très courts, quasi-cash : **très sûr, faible rendement** (pour « garer » de l'argent en attendant).",
+            "**C (Contractuel)** — rendement encadré par une formule définie à l'avance.",
           ],
         },
-        { kind: "text", value: "L'écart (~4 points) montre qu'à la BRVM, les fruits (dividendes) comptent presque autant que la croissance de l'arbre. Ne les oubliez jamais." },
-        {
-          kind: "boctable",
-          caption: "Ce que dit l'encart ci-dessous, visualisé",
-          columns: ["Indicateur", "Valeur"],
-          rows: [
-            ["BRVM Composite (prix seuls)", "+38,40 %/an"],
-            ["BRVM Composite Total Return (prix + dividendes)", "+42,69 %/an"],
-            ["PER moyen du marché", "≈ 14"],
-            ["Rendement moyen du marché", "≈ 6 %"],
-          ],
-          highlightCols: [1],
-        },
-        { kind: "text", value: "Sur le tableau des secteurs vu plus tôt, l'info qui compte vraiment pour juger un secteur, c'est son **PER**. PER veut dire **Price Earning Ratio** (« cours sur bénéfice ») : plus il est bas, moins vous payez cher pour chaque FCFA de bénéfice de l'entreprise. On le détaille en profondeur au **module 14**, puis on s'en sert pour calculer un juste prix au **module 20** (avec Graham)." },
-        { kind: "callout", tone: "info", value: "(Tout en bas du BOC, un dernier repère utile : le rendement moyen du marché ≈ 6 %. Le reste, ce sont des outils de pros : ignorez-les pour l'instant.) 👇" },
+      ],
+    },
+    {
+      title: "Les frais (simples)",
+      blocks: [
+        { kind: "text", value: "Vous payez des **frais d'entrée** (à la souscription) et de **sortie** (au rachat) — par ex. 1 % à l'entrée. Entre les deux, rien de visible : les **frais de gestion** des professionnels sont prélevés **à l'intérieur du fonds** (déjà reflétés dans la VL). C'est plus lisible que la gestion directe (transactions + droits de garde)." },
+      ],
+    },
+    {
+      title: "⚠️ La contrepartie : vous déléguez le contrôle",
+      blocks: [
+        { kind: "text", value: "Vous ne décidez pas des choix du fonds. Un gérant peut se tromper : un fonds **peut sous-performer, voire mal tourner** (ça s'est déjà vu à la BRVM, avec des fonds en difficulté pour rembourser leurs porteurs)." },
+        { kind: "text", value: "L'OPCVM n'est donc **pas** sans risque — regardez le sérieux et l'historique du gérant, et diversifiez. 👇" },
       ],
     },
   ],
@@ -222,55 +115,52 @@ export const m12: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "Lire le tableau de bord",
-    instruction: "Observez ce tableau de bord inspiré du BOC et répondez. (1 erreur = − 5 000 FCFA.)",
-    table: {
-      caption: "Tableau de bord du marché (inspiré du BOC)",
-      columns: ["Indicateur", "Valeur"],
-      rows: [
-        ["BRVM Composite", "+38,40 %/an"],
-        ["BRVM Composite Total Return", "+42,69 %/an"],
-        ["PER — Consommation de Base", "10,31"],
-        ["PER — Services Financiers", "15,61"],
-        ["PER — Consommation Discrétionnaire", "38,58"],
-      ],
-    },
+    title: "Choisir le bon fonds",
+    instruction:
+      "Extrait de la page OPCVM du BOC. **FCP Croissance Actions** | Catégorie A | VL 15 300 FCFA | +205 % depuis 2016. **FCP Sérénité Obligations** | Catégorie OMLT | VL 13 200 FCFA | +38 % depuis 2018. **FCP Diversifié Équilibre** | Catégorie D | VL 24 000 FCFA | +140 % depuis 2017. **FCP Trésorerie** | Catégorie M (monétaire) | VL 10 700 FCFA | +7 %. (1 erreur = − 5 000 FCFA.)",
     penaltyPerError: 5000,
     perfectReward: 20000,
     // Recopie des options de Q1 en repli neutre (requis par le type) :
-    // chaque question a sa propre paire/triplet de boutons, verbatim
-    // depuis le .txt source.
+    // chaque question a sa propre liste de boutons.
     options: [
-      { value: "battu", label: "J'ai battu le marché." },
-      { value: "sous", label: "J'ai bien gagné, mais moins que la moyenne de la classe (sous-performance)." },
-      { value: "perdu", label: "J'ai perdu de l'argent." },
+      { value: "prix_part", label: "Le prix d'une part du fonds." },
+      { value: "benefice", label: "Le bénéfice annuel." },
+      { value: "frais", label: "Les frais." },
     ],
     questions: [
       {
-        prompt: "Le Composite (la note moyenne de la classe) a fait **+38,40 %** sur l'année. Votre portefeuille : **+25 %**. Conclusion ?",
-        answer: "sous",
+        prompt: "**Q1 :** Que représente la « Valeur Liquidative » de 15 300 FCFA ?",
+        answer: "prix_part",
         options: [
-          { value: "battu", label: "J'ai battu le marché." },
-          { value: "sous", label: "J'ai bien gagné, mais moins que la moyenne de la classe (sous-performance)." },
-          { value: "perdu", label: "J'ai perdu de l'argent." },
+          { value: "prix_part", label: "Le prix d'une part du fonds." },
+          { value: "benefice", label: "Le bénéfice annuel." },
+          { value: "frais", label: "Les frais." },
         ],
       },
       {
-        prompt: "Pourquoi le « Total Return » (+42,69 %) dépasse-t-il le Composite (+38,40 %) ?",
-        answer: "dividendes",
+        prompt: "**Q2 :** Awa est **prudente** (éviter les grosses secousses). Quel fonds ?",
+        answer: "serenite",
         options: [
-          { value: "erreur", label: "Une erreur de la BRVM." },
-          { value: "dividendes", label: "Il compte aussi les dividendes (les fruits), pas seulement la hausse des prix (l'arbre)." },
-          { value: "grandes", label: "Il ne compte que les grandes entreprises." },
+          { value: "croissance", label: "FCP Croissance Actions" },
+          { value: "serenite", label: "FCP Sérénité Obligations" },
+          { value: "peu_importe", label: "N'importe lequel." },
         ],
       },
       {
-        prompt: "D'après les PER, quel secteur est le plus **cher** ?",
-        answer: "conso_discretionnaire",
+        prompt: "**Q3 :** Le principal coût quand on délègue à un OPCVM ?",
+        answer: "gestion",
         options: [
-          { value: "conso_base", label: "Conso de Base (10,31)" },
-          { value: "services_financiers", label: "Services Financiers (15,61)" },
-          { value: "conso_discretionnaire", label: "Conso Discrétionnaire (38,58)" },
+          { value: "gratuit", label: "Aucun, c'est gratuit." },
+          { value: "gestion", label: "Des frais de gestion." },
+          { value: "impot", label: "Un impôt de 50 %." },
+        ],
+      },
+      {
+        prompt: "**Q4 :** Le FCP Actions affiche **+205 % depuis 2016**. Conclusion ?",
+        answer: "pas_garantie",
+        options: [
+          { value: "garanti", label: "Garanti de refaire +205 %." },
+          { value: "pas_garantie", label: "Belle performance passée, mais pas une garantie pour l'avenir." },
         ],
       },
     ],
@@ -280,35 +170,40 @@ export const m12: Module = {
   feedback: {
     perfect: {
       icon: "🎉",
-      title: "Vue d'ensemble maîtrisée ! + 20 000 FCFA sur votre portefeuille !",
-      body: "Vous lisez le marché entier d'un coup d'œil, et vous savez vous comparer à la moyenne de la classe.",
+      title: "Conseiller en fonds confirmé ! + 20 000 FCFA sur votre portefeuille !",
+      body: "Vous savez lire un OPCVM et le relier à un profil.",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! Le tableau de bord mérite un second regard (− 5 000 FCFA par erreur).",
-      body: "Reprenons.",
+      title: "Aïe ! Un fonds mal choisi (− 5 000 FCFA par erreur).",
+      body: "Reprenons la lecture des 4 fonds.",
     },
     explanations: [
       {
-        verdict: "Sous-performance",
-        title: "Le benchmark, votre bulletin de notes.",
-        body: "+25 %, c'est bien… mais la classe a fait +38,40 %. Vous êtes donc **sous la moyenne** : suivre toute la classe aurait rapporté plus. On se compare TOUJOURS à l'indice.",
+        verdict: "Le prix d'une part",
+        title: "La VL",
+        body: "**La VL** = le prix d'une part (elle monte quand le panier prend de la valeur).",
       },
       {
-        verdict: "Les dividendes (les fruits)",
-        title: "L'arbre ET les fruits.",
-        body: "L'écart entre +42,69 % et +38,40 %, ce sont les dividendes (les fruits récoltés). À la BRVM, ils font une grosse part de l'enrichissement.",
+        verdict: "Sérénité Obligations",
+        title: "La catégorie doit coller au profil",
+        body: "Awa prudente → **Sérénité Obligations**. Le FCP Actions (+205 %) est tentant, mais il monte ET descend fort. On ne choisit jamais un fonds sur sa seule performance, mais sur l'adéquation au profil (M05).",
       },
       {
-        verdict: "Conso Discrétionnaire",
-        title: "Chaque famille de métier a sa norme.",
-        body: "La Conso Discrétionnaire (PER 38,58) est bien plus chère que les Services Financiers (15,61). On compare toujours une action à **sa famille (son secteur) et à la moyenne du marché (≈ 14)**.",
+        verdict: "Des frais de gestion",
+        title: "Le coût de la délégation",
+        body: "**Les frais** rémunèrent les pros qui gèrent à votre place : le compromis de la délégation.",
+      },
+      {
+        verdict: "Passé ≠ futur",
+        title: "La performance passée n'est pas une promesse",
+        body: "Regardez-la sur la durée comme un indice de sérieux, jamais comme une garantie.",
       },
     ],
   },
 
   next: {
-    label: "Je connais le marché. Zoomons sur UNE ligne d'action.",
+    label: "Je sais déléguer ! Mais si j'achète moi-même, comment passer un ordre ?",
     target: "Module 13",
   },
 };

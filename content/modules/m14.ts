@@ -1,152 +1,124 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 14 — Le BOC avancé (3/3) : les colonnes de
-   l'analyste.
-   Défi = quiz à 3 questions. Q1 (3 boutons) et Q2 (2 boutons)
-   reprennent verbatim les boutons déjà réels du .txt. Q3 était un
-   [Champ de saisie] libre (« ____ % ») dans la source : converti
-   en QCM avec des distracteurs d'ordre de grandeur plausibles
-   (0,6 % / 6 % / 60 %), même logique que la conversion numérique
-   de M03 (Task 14) — décision explicite du brief de cette tâche.
-   Formules entre backticks du .txt (`PER = …`, `Rendement = …`,
-   `capitalisation = …`) converties en **gras** dans le texte des
-   slides, comme dans m08.ts (`CMP = …`).
+   Contenu du Module 14 — Lire le BOC : l'essentiel.
+   Première étape de la Phase 4 « L'Analyse ». Défi = quiz à 3
+   questions ; le .txt source décrit une interaction « clic sur la
+   bonne case du tableau, sinon un QCM » — on prend le repli QCM
+   explicitement prévu par la source, avec pour distracteurs les
+   AUTRES valeurs de la même colonne du tableau du BOC (mêmes
+   3 lignes SNTS/BOAC/CIE pour les 3 questions) → chaque question a
+   sa propre paire d'options (mécanisme M03/M06/M07). Le tableau du
+   BOC (Section 2 du .txt) est rendu en vrai tableau HTML (kind
+   "boctable" côté slide, champ `table` côté défi) — cf. revue
+   post-lancement : plus de valeurs repliées en prose.
    Barème Phase 3 standard (§4) : +20 000 / −5 000.
    ============================================================= */
 export const m14: Module = {
   code: "M14",
   index: 14,
   totalModules: 28,
-  title: "Le BOC avancé (3/3) : les colonnes de l'analyste",
-  phase: "Phase 3 · L'Analyse",
+  title: "Lire le BOC : l'essentiel",
+  phase: "Phase 4 · L'Analyse",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
   reward: 20000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 14",
-    headline: "Le BOC calcule déjà l'analyse pour vous.",
+    headline: "Le grand tableau d'affichage de la bourse.",
     lead:
-      "PER, rendement net, dividende, capitalisation : ces colonnes ont l'air techniques, mais chacune se lit avec une image du quotidien — une boutique, un loyer, un verger, un supermarché.",
+      "Le BOC (Bulletin Officiel de la Cote) ressemble à un tableau vertigineux de chiffres. Bonne nouvelle : pour investir sereinement, **3 colonnes suffisent** — le prix, l'affluence, le loyer.",
     card: {
-      label: "Les 3 colonnes de l'analyste",
-      title: "PER, rendement, capitalisation",
-      hint: "3 indicateurs déjà calculés pour vous, à lire simplement :",
+      label: "Vos 3 réflexes de lecture",
+      title: "Prix, affluence, loyer",
+      hint: "Ignorez les dizaines d'autres colonnes, concentrez-vous sur :",
       rules: [
-        "**Le PER** — en combien d'années votre « boutique » se rembourse.",
-        "**Le rendement net** — le « loyer » que l'action vous verse chaque année.",
-        "**La capitalisation** — la taille de l'entreprise : géant ou petite boutique ?",
+        "**Le prix (cours de clôture)** — ce que vous paierez si vous achetez demain.",
+        "**L'affluence (volume)** — combien de titres s'échangent, pour savoir si vous pourrez revendre.",
+        "**Le loyer (dividende)** — combien l'action vous versera, et à quelle date.",
       ],
     },
     objectives: [
-      "Calculer et interpréter le PER : plus il est bas, plus vite vous récupérez votre mise.",
-      "Lire le rendement net comme le « loyer » annuel d'une action, et repérer la date de détachement du dividende.",
-      "Comprendre ce que mesure la capitalisation boursière et pourquoi elle indique la taille d'une entreprise.",
+      "Reconnaître la structure d'un extrait du BOC, sans paniquer devant le nombre de colonnes.",
+      "Repérer les 3 colonnes essentielles pour débuter : le prix, le volume, le dividende.",
+      "Lire une ligne réelle du bulletin et en tirer une décision concrète.",
     ],
-    cta: "Lire le BOC comme un analyste",
+    cta: "Ouvrir le grand tableau d'affichage",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "Le BOC vous mâche le travail",
+      title: "Le BOC, le grand tableau d'affichage",
       blocks: [
-        { kind: "text", value: "Vous savez lire les prix et les mouvements. Encore mieux : le BOC calcule pour vous certains **indicateurs d'analyste**. Voyons les 3 colonnes qui vous aident vraiment à décider — avec, à chaque fois, une image simple du quotidien. Voici un exemple réel, qu'on décortique colonne par colonne :" },
         {
-          kind: "boctable",
-          caption: "Colonnes d'analyse de Sonatel (données réelles)",
-          columns: ["PER", "Rendement net", "Dernier dividende", "Date de paiement"],
-          rows: [["7,74", "5,44 %", "1 740 FCFA", "26/05/2026"]],
+          kind: "text",
+          value:
+            "Le **BOC** (Bulletin Officiel de la Cote) est le document officiel que la BRVM publie chaque soir de bourse. Voyez-le comme le **grand tableau d'affichage** de la bourse : tout ce qui s'est passé dans la journée y est écrit — les prix, les quantités échangées, les dividendes à venir. C'est là qu'on va chercher l'info avant d'acheter.",
+        },
+        {
+          kind: "download",
+          label: "Télécharger un vrai BOC (PDF)",
+          sublabel: "Bulletin officiel de la BRVM du 17/07/2026 · 19 pages",
+          href: "/docs/boc-exemple-brvm.pdf",
         },
       ],
     },
     {
-      title: "Le PER : « en combien d'années je récupère ma mise ? »",
+      title: "Voici à quoi ressemble un extrait du BOC",
       blocks: [
-        { kind: "text", value: "**L'image :** imaginez que vous achetez une **boutique**. Elle vous coûte 8 millions et rapporte 1 million de bénéfice par an. En combien d'années votre boutique se rembourse-t-elle ? **8 ans.** Ce chiffre « 8 », c'est le PER." },
-        { kind: "text", value: "Pour une action, la formule est la même idée :" },
-        { kind: "formula", label: "PER", value: "Cours ÷ Bénéfice par action" },
-        { kind: "text", value: "Plus il est **bas**, plus vite vous « récupérez votre mise » — donc moins l'action est chère." },
-        { kind: "text", value: "**Exemple réel :**" },
+        { kind: "text", value: "Avant d'aller plus loin, regardons un vrai extrait (données fictives, structure réelle) — trois lignes, avec les colonnes qu'on va apprendre à lire ensemble :" },
         {
           kind: "boctable",
-          caption: "PER · plus c'est bas, moins c'est cher",
-          columns: ["Action", "PER", "Lecture"],
+          caption: "Extrait du BOC · séance du jour (données fictives, structure réelle)",
+          columns: ["Valeur", "Cours clôture", "Volume", "Dividende net", "Date paiement"],
           rows: [
-            ["Sonatel", "7,74", "≈ 8 ans pour se rembourser"],
-            ["Ecobank", "3,56", "Bon marché"],
-            ["Moyenne du marché", "≈ 14", "Repère"],
-          ],
-          highlightCols: [1],
-        },
-        { kind: "text", value: "Une action à PER 30 mettrait 30 ans à se rembourser : beaucoup plus chère." },
-      ],
-    },
-    {
-      title: "Le rendement net : le « loyer » de votre action 🏠",
-      blocks: [
-        { kind: "text", value: "**L'image :** vous achetez un appartement 10 millions, et il vous rapporte 600 000 FCFA de loyer par an. Votre rendement = 600 000 ÷ 10 000 000 = **6 %**." },
-        { kind: "text", value: "Pour une action, c'est exactement pareil :" },
-        { kind: "formula", label: "Rendement net", value: "Dividende ÷ Cours" },
-        { kind: "text", value: "C'est le « loyer » que l'action vous verse chaque année, en pourcentage de son prix." },
-        { kind: "text", value: "**Exemple réel :**" },
-        {
-          kind: "boctable",
-          caption: "Rendement net · le « loyer » annuel de l'action",
-          columns: ["Action", "Rendement net"],
-          rows: [
-            ["Sonatel", "5,44 %"],
-            ["BOA Côte d'Ivoire", "6,13 %"],
-          ],
-          highlightCols: [1],
-        },
-        { kind: "text", value: "À la BRVM, un bon « loyer » se situe souvent entre **6 et 10 %** — bien mieux qu'un livret d'épargne." },
-      ],
-    },
-    {
-      title: "Le dividende & la date de détachement ⚠️",
-      blocks: [
-        { kind: "text", value: "Le BOC affiche le **dernier dividende versé** et sa date, et une page « Opérations en cours » annonce les prochains versements :" },
-        {
-          kind: "boctable",
-          caption: "Extrait du BOC · dividendes",
-          columns: ["Émetteur", "Dividende net", "Date", "Statut"],
-          rows: [
-            ["Sonatel", "1 740 FCFA", "26/05/2026", "Déjà versé"],
-            ["Solibra", "2 127 FCFA", "30/07/2026", "À venir"],
-            ["CIE Côte d'Ivoire", "234 FCFA", "28/07/2026", "À venir"],
+            ["SNTS — SONATEL SÉNÉGAL", "18 500", "45 200", "1 500", "15/05/2026"],
+            ["BOAC — BOA CÔTE D'IVOIRE", "6 200", "12 000", "620", "22/04/2026"],
+            ["CIE — CIE CÔTE D'IVOIRE", "1 950", "3 500", "250", "10/06/2026"],
           ],
         },
-        { kind: "callout", tone: "warn", value: "**Le piège à connaître :** vous ne touchez le dividende **que si vous détenez l'action AVANT sa date de détachement**. L'acheter le lendemain, c'est comme arriver au verger **après** la récolte : les fruits sont déjà partis." },
-        { kind: "callout", tone: "info", value: "💡 Le montant affiché est **net** : l'impôt (IRVM, ~12 %) est déjà prélevé — le cash arrive propre sur votre compte." },
+        { kind: "text", value: "Impressionnant ? Gardez cet extrait en tête : dans les slides suivantes, on décortique une colonne à la fois." },
       ],
     },
     {
-      title: "La capitalisation : géant ou petite boutique ?",
+      title: "Un tableau qui fait peur ? Pas grave",
       blocks: [
-        { kind: "text", value: "**En clair :** c'est la valeur de toute l'entreprise en bourse — autrement dit, sa **taille**." },
-        { kind: "formula", label: "Capitalisation boursière", value: "Cours de l'action × Nombre d'actions" },
-        { kind: "text", value: "**L'image :** c'est la différence entre une **grande chaîne de supermarchés** (grosse capitalisation : solide, facile à acheter et à revendre) et une **petite boutique de quartier** (petite capitalisation : plus fragile, parfois difficile à revendre)." },
-        { kind: "text", value: "**Exemple (chiffres fictifs) :**" },
-        {
-          kind: "boctable",
-          caption: "Capitalisation · un exemple",
-          columns: ["Élément", "Valeur"],
-          rows: [
-            ["Cours de l'action", "10 000 FCFA"],
-            ["Nombre d'actions en circulation", "1 000 000"],
-            ["Capitalisation boursière", "10 000 000 000 FCFA"],
-          ],
-          highlightCols: [1],
-        },
-        { kind: "text", value: "**À noter :** le BOC affiche surtout la capitalisation **de tout le marché** (18 434 milliards de FCFA au 17/07/2026) ; pour une société précise, vous la calculez vous-même." },
+        { kind: "text", value: "À première vue, le BOC ressemble à un immense tableau de chiffres, avec des dizaines de colonnes — de quoi donner le vertige." },
+        { kind: "text", value: "Rassurez-vous : c'est comme un journal. Personne ne lit toutes les pages ! Pour investir tranquillement, **3 colonnes suffisent**. On les regarde une par une." },
       ],
     },
     {
-      title: "À vous de lire l'analyste 👇",
+      title: "Colonne 1 : le prix (le cours de clôture) 💵",
       blocks: [
-        { kind: "lead", value: "À vous de lire l'analyste. 👇" },
+        { kind: "text", value: "**En clair :** c'est le prix affiché sur « l'étiquette » de l'action à la fermeture — le dernier prix auquel elle s'est vendue dans la journée." },
+        { kind: "text", value: "**Pourquoi ça compte :** c'est ce que vous paierez, ou presque, si vous achetez demain." },
+        { kind: "text", value: "**Exemple :** BOA Côte d'Ivoire a fini la journée à **6 200 FCFA**. Vous voulez 10 actions ? Prévoyez environ **62 000 FCFA** (avant les frais)." },
+      ],
+    },
+    {
+      title: "Colonne 2 : le volume (y a-t-il foule ?) 🔄",
+      blocks: [
+        { kind: "text", value: "**En clair :** le volume, c'est le nombre d'actions qui ont changé de main dans la journée. Une image simple : c'est **l'affluence du marché**." },
+        { kind: "text", value: "**Pourquoi ça compte :** dans un marché **animé** (beaucoup de monde), vous trouvez toujours quelqu'un pour vous vendre une action ou vous racheter la vôtre. Dans un marché **désert**, vous risquez de rester planté : personne pour reprendre vos titres le jour où vous voudrez sortir." },
+        { kind: "text", value: "**Exemple :** Sonatel a échangé **45 200 titres** aujourd'hui — la foule des grands jours, vous entrez et sortez quand vous voulez. Une action qui n'échange que 5 titres par jour, elle, est à éviter pour débuter." },
+      ],
+    },
+    {
+      title: "Colonne 3 : le dividende (le « loyer » de l'action) 🎁",
+      blocks: [
+        { kind: "text", value: "**En clair :** le dividende, c'est la part des bénéfices que l'entreprise vous verse en cash. Une image : c'est comme un **loyer** — vous possédez l'action, et elle vous « paie un loyer » chaque année." },
+        { kind: "text", value: "**Pourquoi ça compte :** le BOC vous dit **à l'avance** combien vous toucherez, et à quelle date." },
+        { kind: "text", value: "**Exemple :** CIE versera **250 FCFA par action** le 10/06/2026. Avec 100 actions, ça fait **25 000 FCFA** de cash — net d'impôt." },
+        { kind: "text", value: "(Rappel du M03 : il faut détenir l'action avant sa « date de détachement » pour y avoir droit.)" },
+      ],
+    },
+    {
+      title: "À vous de jouer",
+      blocks: [
+        { kind: "lead", value: "Vous avez les 3 réflexes : **le prix, l'affluence (volume), le loyer (dividende)**." },
+        { kind: "text", value: "Place à la chasse au trésor. 👇" },
       ],
     },
   ],
@@ -155,47 +127,53 @@ export const m14: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "Lire comme un analyste",
-    instruction: "Voici les colonnes d'analyse d'une vraie ligne du BOC. Observez-les et répondez. (1 erreur = − 5 000 FCFA.)",
+    title: "La chasse au trésor",
+    instruction: "Observez cet extrait du BOC et retrouvez les infos demandées. (1 erreur = − 5 000 FCFA.)",
     table: {
-      caption: "Colonnes d'analyse de Sonatel (données réelles)",
-      columns: ["PER", "Rendement net", "Dernier dividende", "Date de paiement"],
-      rows: [["7,74", "5,44 %", "1 740 FCFA", "26/05/2026"]],
+      caption: "Extrait du BOC · séance du jour (données fictives, structure réelle)",
+      columns: ["Valeur", "Cours clôture", "Volume", "Dividende net", "Date paiement"],
+      rows: [
+        ["SNTS — SONATEL SÉNÉGAL", "18 500", "45 200", "1 500", "15/05/2026"],
+        ["BOAC — BOA CÔTE D'IVOIRE", "6 200", "12 000", "620", "22/04/2026"],
+        ["CIE — CIE CÔTE D'IVOIRE", "1 950", "3 500", "250", "10/06/2026"],
+      ],
     },
     penaltyPerError: 5000,
     perfectReward: 20000,
-    // Recopie des options de Q1 en repli neutre (requis par le type) :
-    // chaque question a sa propre paire/triplet de boutons.
+    // Recopie des options de la Mission 1 en repli neutre (requis par le
+    // type) : chaque question ci-dessous fournit ses propres distracteurs,
+    // tirés des autres valeurs de la même colonne du tableau du BOC.
     options: [
-      { value: "chere", label: "Chère." },
-      { value: "bon_marche", label: "Bon marché : on récupère sa mise deux fois plus vite que la moyenne." },
-      { value: "impossible", label: "Impossible à dire." },
+      { value: "18500", label: "18 500" },
+      { value: "6200", label: "6 200" },
+      { value: "1950", label: "1 950" },
     ],
     questions: [
       {
-        prompt: "Le PER moyen du marché est ≈ 14 (≈ 14 ans pour récupérer sa mise). Avec un PER de **7,74**, Sonatel est plutôt… ?",
-        answer: "bon_marche",
+        prompt: "**Mission 1 — Le prix :** vous voulez acheter BOA Côte d'Ivoire. À quel prix l'action a-t-elle terminé la journée ?",
+        answer: "6200",
         options: [
-          { value: "chere", label: "Chère." },
-          { value: "bon_marche", label: "Bon marché : on récupère sa mise deux fois plus vite que la moyenne." },
-          { value: "impossible", label: "Impossible à dire." },
+          { value: "18500", label: "18 500" },
+          { value: "6200", label: "6 200" },
+          { value: "1950", label: "1 950" },
         ],
       },
       {
-        prompt: "Une action détache son dividende demain. Vous l'achetez **après-demain**. Touchez-vous ce dividende ?",
-        answer: "non",
+        prompt: "**Mission 2 — L'affluence :** combien de titres Sonatel ont été échangés dans la journée ?",
+        answer: "45200",
         options: [
-          { value: "oui", label: "Oui, dès que je possède l'action." },
-          { value: "non", label: "Non : je suis arrivé après la récolte (il fallait la détenir avant le détachement)." },
+          { value: "45200", label: "45 200" },
+          { value: "12000", label: "12 000" },
+          { value: "3500", label: "3 500" },
         ],
       },
       {
-        prompt: "Une action cote **10 000 FCFA** et verse **600 FCFA** net. Quel est son « loyer » (rendement net) ?",
-        answer: "6",
+        prompt: "**Mission 3 — Le loyer :** quelle entreprise versera exactement 250 FCFA par action ?",
+        answer: "CIE",
         options: [
-          { value: "0.6", label: "0,6 %" },
-          { value: "6", label: "6 %" },
-          { value: "60", label: "60 %" },
+          { value: "SNTS", label: "SNTS — Sonatel Sénégal" },
+          { value: "BOAC", label: "BOAC — BOA Côte d'Ivoire" },
+          { value: "CIE", label: "CIE — CIE Côte d'Ivoire" },
         ],
       },
     ],
@@ -205,35 +183,36 @@ export const m14: Module = {
   feedback: {
     perfect: {
       icon: "🎉",
-      title: "Vous lisez le BOC comme un pro ! + 20 000 FCFA sur votre portefeuille !",
-      body: "Prix, « loyer », dividende, détachement : plus aucune colonne ne vous résiste.",
+      title: "Coup de maître ! + 20 000 FCFA sur votre portefeuille !",
+      body: "Vous venez de dompter le document le plus impressionnant de la bourse.",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! Une colonne vous a échappé (− 5 000 FCFA par erreur).",
-      body: "Reprenons.",
+      title: "Aïe ! Lecture trop rapide (− 5 000 FCFA par erreur).",
+      body: "Un mauvais clic, c'est lire la mauvaise ligne du tableau d'affichage. Reprenons.",
     },
     explanations: [
       {
-        verdict: "Bon marché",
-        title: "Le PER, c'est le nombre d'années pour se rembourser.",
-        body: "7,74 face à ≈ 14, c'est **deux fois plus rapide** que la moyenne : Sonatel est bon marché (à condition que les fondamentaux suivent — on le verra avec Graham).",
+        verdict: "6 200",
+        title: "Le prix",
+        body: "BOA a fini à **6 200**, c'est ce que vous paierez à l'achat.",
       },
       {
-        verdict: "Non (arrivé après la récolte)",
-        title: "La récolte du dividende.",
-        body: "Le dividende revient à celui qui détient l'action **la veille** du détachement. Acheter juste après = arriver après la récolte, pas de fruits cette année.",
+        verdict: "45 200",
+        title: "L'affluence (volume)",
+        body: "Sonatel a échangé **45 200** titres : la foule, donc facile à revendre.",
       },
       {
-        verdict: "6 % (600 ÷ 10 000 × 100)",
-        title: "Le « loyer » est un simple pourcentage.",
-        body: "**600 ÷ 10 000 × 100 = 6 %.** C'est ce que l'action vous rapporte chaque année, comme un loyer.",
+        verdict: "CIE",
+        title: "Le loyer (dividende)",
+        body: "**CIE** verse 250 FCFA/action : le meilleur repère pour la stratégie de rente.",
+        note: "Rassurez-vous : les dizaines d'autres colonnes (limites de fluctuation, PER, capitalisation…) servent surtout aux analystes. On les découvre justement dans les 3 modules suivants, en douceur.",
       },
     ],
   },
 
   next: {
-    label: "Je maîtrise tout le BOC ! Approfondissons un produit clé : les obligations.",
+    label: "Je lis l'essentiel ! Passons à la lecture avancée du BOC.",
     target: "Module 15",
   },
 };

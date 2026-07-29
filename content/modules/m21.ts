@@ -1,117 +1,201 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 21 — Défi de synthèse : analyser une
-   entreprise de A à Z. Capstone de fin de Phase 3 (le bloc Graham
-   au complet, appliqué à un cas fictif « Banque du Fleuve »).
-   Barème NON standard (§4 : « Défi de synthèse (capstone) | 3 |
-   +50 000 | −10 000 ») : le plus haut de toute la Phase 3.
-   ÉCHELLE DE STATUT 5 PALIERS (décision produit explicite, revue
-   finale — NE PAS « corriger » en revenant à 🥇) : le champ `status`
-   représente une échelle qui GRIMPE le long de l'ordre des modules
-   (🥉 M01 → 🥈 M05 → 🥇 M11 → 🎓 M21-M27 → 💎 M28), lue par
-   `deriveStatus(doneCount)` qui prend le `status` du module courant
-   (index = nombre de modules terminés, clampé au dernier). Pour éviter
-   toute régression 🎓→🥇 (flicker pire que le trou d'origine), M21 à
-   M27 portent TOUS 🎓 « L'Analyste Confirmé » et M28 porte 💎 « Le
-   Loup de la BRVM ». Ce champ `status` PERSISTANT est distinct du
-   badge de complétion PONCTUEL `feedback.perfect.icon`/`.title` (qui
-   célèbre une seule fois la réussite de CE module) : les deux
-   réutilisent volontairement le même emoji+libellé 🎓 « L'Analyste
-   Confirmé », ce n'est pas un doublon à dédupliquer. Le .txt d'origine
-   avait deux lignes en tête — « Statut actuel : 🥇 » et « Badge à
-   débloquer : 🎓 » — mais le statut affiché suit désormais l'échelle
-   ci-dessus, pas la ligne littérale du .txt.
-   6 questions, 3 options chacune (Q5 lettrées A/B/C dans le .txt) ;
-   6 explications verbatim, une par « Pilier ». Le paragraphe de
-   clôture « Transition — Fin de la Phase 3 » est replié dans le
-   `.note` de la 6ᵉ (dernière) explication, comme M04 pour la fin de
-   Phase 1 — PAS une 7ᵉ entrée synthétique.
-   `feedback.explanations.length` = 6 = `challenge.questions.length`.
-   Formule entre backticks du .txt (`PER × PBR`) convertie en **gras**.
+   Contenu du Module 21 — Graham (2/4) : la performance (lire le
+   compte de résultat).
+   Barème NON standard (§4 : « Graham 1b Performance | 3 | +30 000 |
+   −10 000 ») : perfectReward 30000 / penaltyPerError 10000 — PAS le
+   20000/5000 par défaut de la Phase 3.
+   RESTRUCTURATION DE L'EXPLICATION (wrinkle documentée dans le
+   brief de cette tâche) : le Défi n'a que 2 questions, mais la
+   source décrit 4 profils A/B/C/D dans son explication. Répartition :
+   - Explanation 1 (Q1, « quel profil est le plus performant ? ») =
+     les 4 puces A/B/C/D combinées en un seul corps — juger A exige
+     de le contraster avec B/C/D.
+   - Explanation 2 (Q2, « que révèle le Profil D ? ») = focus sur la
+     seule puce D (chevauchement volontaire avec l'explanation 1, pas
+     une duplication problématique — Q2 porte spécifiquement sur D).
+   Le paragraphe de clôture « Deux leçons d'or » + la parenthèse
+   « (Pour une banque, on suit le PNB.) » sont repliés dans le `.note`
+   de l'explanation 2 (la dernière), jamais en 3ᵉ entrée synthétique.
+   `feedback.explanations.length` = 2 = `challenge.questions.length`.
+   Parenthèse italique *(Hors Activités Ordinaires)* et la question
+   d'analyste en italique (Slide 4) : astérisques simples retirés,
+   texte conservé (splitMarkup, lib/format.ts, ne reconnaît que
+   **gras**).
+   Revue post-lancement : lien brvm.org + PDF réel (états financiers
+   Sonatel 2025) sur la Slide 1 ; illustrations (boctable/duo) sur
+   chaque slide restante, avec un même exemple chiffré fictif filé
+   sur les Slides 2-4 (100M CA → 20M exploitation → 26M net, puis le
+   piège du camion vendu une seule fois).
    ============================================================= */
 export const m21: Module = {
   code: "M21",
   index: 21,
   totalModules: 28,
-  title: "Défi de synthèse : analyser une entreprise de A à Z",
-  phase: "Phase 3 · L'Analyse",
+  title: "Graham (2/4) : la performance (lire le compte de résultat)",
+  phase: "Phase 4 · L'Analyse",
   status: { emoji: "🎓", label: "L'Analyste Confirmé" },
-  reward: 50000,
+  reward: 30000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 21",
-    headline: "L'examen de passage : votre dossier complet.",
+    headline: "Le bénéfice ne dit pas tout : d'où vient-il ?",
     lead:
-      "Portrait, performance, perspectives, prix, BOC : vous maîtrisez chaque pilier séparément. Place au vrai test — assembler les 5 en un seul verdict, sur une entreprise fictive construite pour ressembler à une vraie valeur BRVM.",
+      "Le compte de résultat se lit comme une **cascade**, du chiffre d'affaires jusqu'au résultat net. Mais un bénéfice final flatteur peut cacher un piège : d'où vient-il vraiment ?",
     card: {
-      label: "Le dossier complet",
-      title: "Portrait → Performance → Perspectives → Prix → Verdict",
-      hint: "Passez chaque pilier au crible, comme un vrai analyste :",
+      label: "La cascade du compte de résultat",
+      title: "CA → Exploitation → Net",
+      hint: "Trois lignes à suivre, du haut vers le bas :",
       rules: [
-        "**BANQUE DU FLEUVE (BDF)** — 33 ans, banque de détail, 4 pays.",
-        "**Performance** — PNB, exploitation et net en hausse régulière depuis 10 ans.",
-        "**Prix** — PER 11, PBR 1,2 : sous la règle de Graham et sous la moyenne du marché.",
+        "**Le chiffre d'affaires** — tout l'argent encaissé (le PNB pour une banque).",
+        "**Le résultat d'exploitation** — ce qui reste une fois le métier payé : la vraie performance.",
+        "**Le résultat net** — la ligne finale, parfois gonflée par de l'exceptionnel.",
       ],
     },
     objectives: [
-      "Mener une analyse complète, seul, du portrait d'une entreprise jusqu'au verdict d'achat.",
-      "Relier performance, perspectives et prix pour décider avec méthode plutôt qu'avec vos émotions face au bruit du marché.",
-      "Vérifier qu'un placement correspond à votre propre stratégie, pas seulement à des fondamentaux au vert.",
+      "Lire le compte de résultat comme une cascade, du chiffre d'affaires (ou du PNB) jusqu'au résultat net.",
+      "Distinguer la vraie performance du métier (résultat d'exploitation) d'un bénéfice gonflé par de l'exceptionnel.",
+      "Suivre la tendance sur 10 ans plutôt qu'un chiffre isolé pour juger si une entreprise est rassurante.",
     ],
-    cta: "Ouvrir le dossier BDF",
+    cta: "Lire la performance comme un analyste",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "L'examen de passage",
+      title: "Gagne-t-elle vraiment de l'argent ?",
       blocks: [
-        { kind: "text", value: "Vous savez dresser un portrait, lire une performance, sonder les perspectives, juger un prix, décrypter le BOC. On assemble tout." },
-        { kind: "text", value: "**Objectif : décideriez-vous d'acheter cette action pour du long terme ?** Passez chaque pilier au crible." },
-        { kind: "text", value: "(Entreprise fictive, construite pour ressembler à une vraie valeur BRVM.)" },
-      ],
-    },
-    {
-      title: "📁 Bloc 1 : le Portrait",
-      blocks: [
-        { kind: "text", value: "**BANQUE DU FLEUVE (BDF)** · Création : 1992 (33 ans) · Banque de détail." },
-        { kind: "text", value: "Actionnaires : Atlantic Financial Group **58 %**, État **12 %**, flottant 30 %." },
-        { kind: "text", value: "Zone : Sénégal, Côte d'Ivoire, Mali, Bénin (4 pays). Compartiment Principal · Secteur Services Financiers." },
-      ],
-    },
-    {
-      title: "📁 Bloc 2 : la Performance (10 ans, Md FCFA)",
-      blocks: [
+        { kind: "text", value: "Vous avez le portrait. Passons à sa **performance financière** : elle se lit dans un document, le **compte de résultat** (publié chaque année dans le rapport annuel, sur brvm.org)." },
         {
-          kind: "list",
-          items: [
-            "**PNB** : 45 → 95 (hausse régulière)",
-            "**Résultat d'exploitation** : 12 → 26 (hausse régulière)",
-            "**Résultat net** : 8 → 18 (positif chaque année)",
-            "**Dividende** : versé **chaque année** depuis 10 ans.",
-          ],
+          kind: "link",
+          label: "Ouvrir les rapports des sociétés cotées",
+          sublabel: "brvm.org · rapports annuels et états financiers",
+          href: "https://www.brvm.org/fr/rapports-societes-cotees",
+        },
+        {
+          kind: "download",
+          label: "Télécharger un vrai compte de résultat (PDF)",
+          sublabel: "États financiers 2025 · Sonatel — exemple réel",
+          href: "/docs/sonatel-etats-financiers-2025.pdf",
         },
       ],
     },
     {
-      title: "📁 Bloc 3 : les Perspectives",
+      title: "Le compte de résultat, c'est une cascade 🍽️",
+      blocks: [
+        { kind: "text", value: "Imaginez un restaurant. L'argent « descend » de haut en bas, étage par étage :" },
+        {
+          kind: "list",
+          items: [
+            "**Le chiffre d'affaires** = tout l'argent encaissé en vendant ses plats.",
+            "**Le résultat d'exploitation** = ce qui reste une fois payés les cuisiniers, les ingrédients, le loyer. ⭐ **C'est la vraie performance du métier.**",
+          ],
+        },
+        {
+          kind: "boctable",
+          caption: "Exemple (chiffres fictifs)",
+          columns: ["Ligne", "Montant"],
+          rows: [
+            ["Chiffre d'affaires", "100 000 000 FCFA"],
+            ["− Coûts du métier (cuisiniers, ingrédients, loyer)", "− 80 000 000 FCFA"],
+            ["= Résultat d'exploitation", "20 000 000 FCFA"],
+          ],
+          highlightCols: [1],
+        },
+        { kind: "text", value: "On continue la cascade au slide suivant." },
+      ],
+    },
+    {
+      title: "La cascade (suite), jusqu'au résultat net",
       blocks: [
         {
           kind: "list",
           items: [
-            "Top-down : bancarisation + mobile money en plein essor dans l'UEMOA.",
-            "Bottom-up : **220 agences**, **3 millions de clients**, une **licence mobile money** difficile à copier.",
+            "**Le résultat financier** = les gains liés aux placements du restaurant (ex. les intérêts de son épargne). C'est **annexe** à son métier.",
+            "**Le résultat HAO** (Hors Activités Ordinaires) = un gain **exceptionnel**, qui ne se reproduira pas (ex. la vente de son vieux camion).",
+            "**Le résultat net** = tout additionné, la toute dernière ligne : le bénéfice final.",
           ],
+        },
+        {
+          kind: "boctable",
+          caption: "Suite de l'exemple (chiffres fictifs)",
+          columns: ["Ligne", "Montant"],
+          rows: [
+            ["Résultat d'exploitation", "20 000 000 FCFA"],
+            ["+ Résultat financier (intérêts de l'épargne)", "+ 1 000 000 FCFA"],
+            ["+ Résultat HAO (vente du vieux camion)", "+ 5 000 000 FCFA"],
+            ["= Résultat net", "26 000 000 FCFA"],
+          ],
+          highlightCols: [1],
         },
       ],
     },
     {
-      title: "📁 Bloc 4 : le Prix (relevé au BOC)",
+      title: "Le piège du résultat net ⚠️",
       blocks: [
-        { kind: "text", value: "Cours : **6 500 FCFA** · **PER : 11** · **PBR : 1,2** · **Rendement net : 6,2 %**." },
-        { kind: "text", value: "(Rappel : PER moyen du marché ≈ 14.) À vous de trancher ! 👇" },
+        { kind: "text", value: "Un restaurant peut afficher un **beau résultat net** cette année… mais seulement parce qu'il a **vendu son camion** (un gain HAO, exceptionnel). L'an prochain, plus de camion à vendre — et on découvre que son cœur de métier gagnait à peine de l'argent." },
+        {
+          kind: "boctable",
+          caption: "Le piège, illustré (suite de l'exemple)",
+          columns: ["Année", "Résultat d'exploitation", "Résultat HAO", "Résultat net"],
+          rows: [
+            ["Cette année", "20 000 000 FCFA", "+ 5 000 000 FCFA (vente du camion)", "26 000 000 FCFA"],
+            ["L'an prochain", "20 000 000 FCFA", "0 FCFA (plus de camion)", "20 000 000 FCFA"],
+          ],
+          highlightCols: [3],
+        },
+        { kind: "text", value: "👉 D'où LA question de l'analyste : le bénéfice vient-il vraiment du métier (le résultat d'exploitation), ou d'un coup de chance ponctuel ?" },
+      ],
+    },
+    {
+      title: "Cas des banques : le PNB",
+      blocks: [
+        { kind: "text", value: "Attention : une **banque** n'a pas de « chiffre d'affaires » classique. Son métier, c'est l'argent lui-même : elle encaisse des intérêts sur les crédits qu'elle accorde, mais en **reverse** sur les dépôts de ses clients." },
+        { kind: "text", value: "On regarde donc le **Produit Net Bancaire (PNB)** : ce qu'elle **garde vraiment** (marge d'intérêt + commissions + gains de marché)." },
+        {
+          kind: "duo",
+          items: [
+            { side: "Entreprise classique", value: "Chiffre d'affaires → Résultat d'exploitation → Résultat net" },
+            { side: "Banque", value: "**PNB** (marge d'intérêt + commissions + gains de marché) → Résultat d'exploitation → Résultat net" },
+          ],
+        },
+        { kind: "text", value: "👉 Pour une banque, remplacez mentalement « chiffre d'affaires » par « PNB »." },
+      ],
+    },
+    {
+      title: "La bonne méthode : la tendance sur 10 ans",
+      blocks: [
+        { kind: "text", value: "Un chiffre isolé ne veut rien dire. Le réflexe d'analyste : tracer sur **10 ans** trois courbes — le chiffre d'affaires (ou le PNB), le résultat d'exploitation et le résultat net." },
+        {
+          kind: "list",
+          items: [
+            "Des courbes qui **montent régulièrement** = une entreprise performante et rassurante.",
+            "Des courbes en **dents de scie** = imprévisible, plus risqué.",
+            "Des courbes qui **déclinent franchement** = signal d'alerte direct. 👇",
+          ],
+        },
+        {
+          kind: "chart",
+          caption: "Profil rassurant (chiffres fictifs, en milliards FCFA)",
+          categories: ["2016", "2018", "2020", "2022", "2025"],
+          series: [
+            { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [40, 50, 65, 78, 90] },
+            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [12, 16, 20, 24, 28] },
+            { label: "Résultat net", kind: "line", color: "gold", values: [9, 12, 15, 18, 21] },
+          ],
+        },
+        {
+          kind: "chart",
+          caption: "Profil en déclin (chiffres fictifs, en milliards FCFA)",
+          categories: ["2016", "2018", "2020", "2022", "2025"],
+          series: [
+            { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [90, 85, 75, 60, 50] },
+            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [28, 22, 16, 9, 4] },
+            { label: "Résultat net", kind: "line", color: "clay", values: [20, 14, 8, 2, -4] },
+          ],
+        },
       ],
     },
   ],
@@ -120,71 +204,90 @@ export const m21: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "Le dossier, pilier par pilier",
-    instruction:
-      "Répondez aux 6 questions dans l'ordre. Chaque erreur coûte 10 000 FCFA. La Q5 (le verdict) est la plus importante ; la Q6 relie l'analyse à votre stratégie.",
+    title: "Interpréter les courbes sur 10 ans",
+    instruction: "Quatre entreprises, chacune avec 3 courbes sur 10 ans (chiffre d'affaires, résultat d'exploitation, résultat net). Basculez d'un profil à l'autre et répondez. (1 erreur = − 10 000 FCFA.)",
+    chartProfiles: [
+      {
+        key: "a",
+        label: "Profil A",
+        data: {
+          categories: ["2016", "2018", "2020", "2022", "2025"],
+          unit: "milliards FCFA",
+          series: [
+            { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [40, 52, 65, 78, 90] },
+            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [10, 14, 18, 23, 28] },
+            { label: "Résultat net", kind: "line", color: "gold", values: [7, 10, 13, 17, 21] },
+          ],
+        },
+      },
+      {
+        key: "b",
+        label: "Profil B",
+        data: {
+          categories: ["2016", "2018", "2020", "2022", "2025"],
+          unit: "milliards FCFA",
+          series: [
+            { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [40, 55, 70, 85, 100] },
+            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [20, 17, 14, 10, 7] },
+            { label: "Résultat net", kind: "line", color: "gold", values: [15, 12, 10, 7, 5] },
+          ],
+        },
+      },
+      {
+        key: "c",
+        label: "Profil C",
+        data: {
+          categories: ["2016", "2018", "2020", "2022", "2025"],
+          unit: "milliards FCFA",
+          series: [
+            { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [40, 70, 35, 90, 55] },
+            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [14, 6, 16, 4, 12] },
+            { label: "Résultat net", kind: "line", color: "gold", values: [10, 2, 12, 0, 8] },
+          ],
+        },
+      },
+      {
+        key: "d",
+        label: "Profil D",
+        data: {
+          categories: ["2016", "2018", "2020", "2022", "2025"],
+          unit: "milliards FCFA",
+          series: [
+            { label: "Chiffre d'affaires", kind: "bar", color: "blue", values: [50, 49, 49, 48, 48] },
+            { label: "Résultat d'exploitation", kind: "line", color: "pos", values: [18, 14, 11, 7, 5] },
+            { label: "Résultat net", kind: "line", color: "gold", values: [10, 12, 14, 17, 20] },
+          ],
+        },
+      },
+    ],
     penaltyPerError: 10000,
-    perfectReward: 50000,
+    perfectReward: 30000,
     // Recopie des options de Q1 en repli neutre (requis par le type) :
     // chaque question a sa propre liste de boutons.
     options: [
-      { value: "ca", label: "Le chiffre d'affaires" },
-      { value: "pnb", label: "Le Produit Net Bancaire (PNB)" },
-      { value: "credits", label: "Le total des crédits" },
+      { value: "a", label: "A" },
+      { value: "b", label: "B" },
+      { value: "c", label: "C" },
+      { value: "d", label: "D" },
     ],
     questions: [
       {
-        prompt: "**Q1 — Portrait.** BDF étant une **banque**, quel indicateur suivre comme « ligne du haut » (équivalent du chiffre d'affaires) ?",
-        answer: "pnb",
+        prompt: "**Q1 :** Quel profil est le plus **performant et rassurant** pour le long terme ?",
+        answer: "a",
         options: [
-          { value: "ca", label: "Le chiffre d'affaires" },
-          { value: "pnb", label: "Le Produit Net Bancaire (PNB)" },
-          { value: "credits", label: "Le total des crédits" },
+          { value: "a", label: "A" },
+          { value: "b", label: "B" },
+          { value: "c", label: "C" },
+          { value: "d", label: "D" },
         ],
       },
       {
-        prompt: "**Q2 — Performance.** Diagnostic des 3 courbes sur 10 ans ?",
-        answer: "solide",
+        prompt: "**Q2 :** Dans le Profil D, le net monte alors que l'exploitation s'effondre. Que révèle-t-il ?",
+        answer: "alerte",
         options: [
-          { value: "solide", label: "Solide : PNB, exploitation et net montent ensemble." },
-          { value: "suspect", label: "Suspect : le net est gonflé par de l'exceptionnel." },
-          { value: "fragile", label: "Fragile : en dents de scie." },
-        ],
-      },
-      {
-        prompt: "**Q3 — Perspectives.** BDF a-t-elle un avenir bien orienté ?",
-        answer: "oui",
-        options: [
-          { value: "oui", label: "Oui : vent porteur (bancarisation) + un fossé solide (réseau, clients, licence)." },
-          { value: "non_declin", label: "Non : secteur en déclin." },
-          { value: "non_aucun", label: "Non : aucun avantage." },
-        ],
-      },
-      {
-        prompt: "**Q4 — Prix.** Calculez **PER × PBR** et jugez (< 22,5 et vs marché ≈ 14).",
-        answer: "raisonnable",
-        options: [
-          { value: "raisonnable", label: "13,2 → sous 22,5 ET sous la moyenne : prix raisonnable, avec marge de sécurité." },
-          { value: "trop_cher", label: "13,2 → trop cher." },
-          { value: "impossible", label: "Impossible à juger." },
-        ],
-      },
-      {
-        prompt: "**Q5 — LE VERDICT.** Ce matin l'action a baissé de **−2 %** et l'indice Services Financiers est dans le rouge. Un collègue dit d'attendre. Votre décision, pour du **long terme** ?",
-        answer: "c",
-        options: [
-          { value: "a", label: "J'attends que ça baisse encore." },
-          { value: "b", label: "Je passe mon chemin." },
-          { value: "c", label: "J'achète : les 3 piliers sont au vert, la baisse du jour n'est que du bruit." },
-        ],
-      },
-      {
-        prompt: "**Q6 — Pour quel investisseur ?** BDF verse 6,2 % de dividende et croît modérément. Elle correspond le mieux à… ?",
-        answer: "rente",
-        options: [
-          { value: "rente", label: "Une stratégie de RENTE (revenu régulier)." },
-          { value: "croissance", label: "Une stratégie de CROISSANCE pure (doublement rapide, sans besoin de cash)." },
-          { value: "peu_importe", label: "Peu importe : une bonne action convient à tout le monde." },
+          { value: "performante", label: "L'entreprise est très performante." },
+          { value: "alerte", label: "Le net est porté par de l'exceptionnel (HAO) ou du financier, pas par le cœur de métier. Signal d'alerte." },
+          { value: "erreur", label: "Une erreur comptable, à ignorer." },
         ],
       },
     ],
@@ -193,52 +296,32 @@ export const m21: Module = {
   // ---- Section 3 : le feedback ----
   feedback: {
     perfect: {
-      icon: "🎓",
-      title: "BADGE DÉBLOQUÉ : L'Analyste Confirmé ! + 50 000 FCFA sur votre portefeuille !",
-      body: "Vous avez mené une analyse complète, seul, du portrait au verdict. Vous décidez avec méthode, pas avec vos émotions.",
+      icon: "🎉",
+      title: "Lecture d'expert ! + 30 000 FCFA sur votre portefeuille !",
+      body: "Vous ne regardez plus seulement la ligne du bas : vous savez d'où vient vraiment le bénéfice.",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! L'analyse mérite une révision (− 10 000 FCFA par erreur).",
-      body: "Reprenons pilier par pilier.",
+      title: "Aïe ! Une courbe vous a trompé (− 10 000 FCFA par erreur).",
+      body: "Reprenons la lecture des 4 profils.",
     },
     explanations: [
       {
-        verdict: "PNB",
-        title: "Pilier 1 — PNB",
-        body: "Pour une banque, on suit le **Produit Net Bancaire**, pas le chiffre d'affaires.",
+        verdict: "Profil A",
+        title: "Les 4 profils, comparés",
+        body: "**Profil A — la championne ✅** : les 3 courbes montent ensemble. Performante et prévisible. **Profil B — la fausse croissance ⚠️** : elle vend plus (40 → 100) mais gagne moins (exploitation 20 → 7) — autrement dit, elle gagne de moins en moins sur chaque vente. **Profil C — montagnes russes ⚠️** : imprévisible, difficile à évaluer. **Profil D — le mirage 🚨** : le net grimpe (10 → 20) mais le cœur de métier s'effondre (18 → 5). Le net n'est gonflé que par de l'exceptionnel. Danger.",
       },
       {
-        verdict: "Solide",
-        title: "Pilier 2 — Performance 🟢",
-        body: "Les 3 courbes montent ensemble, dividende chaque année : pas de piège HAO.",
-      },
-      {
-        verdict: "Oui",
-        title: "Pilier 3 — Perspectives 🟢",
-        body: "Vent porteur (bancarisation, mobile money) + un vrai fossé (agences, clients, licence).",
-      },
-      {
-        verdict: "13,2 raisonnable",
-        title: "Pilier 4 — Prix 🟢",
-        body: "11 × 1,2 = 13,2, sous 22,5 **et** sous la moyenne (≈ 14). Rendement 6,2 % en prime.",
-      },
-      {
-        verdict: "Bouton C",
-        title: "Pilier 5 — Le verdict",
-        body: "3 feux verts → **on achète (C)**. Le −2 % du jour n'est que du **bruit** ; il ne change rien à une entreprise qu'on garde 10 ans.",
-      },
-      {
-        verdict: "Rente",
-        title: "Pilier 6 — Rente",
-        body: "Dividende 6,2 % + entreprise mature à croissance modérée = profil **rente**. « Une bonne action n'existe pas dans l'absolu — seulement la bonne action pour VOTRE stratégie » (M16).",
-        note: "**La méthode maîtrisée :** Portrait → Performance → Perspectives → Prix → Verdict → Adéquation à votre stratégie. 🏆 **Félicitations, Analyste Confirmé !** La théorie est terminée. Rangez vos lunettes d'analyste, sortez votre pièce d'identité : il est temps d'ouvrir votre VRAI compte.",
+        verdict: "Porté par l'exceptionnel (HAO/financier) — signal d'alerte",
+        title: "Le mirage du Profil D",
+        body: "**Profil D — le mirage 🚨** : le net grimpe (10 → 20) mais le cœur de métier s'effondre (18 → 5). Le net n'est gonflé que par de l'exceptionnel. Danger.",
+        note: "**Deux leçons d'or :** le **résultat d'exploitation** est le vrai juge de la performance (c'est lui qui dit si le métier gagne de l'argent) ; et la **tendance sur 10 ans** compte plus que le chiffre d'une seule année. (Pour une banque, on suit le PNB.)",
       },
     ],
   },
 
   next: {
-    label: "Passer à la Phase 4 : ouvrir mon compte et acheter pour de vrai !",
+    label: "Performante… mais son avenir est-il assuré ?",
     target: "Module 22",
   },
 };

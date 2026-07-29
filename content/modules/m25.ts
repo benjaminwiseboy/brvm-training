@@ -18,7 +18,7 @@ import type { Module } from "@/lib/types";
    2 entrées, et `feedback.explanations` AUSSI 2 entrées (règle
    stricte de correspondance). Le rappel de prudence final (« La
    fiscalité évolue ») est replié dans le `.note` de la 2ᵉ (dernière)
-   explication, comme M04/M21 — PAS une 3ᵉ entrée synthétique.
+   explication, comme M04/M24 — PAS une 3ᵉ entrée synthétique.
    Italiques simples (*…*) du .txt non supportées par renderMarkup
    (lib/format.ts ne segmente que le `**gras**`) : converties en
    texte normal ou en gras selon l'emphase voulue, jamais laissées

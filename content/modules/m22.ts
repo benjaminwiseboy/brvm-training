@@ -1,130 +1,138 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 22 — Ouvrir son compte SGI (et comprendre
-   les frais). Première étape de la Phase 4 « Passage à l'action ».
-   Barème standard Phase 4 (Bareme harmonise.txt §4 : « Phase 4 —
-   Action | +20 000 | −5 000 ») : perfectReward 20000 /
-   penaltyPerError 5000 / reward 20000 — confirmé par le propre
-   texte du .txt (« + 20 000 FCFA » / « − 5 000 FCFA »).
-   Défi = quiz à UNE SEULE question (2 boutons, Courtier A/B) :
-   `challenge.questions` a donc 1 seule entrée, et
-   `feedback.explanations` AUSSI 1 seule entrée (les deux calculs —
-   1 % vs forfait — justifient le même verdict, combinés dans un
-   seul `body`, comme M16). La « Règle d'or » de conclusion est
-   repliée dans le `.note` de cette explication unique.
-   GARDE-FOU commercial (signalé par le brief de cette tâche) :
-   aucun nom réel de SGI n'est utilisé nulle part dans ce fichier —
-   les placeholders génériques du .txt (« Courtier A », « Courtier
-   B ») sont conservés tels quels, y compris dans les labels de
-   boutons du défi.
+   Contenu du Module 22 — Graham (3/4) : les perspectives
+   (top-down & bottom-up).
+   Barème NON standard (§4 : « Graham 2 Perspectives | 3 | +25 000 |
+   −5 000 »).
+   RESTRUCTURATION DE L'EXPLICATION (wrinkle documentée dans le brief
+   de cette tâche) : le Défi a 4 questions (les 3 mini-questions
+   numérotées de la Partie A + la question de la Partie B), mais la
+   source ne fournit que 2 paragraphes d'explication : un paragraphe
+   « Top-Down » qui couvre les 3 événements de la Partie A (séparés
+   par des flèches « → »), et un paragraphe « Bottom-Up » pour la
+   Partie B. Le paragraphe Top-Down est éclaté en 3 explanations
+   distinctes (une par événement numéroté, chacune reprenant
+   verbatim sa propre clause) ; le paragraphe Bottom-Up devient la
+   4ᵉ explanation.
+   Revue post-lancement (1) : Partie A/B renommées Scénario 1/2,
+   illustrées en tableaux (Tableau A/B) ; Partie C renommée "Bilan" —
+   2 questions de classification top-down/bottom-up (5ᵉ et 6ᵉ
+   questions), avec leurs 2 explanations. La nuance finale
+   *(« personne ne prédit l'avenir à 100 %... »)* est repliée dans le
+   `.note` de la 6ᵉ (dernière) explanation. `feedback.explanations.
+   length` = 6 = questions.length.
+   Revue post-lancement (2) : le tableau du Scénario 1 et l'encart
+   `scenario` du Scénario 2 étaient tous deux affichés en permanence,
+   même pendant les questions du Bilan qui n'en dépendent pas — source
+   de confusion signalée par le user. Remplacés par `tableTabs` (champ
+   dédié, nouveau composant TableTabs — même mécanisme que ChartTabs
+   de m21.ts, factorisé dans components/engine/Tabs.tsx) : un seul
+   tableau visible à la fois, l'apprenant bascule entre "Scénario 1"
+   et "Scénario 2" via onglets. `instruction` explicite quel onglet
+   consulter pour chaque question.
    ============================================================= */
 export const m22: Module = {
   code: "M22",
   index: 22,
   totalModules: 28,
-  title: "Ouvrir son compte SGI (et comprendre les frais)",
-  phase: "Phase 4 · Passage à l'action",
+  title: "Graham (3/4) : les perspectives (top-down & bottom-up)",
+  phase: "Phase 4 · L'Analyse",
   status: { emoji: "🎓", label: "L'Analyste Confirmé" },
-  reward: 20000,
+  reward: 25000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 22",
-    headline: "Le sésame pour investir : votre compte SGI.",
+    headline: "Deux paires de lunettes pour juger l'avenir.",
     lead:
-      "La théorie est finie. Pour acheter vos premières actions, il vous faut un compte chez une **SGI** (Société de Gestion et d'Intermédiation) — votre courtier. C'est presque aussi simple qu'un compte bancaire, souvent faisable en ligne, et ouvert à la diaspora.",
+      "Le compte de résultat, c'est le passé. En achetant une action, vous achetez son futur. Pour le juger, on chausse deux paires de lunettes complémentaires : la vue de l'**aigle** (top-down) et la vue de la **fourmi** (bottom-up).",
     card: {
-      label: "Avant d'ouvrir un compte",
-      title: "3 critères pour choisir sa SGI, et les frais à surveiller",
-      hint: "Toutes les SGI donnent accès à la même bourse. Ce qui change :",
+      label: "Les deux lunettes de l'analyste",
+      title: "Top-down (l'aigle) & bottom-up (la fourmi)",
+      hint: "Deux angles complémentaires pour juger l'avenir :",
       rules: [
-        "**La plateforme en ligne** — pouvoir passer vos ordres vous-même, depuis votre téléphone.",
-        "**Le conseil** — de vraies études d'entreprise, pas juste l'actualité déjà lue dans le BOC.",
-        "**Les frais** — intermédiation, droits de garde, bourse en ligne : le forfait peut coûter cher sur les petits montants.",
+        "**Top-down 🦅** — de l'économie régionale au secteur, puis à l'entreprise : vents porteurs ou contraires ?",
+        "**Bottom-up 🐜** — l'entreprise de près : possède-t-elle un « fossé » durable face à ses concurrents ?",
+        "**La combinaison gagnante** — solide + secteur porteur + fossé protégé.",
       ],
     },
     objectives: [
-      "Savoir ce qu'est une SGI et les documents nécessaires pour ouvrir un compte-titres, même depuis la diaspora.",
-      "Choisir sa SGI selon 3 critères concrets : la plateforme en ligne, la qualité du conseil, le montant minimum.",
-      "Calculer l'impact réel des frais (pourcentage vs forfait) sur de petits montants investis régulièrement.",
+      "Repérer les vents porteurs et contraires d'un secteur avec la vue de l'aigle (top-down).",
+      "Identifier le « fossé » qui protège durablement une entreprise de ses concurrents, avec la vue de la fourmi (bottom-up).",
+      "Combiner performance, secteur porteur et fossé pour juger si l'avenir d'une entreprise est bien orienté.",
     ],
-    cta: "Ouvrir mon compte-titres",
+    cta: "Chausser les deux paires de lunettes",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "Le sésame pour investir",
+      title: "On conduit en regardant la route",
       blocks: [
-        { kind: "text", value: "La théorie est finie. Pour acheter vos premières actions, il faut un compte chez une **SGI** (Société de Gestion et d'Intermédiation) — c'est votre **courtier**, l'intermédiaire par lequel passent tous vos ordres." },
+        { kind: "text", value: "Le compte de résultat, c'est le **passé** de l'entreprise. Or, en achetant une action, vous achetez son **futur**. Une entreprise magnifique hier peut être menacée demain." },
+        { kind: "text", value: "Pour juger l'avenir, on chausse **deux paires de lunettes** complémentaires." },
       ],
     },
     {
-      title: "Est-ce compliqué ? Non.",
+      title: "Lunettes Top-Down : la vue de l'aigle 🦅",
       blocks: [
-        { kind: "text", value: "C'est presque aussi simple qu'ouvrir un compte bancaire, et souvent faisable en ligne. Il faut généralement réunir :" },
+        { kind: "text", value: "Comme un aigle qui plane haut dans le ciel puis fond vers sa proie, on part du grand tableau et on descend, étape par étape :" },
         {
           kind: "list",
           items: [
-            "une pièce d'identité valide,",
-            "un justificatif de domicile,",
-            "deux photos d'identité.",
+            "**L'économie de l'UEMOA** — la croissance, l'inflation et les taux de la BCEAO (la Banque Centrale des États de l'Afrique de l'Ouest, la banque centrale de la région) donnent le climat général.",
+            "**Les matières premières** (cacao, coton, or, pétrole) — elles font vivre une grande partie des entreprises de la région ; leur cours mondial pèse lourd.",
+            "**Le secteur** — lequel profite (ou souffre) du contexte ? (7 secteurs BRVM : Télécoms, Services Financiers, Consommation Discrétionnaire, Consommation de Base, Industriels, Énergie, Services Publics.)",
+            "**Enfin l'entreprise elle-même.**",
+          ],
+        },
+        { kind: "text", value: "Objectif : repérer les **vents porteurs** (un secteur en plein essor) et les **vents contraires** (un secteur menacé)." },
+      ],
+    },
+    {
+      title: "Lunettes Bottom-Up : la vue de la fourmi 🐜",
+      blocks: [
+        { kind: "text", value: "À l'inverse, comme une fourmi au ras du sol, on regarde l'entreprise de tout près, sans se soucier du contexte. La question clé : **possède-t-elle un « fossé » ?**" },
+        { kind: "text", value: "Un fossé, c'est un avantage **durable** qui la protège de ses concurrents, comme les douves d'un château. Par exemple :" },
+        {
+          kind: "list",
+          items: [
+            "une **position dominante** (une grosse part de marché),",
+            "un **réseau difficile à copier** (les antennes d'un opérateur télécom, le maillage d'agences d'une banque),",
+            "une **marque forte** à laquelle les clients sont fidèles, ou des **coûts plus bas** que tous ses rivaux.",
           ],
         },
       ],
     },
     {
-      title: "Vous vivez à l'étranger ? La diaspora aussi ! 🌍",
+      title: "Pourquoi le fossé est vital",
       blocks: [
-        { kind: "text", value: "Idée reçue à casser : **vous n'avez PAS besoin d'être sur le territoire du pays, ni d'en être citoyen**, pour ouvrir votre compte-titres." },
-        { kind: "text", value: "Depuis la diaspora, vous pouvez parfaitement ouvrir un compte dans une SGI de Côte d'Ivoire (ou d'un autre pays de l'UEMOA), souvent **entièrement à distance, en ligne**. La bourse régionale est ouverte à tous." },
-        { kind: "callout", tone: "info", value: "Vérifiez simplement la liste des justificatifs : certaines SGI ont des modalités adaptées aux non-résidents." },
+        { kind: "text", value: "Une entreprise **sans fossé** se fait grignoter ses bénéfices dès qu'un concurrent agressif arrive et casse les prix." },
+        { kind: "text", value: "Une entreprise **avec un fossé** peut protéger ses marges et ses dividendes dans la durée. C'est ce qui distingue une belle entreprise passagère d'une belle entreprise qui **dure**." },
       ],
     },
     {
-      title: "Choisir la bonne SGI : 3 critères",
+      title: "La combinaison gagnante",
       blocks: [
-        { kind: "text", value: "Toutes les SGI donnent accès à la même bourse. Ce qui les distingue vraiment :" },
+        { kind: "text", value: "L'idéal réunit les trois : une entreprise **solide** (performance ✓) + dans un secteur **porteur** (top-down ✓) + protégée par un **fossé** (bottom-up ✓)." },
+        { kind: "text", value: "À l'inverse, un beau bilan dans un secteur en déclin, ou sans avantage concurrentiel, reste un pari risqué." },
+      ],
+    },
+    {
+      title: "Où trouver les perspectives ? 📍",
+      blocks: [
+        { kind: "text", value: "Contrairement aux chiffres du passé (dans le rapport annuel), les perspectives se cherchent à plusieurs endroits :" },
         {
           kind: "list",
           items: [
-            "**La plateforme en ligne** — pouvoir passer vos ordres vous-même, depuis votre téléphone. Fuyez celles qui obligent à se déplacer ou à tout faire par mail : vous perdriez des occasions en attendant qu'un employé traite votre demande.",
-            "**Le conseil** — publie-t-elle de vraies **études d'entreprise** qui aident à décider ? Beaucoup se contentent de répéter l'actualité, que vous savez déjà lire dans le BOC : ça, ce n'est pas du conseil.",
-            "**Le montant minimum d'ouverture** — ce n'est pas un frais (c'est votre argent, que vous investirez), mais un minimum trop élevé (ex. 2 millions) vous bloque l'entrée. Choisissez-en un adapté à votre budget.",
+            "le **rapport d'activité** de l'entreprise (souvent une section « Perspectives » ou « Stratégie »),",
+            "les **médias financiers** : **Sika Finance**, Financial Afrik, la presse économique,",
+            "pour le top-down : les publications de la **BCEAO** et les cours des matières premières,",
+            "les communiqués et l'espace actualités de brvm.org.",
           ],
         },
-      ],
-    },
-    {
-      title: "Les frais (1/2) : l'intermédiation",
-      blocks: [
-        { kind: "text", value: "C'est la commission que prend la SGI **à chaque fois** qu'elle achète ou vend pour vous — un peu comme les frais du mobile money." },
-        {
-          kind: "list",
-          items: [
-            "Le plus souvent : un **pourcentage** (~1 % du montant).",
-          ],
-        },
-        { kind: "callout", tone: "warn", value: "⚠️ Certaines ajoutent un **forfait minimum** (ex. 1 000 FCFA par ordre). C'est un piège pour les petits montants : sur un ordre de 25 000 FCFA, 1 000 F de frais = **4 %** ! (on le calcule dans le défi)." },
-      ],
-    },
-    {
-      title: "Les frais (2/2) : garde & bourse en ligne",
-      blocks: [
-        {
-          kind: "list",
-          items: [
-            "**Les droits de garde** : un petit frais **annuel** que la SGI prélève pour **conserver vos titres** en sécurité (~0,27 %/an de la valeur de votre portefeuille). Plus votre portefeuille grossit, plus ils augmentent.",
-            "**Les frais de bourse en ligne** : l'accès à la plateforme. **Gratuit** chez beaucoup de SGI, mais **payant** chez d'autres (~1 000 FCFA/mois) — à vérifier avant de choisir.",
-          ],
-        },
-      ],
-    },
-    {
-      title: "Le piège le plus courant : le forfait",
-      blocks: [
-        { kind: "text", value: "Si vous investissez de petites sommes chaque mois, un mauvais choix de frais peut détruire votre rendement avant même de commencer. Faisons le calcul. 👇" },
+        { kind: "callout", tone: "highlight", value: "📬 **Notre recommandation : la newsletter Cauri News.** Chaque édition décrypte l'actualité économique et boursière de l'UEMOA — exactement le type de signaux (vents porteurs, vents contraires, mouvements sectoriels) qui nourrissent votre lecture top-down. Un réflexe simple à prendre : quelques minutes de lecture pour garder une longueur d'avance. 👇" },
       ],
     },
   ],
@@ -133,19 +141,91 @@ export const m22: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "Le calcul des frais",
-    instruction:
-      "Vous investissez 25 000 FCFA/mois (DCA). Deux SGI. **Courtier A — au pourcentage :** 1 % par transaction. **Courtier B — au forfait :** 1 000 FCFA fixes minimum par transaction. (1 erreur = − 5 000 FCFA.)",
+    title: "La double vision de l'analyste",
+    instruction: "2 scénarios, 1 tableau chacun — basculez entre les onglets ci-dessous pour les consulter, puis répondez. (1 erreur = − 5 000 FCFA.)",
+    tableTabs: [
+      {
+        key: "1",
+        label: "Scénario 1",
+        table: {
+          caption: "Tableau A — trois événements macro",
+          columns: ["Événement", "Secteur touché"],
+          rows: [
+            ["Le cacao chute de 30 %", "Exportateurs de cacao"],
+            ["Le mobile money explose dans l'UEMOA", "Banques & télécoms"],
+            ["Le carburant s'envole durablement", "Transport routier"],
+          ],
+        },
+      },
+      {
+        key: "2",
+        label: "Scénario 2",
+        table: {
+          caption: "Tableau B — deux opérateurs télécoms",
+          columns: ["Opérateur", "Part de marché", "Réseau", "Marque"],
+          rows: [
+            ["Télé-Réseau", "65 %", "Bâti sur 20 ans", "Connue"],
+            ["NouvelOp", "5 %", "Loué, pas le sien", "Casse les prix"],
+          ],
+        },
+      },
+    ],
     penaltyPerError: 5000,
-    perfectReward: 20000,
+    perfectReward: 25000,
+    // Recopie des options du Scénario 1 en repli neutre (requis par le
+    // type) : Q4/Q5/Q6 ont chacune leur propre paire de boutons.
     options: [
-      { value: "a", label: "Courtier A (1 %)" },
-      { value: "b", label: "Courtier B (1 000 FCFA fixes)" },
+      { value: "porteur", label: "Porteur" },
+      { value: "contraire", label: "Contraire" },
     ],
     questions: [
       {
-        prompt: "**Question : pour 25 000 FCFA/mois, quelle SGI vous coûte le moins cher ?**",
-        answer: "a",
+        prompt: "**Scénario 1.** « Le cacao chute de 30 % » → pour un **exportateur de cacao**, c'est un vent :",
+        answer: "contraire",
+        options: [
+          { value: "porteur", label: "Porteur" },
+          { value: "contraire", label: "Contraire" },
+        ],
+      },
+      {
+        prompt: "**Scénario 1.** « Le mobile money explose dans l'UEMOA » → pour **banques & télécoms**, c'est un vent :",
+        answer: "porteur",
+        options: [
+          { value: "porteur", label: "Porteur" },
+          { value: "contraire", label: "Contraire" },
+        ],
+      },
+      {
+        prompt: "**Scénario 1.** « Le carburant s'envole durablement » → pour le **transport routier**, c'est un vent :",
+        answer: "contraire",
+        options: [
+          { value: "porteur", label: "Porteur" },
+          { value: "contraire", label: "Contraire" },
+        ],
+      },
+      {
+        prompt: "**Scénario 2.** Entre Télé-Réseau et NouvelOp, lequel a le « fossé » le plus solide ?",
+        answer: "tele_reseau",
+        options: [
+          { value: "tele_reseau", label: "Télé-Réseau" },
+          { value: "nouvelop", label: "NouvelOp" },
+        ],
+      },
+      {
+        prompt: "**Bilan.** Dans le Scénario 1, pour juger le cacao, le mobile money et le carburant, vous êtes parti de l'économie régionale pour descendre vers le secteur. Quelle paire de lunettes est-ce ?",
+        answer: "top_down",
+        options: [
+          { value: "top_down", label: "Top-down (l'aigle)" },
+          { value: "bottom_up", label: "Bottom-up (la fourmi)" },
+        ],
+      },
+      {
+        prompt: "**Bilan.** Dans le Scénario 2, pour comparer Télé-Réseau et NouvelOp, vous avez regardé directement leur part de marché et leur réseau, sans vous soucier du contexte régional. Quelle paire de lunettes est-ce ?",
+        answer: "bottom_up",
+        options: [
+          { value: "top_down", label: "Top-down (l'aigle)" },
+          { value: "bottom_up", label: "Bottom-up (la fourmi)" },
+        ],
       },
     ],
   },
@@ -154,26 +234,51 @@ export const m22: Module = {
   feedback: {
     perfect: {
       icon: "🎉",
-      title: "Calcul parfait ! + 20 000 FCFA sur votre portefeuille !",
-      body: "Vous venez de sauver votre capital de l'appétit de certains courtiers.",
+      title: "Vision panoramique ! + 25 000 FCFA sur votre portefeuille !",
+      body: "Vous voyez la forêt (le contexte) ET l'arbre (l'entreprise).",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! Les frais fixes ont englouti votre capital (− 5 000 FCFA).",
-      body: "Reprenons le calcul.",
+      title: "Aïe ! Angle mort dans votre analyse (− 5 000 FCFA par erreur).",
+      body: "Reprenons les deux lunettes de l'analyste.",
     },
     explanations: [
       {
-        verdict: "Courtier A",
-        title: "Le calcul, pourcentage vs forfait",
-        body: "**Courtier A (1 %)** : 1 % de 25 000 = **250 FCFA**. **Courtier B (forfait)** : **1 000 FCFA**, soit `1000 ÷ 25000 = **4 %** de frais immédiats !` Avec le Courtier B, votre action devrait monter de 4 % **rien que pour rembourser les frais**.",
-        note: "**Règle d'or :** pour de **petites sommes** régulières, fuyez les forfaits, privilégiez le pourcentage. Le forfait n'avantage que les très gros montants ponctuels.",
+        verdict: "Contraire",
+        title: "Cacao −30 % : un vent contraire",
+        body: "Cacao −30 % → l'exportateur vend au même volume mais à prix cassé → **contraire**.",
+      },
+      {
+        verdict: "Porteur",
+        title: "Mobile money : un vent porteur structurel",
+        body: "Mobile money → plus de clients et de commissions → **porteur** structurel.",
+      },
+      {
+        verdict: "Contraire",
+        title: "Carburant en hausse : un vent contraire pour le transport",
+        body: "Carburant en hausse → coût du transport qui explose → **contraire**.",
+      },
+      {
+        verdict: "Télé-Réseau",
+        title: "Tableau B : le fossé de Télé-Réseau",
+        body: "**Télé-Réseau** a un vrai fossé (65 % de marché **et** un réseau que personne ne copie en un jour). NouvelOp n'a qu'une arme, casser les prix, ce qui détruit ses propres marges.",
+      },
+      {
+        verdict: "Top-down",
+        title: "Le Scénario 1, c'était du top-down",
+        body: "Économie régionale → secteur → entreprise : c'est la vue de **l'aigle**, qui part du contexte pour descendre vers le titre précis. C'est exactement ce que vous avez fait pour juger le cacao, le mobile money et le carburant.",
+      },
+      {
+        verdict: "Bottom-up",
+        title: "Le Scénario 2, c'était du bottom-up",
+        body: "Part de marché, réseau, avantage concurrentiel : c'est la vue de **la fourmi**, qui étudie l'entreprise de près, sans se soucier du contexte macro. C'est exactement ce que vous avez fait pour comparer Télé-Réseau et NouvelOp.",
+        note: "Nuance : personne ne prédit l'avenir à 100 %. On met les probabilités de son côté.",
       },
     ],
   },
 
   next: {
-    label: "Mon compte est prêt. Et si je préfère déléguer ?",
+    label: "Bonne entreprise, bel avenir… reste LA question : à quel prix ?",
     target: "Module 23",
   },
 };

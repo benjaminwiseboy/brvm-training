@@ -1,165 +1,219 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 15 — Les obligations en profondeur.
-   Approfondit l'obligation vue simplement au M04 (« Les produits »)
-   — mention repliée dans hero.lead (seule synthèse créative admise).
-   Barème NON standard (§4 : « Obligations en profondeur | 3 |
-   +25 000 | −5 000 ») : perfectReward 25000 / penaltyPerError 5000,
-   PAS le 20000/5000 par défaut de la Phase 3.
-   Formules/noms entre backticks du .txt (`ÉTAT DU SÉNÉGAL 6,50 %
-   2025-2032`) convertis en **gras**, même convention que m08/m12.
-   Emphases *italique* à un seul astérisque (ex. « *C'est le plus
-   courant pour les États.* », « *Bon à savoir : ... ACD.* ») : le
-   type Block ne supporte que **gras** (voir lib/format.ts,
-   splitMarkup ne reconnaît que `**...**`) — astérisques simples
-   retirés, texte conservé tel quel (aucun mot perdu ni inventé).
-   Défi = quiz à 4 questions ; chaque question a sa propre paire de
-   boutons (mécanisme M03/M11/M14), le tableau de l'obligation du
-   BOC (Section 2 du .txt) replié verbatim dans challenge.instruction.
-   RESTRUCTURATION DE L'EXPLICATION (voir rapport de tâche) : la
-   source ne fournit PAS 4 paragraphes séparés mais un bloc combiné
-   « Le grand choix : In Fine vs Amortissement » (couvrant Q2 ET Q3),
-   un paragraphe « Le coupon couru » (Q4), et AUCUN paragraphe dédié
-   à Q1 (sa lecture n'est explicitée qu'à la Slide 6, « carte
-   d'identité »). Les 4 explanations ci-dessous répartissent chaque
-   phrase sourcée vers la question qu'elle éclaire réellement,
-   parfois en dupliquant une phrase-pivot (« Aucun n'est meilleur »),
-   sans jamais inventer un fait absent du .txt. L'aside finale
-   « Bon à savoir : ACD » est repliée dans le `.note` de la 4ᵉ
-   (dernière) explanation, jamais en 5ᵉ entrée synthétique.
+   Contenu du Module 15 — Le BOC avancé (1/3) : indices,
+   compartiments & secteurs.
+   Défi = quiz à 3 questions ; les données du haut du BOC (indices,
+   PER sectoriels) sont rendues en vrai tableau (champ `table`,
+   cf. revue post-lancement) plutôt que repliées en prose dans
+   `challenge.instruction`. Q1/Q2/Q3 ont chacune 3 boutons
+   déjà réels dans le .txt (pas de conversion numérique nécessaire) ;
+   options par question quand même utilisées, car les 3 paires
+   diffèrent d'une question à l'autre (précédent M03/M06/M07).
+   Le .txt ne donne pas de 2ᵉ ligne de corps pour le feedback
+   « imperfect » (seulement le titre) : un court « Reprenons. » est
+   ajouté, dans le ton terse déjà utilisé ailleurs (M06/M07), le
+   champ `body` étant requis par le type.
+   Barème Phase 3 standard (§4) : +20 000 / −5 000.
    ============================================================= */
 export const m15: Module = {
   code: "M15",
   index: 15,
   totalModules: 28,
-  title: "Les obligations en profondeur",
-  phase: "Phase 3 · L'Analyse",
+  title: "Le BOC avancé (1/3) : indices, compartiments & secteurs",
+  phase: "Phase 4 · L'Analyse",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
-  reward: 25000,
+  reward: 20000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 15",
-    headline: "Vous devenez le banquier.",
+    headline: "La météo du marché, en un coup d'œil.",
     lead:
-      "Vous approfondissez ici l'obligation déjà vue simplement au M04. Jusqu'ici, vous achetiez des petits morceaux d'entreprises (des actions) ; avec une obligation, vous changez de rôle : vous devenez **celui qui prête**, contre un intérêt régulier (le coupon) et la promesse de récupérer **tout** votre capital à une date connue d'avance.",
+      "Avant de choisir une action, un investisseur avisé regarde d'abord le haut du BOC : les **indices**. Ce sont les « notes moyennes » qui résument, en un seul chiffre, comment se porte le marché — ou une famille d'entreprises.",
     card: {
-      label: "Le vocabulaire du prêteur",
-      title: "Nominal, coupon, coupon couru, remboursement",
-      hint: "4 notions pour lire une obligation comme un banquier :",
+      label: "Le bulletin météo du marché",
+      title: "Indices, compartiments, secteurs",
+      hint: "3 repères pour situer une action dans son contexte :",
       rules: [
-        "**Le nominal** — la somme prêtée (souvent 10 000 FCFA), rendue intégralement à la fin.",
-        "**Le coupon** — l'intérêt régulier qu'on vous verse pour vous remercier de prêter.",
-        "**Le coupon couru** — la part d'intérêts à rembourser si vous achetez en cours d'année.",
-        "**Le mode de remboursement** — In Fine (tout à la fin) ou Amortissement (progressif).",
+        "**Les indices** — Composite, BRVM 30, Prestige : la « note moyenne » d'un groupe d'entreprises.",
+        "**Les compartiments** — Prestige, Principal, Croissance : le classement par taille et solidité.",
+        "**Les secteurs** — 7 familles de métiers, chacune avec sa propre norme (PER, rendement…).",
       ],
     },
     objectives: [
-      "Distinguer le remboursement In Fine de l'Amortissement, et savoir lequel rapporte le plus d'intérêts au total.",
-      "Comprendre pourquoi le coupon couru se rembourse au vendeur quand on achète une obligation en cours d'année.",
-      "Décoder le nom d'une obligation au BOC (émetteur, taux, échéance) comme une carte d'identité.",
+      "Comprendre ce que mesure un indice boursier, et lire les niveaux du Composite, du BRVM 30 et du Prestige.",
+      "Distinguer les 3 compartiments (Prestige, Principal, Croissance) et les 7 secteurs de la cote.",
+      "Se servir de l'indice comme d'un thermomètre du marché et comme d'un bulletin de notes pour votre propre portefeuille.",
     ],
-    cta: "Devenir le banquier",
+    cta: "Regarder la météo du marché",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "Vous devenez le banquier",
+      title: "D'abord, regarder la météo",
       blocks: [
-        { kind: "text", value: "Jusqu'ici, vous achetiez des petits morceaux d'entreprises (des actions). Avec une **obligation**, vous changez de rôle : vous devenez **celui qui prête**." },
-        { kind: "text", value: "C'est simple : vous prêtez votre argent (le plus souvent à un État, comme celui du Sénégal), il vous verse un intérêt régulier, puis vous rend **tout** votre argent à une date connue d'avance. C'est le placement le plus tranquille de la bourse — vous êtes le prêteur, pas le joueur." },
-      ],
-    },
-    {
-      title: "Le nominal & le coupon (la somme prêtée & les intérêts)",
-      blocks: [
-        {
-          kind: "list",
-          items: [
-            "**La valeur nominale**, c'est le montant d'**un « billet » de prêt** : souvent **10 000 FCFA**. C'est aussi la somme exacte qu'on vous rendra à la fin.",
-            "**Le coupon**, c'est l'**intérêt** qu'on vous verse pour vous remercier de prêter. Il a un taux (ex. 6,50 %) et une fréquence de versement :",
-          ],
-        },
-        {
-          kind: "list",
-          items: [
-            "**A** — Annuelle : une fois par an.",
-            "**S** — Semestrielle : deux fois par an.",
-            "**T** — Trimestrielle : quatre fois par an.",
-          ],
-        },
-        { kind: "formula", label: "Coupon annuel", value: "Valeur nominale × Taux" },
-        { kind: "text", value: "**Exemple :** 6,50 % de 10 000, ça fait **650 FCFA** d'intérêt par an, dans votre poche." },
-      ],
-    },
-    {
-      title: "Le coupon couru (arriver en cours de route) 🥭",
-      blocks: [
-        { kind: "text", value: "Imaginez un **manguier** qui donne ses fruits une fois par an. Si vous le rachetez **6 mois avant la récolte**, les fruits ont déjà à moitié poussé grâce à l'ancien propriétaire — normal de lui rembourser sa part." },
-        { kind: "text", value: "C'est exactement le **coupon couru** : en achetant une obligation en cours d'année, vous remboursez au vendeur les intérêts déjà « poussés » depuis le dernier versement. Rassurez-vous : vous récupérerez **tout** le coupon à la prochaine récolte." },
-        { kind: "formula", label: "Coupon couru (approximatif)", value: "Coupon annuel × (Jours écoulés ÷ 365)" },
-      ],
-    },
-    {
-      title: "Les modes de remboursement : comment on vous rend l'argent 🔑",
-      blocks: [
-        { kind: "text", value: "La colonne « Type Amort » du BOC dit **comment** on vous rend votre capital. Imaginez que vous prêtez 10 000 FCFA à un ami :" },
-        {
-          kind: "list",
-          items: [
-            "**IF (In Fine)** — il vous verse les intérêts chaque année, et vous rend **tout d'un coup, à la fin**.",
-            "**AC (Amortissement Constant)** — il vous rembourse **par petites tranches égales**, chaque année (comme on rembourse un crédit).",
-            "**ACD (Constant Différé)** — pareil que AC, mais il commence par **ne payer que les intérêts** pendant quelques années, puis rembourse par tranches. C'est le plus courant pour les États.",
-            "**AD (Dégressif)** — il rembourse **beaucoup au début**, puis de moins en moins (rare).",
-          ],
-        },
-        { kind: "text", value: "Voici à quoi ressemble une obligation dans le BOC, avec tout ce que vous savez déjà lire :" },
+        { kind: "text", value: "Avant de choisir une action précise, un investisseur avisé jette un œil au **haut du BOC**. C'est comme un marin : avant de sortir en mer, il regarde d'abord si la mer est calme ou agitée." },
+        { kind: "text", value: "Ce « bulletin météo » du marché, ce sont les **indices**. Voici, inspiré d'un vrai BOC, ce qu'on y trouve : les indices, les compartiments et les secteurs. Pas de panique — on décortique chaque tableau juste après." },
         {
           kind: "boctable",
-          caption: "Extrait du BOC · obligation d'État",
-          columns: ["Titre", "Val. nominale", "Coupon net", "Coupon couru (exemple)", "Périodicité", "Type Amort", "Échéance"],
-          rows: [["ÉTAT DU SÉNÉGAL 6,50 % 2025-2032", "10 000 FCFA", "650 FCFA", "325 FCFA", "A", "ACD", "2032"]],
-        },
-      ],
-    },
-    {
-      title: "Pourquoi ce choix change tout",
-      blocks: [
-        {
-          kind: "list",
-          items: [
-            "**In Fine :** votre argent « travaille » en entier jusqu'au bout → vous gagnez **plus d'intérêts en tout**, mais il reste **bloqué** jusqu'à la fin.",
-            "**Amortissement (AC / ACD) :** votre argent vous **revient petit à petit** → plus disponible et moins risqué, mais comme la somme prêtée diminue, vous gagnez **moins d'intérêts** au total.",
+          caption: "Les indices (inspiré d'un vrai BOC)",
+          columns: ["Indice", "Niveau", "Var. annuelle"],
+          rows: [
+            ["BRVM Composite", "478,53", "+38,40 %"],
+            ["BRVM 30", "227,70", "+36,97 %"],
+            ["BRVM Prestige", "175,04", "+21,34 %"],
           ],
         },
-        { kind: "text", value: "Aucun n'est meilleur : voulez-vous **le maximum d'intérêts** (In Fine) ou **récupérer votre argent progressivement** (Amortissement) ?" },
-      ],
-    },
-    {
-      title: "Décoder le nom d'une obligation",
-      blocks: [
-        { kind: "text", value: "**ÉTAT DU SÉNÉGAL 6,50 % 2025-2032** se lit comme une carte d'identité :" },
         {
           kind: "boctable",
-          caption: "Carte d'identité d'une obligation",
-          columns: ["Qui emprunte", "Taux d'intérêt", "Année de départ", "Année de fin"],
-          rows: [["État du Sénégal", "6,50 %", "2025", "2032"]],
+          caption: "Les compartiments",
+          columns: ["Compartiment", "Nb de sociétés", "Niveau"],
+          rows: [
+            ["BRVM-Prestige", "12", "175,04"],
+            ["BRVM-Principal", "35", "362,87"],
+          ],
         },
-        { kind: "text", value: "Quelques sigles d'emprunteurs :" },
+        {
+          kind: "boctable",
+          caption: "Les secteurs (PER moyen)",
+          columns: ["Secteur", "PER moyen"],
+          rows: [
+            ["Télécommunications", "10,72"],
+            ["Consommation Discrétionnaire", "38,58"],
+            ["Services Financiers", "15,61"],
+            ["Consommation de Base", "10,31"],
+            ["Industriels", "23,11"],
+            ["Énergie", "18,27"],
+            ["Services Publics", "20,91"],
+          ],
+        },
+      ],
+    },
+    {
+      title: "Un indice, c'est quoi ? La note moyenne de la classe 🎓",
+      blocks: [
+        { kind: "text", value: "Imaginez une classe de 47 élèves. Plutôt que de regarder la note de chaque élève une par une, le maître calcule **la moyenne de la classe** : un seul chiffre qui résume comment tout le monde s'en sort." },
+        { kind: "text", value: "Un **indice boursier**, c'est exactement ça. Au lieu de suivre les 47 entreprises de la BRVM une par une, on calcule leur **« note moyenne »**. Si cette moyenne monte, c'est que, dans l'ensemble, les entreprises se portent bien." },
+        { kind: "text", value: "Le **BRVM Composite**, c'est la note moyenne de **toutes** les entreprises cotées." },
+      ],
+    },
+    {
+      title: "Trois « moyennes » plutôt qu'une",
+      blocks: [
+        { kind: "text", value: "La BRVM calcule trois notes moyennes, pour trois groupes différents :" },
         {
           kind: "list",
           items: [
-            "**TPCI** — Trésor de Côte d'Ivoire.",
-            "**TPBF** — Trésor du Burkina Faso.",
-            "**TPBJ** — Trésor du Bénin.",
-            "**TPTG** — Trésor du Togo.",
-            "**TPNE** — Trésor du Niger.",
-            "**EOM / EOS** — État du Mali / État du Sénégal.",
+            "**BRVM Composite (478)** — la moyenne de **TOUTE la classe** (toutes les entreprises).",
+            "**BRVM 30 (228)** — la moyenne des **30 élèves les plus actifs** (les 30 actions les plus échangées). Un baromètre plus stable, centré sur les grandes entreprises.",
+            "**BRVM Prestige (175)** — la moyenne de **l'élite** : les entreprises du compartiment le plus exigeant.",
           ],
         },
-        { kind: "text", value: "👇" },
+        {
+          kind: "boctable",
+          caption: "Exemple réel de ce qu'on retrouve en haut du BOC",
+          columns: ["Indice", "Niveau"],
+          rows: [
+            ["BRVM Composite", "478"],
+            ["BRVM 30", "228"],
+            ["BRVM Prestige", "175"],
+          ],
+        },
+      ],
+    },
+    {
+      title: "Pourquoi l'indice affiche « 478 » ? Le point de départ",
+      blocks: [
+        { kind: "text", value: "Le jour où l'on crée un indice, on décide de mettre le compteur à **100** — comme le **kilomètre zéro** au départ d'une route." },
+        { kind: "text", value: "Dans notre exemple, le Composite affiche **478**. La traduction est toute simple : ce qui valait **100** au départ vaut, dans cet exemple, **478**. Donc le marché a été **multiplié par presque 5** depuis le début." },
+        { kind: "text", value: "Autre image : au départ, un panier contenant un petit morceau de chaque entreprise coûtait **100 FCFA**. Dans cet exemple, le même panier coûte **478 FCFA**." },
+        { kind: "callout", tone: "highlight", value: "👉 Mais au quotidien, le chiffre exact compte peu. Ce qu'on regarde, c'est **de combien il a bougé** : **+38,40 % sur l'année**, ça veut dire que « la classe » a gagné 38 % en moyenne cette année." },
+      ],
+    },
+    {
+      title: "Compartiments & secteurs : deux façons de ranger",
+      blocks: [
+        { kind: "text", value: "On range aussi les entreprises comme dans un championnat de foot et un annuaire des métiers :" },
+        { kind: "text", value: "Par **compartiment** (comme les divisions d'un championnat) :" },
+        {
+          kind: "list",
+          items: [
+            "**Prestige** — la première division : les 12 plus grands « clubs », les plus solides et les plus suivis. Pour débuter, plutôt rassurant.",
+            "**Principal** — les 35 « clubs » suivants.",
+            "**Croissance** — les jeunes « clubs » qui montent.",
+          ],
+        },
+        { kind: "text", value: "Par **secteur** (comme les familles de métiers), 7 en tout :" },
+        {
+          kind: "countries",
+          items: ["Télécoms", "Services Financiers", "Consommation Discrétionnaire", "Consommation de Base", "Industriels", "Énergie", "Services Publics"],
+        },
+        { kind: "text", value: "Chaque famille a sa propre note moyenne → vous voyez tout de suite **quel métier a le vent en poupe**." },
+        {
+          kind: "boctable",
+          caption: "Extrait du BOC · indices par compartiment",
+          columns: ["Compartiment", "Nb de sociétés", "Niveau"],
+          rows: [
+            ["BRVM-Prestige", "12", "175,04"],
+            ["BRVM-Principal", "35", "362,87"],
+          ],
+        },
+        {
+          kind: "boctable",
+          caption: "Extrait du BOC · indices sectoriels (PER moyen)",
+          columns: ["Secteur", "PER moyen"],
+          rows: [
+            ["Télécommunications", "10,72"],
+            ["Consommation Discrétionnaire", "38,58"],
+            ["Services Financiers", "15,61"],
+            ["Consommation de Base", "10,31"],
+            ["Industriels", "23,11"],
+            ["Énergie", "18,27"],
+            ["Services Publics", "20,91"],
+          ],
+        },
+      ],
+    },
+    {
+      title: "À quoi ça sert ? Le thermomètre et le bulletin de notes",
+      blocks: [
+        {
+          kind: "list",
+          items: [
+            "**Le thermomètre** : le marché est-il de bonne humeur aujourd'hui ? S'il baisse en général, pas étonnant que VOS actions baissent aussi — elles suivent souvent le mouvement du groupe.",
+            "**Le bulletin de notes (le juge de vos résultats)** : avez-vous fait mieux ou moins bien que « la classe » ? Exemple : vous avez gagné **+25 %** cette année — bravo ! Mais si la moyenne de la classe (le Composite) a fait **+38 %**, vous êtes **en dessous de la moyenne**. Vous auriez gagné plus en achetant simplement « toute la classe » (un fonds qui copie l'indice).",
+          ],
+        },
+      ],
+    },
+    {
+      title: "Le secret des dividendes : l'arbre ET les fruits 🍎",
+      blocks: [
+        { kind: "text", value: "Le BOC affiche deux versions de l'indice :" },
+        {
+          kind: "list",
+          items: [
+            "Le **Composite** (+38,40 %) — il ne compte que la hausse des **prix** : l'arbre qui grandit.",
+            "Le **Composite Total Return** (+42,69 %) — il compte **en plus** les **dividendes** : les fruits que vous avez récoltés en chemin.",
+          ],
+        },
+        { kind: "text", value: "L'écart (~4 points) montre qu'à la BRVM, les fruits (dividendes) comptent presque autant que la croissance de l'arbre. Ne les oubliez jamais." },
+        {
+          kind: "boctable",
+          caption: "Ce que dit l'encart ci-dessous, visualisé",
+          columns: ["Indicateur", "Valeur"],
+          rows: [
+            ["BRVM Composite (prix seuls)", "+38,40 %/an"],
+            ["BRVM Composite Total Return (prix + dividendes)", "+42,69 %/an"],
+            ["PER moyen du marché", "≈ 14"],
+            ["Rendement moyen du marché", "≈ 6 %"],
+          ],
+          highlightCols: [1],
+        },
+        { kind: "text", value: "Sur le tableau des secteurs vu plus tôt, l'info qui compte vraiment pour juger un secteur, c'est son **PER**. PER veut dire **Price Earning Ratio** (« cours sur bénéfice ») : plus il est bas, moins vous payez cher pour chaque FCFA de bénéfice de l'entreprise. On le détaille en profondeur au **module 17**, puis on s'en sert pour calculer un juste prix au **module 23** (avec Graham)." },
+        { kind: "callout", tone: "info", value: "(Tout en bas du BOC, un dernier repère utile : le rendement moyen du marché ≈ 6 %. Le reste, ce sont des outils de pros : ignorez-les pour l'instant.) 👇" },
       ],
     },
   ],
@@ -168,53 +222,55 @@ export const m15: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "Décoder une obligation",
-    instruction: "Voici une obligation d'État telle qu'au BOC. Observez-la et répondez. (1 erreur = − 5 000 FCFA.)",
+    title: "Lire le tableau de bord",
+    instruction: "Observez ce tableau de bord inspiré du BOC et répondez. (1 erreur = − 5 000 FCFA.)",
     table: {
-      caption: "ÉTAT DU SÉNÉGAL 6,50 % 2025-2032",
-      columns: ["Émetteur", "Taux", "Année de départ", "Année de fin", "Nominal", "Coupon net", "Périodicité", "Type Amort"],
-      rows: [["État du Sénégal", "6,50 %", "2025", "2032", "10 000 FCFA", "650 FCFA", "Annuelle (A)", "ACD"]],
-      highlightCols: [1, 3, 7],
+      caption: "Tableau de bord du marché (inspiré du BOC)",
+      columns: ["Indicateur", "Valeur"],
+      rows: [
+        ["BRVM Composite", "+38,40 %/an"],
+        ["BRVM Composite Total Return", "+42,69 %/an"],
+        ["PER — Consommation de Base", "10,31"],
+        ["PER — Services Financiers", "15,61"],
+        ["PER — Consommation Discrétionnaire", "38,58"],
+      ],
     },
     penaltyPerError: 5000,
-    perfectReward: 25000,
+    perfectReward: 20000,
     // Recopie des options de Q1 en repli neutre (requis par le type) :
-    // chaque question a sa propre paire de boutons.
+    // chaque question a sa propre paire/triplet de boutons, verbatim
+    // depuis le .txt source.
     options: [
-      { value: "taux_echeance", label: "Le taux d'intérêt annuel, et l'année où l'on vous rend votre capital (échéance)." },
-      { value: "prix_creation", label: "Le prix de l'obligation, et l'année de création." },
+      { value: "battu", label: "J'ai battu le marché." },
+      { value: "sous", label: "J'ai bien gagné, mais moins que la moyenne de la classe (sous-performance)." },
+      { value: "perdu", label: "J'ai perdu de l'argent." },
     ],
     questions: [
       {
-        prompt: "**Q1 :** Que signifient « 6,50 % » et « 2032 » ?",
-        answer: "taux_echeance",
+        prompt: "Le Composite (la note moyenne de la classe) a fait **+38,40 %** sur l'année. Votre portefeuille : **+25 %**. Conclusion ?",
+        answer: "sous",
         options: [
-          { value: "taux_echeance", label: "Le taux d'intérêt annuel, et l'année où l'on vous rend votre capital (échéance)." },
-          { value: "prix_creation", label: "Le prix de l'obligation, et l'année de création." },
+          { value: "battu", label: "J'ai battu le marché." },
+          { value: "sous", label: "J'ai bien gagné, mais moins que la moyenne de la classe (sous-performance)." },
+          { value: "perdu", label: "J'ai perdu de l'argent." },
         ],
       },
       {
-        prompt: "**Q2 :** Un investisseur veut **récupérer une partie de son argent chaque année**. Quel mode ?",
-        answer: "amortissement",
+        prompt: "Pourquoi le « Total Return » (+42,69 %) dépasse-t-il le Composite (+38,40 %) ?",
+        answer: "dividendes",
         options: [
-          { value: "in_fine", label: "In Fine (IF)" },
-          { value: "amortissement", label: "Amortissement Constant (AC ou ACD)" },
+          { value: "erreur", label: "Une erreur de la BRVM." },
+          { value: "dividendes", label: "Il compte aussi les dividendes (les fruits), pas seulement la hausse des prix (l'arbre)." },
+          { value: "grandes", label: "Il ne compte que les grandes entreprises." },
         ],
       },
       {
-        prompt: "**Q3 :** À montant et taux identiques, quel mode rapporte le **plus d'intérêts au total** ?",
-        answer: "in_fine",
+        prompt: "D'après les PER, quel secteur est le plus **cher** ?",
+        answer: "conso_discretionnaire",
         options: [
-          { value: "in_fine", label: "In Fine (IF)" },
-          { value: "amortissement", label: "Amortissement Constant (AC)" },
-        ],
-      },
-      {
-        prompt: "**Q4 :** Vous achetez l'obligation **6 mois** après le dernier coupon. Que se passe-t-il ?",
-        answer: "coupon_couru",
-        options: [
-          { value: "rien", label: "Rien de plus, le prix affiché suffit." },
-          { value: "coupon_couru", label: "Vous remboursez au vendeur le « coupon couru » (sa part de fruits déjà poussés), récupéré au coupon suivant." },
+          { value: "conso_base", label: "Conso de Base (10,31)" },
+          { value: "services_financiers", label: "Services Financiers (15,61)" },
+          { value: "conso_discretionnaire", label: "Conso Discrétionnaire (38,58)" },
         ],
       },
     ],
@@ -224,41 +280,35 @@ export const m15: Module = {
   feedback: {
     perfect: {
       icon: "🎉",
-      title: "Vous parlez la langue des obligations ! + 25 000 FCFA sur votre portefeuille !",
-      body: "Nominal, coupon, coupon couru, mode de remboursement : le vocabulaire des obligations n'a plus de secret pour vous.",
+      title: "Vue d'ensemble maîtrisée ! + 20 000 FCFA sur votre portefeuille !",
+      body: "Vous lisez le marché entier d'un coup d'œil, et vous savez vous comparer à la moyenne de la classe.",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! Une colonne obligataire vous a échappé (− 5 000 FCFA par erreur).",
-      body: "Reprenons les mécanismes clés avant de continuer.",
+      title: "Aïe ! Le tableau de bord mérite un second regard (− 5 000 FCFA par erreur).",
+      body: "Reprenons.",
     },
     explanations: [
       {
-        verdict: "Taux annuel + échéance",
-        title: "Décoder la carte d'identité de l'obligation",
-        body: "**ÉTAT DU SÉNÉGAL 6,50 % 2025-2032** se lit comme une carte d'identité : qui emprunte (l'État du Sénégal) · **le taux d'intérêt** (6,50 %) · **l'année de départ et de fin** (2025 → 2032).",
+        verdict: "Sous-performance",
+        title: "Le benchmark, votre bulletin de notes.",
+        body: "+25 %, c'est bien… mais la classe a fait +38,40 %. Vous êtes donc **sous la moyenne** : suivre toute la classe aurait rapporté plus. On se compare TOUJOURS à l'indice.",
       },
       {
-        verdict: "Amortissement Constant",
-        title: "L'Amortissement vous rend votre argent petit à petit",
-        body: "**Amortissement Constant :** on vous rend 2 500 de capital chaque année ; l'intérêt baisse avec la somme qui reste due (600, 450, 300, 150). Total des intérêts : **1 500 FCFA**, mais vous récupérez votre argent au fil du temps — plus disponible et moins risqué.",
+        verdict: "Les dividendes (les fruits)",
+        title: "L'arbre ET les fruits.",
+        body: "L'écart entre +42,69 % et +38,40 %, ce sont les dividendes (les fruits récoltés). À la BRVM, ils font une grosse part de l'enrichissement.",
       },
       {
-        verdict: "In Fine",
-        title: "L'In Fine rapporte plus d'intérêts au total",
-        body: "**In Fine :** 600 FCFA d'intérêt chaque année, et vos 10 000 reviennent **en une fois à la fin**. Total des intérêts : 4 × 600 = **2 400 FCFA**. In Fine rapporte plus d'intérêts, car l'argent travaille en entier jusqu'au bout ; aucun des deux modes n'est « meilleur » — ça dépend de votre besoin.",
-      },
-      {
-        verdict: "Coupon couru",
-        title: "Le coupon couru, une question de justice",
-        body: "**Le coupon couru** est simplement une question de justice : chacun (ancien et nouveau propriétaire) touche sa part de fruits.",
-        note: "Bon à savoir : la plupart des obligations d'État de la BRVM sont en **ACD**.",
+        verdict: "Conso Discrétionnaire",
+        title: "Chaque famille de métier a sa norme.",
+        body: "La Conso Discrétionnaire (PER 38,58) est bien plus chère que les Services Financiers (15,61). On compare toujours une action à **sa famille (son secteur) et à la moyenne du marché (≈ 14)**.",
       },
     ],
   },
 
   next: {
-    label: "Je maîtrise les obligations ! Passons à l'analyse d'une action.",
+    label: "Je connais le marché. Zoomons sur UNE ligne d'action.",
     target: "Module 16",
   },
 };

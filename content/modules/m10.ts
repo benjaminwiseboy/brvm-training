@@ -127,7 +127,7 @@ export const m10: Module = {
   },
 
   next: {
-    label: "Débloquer « Analyste Stratège » et apprendre à lire le BOC !",
+    label: "Mon plan est prêt. Passons à l'action : ouvrir mon compte !",
     target: "Module 11",
   },
 };

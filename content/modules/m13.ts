@@ -1,127 +1,92 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 13 — Le BOC avancé (2/3) : lire une ligne
-   d'action.
-   Défi = quiz à 3 questions, boutons déjà réels dans le .txt
-   (2 ou 3 options selon la question — Q3 n'a que 2 boutons dans
-   la source, conservé tel quel). Ligne réelle d'Ecobank (ETIT,
-   17/07/2026), rendue en vrai tableau (champ `table`, cf. revue
-   post-lancement) plutôt que repliée en prose.
-   Le .txt ne donne pas de 2ᵉ ligne de corps pour le feedback
-   « imperfect » (seulement le titre) : un court « Reprenons. » est
-   ajouté (même repli que M12), le champ `body` étant requis par
-   le type.
-   Barème Phase 3 standard (§4) : +20 000 / −5 000.
+   Contenu du Module 13 — Passer votre premier ordre. Phase 3
+   « Passage à l'action » (barème externe cité ci-dessous sous son
+   nom d'origine « Phase 4 », cf. Bareme harmonise.txt).
+   Barème standard Phase 4 (Bareme harmonise.txt §4 : « Phase 4 —
+   Action | +20 000 | −5 000 ») : perfectReward 20000 /
+   penaltyPerError 5000 / reward 20000 — confirmé par le propre
+   texte du .txt (« + 20 000 FCFA » / « − 5 000 FCFA »).
+   Défi = quiz à UNE SEULE question (3 boutons) : `challenge.questions`
+   a donc 1 seule entrée, et `feedback.explanations` AUSSI 1 seule
+   entrée (la mécanique du carnet d'ordres et son résultat chiffré
+   sont un seul raisonnement, combiné dans un seul `body`, comme
+   M19/M11). La « règle d'or à la BRVM » de conclusion est repliée
+   dans le `.note` de cette explication unique.
+   Métaphore du grand marché d'Adjamé/Dantokpa (négociation, carnet
+   d'ordres) préservée verbatim, comme demandé par le brief.
    ============================================================= */
 export const m13: Module = {
   code: "M13",
   index: 13,
   totalModules: 28,
-  title: "Le BOC avancé (2/3) : lire une ligne d'action",
-  phase: "Phase 3 · L'Analyse",
+  title: "Passer votre premier ordre",
+  phase: "Phase 3 · Passage à l'action",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
   reward: 20000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 13",
-    headline: "Une ligne d'action, plusieurs heures de la journée.",
+    headline: "La bourse, c'est le grand marché : on négocie.",
     lead:
-      "Cours précédent, ouverture, clôture, cours de référence… chaque colonne de prix raconte un moment précis de la journée. Et une variation du jour ne dit jamais tout sur le climat de l'année.",
+      "Comme au grand marché d'Adjamé ou de Dantokpa, la bourse n'a pas de prix fixe : pour acheter, il faut qu'un autre investisseur accepte de vendre. Le **carnet d'ordres** met face à face acheteurs et vendeurs, et deux types d'ordres vous permettent d'y participer.",
     card: {
-      label: "Lire une ligne comme un pro",
-      title: "Les prix, le disjoncteur, la météo",
-      hint: "3 pièges à éviter sur la ligne d'une action :",
+      label: "Les 2 types d'ordres",
+      title: "Cours limité vs marché",
+      hint: "Le réflexe qui protège votre budget, et celui qui va vite :",
       rules: [
-        "**Les colonnes de prix** — précédent, ouverture, clôture : chacune raconte un moment de la journée.",
-        "**Le disjoncteur des ± 7,5 %** — la limite de sécurité calculée sur le cours de référence.",
-        "**La météo vs le climat** — ne jamais confondre la variation du jour et celle de l'année.",
+        "**L'ordre à cours limité 🛡️** — vous fixez un prix maximum, vous maîtrisez votre budget.",
+        "**L'ordre au marché 🚀** — aucun prix fixé, exécution immédiate, mais risque de payer plus cher.",
       ],
     },
     objectives: [
-      "Distinguer les colonnes de prix d'une ligne d'action : cours précédent, ouverture, clôture, cours de référence.",
-      "Comprendre le rôle du « disjoncteur » des ± 7,5 % et le prix sur lequel il se calcule.",
-      "Ne plus confondre la variation du jour et la tendance de l'année avant de juger une action.",
+      "Comprendre comment le carnet d'ordres met face à face acheteurs et vendeurs, sans prix fixe imposé.",
+      "Distinguer l'ordre à cours limité de l'ordre au marché, et savoir quand utiliser chacun.",
+      "Éviter le piège du prix moyen qui explose en passant un ordre au marché sur un titre peu liquide.",
     ],
-    cta: "Décoder une vraie ligne d'action",
+    cta: "Passer mon premier ordre",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "Zoomons sur une seule action",
+      title: "Comment parler au marché",
       blocks: [
-        { kind: "text", value: "Vous savez lire la météo générale du marché (module 12). Descendons maintenant sur **une seule action**. Sa ligne dans le BOC a plusieurs colonnes de prix — pas de panique, chacune raconte simplement **un moment de la journée**. Voici un exemple réel, qu'on décortique colonne par colonne dans les slides suivantes :" },
-        {
-          kind: "boctable",
-          caption: "Ligne réelle d'Ecobank (ETIT) · BOC du 17/07/2026",
-          columns: ["Cours précédent", "Ouverture", "Clôture", "Cours de référence", "Var. jour", "Var. année", "Volume", "Valeur"],
-          rows: [["73", "68", "68", "68", "−6,85 %", "+195,65 %", "1 662 045", "113 073 294 FCFA"]],
-        },
+        { kind: "text", value: "La bourse n'est pas un supermarché à prix fixes. C'est comme le grand marché d'Adjamé ou de Dantokpa : **on négocie**. Pour acheter, il faut qu'un autre investisseur accepte de vendre." },
       ],
     },
     {
-      title: "Les prix, comme les heures d'une journée",
+      title: "Le carnet d'ordres",
       blocks: [
-        { kind: "text", value: "Imaginez une journée au marché :" },
+        { kind: "text", value: "C'est le tableau qui met face à face les **acheteurs** et les **vendeurs**. Pour y participer, vous avez principalement **2 types d'ordres**." },
+      ],
+    },
+    {
+      title: "L'ordre à cours limité 🛡️ (le stratège)",
+      blocks: [
+        { kind: "text", value: "Vous fixez un **prix maximum** : « j'achète, mais pas au-dessus de 5 000 FCFA ». C'est le réflexe du bon acheteur au marché : vous avez une somme en tête, et vous ne payez pas un franc de plus." },
         {
           kind: "list",
           items: [
-            "**Cours précédent** — le prix d'**hier** soir. C'est le point de comparaison : a-t-on monté ou baissé depuis ?",
-            "**Ouverture** — le prix à **l'ouverture des portes** ce matin. Il donne l'ambiance de début de journée.",
-            "**Clôture** — le prix à **la fermeture**, le soir. C'est LE prix qui vous intéresse : votre ordre de demain se fera à peu près à ce niveau.",
+            "Avantage : aucune mauvaise surprise, vous maîtrisez votre budget (et vos ratios).",
+            "Risque : si personne ne vend à ce prix, votre ordre n'est pas exécuté.",
           ],
         },
       ],
     },
     {
-      title: "Le cours de référence & le « disjoncteur » des ± 7,5 %",
+      title: "L'ordre au marché 🚀 (le pressé)",
       blocks: [
-        { kind: "text", value: "**En clair :** le cours de référence est le prix « de base » que la BRVM fixe pour le lendemain (souvent égal à la clôture)." },
-        { kind: "text", value: "**À quoi il sert :** à poser une **limite de sécurité**. En une seule journée, une action ne peut ni monter ni baisser de plus de **± 7,5 %** par rapport à ce prix de base." },
-        { kind: "text", value: "**L'image :** c'est un **disjoncteur électrique**. Quand le courant s'affole, le disjoncteur saute pour éviter l'incendie. Ici, si une action s'emballe, la règle des 7,5 % « coupe le courant » pour la journée, le temps que tout le monde se calme. Impossible, donc, qu'une simple rumeur fasse chuter votre action de 40 % en un jour." },
-        { kind: "callout", tone: "highlight", value: "**Une spécificité de la BRVM, et une vraie sécurité pour vous :** contrairement à d'autres marchés (actions américaines sans limite, cryptomonnaies…) où un titre peut perdre 50 %, 90 % voire tomber à zéro en une seule séance, **ce disjoncteur rend ça impossible ici**. Vous ne pouvez jamais perdre tout votre argent d'un coup sur une action à la BRVM : au pire, − 7,5 % par jour, jamais plus." },
-      ],
-    },
-    {
-      title: "Le piège n°1 : la météo du jour vs le climat de l'année ⚠️",
-      blocks: [
-        { kind: "text", value: "Le BOC donne DEUX variations : celle **du jour** et celle **de l'année**. Ne les confondez jamais — c'est la différence entre **la météo d'aujourd'hui** et **le climat de l'année**." },
-        { kind: "text", value: "Exemple réel — Ecobank (ETIT), le 17/07/2026 :" },
+        { kind: "text", value: "Vous ne fixez **aucun prix** : « achetez tout de suite, peu importe le coût ». C'est foncer tête baissée : très rapide, mais on peut le payer cher." },
         {
-          kind: "boctable",
-          caption: "Ecobank (ETIT) · deux lectures de la même action",
-          columns: ["Période", "Variation"],
-          rows: [
-            ["Aujourd'hui (la météo)", "−6,85 %"],
-            ["Sur l'année (le climat)", "+195,65 % 🚀"],
+          kind: "list",
+          items: [
+            "Avantage : vous obtenez vos actions immédiatement.",
+            "Risque : vous pouvez payer **beaucoup plus cher** que prévu, surtout si l'action est peu liquide. Voyons pourquoi. 👇",
           ],
         },
-        { kind: "text", value: "Une journée de pluie… mais l'action a presque **triplé** sur l'année !" },
-        { kind: "callout", tone: "warn", value: "Le débutant voit la pluie du jour et prend peur. L'investisseur avisé sait qu'une journée de pluie ne change rien à un climat magnifique. **On juge une action sur son climat, pas sur la météo d'un jour.**" },
-      ],
-    },
-    {
-      title: "Le volume : y a-t-il foule ? (rappel)",
-      blocks: [
-        { kind: "text", value: "Comme au **module 11**, le **volume** = le nombre de titres échangés dans la journée = **l'affluence** du marché. Plus il y a de monde, plus c'est facile d'acheter ou de revendre sans faire bouger le prix." },
-        { kind: "text", value: "**Exemple :** ce jour-là, ETIT a échangé une cohue de titres, contre beaucoup moins pour Sonatel. La colonne Valeur mesure la même affluence, mais en argent :" },
-        {
-          kind: "boctable",
-          caption: "BOC du 17/07/2026 · affluence de deux actions",
-          columns: ["Titre", "Volume (titres)", "Valeur échangée"],
-          rows: [
-            ["ETIT — Ecobank Trans. Incorp. TG", "1 662 045", "113 073 294 FCFA"],
-            ["SNTS — Sonatel SN", "1 944", "62 480 935 FCFA"],
-          ],
-        },
-      ],
-    },
-    {
-      title: "À vous de lire une vraie ligne 👇",
-      blocks: [
-        { kind: "lead", value: "À vous de lire une vraie ligne. 👇" },
       ],
     },
   ],
@@ -130,50 +95,20 @@ export const m13: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "Décoder les mouvements",
-    instruction: "Voici une vraie ligne d'action, telle qu'elle apparaît dans le BOC. Observez-la et répondez. (1 erreur = − 5 000 FCFA.)",
-    table: {
-      caption: "Ligne réelle d'Ecobank (ETIT) · BOC du 17/07/2026",
-      columns: ["Cours précédent", "Ouverture", "Clôture", "Cours de référence", "Var. jour", "Var. année", "Volume", "Valeur"],
-      rows: [["73", "68", "68", "68", "−6,85 %", "+195,65 %", "1 662 045", "113 073 294 FCFA"]],
-      highlightCols: [4, 5],
-    },
+    title: "Le carnet d'ordres",
+    instruction:
+      "Action fictive « Afri-Transport ». Clôture d'hier (BOC) : 4 000 FCFA. Vous voulez 15 actions ce matin. Le carnet d'ordres (les vendeurs) : Vendeur n°1, 5 actions à 4 050 FCFA. Vendeur n°2, 10 actions à 4 300 FCFA. Votre action : pressé, vous passez un ordre « au marché » pour 15 actions d'un coup. (1 erreur = − 5 000 FCFA.)",
     penaltyPerError: 5000,
     perfectReward: 20000,
-    // Recopie des options de Q1 en repli neutre (requis par le type) :
-    // chaque question a sa propre paire/triplet de boutons, verbatim
-    // depuis le .txt source (Q3 n'a que 2 boutons dans la source).
     options: [
-      { value: "raison", label: "Il a raison, l'action s'effondre." },
-      { value: "meteo", label: "Ce n'est que la météo du jour ; sur l'année (le climat), l'action fait +195,65 %. Pas de panique." },
-      { value: "impossible", label: "Impossible à dire." },
+      { value: "force_hier", label: "Il force les vendeurs à me vendre à 4 000 (le prix d'hier)." },
+      { value: "cascade", label: "Il prend les 5 premières à 4 050, puis les 10 suivantes à 4 300 → mon budget moyen explose." },
+      { value: "annule", label: "Il annule mon ordre, car aucun vendeur n'a 15 actions d'un coup." },
     ],
     questions: [
       {
-        prompt: "Votre beau-frère voit « −6,85 % », panique et veut tout vendre. La bonne lecture ?",
-        answer: "meteo",
-        options: [
-          { value: "raison", label: "Il a raison, l'action s'effondre." },
-          { value: "meteo", label: "Ce n'est que la météo du jour ; sur l'année (le climat), l'action fait +195,65 %. Pas de panique." },
-          { value: "impossible", label: "Impossible à dire." },
-        ],
-      },
-      {
-        prompt: "Quel prix sert de base au « disjoncteur » des ± 7,5 % de la prochaine séance ?",
-        answer: "reference",
-        options: [
-          { value: "ouverture", label: "L'ouverture" },
-          { value: "reference", label: "Le cours de référence" },
-          { value: "precedent", label: "Le cours précédent" },
-        ],
-      },
-      {
-        prompt: "Avec 1 662 045 titres échangés, que peut-on dire d'ETIT ce jour-là ?",
-        answer: "liquide",
-        options: [
-          { value: "peu", label: "Peu échangée, difficile à revendre." },
-          { value: "liquide", label: "Très liquide (grosse affluence) : facile à acheter ou revendre." },
-        ],
+        prompt: "**Question : que fait le système, et quel en est le résultat ?**",
+        answer: "cascade",
       },
     ],
   },
@@ -182,35 +117,26 @@ export const m13: Module = {
   feedback: {
     perfect: {
       icon: "🎉",
-      title: "Lecture chirurgicale ! + 20 000 FCFA sur votre portefeuille !",
-      body: "Ni les colonnes de prix, ni le rouge d'une seule journée ne vous piègent plus.",
+      title: "Excellente vision du marché ! + 20 000 FCFA sur votre portefeuille !",
+      body: "Vous avez évité le piège classique des marchés peu liquides.",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! Un prix vous a échappé (− 5 000 FCFA par erreur).",
-      body: "Reprenons.",
+      title: "Aïe ! Le marché vous a fait payer le prix fort (− 5 000 FCFA).",
+      body: "Reprenons la mécanique de l'ordre « au marché ».",
     },
     explanations: [
       {
-        verdict: "La météo du jour vs le climat",
-        title: "La météo vs le climat.",
-        body: "Une baisse de −6,85 % en un jour, c'est une averse : ça ne dit **rien** sur la solidité de l'entreprise. Sur l'année, ETIT a fait **+195,65 %**. On regarde toujours le **climat** (la tendance longue), pas la pluie d'un jour.",
-      },
-      {
-        verdict: "Le cours de référence",
-        title: "Le disjoncteur.",
-        body: "La limite des ± 7,5 % se calcule à partir du **cours de référence** : c'est le garde-fou anti-panique de la BRVM.",
-      },
-      {
-        verdict: "Très liquide",
-        title: "L'affluence.",
-        body: "Beaucoup de titres échangés = marché animé = on entre et on sort facilement. Un volume minuscule est un signal de prudence.",
+        verdict: "Il prend les 5 premières à 4 050, puis les 10 suivantes à 4 300",
+        title: "La mécanique de l'ordre « au marché »",
+        body: "Le système « mange » les lignes du carnet, de la moins chère à la plus chère, jusqu'à votre quantité. 1. Il prend les 5 actions à 4 050. 2. Il lui en faut 10 de plus → il prend celles à 4 300. 3. Il accepte, car vous n'avez mis aucune limite. **Résultat :** vous pensiez payer ~4 000, vous vous retrouvez avec des actions à 4 300.",
+        note: "**La règle d'or à la BRVM :** le marché est parfois peu liquide. **Utilisez TOUJOURS l'ordre à cours limité.** Avec une limite à 4 100, vous auriez eu les 5 premières, et votre ordre aurait sagement attendu le reste à bon prix. Vous restez maître de votre argent.",
       },
     ],
   },
 
   next: {
-    label: "Je sais lire les mouvements. Passons aux colonnes de l'analyste.",
+    label: "Mon compte est prêt, mes ordres protégés ! Reste à apprendre à choisir les bonnes actions.",
     target: "Module 14",
   },
 };

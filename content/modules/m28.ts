@@ -41,7 +41,7 @@ import type { Module } from "@/lib/types";
    ci-dessus pour calibrer penaltyPerError.
 
    ÉCHELLE DE STATUT 5 PALIERS (décision produit explicite, revue
-   finale — même convention que M21, NE PAS revenir à 🥇) : dernier
+   finale — même convention que M24, NE PAS revenir à 🥇) : dernier
    module du parcours, M28 porte le palier terminal `status` = 💎
    « Le Loup de la BRVM ». Comme `deriveStatus`'s `idx` clampe au
    dernier index une fois `doneCount >= 25`, ce statut persiste ensuite

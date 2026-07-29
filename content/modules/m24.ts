@@ -1,91 +1,119 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 24 — Passer votre premier ordre. Phase 4
-   « Passage à l'action ».
-   Barème standard Phase 4 (Bareme harmonise.txt §4 : « Phase 4 —
-   Action | +20 000 | −5 000 ») : perfectReward 20000 /
-   penaltyPerError 5000 / reward 20000 — confirmé par le propre
-   texte du .txt (« + 20 000 FCFA » / « − 5 000 FCFA »).
-   Défi = quiz à UNE SEULE question (3 boutons) : `challenge.questions`
-   a donc 1 seule entrée, et `feedback.explanations` AUSSI 1 seule
-   entrée (la mécanique du carnet d'ordres et son résultat chiffré
-   sont un seul raisonnement, combiné dans un seul `body`, comme
-   M16/M22). La « règle d'or à la BRVM » de conclusion est repliée
-   dans le `.note` de cette explication unique.
-   Métaphore du grand marché d'Adjamé/Dantokpa (négociation, carnet
-   d'ordres) préservée verbatim, comme demandé par le brief.
+   Contenu du Module 24 — Défi de synthèse : analyser une
+   entreprise de A à Z. Capstone de fin de Phase 3 (le bloc Graham
+   au complet, appliqué à un cas fictif « Banque du Fleuve »).
+   Barème NON standard (§4 : « Défi de synthèse (capstone) | 3 |
+   +50 000 | −10 000 ») : le plus haut de toute la Phase 3.
+   ÉCHELLE DE STATUT 5 PALIERS (décision produit explicite, revue
+   finale — NE PAS « corriger » en revenant à 🥇) : le champ `status`
+   représente une échelle qui GRIMPE le long de la POSITION dans
+   l'ordre des modules, pas de leur contenu (boundaries inchangées par
+   la revue « Passage à l'action déplacé » : 🥉 M01 → 🥈 M05 → 🥇 M11
+   → 🎓 M21-M27 → 💎 M28), lue par `deriveStatus(doneCount)` qui prend
+   le `status` du module courant (index = nombre de modules terminés,
+   clampé au dernier). Pour éviter toute régression 🎓→🥇 (flicker pire
+   que le trou d'origine), M21 à M27 portent TOUS 🎓 « L'Analyste
+   Confirmé » et M28 porte 💎 « Le Loup de la BRVM ». Ce champ `status`
+   PERSISTANT est distinct du
+   badge de complétion PONCTUEL `feedback.perfect.icon`/`.title` (qui
+   célèbre une seule fois la réussite de CE module) : les deux
+   réutilisent volontairement le même emoji+libellé 🎓 « L'Analyste
+   Confirmé », ce n'est pas un doublon à dédupliquer. Le .txt d'origine
+   avait deux lignes en tête — « Statut actuel : 🥇 » et « Badge à
+   débloquer : 🎓 » — mais le statut affiché suit désormais l'échelle
+   ci-dessus, pas la ligne littérale du .txt.
+   6 questions, 3 options chacune (Q5 lettrées A/B/C dans le .txt) ;
+   6 explications verbatim, une par « Pilier ». Le paragraphe de
+   clôture « Transition — Fin de la Phase 3 » est replié dans le
+   `.note` de la 6ᵉ (dernière) explication, comme M04 pour la fin de
+   Phase 1 — PAS une 7ᵉ entrée synthétique.
+   `feedback.explanations.length` = 6 = `challenge.questions.length`.
+   Formule entre backticks du .txt (`PER × PBR`) convertie en **gras**.
    ============================================================= */
 export const m24: Module = {
   code: "M24",
   index: 24,
   totalModules: 28,
-  title: "Passer votre premier ordre",
-  phase: "Phase 4 · Passage à l'action",
+  title: "Défi de synthèse : analyser une entreprise de A à Z",
+  phase: "Phase 4 · L'Analyse",
   status: { emoji: "🎓", label: "L'Analyste Confirmé" },
-  reward: 20000,
+  reward: 50000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 24",
-    headline: "La bourse, c'est le grand marché : on négocie.",
+    headline: "L'examen de passage : votre dossier complet.",
     lead:
-      "Comme au grand marché d'Adjamé ou de Dantokpa, la bourse n'a pas de prix fixe : pour acheter, il faut qu'un autre investisseur accepte de vendre. Le **carnet d'ordres** met face à face acheteurs et vendeurs, et deux types d'ordres vous permettent d'y participer.",
+      "Portrait, performance, perspectives, prix, BOC : vous maîtrisez chaque pilier séparément. Place au vrai test — assembler les 5 en un seul verdict, sur une entreprise fictive construite pour ressembler à une vraie valeur BRVM.",
     card: {
-      label: "Les 2 types d'ordres",
-      title: "Cours limité vs marché",
-      hint: "Le réflexe qui protège votre budget, et celui qui va vite :",
+      label: "Le dossier complet",
+      title: "Portrait → Performance → Perspectives → Prix → Verdict",
+      hint: "Passez chaque pilier au crible, comme un vrai analyste :",
       rules: [
-        "**L'ordre à cours limité 🛡️** — vous fixez un prix maximum, vous maîtrisez votre budget.",
-        "**L'ordre au marché 🚀** — aucun prix fixé, exécution immédiate, mais risque de payer plus cher.",
+        "**BANQUE DU FLEUVE (BDF)** — 33 ans, banque de détail, 4 pays.",
+        "**Performance** — PNB, exploitation et net en hausse régulière depuis 10 ans.",
+        "**Prix** — PER 11, PBR 1,2 : sous la règle de Graham et sous la moyenne du marché.",
       ],
     },
     objectives: [
-      "Comprendre comment le carnet d'ordres met face à face acheteurs et vendeurs, sans prix fixe imposé.",
-      "Distinguer l'ordre à cours limité de l'ordre au marché, et savoir quand utiliser chacun.",
-      "Éviter le piège du prix moyen qui explose en passant un ordre au marché sur un titre peu liquide.",
+      "Mener une analyse complète, seul, du portrait d'une entreprise jusqu'au verdict d'achat.",
+      "Relier performance, perspectives et prix pour décider avec méthode plutôt qu'avec vos émotions face au bruit du marché.",
+      "Vérifier qu'un placement correspond à votre propre stratégie, pas seulement à des fondamentaux au vert.",
     ],
-    cta: "Passer mon premier ordre",
+    cta: "Ouvrir le dossier BDF",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "Comment parler au marché",
+      title: "L'examen de passage",
       blocks: [
-        { kind: "text", value: "La bourse n'est pas un supermarché à prix fixes. C'est comme le grand marché d'Adjamé ou de Dantokpa : **on négocie**. Pour acheter, il faut qu'un autre investisseur accepte de vendre." },
+        { kind: "text", value: "Vous savez dresser un portrait, lire une performance, sonder les perspectives, juger un prix, décrypter le BOC. On assemble tout." },
+        { kind: "text", value: "**Objectif : décideriez-vous d'acheter cette action pour du long terme ?** Passez chaque pilier au crible." },
+        { kind: "text", value: "(Entreprise fictive, construite pour ressembler à une vraie valeur BRVM.)" },
       ],
     },
     {
-      title: "Le carnet d'ordres",
+      title: "📁 Bloc 1 : le Portrait",
       blocks: [
-        { kind: "text", value: "C'est le tableau qui met face à face les **acheteurs** et les **vendeurs**. Pour y participer, vous avez principalement **2 types d'ordres**." },
+        { kind: "text", value: "**BANQUE DU FLEUVE (BDF)** · Création : 1992 (33 ans) · Banque de détail." },
+        { kind: "text", value: "Actionnaires : Atlantic Financial Group **58 %**, État **12 %**, flottant 30 %." },
+        { kind: "text", value: "Zone : Sénégal, Côte d'Ivoire, Mali, Bénin (4 pays). Compartiment Principal · Secteur Services Financiers." },
       ],
     },
     {
-      title: "L'ordre à cours limité 🛡️ (le stratège)",
+      title: "📁 Bloc 2 : la Performance (10 ans, Md FCFA)",
       blocks: [
-        { kind: "text", value: "Vous fixez un **prix maximum** : « j'achète, mais pas au-dessus de 5 000 FCFA ». C'est le réflexe du bon acheteur au marché : vous avez une somme en tête, et vous ne payez pas un franc de plus." },
         {
           kind: "list",
           items: [
-            "Avantage : aucune mauvaise surprise, vous maîtrisez votre budget (et vos ratios).",
-            "Risque : si personne ne vend à ce prix, votre ordre n'est pas exécuté.",
+            "**PNB** : 45 → 95 (hausse régulière)",
+            "**Résultat d'exploitation** : 12 → 26 (hausse régulière)",
+            "**Résultat net** : 8 → 18 (positif chaque année)",
+            "**Dividende** : versé **chaque année** depuis 10 ans.",
           ],
         },
       ],
     },
     {
-      title: "L'ordre au marché 🚀 (le pressé)",
+      title: "📁 Bloc 3 : les Perspectives",
       blocks: [
-        { kind: "text", value: "Vous ne fixez **aucun prix** : « achetez tout de suite, peu importe le coût ». C'est foncer tête baissée : très rapide, mais on peut le payer cher." },
         {
           kind: "list",
           items: [
-            "Avantage : vous obtenez vos actions immédiatement.",
-            "Risque : vous pouvez payer **beaucoup plus cher** que prévu, surtout si l'action est peu liquide. Voyons pourquoi. 👇",
+            "Top-down : bancarisation + mobile money en plein essor dans l'UEMOA.",
+            "Bottom-up : **220 agences**, **3 millions de clients**, une **licence mobile money** difficile à copier.",
           ],
         },
+      ],
+    },
+    {
+      title: "📁 Bloc 4 : le Prix (relevé au BOC)",
+      blocks: [
+        { kind: "text", value: "Cours : **6 500 FCFA** · **PER : 11** · **PBR : 1,2** · **Rendement net : 6,2 %**." },
+        { kind: "text", value: "(Rappel : PER moyen du marché ≈ 14.) À vous de trancher ! 👇" },
       ],
     },
   ],
@@ -94,20 +122,72 @@ export const m24: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "Le carnet d'ordres",
+    title: "Le dossier, pilier par pilier",
     instruction:
-      "Action fictive « Afri-Transport ». Clôture d'hier (BOC) : 4 000 FCFA. Vous voulez 15 actions ce matin. Le carnet d'ordres (les vendeurs) : Vendeur n°1, 5 actions à 4 050 FCFA. Vendeur n°2, 10 actions à 4 300 FCFA. Votre action : pressé, vous passez un ordre « au marché » pour 15 actions d'un coup. (1 erreur = − 5 000 FCFA.)",
-    penaltyPerError: 5000,
-    perfectReward: 20000,
+      "Répondez aux 6 questions dans l'ordre. Chaque erreur coûte 10 000 FCFA. La Q5 (le verdict) est la plus importante ; la Q6 relie l'analyse à votre stratégie.",
+    penaltyPerError: 10000,
+    perfectReward: 50000,
+    // Recopie des options de Q1 en repli neutre (requis par le type) :
+    // chaque question a sa propre liste de boutons.
     options: [
-      { value: "force_hier", label: "Il force les vendeurs à me vendre à 4 000 (le prix d'hier)." },
-      { value: "cascade", label: "Il prend les 5 premières à 4 050, puis les 10 suivantes à 4 300 → mon budget moyen explose." },
-      { value: "annule", label: "Il annule mon ordre, car aucun vendeur n'a 15 actions d'un coup." },
+      { value: "ca", label: "Le chiffre d'affaires" },
+      { value: "pnb", label: "Le Produit Net Bancaire (PNB)" },
+      { value: "credits", label: "Le total des crédits" },
     ],
     questions: [
       {
-        prompt: "**Question : que fait le système, et quel en est le résultat ?**",
-        answer: "cascade",
+        prompt: "**Q1 — Portrait.** BDF étant une **banque**, quel indicateur suivre comme « ligne du haut » (équivalent du chiffre d'affaires) ?",
+        answer: "pnb",
+        options: [
+          { value: "ca", label: "Le chiffre d'affaires" },
+          { value: "pnb", label: "Le Produit Net Bancaire (PNB)" },
+          { value: "credits", label: "Le total des crédits" },
+        ],
+      },
+      {
+        prompt: "**Q2 — Performance.** Diagnostic des 3 courbes sur 10 ans ?",
+        answer: "solide",
+        options: [
+          { value: "solide", label: "Solide : PNB, exploitation et net montent ensemble." },
+          { value: "suspect", label: "Suspect : le net est gonflé par de l'exceptionnel." },
+          { value: "fragile", label: "Fragile : en dents de scie." },
+        ],
+      },
+      {
+        prompt: "**Q3 — Perspectives.** BDF a-t-elle un avenir bien orienté ?",
+        answer: "oui",
+        options: [
+          { value: "oui", label: "Oui : vent porteur (bancarisation) + un fossé solide (réseau, clients, licence)." },
+          { value: "non_declin", label: "Non : secteur en déclin." },
+          { value: "non_aucun", label: "Non : aucun avantage." },
+        ],
+      },
+      {
+        prompt: "**Q4 — Prix.** Calculez **PER × PBR** et jugez (< 22,5 et vs marché ≈ 14).",
+        answer: "raisonnable",
+        options: [
+          { value: "raisonnable", label: "13,2 → sous 22,5 ET sous la moyenne : prix raisonnable, avec marge de sécurité." },
+          { value: "trop_cher", label: "13,2 → trop cher." },
+          { value: "impossible", label: "Impossible à juger." },
+        ],
+      },
+      {
+        prompt: "**Q5 — LE VERDICT.** Ce matin l'action a baissé de **−2 %** et l'indice Services Financiers est dans le rouge. Un collègue dit d'attendre. Votre décision, pour du **long terme** ?",
+        answer: "c",
+        options: [
+          { value: "a", label: "J'attends que ça baisse encore." },
+          { value: "b", label: "Je passe mon chemin." },
+          { value: "c", label: "J'achète : les 3 piliers sont au vert, la baisse du jour n'est que du bruit." },
+        ],
+      },
+      {
+        prompt: "**Q6 — Pour quel investisseur ?** BDF verse 6,2 % de dividende et croît modérément. Elle correspond le mieux à… ?",
+        answer: "rente",
+        options: [
+          { value: "rente", label: "Une stratégie de RENTE (revenu régulier)." },
+          { value: "croissance", label: "Une stratégie de CROISSANCE pure (doublement rapide, sans besoin de cash)." },
+          { value: "peu_importe", label: "Peu importe : une bonne action convient à tout le monde." },
+        ],
       },
     ],
   },
@@ -115,27 +195,52 @@ export const m24: Module = {
   // ---- Section 3 : le feedback ----
   feedback: {
     perfect: {
-      icon: "🎉",
-      title: "Excellente vision du marché ! + 20 000 FCFA sur votre portefeuille !",
-      body: "Vous avez évité le piège classique des marchés peu liquides.",
+      icon: "🎓",
+      title: "BADGE DÉBLOQUÉ : L'Analyste Confirmé ! + 50 000 FCFA sur votre portefeuille !",
+      body: "Vous avez mené une analyse complète, seul, du portrait au verdict. Vous décidez avec méthode, pas avec vos émotions.",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! Le marché vous a fait payer le prix fort (− 5 000 FCFA).",
-      body: "Reprenons la mécanique de l'ordre « au marché ».",
+      title: "Aïe ! L'analyse mérite une révision (− 10 000 FCFA par erreur).",
+      body: "Reprenons pilier par pilier.",
     },
     explanations: [
       {
-        verdict: "Il prend les 5 premières à 4 050, puis les 10 suivantes à 4 300",
-        title: "La mécanique de l'ordre « au marché »",
-        body: "Le système « mange » les lignes du carnet, de la moins chère à la plus chère, jusqu'à votre quantité. 1. Il prend les 5 actions à 4 050. 2. Il lui en faut 10 de plus → il prend celles à 4 300. 3. Il accepte, car vous n'avez mis aucune limite. **Résultat :** vous pensiez payer ~4 000, vous vous retrouvez avec des actions à 4 300.",
-        note: "**La règle d'or à la BRVM :** le marché est parfois peu liquide. **Utilisez TOUJOURS l'ordre à cours limité.** Avec une limite à 4 100, vous auriez eu les 5 premières, et votre ordre aurait sagement attendu le reste à bon prix. Vous restez maître de votre argent.",
+        verdict: "PNB",
+        title: "Pilier 1 — PNB",
+        body: "Pour une banque, on suit le **Produit Net Bancaire**, pas le chiffre d'affaires.",
+      },
+      {
+        verdict: "Solide",
+        title: "Pilier 2 — Performance 🟢",
+        body: "Les 3 courbes montent ensemble, dividende chaque année : pas de piège HAO.",
+      },
+      {
+        verdict: "Oui",
+        title: "Pilier 3 — Perspectives 🟢",
+        body: "Vent porteur (bancarisation, mobile money) + un vrai fossé (agences, clients, licence).",
+      },
+      {
+        verdict: "13,2 raisonnable",
+        title: "Pilier 4 — Prix 🟢",
+        body: "11 × 1,2 = 13,2, sous 22,5 **et** sous la moyenne (≈ 14). Rendement 6,2 % en prime.",
+      },
+      {
+        verdict: "Bouton C",
+        title: "Pilier 5 — Le verdict",
+        body: "3 feux verts → **on achète (C)**. Le −2 % du jour n'est que du **bruit** ; il ne change rien à une entreprise qu'on garde 10 ans.",
+      },
+      {
+        verdict: "Rente",
+        title: "Pilier 6 — Rente",
+        body: "Dividende 6,2 % + entreprise mature à croissance modérée = profil **rente**. « Une bonne action n'existe pas dans l'absolu — seulement la bonne action pour VOTRE stratégie » (M19).",
+        note: "**La méthode maîtrisée :** Portrait → Performance → Perspectives → Prix → Verdict → Adéquation à votre stratégie. 🏆 **Félicitations, Analyste Confirmé !** Vous savez maintenant choisir vos actions vous-même, sur votre compte déjà ouvert. Reste à apprendre à garder ce que vous gagnez, et à suivre votre portefeuille dans la durée.",
       },
     ],
   },
 
   next: {
-    label: "Je protège mes ordres ! Au fait, que réclame l'État sur mes gains ?",
+    label: "Je sais analyser une entreprise ! Reste à savoir garder ce que je gagne.",
     target: "Module 25",
   },
 };

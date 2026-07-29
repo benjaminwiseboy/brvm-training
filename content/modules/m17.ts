@@ -1,124 +1,152 @@
 import type { Module } from "@/lib/types";
 
 /* =============================================================
-   Contenu du Module 17 — Graham (1/4) : le portrait de l'entreprise.
-   Premier des 4 modules du bloc Graham (M17-M20) + capstone M21 —
-   « le cœur » de la formation. Titre du .txt sans le préfixe « M17 — »
-   (déjà porté par `code`), même convention que m12/m13/m14.
-   Barème NON standard (§4 : « Graham 1a Portrait | 3 | +20 000 |
-   −5 000 ») : ici ça coïncide avec le standard Phase 3, mais reste
-   documenté car les 4 modules suivants (M18-M21) ont chacun un
-   barème différent — voir leurs commentaires respectifs.
-   Emphases *italique* à un seul astérisque du .txt (ex. « *n'achetez
-   pas une action, achetez une entreprise.* », les parenthèses
-   « (sa performance) » etc., et l'astuce de la Slide 4) : le type
-   Block ne supporte que **gras** (splitMarkup, lib/format.ts) —
-   astérisques simples retirés, texte conservé tel quel.
-   Défi = quiz à 3 questions ; chaque question a sa propre paire/
-   triplet de boutons (mécanisme M03/M11/M14/M15).
-   L'explication du .txt liste 3 puces dans un ordre différent de
-   l'ordre des questions (40 ans+actionnariat, puis 3 pays, puis
-   activité compréhensible) : réordonnées ici pour suivre Q1→Q2→Q3
-   (3 pays / 40 ans+actionnariat / activité compréhensible), aucune
-   phrase perdue ni inventée. Le paragraphe de clôture « Le portrait
-   ne remplace pas... » est replié dans le `.note` de la 3ᵉ (dernière)
-   explication, même convention que M04/M15/M16 (jamais une 4ᵉ entrée
-   synthétique — cf. `feedback.explanations.length === questions.length`).
+   Contenu du Module 17 — Le BOC avancé (3/3) : les colonnes de
+   l'analyste.
+   Défi = quiz à 3 questions. Q1 (3 boutons) et Q2 (2 boutons)
+   reprennent verbatim les boutons déjà réels du .txt. Q3 était un
+   [Champ de saisie] libre (« ____ % ») dans la source : converti
+   en QCM avec des distracteurs d'ordre de grandeur plausibles
+   (0,6 % / 6 % / 60 %), même logique que la conversion numérique
+   de M03 (Task 14) — décision explicite du brief de cette tâche.
+   Formules entre backticks du .txt (`PER = …`, `Rendement = …`,
+   `capitalisation = …`) converties en **gras** dans le texte des
+   slides, comme dans m08.ts (`CMP = …`).
+   Barème Phase 3 standard (§4) : +20 000 / −5 000.
    ============================================================= */
 export const m17: Module = {
   code: "M17",
   index: 17,
   totalModules: 28,
-  title: "Graham (1/4) : le portrait de l'entreprise",
-  phase: "Phase 3 · L'Analyse",
+  title: "Le BOC avancé (3/3) : les colonnes de l'analyste",
+  phase: "Phase 4 · L'Analyse",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
   reward: 20000,
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----
   hero: {
     eyebrow: "Formation BRVM · Module 17",
-    headline: "Avant les chiffres, qui est cette entreprise ?",
+    headline: "Le BOC calcule déjà l'analyse pour vous.",
     lead:
-      "Vous allez apprendre à analyser comme **Benjamin Graham**, le mentor de Warren Buffett. Sa règle d'or : n'achetez pas une action, achetez une **entreprise** — et tout commence, avant même les comptes, par son **portrait**.",
+      "PER, rendement net, dividende, capitalisation : ces colonnes ont l'air techniques, mais chacune se lit avec une image du quotidien — une boutique, un loyer, un verger, un supermarché.",
     card: {
-      label: "La carte d'identité de l'analyste",
-      title: "Nom, activité, actionnaires, zone, capital",
-      hint: "5 éléments à noter avant d'ouvrir les comptes :",
+      label: "Les 3 colonnes de l'analyste",
+      title: "PER, rendement, capitalisation",
+      hint: "3 indicateurs déjà calculés pour vous, à lire simplement :",
       rules: [
-        "**Le nom, la date de création et l'activité** — que vend-elle, en une phrase ?",
-        "**Les actionnaires principaux** — qui tient le volant ?",
-        "**La zone géographique et le capital** — diversification et taille.",
+        "**Le PER** — en combien d'années votre « boutique » se rembourse.",
+        "**Le rendement net** — le « loyer » que l'action vous verse chaque année.",
+        "**La capitalisation** — la taille de l'entreprise : géant ou petite boutique ?",
       ],
     },
     objectives: [
-      "Dresser le portrait d'une entreprise avant d'ouvrir ses comptes : activité, actionnaires, ancienneté, zone, capital.",
-      "Repérer les signaux de solidité, comme la longévité et un actionnariat de référence rassurant.",
-      "Éviter d'investir dans une entreprise dont vous ne pouvez pas résumer le métier en une phrase.",
+      "Calculer et interpréter le PER : plus il est bas, plus vite vous récupérez votre mise.",
+      "Lire le rendement net comme le « loyer » annuel d'une action, et repérer la date de détachement du dividende.",
+      "Comprendre ce que mesure la capitalisation boursière et pourquoi elle indique la taille d'une entreprise.",
     ],
-    cta: "Dresser le portrait d'une entreprise",
+    cta: "Lire le BOC comme un analyste",
   },
 
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "La méthode Graham",
+      title: "Le BOC vous mâche le travail",
       blocks: [
-        { kind: "lead", value: "Nous allons analyser comme **Benjamin Graham**, le « père de l'investissement dans la valeur » et le mentor de Warren Buffett. Sa règle d'or : n'achetez pas une action, achetez une entreprise." },
-        { kind: "text", value: "Avant d'acheter, il pose 3 questions, dans l'ordre :" },
+        { kind: "text", value: "Vous savez lire les prix et les mouvements. Encore mieux : le BOC calcule pour vous certains **indicateurs d'analyste**. Voyons les 3 colonnes qui vous aident vraiment à décider — avec, à chaque fois, une image simple du quotidien. Voici un exemple réel, qu'on décortique colonne par colonne :" },
         {
-          kind: "list",
-          items: [
-            "**Est-ce une bonne entreprise ?** (sa performance)",
-            "**Va-t-elle le rester ?** (ses perspectives)",
-            "**Le prix est-il raisonnable ?** (sa valorisation)",
+          kind: "boctable",
+          caption: "Colonnes d'analyse de Sonatel (données réelles)",
+          columns: ["PER", "Rendement net", "Dernier dividende", "Date de paiement"],
+          rows: [["7,74", "5,44 %", "1 740 FCFA", "26/05/2026"]],
+        },
+      ],
+    },
+    {
+      title: "Le PER : « en combien d'années je récupère ma mise ? »",
+      blocks: [
+        { kind: "text", value: "**L'image :** imaginez que vous achetez une **boutique**. Elle vous coûte 8 millions et rapporte 1 million de bénéfice par an. En combien d'années votre boutique se rembourse-t-elle ? **8 ans.** Ce chiffre « 8 », c'est le PER." },
+        { kind: "text", value: "Pour une action, la formule est la même idée :" },
+        { kind: "formula", label: "PER", value: "Cours ÷ Bénéfice par action" },
+        { kind: "text", value: "Plus il est **bas**, plus vite vous « récupérez votre mise » — donc moins l'action est chère." },
+        { kind: "text", value: "**Exemple réel :**" },
+        {
+          kind: "boctable",
+          caption: "PER · plus c'est bas, moins c'est cher",
+          columns: ["Action", "PER", "Lecture"],
+          rows: [
+            ["Sonatel", "7,74", "≈ 8 ans pour se rembourser"],
+            ["Ecobank", "3,56", "Bon marché"],
+            ["Moyenne du marché", "≈ 14", "Repère"],
+          ],
+          highlightCols: [1],
+        },
+        { kind: "text", value: "Une action à PER 30 mettrait 30 ans à se rembourser : beaucoup plus chère." },
+      ],
+    },
+    {
+      title: "Le rendement net : le « loyer » de votre action 🏠",
+      blocks: [
+        { kind: "text", value: "**L'image :** vous achetez un appartement 10 millions, et il vous rapporte 600 000 FCFA de loyer par an. Votre rendement = 600 000 ÷ 10 000 000 = **6 %**." },
+        { kind: "text", value: "Pour une action, c'est exactement pareil :" },
+        { kind: "formula", label: "Rendement net", value: "Dividende ÷ Cours" },
+        { kind: "text", value: "C'est le « loyer » que l'action vous verse chaque année, en pourcentage de son prix." },
+        { kind: "text", value: "**Exemple réel :**" },
+        {
+          kind: "boctable",
+          caption: "Rendement net · le « loyer » annuel de l'action",
+          columns: ["Action", "Rendement net"],
+          rows: [
+            ["Sonatel", "5,44 %"],
+            ["BOA Côte d'Ivoire", "6,13 %"],
+          ],
+          highlightCols: [1],
+        },
+        { kind: "text", value: "À la BRVM, un bon « loyer » se situe souvent entre **6 et 10 %** — bien mieux qu'un livret d'épargne." },
+      ],
+    },
+    {
+      title: "Le dividende & la date de détachement ⚠️",
+      blocks: [
+        { kind: "text", value: "Le BOC affiche le **dernier dividende versé** et sa date, et une page « Opérations en cours » annonce les prochains versements :" },
+        {
+          kind: "boctable",
+          caption: "Extrait du BOC · dividendes",
+          columns: ["Émetteur", "Dividende net", "Date", "Statut"],
+          rows: [
+            ["Sonatel", "1 740 FCFA", "26/05/2026", "Déjà versé"],
+            ["Solibra", "2 127 FCFA", "30/07/2026", "À venir"],
+            ["CIE Côte d'Ivoire", "234 FCFA", "28/07/2026", "À venir"],
           ],
         },
-        { kind: "text", value: "Mais tout commence par une question plus simple : **qui est cette entreprise ?**" },
+        { kind: "callout", tone: "warn", value: "**Le piège à connaître :** vous ne touchez le dividende **que si vous détenez l'action AVANT sa date de détachement**. L'acheter le lendemain, c'est comme arriver au verger **après** la récolte : les fruits sont déjà partis." },
+        { kind: "callout", tone: "info", value: "💡 Le montant affiché est **net** : l'impôt (IRVM, ~12 %) est déjà prélevé — le cash arrive propre sur votre compte." },
       ],
     },
     {
-      title: "La carte d'identité avant l'entretien",
+      title: "La capitalisation : géant ou petite boutique ?",
       blocks: [
-        { kind: "text", value: "On n'embauche personne — et on ne lui confie pas son argent — sans savoir qui il est. Avant les chiffres, dressez le **portrait** de l'entreprise. Les 3 premiers éléments à noter :" },
+        { kind: "text", value: "**En clair :** c'est la valeur de toute l'entreprise en bourse — autrement dit, sa **taille**." },
+        { kind: "formula", label: "Capitalisation boursière", value: "Cours de l'action × Nombre d'actions" },
+        { kind: "text", value: "**L'image :** c'est la différence entre une **grande chaîne de supermarchés** (grosse capitalisation : solide, facile à acheter et à revendre) et une **petite boutique de quartier** (petite capitalisation : plus fragile, parfois difficile à revendre)." },
+        { kind: "text", value: "**Exemple (chiffres fictifs) :**" },
         {
-          kind: "list",
-          items: [
-            "**Le nom et la date de création** — une entreprise qui existe depuis 40 ans a déjà traversé des crises et prouvé sa solidité ; une toute jeune a moins de recul.",
-            "**L'activité** — que vend-elle, concrètement ? Si vous ne pouvez pas résumer son métier en une phrase, méfiance : on ne juge bien que ce qu'on comprend.",
-            "**Les actionnaires principaux** — qui tient le volant de l'entreprise ? Un grand groupe solide ou l'État aux commandes rassurent : ce sont eux qui veillent à sa bonne gestion.",
+          kind: "boctable",
+          caption: "Capitalisation · un exemple",
+          columns: ["Élément", "Valeur"],
+          rows: [
+            ["Cours de l'action", "10 000 FCFA"],
+            ["Nombre d'actions en circulation", "1 000 000"],
+            ["Capitalisation boursière", "10 000 000 000 FCFA"],
           ],
+          highlightCols: [1],
         },
+        { kind: "text", value: "**À noter :** le BOC affiche surtout la capitalisation **de tout le marché** (18 434 milliards de FCFA au 17/07/2026) ; pour une société précise, vous la calculez vous-même." },
       ],
     },
     {
-      title: "La carte d'identité (suite)",
+      title: "À vous de lire l'analyste 👇",
       blocks: [
-        {
-          kind: "list",
-          items: [
-            "**La zone géographique** — opère-t-elle dans un seul pays (tous ses œufs dans le même panier) ou dans plusieurs (activité plus diversifiée) ? Si un pays va mal, les autres peuvent compenser.",
-            "**Le capital** — la taille de l'entreprise et le nombre d'actions en circulation. Cela vous dit si vous avez affaire à un géant ou à une petite valeur.",
-          ],
-        },
-      ],
-    },
-    {
-      title: "Où trouver le portrait ?",
-      blocks: [
-        { kind: "text", value: "Sur la **fiche société de brvm.org**, chaque entreprise cotée a sa page d'identité. L'ouvrir, c'est votre tout premier réflexe d'analyste." },
-        {
-          kind: "link",
-          label: "Ouvrir les fiches sociétés cotées",
-          sublabel: "brvm.org · liste des entreprises cotées",
-          href: "https://www.brvm.org/fr/emetteurs/societes-cotees",
-        },
-        { kind: "text", value: "(Astuce : c'est aussi ce qu'un bon outil de suivi devrait vous afficher d'un coup d'œil.)" },
-      ],
-    },
-    {
-      title: "Entraînons-nous",
-      blocks: [
-        { kind: "lead", value: "Entraînons-nous. 👇" },
+        { kind: "lead", value: "À vous de lire l'analyste. 👇" },
       ],
     },
   ],
@@ -127,53 +155,47 @@ export const m17: Module = {
   challenge: {
     type: "quiz",
     kicker: "Le Défi",
-    title: "Lire la carte d'identité",
-    instruction: "Voici la fiche d'une entreprise cotée. Observez-la et répondez. (1 erreur = − 5 000 FCFA.)",
-    idcard: {
-      icon: "🏢",
-      title: "AgriBénin SA",
-      fields: [
-        { label: "Création", value: "1985 (40 ans)" },
-        { label: "Activité", value: "Production et exportation d'huile de palme et de coton" },
-        { label: "Actionnaires", value: "Groupe Agro-Ouest (55 %), État du Bénin (20 %), public (25 %)" },
-        { label: "Zone", value: "Bénin, Togo, Burkina Faso" },
-        { label: "Capital", value: "10 milliards FCFA, 2 millions d'actions" },
-      ],
+    title: "Lire comme un analyste",
+    instruction: "Voici les colonnes d'analyse d'une vraie ligne du BOC. Observez-les et répondez. (1 erreur = − 5 000 FCFA.)",
+    table: {
+      caption: "Colonnes d'analyse de Sonatel (données réelles)",
+      columns: ["PER", "Rendement net", "Dernier dividende", "Date de paiement"],
+      rows: [["7,74", "5,44 %", "1 740 FCFA", "26/05/2026"]],
     },
     penaltyPerError: 5000,
     perfectReward: 20000,
     // Recopie des options de Q1 en repli neutre (requis par le type) :
     // chaque question a sa propre paire/triplet de boutons.
     options: [
-      { value: "1", label: "1" },
-      { value: "3", label: "3" },
-      { value: "8", label: "8" },
+      { value: "chere", label: "Chère." },
+      { value: "bon_marche", label: "Bon marché : on récupère sa mise deux fois plus vite que la moyenne." },
+      { value: "impossible", label: "Impossible à dire." },
     ],
     questions: [
       {
-        prompt: "**Q1 :** Dans combien de pays l'entreprise est-elle présente ?",
-        answer: "3",
+        prompt: "Le PER moyen du marché est ≈ 14 (≈ 14 ans pour récupérer sa mise). Avec un PER de **7,74**, Sonatel est plutôt… ?",
+        answer: "bon_marche",
         options: [
-          { value: "1", label: "1" },
-          { value: "3", label: "3" },
-          { value: "8", label: "8" },
+          { value: "chere", label: "Chère." },
+          { value: "bon_marche", label: "Bon marché : on récupère sa mise deux fois plus vite que la moyenne." },
+          { value: "impossible", label: "Impossible à dire." },
         ],
       },
       {
-        prompt: "**Q2 :** Quel élément rassure le plus sur sa **solidité** ?",
-        answer: "quarante_ans",
+        prompt: "Une action détache son dividende demain. Vous l'achetez **après-demain**. Touchez-vous ce dividende ?",
+        answer: "non",
         options: [
-          { value: "capital", label: "Son capital divisé en 2 millions d'actions." },
-          { value: "quarante_ans", label: "Ses 40 ans d'existence + un grand groupe et l'État comme actionnaires de référence." },
-          { value: "export", label: "Le fait qu'elle exporte de l'huile de palme." },
+          { value: "oui", label: "Oui, dès que je possède l'action." },
+          { value: "non", label: "Non : je suis arrivé après la récolte (il fallait la détenir avant le détachement)." },
         ],
       },
       {
-        prompt: "**Q3 :** Un ami vous conseille une action « qui va exploser », mais il ne sait pas expliquer ce que fait l'entreprise. Le bon réflexe ?",
-        answer: "investis_pas",
+        prompt: "Une action cote **10 000 FCFA** et verse **600 FCFA** net. Quel est son « loyer » (rendement net) ?",
+        answer: "6",
         options: [
-          { value: "achete_quand_meme", label: "J'achète quand même, tant que ça monte." },
-          { value: "investis_pas", label: "Je n'investis pas : on n'investit que dans une entreprise dont on comprend le métier." },
+          { value: "0.6", label: "0,6 %" },
+          { value: "6", label: "6 %" },
+          { value: "60", label: "60 %" },
         ],
       },
     ],
@@ -183,36 +205,35 @@ export const m17: Module = {
   feedback: {
     perfect: {
       icon: "🎉",
-      title: "Portrait maîtrisé ! + 20 000 FCFA sur votre portefeuille !",
-      body: "Vous cadrez une entreprise avant même d'ouvrir ses comptes. Le réflexe des pros.",
+      title: "Vous lisez le BOC comme un pro ! + 20 000 FCFA sur votre portefeuille !",
+      body: "Prix, « loyer », dividende, détachement : plus aucune colonne ne vous résiste.",
     },
     imperfect: {
       icon: "📉",
-      title: "Aïe ! Le portrait mérite un second regard (− 5 000 FCFA par erreur).",
-      body: "Reprenons les points clés du portrait.",
+      title: "Aïe ! Une colonne vous a échappé (− 5 000 FCFA par erreur).",
+      body: "Reprenons.",
     },
     explanations: [
       {
-        verdict: "3 pays",
-        title: "Présence dans 3 pays",
-        body: "**Présence dans 3 pays** = activité un peu diversifiée : si un pays connaît une mauvaise année, les autres compensent.",
+        verdict: "Bon marché",
+        title: "Le PER, c'est le nombre d'années pour se rembourser.",
+        body: "7,74 face à ≈ 14, c'est **deux fois plus rapide** que la moyenne : Sonatel est bon marché (à condition que les fondamentaux suivent — on le verra avec Graham).",
       },
       {
-        verdict: "40 ans + actionnariat solide",
-        title: "Longévité et actionnariat de référence",
-        body: "**Longévité (40 ans) + actionnariat de référence solide** = une entreprise installée, au pilotage cadré. Le plus fort signal de stabilité.",
+        verdict: "Non (arrivé après la récolte)",
+        title: "La récolte du dividende.",
+        body: "Le dividende revient à celui qui détient l'action **la veille** du détachement. Acheter juste après = arriver après la récolte, pas de fruits cette année.",
       },
       {
-        verdict: "Je n'investis pas",
-        title: "Comprendre le métier avant d'investir",
-        body: "**Activité compréhensible** : si vous ne comprenez pas comment l'entreprise gagne sa vie, vous ne pourrez jamais juger si elle va bien. **On n'investit jamais à l'aveugle.**",
-        note: "Le portrait ne remplace pas l'analyse des chiffres, mais il donne une **vue d'ensemble** et fait déjà remonter des signaux (bons ou mauvais).",
+        verdict: "6 % (600 ÷ 10 000 × 100)",
+        title: "Le « loyer » est un simple pourcentage.",
+        body: "**600 ÷ 10 000 × 100 = 6 %.** C'est ce que l'action vous rapporte chaque année, comme un loyer.",
       },
     ],
   },
 
   next: {
-    label: "Je sais QUI est l'entreprise. Gagne-t-elle vraiment de l'argent ?",
+    label: "Je maîtrise tout le BOC ! Approfondissons un produit clé : les obligations.",
     target: "Module 18",
   },
 };
