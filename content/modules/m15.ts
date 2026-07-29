@@ -172,8 +172,9 @@ export const m15: Module = {
     instruction: "Voici une obligation d'État telle qu'au BOC. Observez-la et répondez. (1 erreur = − 5 000 FCFA.)",
     table: {
       caption: "ÉTAT DU SÉNÉGAL 6,50 % 2025-2032",
-      columns: ["Nominal", "Coupon net", "Périodicité", "Type Amort"],
-      rows: [["10 000 FCFA", "650 FCFA", "Annuelle (A)", "ACD"]],
+      columns: ["Émetteur", "Taux", "Année de départ", "Année de fin", "Nominal", "Coupon net", "Périodicité", "Type Amort"],
+      rows: [["État du Sénégal", "6,50 %", "2025", "2032", "10 000 FCFA", "650 FCFA", "Annuelle (A)", "ACD"]],
+      highlightCols: [1, 3, 7],
     },
     penaltyPerError: 5000,
     perfectReward: 25000,
