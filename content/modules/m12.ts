@@ -55,9 +55,18 @@ export const m12: Module = {
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "Le pilote automatique de la bourse",
+      title: "Imaginez un grand mariage…",
       blocks: [
-        { kind: "text", value: "Souvenez-vous de Seydou, le chirurgien pressé (M04). Sa solution, c'est l'**OPCVM** : un panier de titres géré par des professionnels (une SGO, Société de Gestion d'OPCVM). Vous achetez une **part** du panier, et la diversification comme le suivi sont faits pour vous." },
+        { kind: "lead", value: "Pour un mariage ou un baptême, plusieurs familles cotisent dans une caisse commune. Personne ne cuisine dans son coin : un traiteur pro achète les bons ingrédients et prépare un menu équilibré pour tout le monde." },
+        { kind: "text", value: "C'est exactement le principe de l'**OPCVM** (Organisme de Placement Collectif en Valeurs Mobilières). Au lieu de choisir vous-même chaque action ou obligation, vous versez votre argent dans une caisse commune, avec d'autres épargnants." },
+        {
+          kind: "duo",
+          items: [
+            { side: "Vous", value: "vous versez votre argent — votre contribution à la caisse commune." },
+            { side: "Le gérant (la SGO)", value: "un professionnel qui achète et surveille un panier de titres pour tout le monde, contre rémunération." },
+          ],
+        },
+        { kind: "text", value: "En échange, vous recevez des **parts** : votre ticket, qui prouve votre bout du festin, proportionnellement à ce que vous avez versé." },
       ],
     },
     {
@@ -111,10 +120,44 @@ export const m12: Module = {
       ],
     },
     {
+      title: "Quel ordre de grandeur, sur un an ?",
+      blocks: [
+        { kind: "lead", value: "Une question légitime avant de déléguer votre argent : à quoi peut-on s'attendre, grosso modo, en un an ?" },
+        {
+          kind: "list",
+          items: [
+            "**Monétaire (M)** — très stable, proche d'un bon compte épargne : souvent **2 % à 4 % par an**.",
+            "**Obligations (OMLT/OCT)** — plus régulier : souvent **4 % à 8 % par an**.",
+            "**Diversifié (D)** — un compromis entre les deux précédents, avec plus de variations.",
+            "**Actions (A)** — le plus volatil : certaines années **+15 %, +30 %** ou plus, d'autres années en baisse.",
+          ],
+        },
+        { kind: "callout", tone: "warn", value: "⚠️ Ce sont des **ordres de grandeur typiques**, pas une promesse — et pas les chiffres d'un fonds précis. Chaque fonds publie sa propre performance passée sur sa fiche : à vérifier avant de choisir." },
+      ],
+    },
+    {
       title: "⚠️ La contrepartie : vous déléguez le contrôle",
       blocks: [
         { kind: "text", value: "Vous ne décidez pas des choix du fonds. Un gérant peut se tromper : un fonds **peut sous-performer, voire mal tourner** (ça s'est déjà vu à la BRVM, avec des fonds en difficulté pour rembourser leurs porteurs)." },
-        { kind: "text", value: "L'OPCVM n'est donc **pas** sans risque — regardez le sérieux et l'historique du gérant, et diversifiez. 👇" },
+        { kind: "text", value: "L'OPCVM n'est donc **pas** sans risque — regardez le sérieux et l'historique du gérant, et diversifiez." },
+      ],
+    },
+    {
+      title: "Ouvrir un compte, trouver les bons fonds",
+      blocks: [
+        { kind: "text", value: "Concrètement, comment souscrire à un OPCVM ?" },
+        {
+          kind: "list",
+          items: [
+            "**Repérez les fonds disponibles** — la BRVM publie la liste des fonds et leurs valeurs liquidatives.",
+            "**Comparez** catégorie, frais et VL sur la durée avant de choisir.",
+            "**Contactez** la SGO qui gère le fonds choisi, ou tout simplement votre SGI (celle où vous avez ouvert votre compte titres) — elle commercialise souvent plusieurs OPCVM.",
+            "**Remplissez un bulletin de souscription**, avec vos pièces d'identité, et versez le montant.",
+            "**Recevez vos parts** : elles apparaissent dans votre portefeuille, et leur valeur suit la VL du fonds.",
+          ],
+        },
+        { kind: "link", label: "Voir les valeurs liquidatives des fonds OPCVM", sublabel: "brvm.org · liste des fonds et de leurs gestionnaires", href: "https://www.brvm.org/fr/valeurs-liquidative" },
+        { kind: "text", value: "Prêt à mettre tout ça en pratique ? 👇" },
       ],
     },
   ],
