@@ -29,6 +29,12 @@ export const m01: Module = {
     headline: "Oubliez Wall&nbsp;Street.",
     lead:
       "Bienvenue dans **BRVM Learning** ! Vous allez apprendre à investir à la Bourse Régionale des Valeurs Mobilières, module après module, sans jargon inutile. On commence par une idée simple : écrans rouges, traders qui hurlent au téléphone… oubliez ces images. La bourse, surtout la BRVM, est bien plus **calme, sûre et accessible** que vous ne le croyez.",
+    rules: [
+      "Ce capital est **virtuel** : zéro risque, juste pour vous entraîner.",
+      "Il évolue avec vous : vos bonnes réponses le font **grandir**, module après module.",
+      "Une erreur vous en coûte un peu — comme dans la vraie vie, mais sans les vraies conséquences.",
+      "L'objectif : finir la formation avec les réflexes d'un vrai investisseur, **avant** d'ouvrir un compte réel.",
+    ],
     objectives: [
       "Comprendre ce qu'est réellement la bourse, et à quoi elle sert.",
       "Découvrir ce qui rend la BRVM unique au monde (8 pays, 1 seul compte).",
