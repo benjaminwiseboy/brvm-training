@@ -7,6 +7,7 @@ import { BocTable } from "./BocTable";
 import { IdCard } from "./IdCard";
 import { ChartTabs } from "./ChartTabs";
 import { TableTabs } from "./TableTabs";
+import { TrendChart } from "./TrendChart";
 import styles from "./QuizChallenge.module.css";
 
 /**
@@ -111,12 +112,13 @@ export function QuizChallenge({
         <h2 className={styles.title}>{renderMarkup(challenge.title)}</h2>
       </div>
 
-      {(challenge.table || challenge.idcard || challenge.chartProfiles || challenge.tableTabs) && (
+      {(challenge.table || challenge.idcard || challenge.chartProfiles || challenge.tableTabs || challenge.chart) && (
         <div className={styles.tableEmphasis}>
           {challenge.table && <BocTable {...challenge.table} />}
           {challenge.idcard && <IdCard {...challenge.idcard} />}
           {challenge.chartProfiles && <ChartTabs profiles={challenge.chartProfiles} />}
           {challenge.tableTabs && <TableTabs scenarios={challenge.tableTabs} />}
+          {challenge.chart && <TrendChart {...challenge.chart} />}
         </div>
       )}
 

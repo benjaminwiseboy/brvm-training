@@ -62,9 +62,40 @@ export const m11: Module = {
   // ---- Section 1 : le cours en slides ----
   slides: [
     {
-      title: "Le sésame pour investir",
+      title: "C'est quoi une SGI, au juste ? ✈️",
       blocks: [
-        { kind: "text", value: "Vous avez votre plan. Pour enfin pouvoir l'exécuter, il faut un compte chez une **SGI** (Société de Gestion et d'Intermédiation) — c'est votre **courtier**, l'intermédiaire par lequel passent tous vos ordres." },
+        { kind: "lead", value: "Imaginez la bourse comme un aéroport." },
+        { kind: "text", value: "Vous ne pouvez pas traverser la piste et monter dans l'avion tout seul : il faut passer par un **guichet agréé**. À la bourse, c'est pareil — seules certaines structures ont le droit d'exécuter des ordres : les **SGI** (Sociétés de Gestion et d'Intermédiation)." },
+        { kind: "text", value: "Concrètement, une SGI c'est votre **guichet d'embarquement** : vous lui donnez vos instructions (« j'achète 10 actions Sonatel »), et c'est elle qui les transmet à la bourse, en votre nom. Sans SGI, impossible d'investir directement." },
+        {
+          kind: "duo",
+          items: [
+            { side: "Vous", value: "vous décidez, vous donnez l'ordre." },
+            { side: "La SGI", value: "elle exécute, elle transmet à la bourse." },
+          ],
+        },
+      ],
+    },
+    {
+      title: "Comment ouvrir son compte, concrètement",
+      blocks: [
+        { kind: "text", value: "Passer de la théorie à l'action, en 4 étapes :" },
+        {
+          kind: "list",
+          items: [
+            "**Comparez les SGI** — toutes ne se valent pas (frais, plateforme, conseil). Un comparateur vous fait gagner du temps.",
+            "**Réunissez vos documents** — pièce d'identité, justificatif de domicile, photos (détail à la slide suivante).",
+            "**Remplissez le dossier d'ouverture** — souvent en ligne, parfois en agence ou par correspondance depuis la diaspora.",
+            "**Déposez vos premiers fonds** — et votre compte est prêt : vous pouvez passer votre premier ordre.",
+          ],
+        },
+        {
+          kind: "link",
+          label: "Comparer les SGI (frais, plateforme, conseil...)",
+          sublabel: "richbourse.com · comparatif des SGI",
+          href: "https://www.richbourse.com/dossier/sgi-comparatif",
+        },
+        { kind: "text", value: "À la fin de ce module, vous aurez tout en main pour passer à l'action. 👇" },
       ],
     },
     {
@@ -142,7 +173,16 @@ export const m11: Module = {
     kicker: "Le Défi",
     title: "Le calcul des frais",
     instruction:
-      "Vous investissez 25 000 FCFA/mois (DCA). Deux SGI. **Courtier A — au pourcentage :** 1 % par transaction. **Courtier B — au forfait :** 1 000 FCFA fixes minimum par transaction. (1 erreur = − 5 000 FCFA.)",
+      "Vous investissez 25 000 FCFA/mois (DCA). Deux SGI. **Courtier A — au pourcentage :** 1 % par transaction. **Courtier B — au forfait :** 1 000 FCFA fixes minimum par transaction. Observez le graphique : à quel montant les deux frais s'égalisent ? (1 erreur = − 5 000 FCFA.)",
+    chart: {
+      xLabel: "Montant investi (FCFA)",
+      yLabel: "Frais payés (FCFA)",
+      categories: ["10 000", "25 000", "50 000", "100 000", "200 000"],
+      series: [
+        { label: "Courtier A (1 %)", kind: "line", color: "pos", values: [100, 250, 500, 1000, 2000] },
+        { label: "Courtier B (1 000 FCFA fixe)", kind: "line", color: "clay", values: [1000, 1000, 1000, 1000, 1000] },
+      ],
+    },
     penaltyPerError: 5000,
     perfectReward: 20000,
     options: [

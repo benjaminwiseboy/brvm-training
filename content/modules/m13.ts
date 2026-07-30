@@ -97,7 +97,15 @@ export const m13: Module = {
     kicker: "Le Défi",
     title: "Le carnet d'ordres",
     instruction:
-      "Action fictive « Afri-Transport ». Clôture d'hier (BOC) : 4 000 FCFA. Vous voulez 15 actions ce matin. Le carnet d'ordres (les vendeurs) : Vendeur n°1, 5 actions à 4 050 FCFA. Vendeur n°2, 10 actions à 4 300 FCFA. Votre action : pressé, vous passez un ordre « au marché » pour 15 actions d'un coup. (1 erreur = − 5 000 FCFA.)",
+      "Action fictive « Afri-Transport ». Clôture d'hier : 4 000 FCFA. Vous voulez 15 actions ce matin, pressé, vous passez un ordre « au marché » pour 15 actions d'un coup. Voici le carnet d'ordres (les vendeurs) : (1 erreur = − 5 000 FCFA.)",
+    table: {
+      caption: "Carnet d'ordres · Afri-Transport (clôture d'hier : 4 000 FCFA)",
+      columns: ["Vendeur", "Quantité", "Prix"],
+      rows: [
+        ["Vendeur n°1", "5 actions", "4 050 FCFA"],
+        ["Vendeur n°2", "10 actions", "4 300 FCFA"],
+      ],
+    },
     penaltyPerError: 5000,
     perfectReward: 20000,
     options: [

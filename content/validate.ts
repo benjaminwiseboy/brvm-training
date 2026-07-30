@@ -51,6 +51,7 @@ export function validateModule(m: Module): string[] {
       if (m.challenge.tableTabs.length === 0) errs.push(`${tag}: scénarios de tableau du défi vides`);
       m.challenge.tableTabs.forEach((s) => validateBocTable(tag, `tableau du défi (scénario ${s.key})`, s.table, errs));
     }
+    if (m.challenge.chart) validateChart(tag, "graphique du défi", m.challenge.chart, errs);
   } else if (m.challenge.type === "diagnostic") {
     if (m.challenge.questions.length === 0) errs.push(`${tag}: diagnostic sans question`);
     m.challenge.questions.forEach((q) => {

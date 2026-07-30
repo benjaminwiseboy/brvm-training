@@ -5,6 +5,13 @@ import type { Module } from "@/lib/types";
    Le moteur (app.js) sait afficher N'IMPORTE quel module à
    partir d'un objet de cette forme. Un module = un fichier de
    données. (Ici en global window.* pour fonctionner en file://.)
+   Revue post-lancement : 3 slides de motivation ajoutées avant la
+   transition vers le défi — BRVM Composite +39 % en 2013 (record,
+   source AllAfrica) vs S&P 500 ≈ +30 % la même année (source
+   officialdata.org), puis deux entreprises réelles à forte
+   croissance annuelle (Ecobank Togo, Sucrivoire — chiffres tirés du
+   vrai BOC fourni par le user), puis le lien explicite « ces gains
+   demandent de se former, c'est l'objet du cours ».
    ============================================================= */
 export const m01: Module = {
   code: "M01",
@@ -77,6 +84,39 @@ export const m01: Module = {
           ],
         },
         { kind: "callout", tone: "info", value: "Un seul compte, 8 pays — et vous pouvez l'ouvrir **même depuis l'étranger** : la diaspora est la bienvenue." },
+      ],
+    },
+    {
+      title: "Un marché qui peut rapporter gros 🚀",
+      blocks: [
+        { kind: "lead", value: "Vous pensez que les grosses performances boursières, c'est réservé à Wall Street ? Petite surprise :" },
+        { kind: "callout", tone: "highlight", value: "**En 2013**, la BRVM a grimpé de **+39 %** sur l'année — davantage que le **S&P 500**, l'indice vedette de la bourse américaine, qui a fait environ **+30 %** la même année. Oui, notre petite bourse régionale a fait mieux que Wall Street, au moins cette année-là !" },
+        { kind: "text", value: "Et ce n'est pas qu'une histoire d'indice global : certaines entreprises de la région, prises individuellement, ont fait des bonds encore plus spectaculaires." },
+      ],
+    },
+    {
+      title: "Des exemples qui donnent le vertige",
+      blocks: [
+        { kind: "text", value: "Regardez ces vraies entreprises cotées à la BRVM (données tirées d'un vrai bulletin officiel) :" },
+        {
+          kind: "boctable",
+          caption: "Croissance sur 1 an (données réelles)",
+          columns: ["Entreprise", "Croissance en 1 an"],
+          rows: [
+            ["Ecobank Togo (ETIT)", "+195 %"],
+            ["Sucrivoire (SCRC)", "+249 %"],
+          ],
+          highlightCols: [1],
+        },
+        { kind: "text", value: "Concrètement : **100 000 FCFA** investis dans Ecobank Togo il y a un an vaudraient aujourd'hui environ **295 000 FCFA**. Sans rien faire d'autre qu'attendre 12 mois." },
+        { kind: "callout", tone: "warn", value: "⚠️ Ce ne sont pas des promesses : toutes les actions ne font pas ça, et les performances passées ne garantissent jamais l'avenir. Mais ça montre le **potentiel réel** de ce marché." },
+      ],
+    },
+    {
+      title: "Le secret ? Se former",
+      blocks: [
+        { kind: "lead", value: "Ces performances ne tombent pas du ciel : elles récompensent ceux qui savent repérer une bonne opportunité, et ne pas paniquer au moindre bruit." },
+        { kind: "text", value: "Bonne nouvelle : c'est exactement ce que cette formation va vous apprendre, module après module, sans jargon inutile." },
       ],
     },
     {

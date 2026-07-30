@@ -33,7 +33,7 @@ export const m12: Module = {
     eyebrow: "Formation BRVM · Module 12",
     headline: "Le pilote automatique de la bourse.",
     lead:
-      "Souvenez-vous de Seydou, le chirurgien pressé (M04). Sa solution, c'est l'**OPCVM** : un panier de titres géré par des professionnels. Vous achetez une **part** du panier, et la diversification comme le suivi sont faits pour vous — moyennant des frais, et un vrai abandon de contrôle.",
+      "Pas le temps ou l'envie de choisir vos actions une par une ? L'**OPCVM** fait le travail à votre place : un panier de titres géré par des professionnels, dans lequel vous achetez simplement une **part**. Diversification et suivi inclus — moyennant des frais, et un vrai abandon de contrôle.",
     card: {
       label: "Ce qu'il faut savoir avant de déléguer",
       title: "VL, catégories, frais",
@@ -45,7 +45,7 @@ export const m12: Module = {
       ],
     },
     objectives: [
-      "Lire une fiche OPCVM au BOC (Valeur Liquidative, catégorie, frais) et savoir ce qu'elle indique vraiment.",
+      "Lire une fiche OPCVM (Valeur Liquidative, catégorie, frais) et savoir ce qu'elle indique vraiment.",
       "Choisir la catégorie de fonds (Actions, Obligations, Diversifié, Monétaire) adaptée à votre profil de risque.",
       "Comprendre ce que vous déléguez, et ce que vous perdez en contrôle, en investissant via un OPCVM.",
     ],
@@ -83,7 +83,7 @@ export const m12: Module = {
     {
       title: "Les catégories : que contient le panier ?",
       blocks: [
-        { kind: "text", value: "Le BOC classe chaque fonds par catégorie, ce qui indique son niveau de risque. À vous de choisir selon votre profil (M05) :" },
+        { kind: "text", value: "Chaque fonds est classé par catégorie, ce qui indique son niveau de risque. À vous de choisir selon votre profil (Module 5) :" },
         {
           kind: "list",
           items: [
@@ -99,7 +99,15 @@ export const m12: Module = {
     {
       title: "Les frais (simples)",
       blocks: [
-        { kind: "text", value: "Vous payez des **frais d'entrée** (à la souscription) et de **sortie** (au rachat) — par ex. 1 % à l'entrée. Entre les deux, rien de visible : les **frais de gestion** des professionnels sont prélevés **à l'intérieur du fonds** (déjà reflétés dans la VL). C'est plus lisible que la gestion directe (transactions + droits de garde)." },
+        { kind: "text", value: "Trois frais à connaître, plus simples que la gestion directe (transactions + droits de garde) :" },
+        {
+          kind: "list",
+          items: [
+            "**Les frais d'entrée** — à la souscription, souvent autour de 1 %.",
+            "**Les frais de sortie** — au rachat de vos parts.",
+            "**Les frais de gestion** — prélevés en continu, à l'intérieur du fonds : rien à payer à part, déjà reflétés dans la VL.",
+          ],
+        },
       ],
     },
     {
@@ -116,8 +124,17 @@ export const m12: Module = {
     type: "quiz",
     kicker: "Le Défi",
     title: "Choisir le bon fonds",
-    instruction:
-      "Extrait de la page OPCVM du BOC. **FCP Croissance Actions** | Catégorie A | VL 15 300 FCFA | +205 % depuis 2016. **FCP Sérénité Obligations** | Catégorie OMLT | VL 13 200 FCFA | +38 % depuis 2018. **FCP Diversifié Équilibre** | Catégorie D | VL 24 000 FCFA | +140 % depuis 2017. **FCP Trésorerie** | Catégorie M (monétaire) | VL 10 700 FCFA | +7 %. (1 erreur = − 5 000 FCFA.)",
+    instruction: "Voici 4 fonds accessibles à l'achat. Observez-les et répondez. (1 erreur = − 5 000 FCFA.)",
+    table: {
+      caption: "4 fonds disponibles (données fictives)",
+      columns: ["Fonds", "Catégorie", "VL", "Performance"],
+      rows: [
+        ["FCP Croissance Actions", "A (Actions)", "15 300 FCFA", "+205 % depuis 2016"],
+        ["FCP Sérénité Obligations", "OMLT", "13 200 FCFA", "+38 % depuis 2018"],
+        ["FCP Diversifié Équilibre", "D (Diversifié)", "24 000 FCFA", "+140 % depuis 2017"],
+        ["FCP Trésorerie", "M (Monétaire)", "10 700 FCFA", "+7 %"],
+      ],
+    },
     penaltyPerError: 5000,
     perfectReward: 20000,
     // Recopie des options de Q1 en repli neutre (requis par le type) :
@@ -187,7 +204,7 @@ export const m12: Module = {
       {
         verdict: "Sérénité Obligations",
         title: "La catégorie doit coller au profil",
-        body: "Awa prudente → **Sérénité Obligations**. Le FCP Actions (+205 %) est tentant, mais il monte ET descend fort. On ne choisit jamais un fonds sur sa seule performance, mais sur l'adéquation au profil (M05).",
+        body: "Awa prudente → **Sérénité Obligations**. Le FCP Actions (+205 %) est tentant, mais il monte ET descend fort. On ne choisit jamais un fonds sur sa seule performance, mais sur l'adéquation au profil (Module 5).",
       },
       {
         verdict: "Des frais de gestion",

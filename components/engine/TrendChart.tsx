@@ -32,7 +32,7 @@ function ticksFor(min: number, max: number): number[] {
  * serveur : aucun state, réutilisable tel quel dans un Block (slide)
  * ou dans ChartTabs (Client Component qui gère l'onglet actif).
  */
-export function TrendChart({ categories, series, unit }: ChartData) {
+export function TrendChart({ categories, series, unit, xLabel, yLabel }: ChartData) {
   const W = 360;
   const H = 240;
   const padL = 40;
@@ -62,7 +62,8 @@ export function TrendChart({ categories, series, unit }: ChartData) {
   const barWidth = Math.min(28, slot * 0.5);
 
   const ticks = ticksFor(rawMin < 0 ? rawMin : 0, rawMax);
-  const yTitle = unit ? `Montant (${unit})` : "Montant";
+  const yTitle = yLabel ?? (unit ? `Montant (${unit})` : "Montant");
+  const xTitle = xLabel ?? "Année";
 
   return (
     <figure className={styles.wrap}>
@@ -126,7 +127,7 @@ export function TrendChart({ categories, series, unit }: ChartData) {
           </text>
         ))}
         <text x={(x0 + x1) / 2} y={H - 6} textAnchor="middle" className={styles.axisTitle}>
-          Année
+          {xTitle}
         </text>
         <text x={0} y={0} transform={`translate(${12} ${(yt + yb) / 2}) rotate(-90)`} textAnchor="middle" className={styles.axisTitle}>
           {yTitle}

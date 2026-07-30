@@ -15,6 +15,10 @@ export type ChartData = {
   categories: string[];
   series: ChartSeries[];
   unit?: string;
+  /** Titre de l'axe X — "Année" par défaut (la plupart des graphiques du cours sont des séries temporelles). */
+  xLabel?: string;
+  /** Titre de l'axe Y — "Montant (unit)" par défaut si non fourni. */
+  yLabel?: string;
 };
 
 export type BocTableData = {
@@ -55,6 +59,8 @@ export type QuizChallenge = {
   chartProfiles?: { key: string; label: string; data: ChartData }[];
   /** Tableaux interactifs par scénario (M19+) : alternative à `table` quand il faut comparer 2 exemples distincts sans tout empiler à l'écran. */
   tableTabs?: { key: string; label: string; table: BocTableData }[];
+  /** Graphique unique, non interactif (M11+) : alternative à `chartProfiles` quand il n'y a qu'un seul exemple à visualiser (pas besoin d'onglets). */
+  chart?: ChartData;
   penaltyPerError: number; perfectReward: number;
   options: { value: string; label: string }[];   // ex. Mythe/Réalité, Feu vert/rouge
   questions: { prompt: string; answer: string; options?: { value: string; label: string }[] }[]; // answer ∈ (options ?? challenge.options).value — per-question override for questions whose correct-answer set differs from the challenge-level shared options (e.g. numeric-amount questions in the same challenge as a percentage question)
