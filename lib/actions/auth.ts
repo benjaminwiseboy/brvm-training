@@ -8,6 +8,13 @@ import { sanitizeNextPath } from "@/lib/safeRedirect";
 
 export type AuthActionState = { error?: string; message?: string } | undefined;
 
+// @supabase/ssr force le flow PKCE (voir lib/supabase/server.ts) : le lien
+// email — même le template PAR DÉFAUT, non édité — redirige donc vers
+// `emailRedirectTo`/`redirectTo` avec un `?code=...` que /auth/confirm
+// échange contre une session. Pas besoin d'éditer les templates Supabase
+// (ce qui nécessite un SMTP custom sur ce projet).
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
@@ -31,9 +38,11 @@ export async function signup(
   if (password.length < 8) return { error: "Le mot de passe doit contenir au moins 8 caractères." };
 
   const supabase = await createClient();
-  // Pas de `emailRedirectTo` : le template d'email (Étape 0.5, Supabase
-  // dashboard) pointe déjà en dur vers /auth/confirm via {{ .SiteURL }}.
-  const { data, error } = await supabase.auth.signUp({ email, password });
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: { emailRedirectTo: `${SITE_URL}/auth/confirm?next=%2F` },
+  });
 
   if (error) return { error: error.message };
   if (!data.user) return { error: "Inscription impossible, réessayez." };
@@ -89,7 +98,9 @@ export async function requestPasswordReset(
   const supabase = await createClient();
   // On ne révèle jamais si l'email existe ou non (évite l'énumération de comptes) :
   // même message de succès dans les deux cas.
-  await supabase.auth.resetPasswordForEmail(email);
+  await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${SITE_URL}/auth/confirm?next=%2Freset-password%2Fupdate`,
+  });
   return { message: "Si ce compte existe, un email de réinitialisation vient d'être envoyé." };
 }
 
