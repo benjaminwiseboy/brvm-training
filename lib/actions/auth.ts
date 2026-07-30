@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { isValidProgressState } from "@/lib/store";
+import { isValidProgressState } from "@/lib/progress";
 import { sanitizeNextPath } from "@/lib/safeRedirect";
 
 export type AuthActionState = { error?: string; message?: string } | undefined;

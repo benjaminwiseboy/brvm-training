@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { deriveStatus, resolveInitialProgress } from "@/lib/store";
+import { deriveStatus, resolveInitialProgress } from "@/lib/progress";
 import { UserTable, type AdminUserRow } from "@/components/admin/UserTable";
 import styles from "./page.module.css";
 

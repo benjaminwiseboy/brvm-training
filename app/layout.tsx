@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Poppins, Nunito } from "next/font/google";
-import { ProgressProvider, resolveInitialProgress } from "@/lib/store";
+import { ProgressProvider } from "@/lib/store";
+import { resolveInitialProgress } from "@/lib/progress";
 import { createClient } from "@/lib/supabase/server";
 import "./globals.css";
 

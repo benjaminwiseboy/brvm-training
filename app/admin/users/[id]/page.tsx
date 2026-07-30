@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { deriveStatus, resolveInitialProgress } from "@/lib/store";
+import { deriveStatus, resolveInitialProgress } from "@/lib/progress";
 import { getModule, PHASES } from "@/content/registry";
 import { money } from "@/lib/format";
 import { ModuleAccessGrid } from "@/components/admin/ModuleAccessGrid";
