@@ -112,17 +112,18 @@ export function QuizChallenge({
         <h2 className={styles.title}>{renderMarkup(challenge.title)}</h2>
       </div>
 
-      {(challenge.table || challenge.idcard || challenge.chartProfiles || challenge.tableTabs || challenge.chart) && (
+      {(challenge.table || challenge.idcard || challenge.chartProfiles || challenge.tableTabs || challenge.chart) ? (
         <div className={styles.tableEmphasis}>
+          <p className={`${styles.instruction} ${styles.instructionInBox}`}>{renderMarkup(challenge.instruction)}</p>
           {challenge.table && <BocTable {...challenge.table} />}
           {challenge.idcard && <IdCard {...challenge.idcard} />}
           {challenge.chartProfiles && <ChartTabs profiles={challenge.chartProfiles} />}
           {challenge.tableTabs && <TableTabs scenarios={challenge.tableTabs} />}
           {challenge.chart && <TrendChart {...challenge.chart} />}
         </div>
+      ) : (
+        <p className={styles.instruction}>{renderMarkup(challenge.instruction)}</p>
       )}
-
-      <p className={styles.instruction}>{renderMarkup(challenge.instruction)}</p>
 
       {challenge.scenario && (
         <div className={styles.scenario}>

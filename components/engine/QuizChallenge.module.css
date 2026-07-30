@@ -71,10 +71,15 @@
   white-space: pre-line;
   line-height: 1.5;
 }
+.instructionInBox {
+  margin: 0 0 14px;
+  color: #6c4d12;
+}
 
-/* Fait ressortir l'extrait de BOC au-dessus de l'instruction : cadre or,
-   plus large que le reste de l'écran, pour qu'il se voie au premier coup
-   d'œil plutôt que de se fondre dans le texte. */
+/* Fait ressortir l'extrait de BOC : cadre or, l'instruction qui s'y
+   rapporte vit maintenant DANS le même cadre (au-dessus du tableau/
+   graphique) pour rester aussi mise en valeur que l'exemple lui-même,
+   plutôt que de retomber en texte gris ordinaire juste en dessous. */
 .tableEmphasis {
   margin: 0 0 20px;
   padding: 16px;
