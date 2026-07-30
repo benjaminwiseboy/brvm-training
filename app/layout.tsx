@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Poppins, Nunito } from "next/font/google";
-import { ProgressProvider } from "@/lib/store";
+import { ProgressProvider, resolveInitialProgress } from "@/lib/store";
+import { createClient } from "@/lib/supabase/server";
 import "./globals.css";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["500", "600", "700", "800"], variable: "--font-poppins" });
@@ -21,11 +22,28 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+// Server Component async (lit la session) : rend toute l'app dynamique par
+// requête — attendu pour une app authentifiée, cf. plan comptes/admin. Évite
+// le flash "état invité" pour un compte connecté : la progression arrive
+// avec le premier HTML plutôt qu'après un aller-retour client.
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  let initialProgress = null;
+  if (user) {
+    const { data } = await supabase.from("user_progress").select("state").eq("user_id", user.id).maybeSingle();
+    initialProgress = data?.state ? resolveInitialProgress(data.state) : null;
+  }
+
   return (
     <html lang="fr" className={`${poppins.variable} ${nunito.variable}`}>
       <body>
-        <ProgressProvider>{children}</ProgressProvider>
+        <ProgressProvider userId={user?.id ?? null} userEmail={user?.email ?? null} initialProgress={initialProgress}>
+          {children}
+        </ProgressProvider>
       </body>
     </html>
   );

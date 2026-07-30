@@ -339,12 +339,17 @@
   font-size: 0.95rem;
   color: var(--blue-2);
 }
+.sbuserActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 2px;
+}
 .resetBtn {
   appearance: none;
   border: none;
   background: transparent;
   padding: 0;
-  margin-top: 2px;
   font-family: var(--f-display);
   font-size: 12px;
   font-weight: 700;
@@ -353,6 +358,21 @@
 }
 .resetBtn:hover {
   color: var(--blue-2);
+  text-decoration: underline;
+}
+.logoutBtn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-family: var(--f-display);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--clay);
+  text-decoration: none;
+}
+.logoutBtn:hover {
+  color: #8a3d1e;
   text-decoration: underline;
 }
 .resetBtn:focus-visible {

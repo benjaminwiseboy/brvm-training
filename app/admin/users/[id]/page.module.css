@@ -1,0 +1,98 @@
+.back {
+  display: inline-block;
+  color: var(--blue);
+  font-weight: 700;
+  text-decoration: none;
+  margin-bottom: 14px;
+  font-size: 0.9rem;
+}
+.back:hover {
+  text-decoration: underline;
+}
+
+.head {
+  margin-bottom: 20px;
+}
+.h1 {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--blue-2);
+  margin: 0 0 4px;
+}
+.sub {
+  color: var(--ink-soft);
+  font-weight: 600;
+  margin: 0;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.stat {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.statLabel {
+  font-family: var(--f-display);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-weight: 700;
+}
+.statValue {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: var(--blue-2);
+  margin-top: 4px;
+}
+
+.section {
+  margin-bottom: 28px;
+}
+.sectionTitle {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--blue-2);
+  margin: 0 0 14px;
+}
+
+.completedTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  font-size: 0.9rem;
+}
+.completedTable th {
+  text-align: left;
+  font-family: var(--f-display);
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--blue-2);
+  padding: 10px 14px;
+}
+.completedTable td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.completedTable tr:last-child td {
+  border-bottom: none;
+}
+.empty {
+  color: var(--ink-soft);
+  font-weight: 600;
+  font-size: 0.9rem;
+}

@@ -7,6 +7,7 @@ import { useProgress, deriveStatus } from "@/lib/store";
 import { money } from "@/lib/format";
 import { Wallet } from "@/components/engine/Wallet";
 import { NavGuardProvider, GuardedLink, useNavGuardActive, useModulePhaseIndex } from "@/lib/navGuard";
+import { logout } from "@/lib/actions/auth";
 import styles from "./AppShell.module.css";
 
 /**
@@ -240,7 +241,7 @@ function ModuleStepper() {
  */
 function Sidebar({ variant }: { variant: "dash" | "module" }) {
   const pathname = usePathname();
-  const { state, reset } = useProgress();
+  const { state, userEmail, reset } = useProgress();
   const doneCount = Object.keys(state.completed).length;
   const status = deriveStatus(doneCount);
   // Fix P2 (critique UX) : estompée pendant un défi de module (même signal
@@ -303,22 +304,29 @@ function Sidebar({ variant }: { variant: "dash" | "module" }) {
             👤
           </div>
           <div className={styles.sbuserMeta}>
-            <div className={styles.sbuserName}>Mon profil</div>
-            {/* Pas de nom d'apprenant réel en v0 (pas de compte) — cf. Hero/
-                ResumeCard : on évite d'inventer une identité factice. */}
-            <button
-              type="button"
-              className={styles.resetBtn}
-              onClick={() => {
-                // Fix P0 (critique UX) : reset irréversible auparavant déclenché
-                // en un clic, y compris en plein module — cf. .impeccable/critique.
-                if (window.confirm("Réinitialiser toute la progression et le portefeuille ? Cette action est irréversible.")) {
-                  reset();
-                }
-              }}
-            >
-              Réinitialiser
-            </button>
+            <div className={styles.sbuserName}>{userEmail ?? "Mon profil"}</div>
+            <div className={styles.sbuserActions}>
+              <button
+                type="button"
+                className={styles.resetBtn}
+                onClick={() => {
+                  // Fix P0 (critique UX) : reset irréversible auparavant déclenché
+                  // en un clic, y compris en plein module — cf. .impeccable/critique.
+                  if (window.confirm("Réinitialiser toute la progression et le portefeuille ? Cette action est irréversible.")) {
+                    reset();
+                  }
+                }}
+              >
+                Réinitialiser
+              </button>
+              {userEmail && (
+                <form action={logout}>
+                  <button type="submit" className={styles.logoutBtn}>
+                    Se déconnecter
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -1,0 +1,58 @@
+.wrap {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--paper);
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 28px;
+  background: var(--blue-2);
+  color: #fff;
+}
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.brandTitle {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+.brandTag {
+  font-size: 12px;
+  color: #a9c2d4;
+  font-weight: 600;
+}
+.right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.email {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #dae6ef;
+}
+.logoutBtn {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  color: #fff;
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-family: var(--f-display);
+  font-size: 13px;
+  font-weight: 700;
+}
+.logoutBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.main {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 28px 24px 60px;
+}

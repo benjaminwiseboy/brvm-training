@@ -6,6 +6,7 @@ import {
   applyCompletion,
   initialState,
   isValidProgressState,
+  resolveInitialProgress,
 } from "./store";
 
 const order = ["M01","M02","M03"];
@@ -94,5 +95,20 @@ describe("isValidProgressState", () => {
     expect(isValidProgressState({ capital: 1000 })).toBe(false); // pas de completed
     expect(isValidProgressState({ ...initialState(), completed: [] })).toBe(false); // tableau ≠ objet
     expect(isValidProgressState({ ...initialState(), capital: "1000" })).toBe(false); // capital string
+  });
+});
+
+// Comptes (Supabase) : même garde de forme que localStorage, appliquée à
+// `user_progress.state` — lue côté serveur (app/layout.tsx) et côté admin
+// (app/admin/**).
+describe("resolveInitialProgress", () => {
+  it("retourne l'état tel quel s'il est bien formé", () => {
+    const s = applyCompletion(initialState(), "M01", 4, 4, 20000);
+    expect(resolveInitialProgress(s)).toEqual(s);
+  });
+  it("retombe sur initialState() pour null / malformé / partiel", () => {
+    expect(resolveInitialProgress(null)).toEqual(initialState());
+    expect(resolveInitialProgress(undefined)).toEqual(initialState());
+    expect(resolveInitialProgress({ capital: 1000 })).toEqual(initialState());
   });
 });
