@@ -9,6 +9,8 @@ const TONE_CLASS: Record<string, string> = {
   gold: styles.icGold,
   teal: styles.icTeal,
   coral: styles.icCoral,
+  blue: styles.icBlue,
+  violet: styles.icViolet,
 };
 
 /**
@@ -48,6 +50,7 @@ export default function CoffrePage() {
               <span className={`${styles.ic} ${TONE_CLASS[r.tone]}`}>{r.icon}</span>
               <div className={styles.body}>
                 <span className={styles.name}>{r.name}</span>
+                <span className={styles.desc}>{r.desc}</span>
                 {!r.unlocked && "need" in r && (
                   <span className={styles.need}>🔒 Débloqué en {r.need}</span>
                 )}

@@ -132,22 +132,6 @@ export function QuizChallenge({
         </div>
       )}
 
-      {!validated && (
-        <div className={styles.head}>
-          <span className={styles.count}>
-            {qi + 1} / {total}
-          </span>
-          <div className={styles.dots}>
-            {challenge.questions.map((_, i) => (
-              <span
-                key={i}
-                className={`${styles.dot} ${i === qi ? styles.on : ""} ${i !== qi && answers[i] !== null ? styles.seen : ""}`}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-
       {visibleIndexes.map((qidx) => {
         const q = challenge.questions[qidx];
         const answer = answers[qidx];
@@ -165,7 +149,9 @@ export function QuizChallenge({
               .filter(Boolean)
               .join(" ")}
           >
-            <div className={styles.qNo}>Affirmation {qidx + 1}</div>
+            <div className={styles.qNo}>
+              Affirmation {qidx + 1} / {total}
+            </div>
             <p className={styles.qPrompt}>{renderMarkup(q.prompt)}</p>
             <div className={styles.qOpts}>
               {opts.map((o) => {

@@ -9,7 +9,7 @@
   background: linear-gradient(140deg, var(--blue-1), var(--blue-2));
   color: #fff;
   border-radius: var(--radius-xl);
-  padding: 28px 28px 26px;
+  padding: 34px 34px 32px;
   box-shadow: var(--shadow-lg);
   position: relative;
   overflow: hidden;
@@ -51,7 +51,7 @@
 }
 .sub {
   color: #c0d2e0;
-  font-weight: 600;
+  font-weight: 500;
   margin: 9px 0 22px;
 }
 .sub b {
@@ -67,7 +67,7 @@
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 18px;
-  padding: 13px 15px;
+  padding: 16px 18px;
   color: #fff;
   transition: background 0.2s, transform 0.1s;
 }

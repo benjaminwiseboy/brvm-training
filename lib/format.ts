@@ -1,3 +1,15 @@
+/** "Aujourd'hui" / "Hier" / "Il y a N jours" / date — pour les listes admin. */
+export function relativeDate(iso: string | null): string {
+  if (!iso) return "Jamais";
+  const date = new Date(iso);
+  const startOf = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+  const diffDays = Math.round((startOf(new Date()) - startOf(date)) / 86_400_000);
+  if (diffDays === 0) return "Aujourd'hui";
+  if (diffDays === 1) return "Hier";
+  if (diffDays > 1 && diffDays < 30) return `Il y a ${diffDays} jours`;
+  return date.toLocaleDateString("fr-FR");
+}
+
 export function money(n: number): string {
   const sign = n < 0 ? "-" : "";
   const digits = Math.abs(Math.round(n)).toString();

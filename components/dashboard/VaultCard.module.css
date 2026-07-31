@@ -25,30 +25,36 @@
 }
 .h2 {
   font-family: var(--f-display);
-  font-weight: 800;
+  font-weight: 700;
   font-size: 1.3rem;
   color: var(--blue-2);
   margin: 0;
 }
-.hint {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--ink-soft);
+.link {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--blue);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.link:hover {
+  color: var(--blue-2);
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  gap: 14px;
 }
 .res {
   display: flex;
   align-items: center;
-  gap: 13px;
+  gap: 14px;
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 14px;
+  padding: 16px;
   box-shadow: var(--shadow-sm);
   /* Fix (débordement mobile) : `.res` est un enfant direct de la grille
      `.grid` (2 colonnes ≥641px, 1 colonne en dessous). */
@@ -75,13 +81,19 @@
 .icCoral {
   background: var(--coral-soft);
 }
+.icBlue {
+  background: var(--blue-soft);
+}
+.icViolet {
+  background: var(--violet-soft);
+}
 .body {
   min-width: 0;
 }
 .name {
   display: block;
   font-family: var(--f-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 0.95rem;
   color: var(--blue-2);
   line-height: 1.15;
@@ -89,7 +101,7 @@
 .meta {
   display: block;
   font-size: 11.5px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--ink-soft);
   margin-top: 3px;
 }
@@ -100,21 +112,7 @@
   filter: grayscale(0.55);
 }
 
-.open {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 14px;
-  font-family: var(--f-display);
-  font-weight: 700;
-  font-size: 13px;
-  color: var(--blue);
-  text-decoration: none;
-}
-.open:hover {
-  color: var(--blue-2);
-}
-.open:focus-visible {
+.link:focus-visible {
   outline: 3px solid var(--or);
   outline-offset: 3px;
   border-radius: 8px;

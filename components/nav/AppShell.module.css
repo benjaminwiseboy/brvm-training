@@ -11,63 +11,72 @@
   min-height: 100dvh;
 }
 
+/* Fix, alignement maquette : plus de fond/position sticky pleine largeur —
+   défile normalement avec le contenu, comme dans la maquette (qui n'a
+   jamais eu de bandeau fixe ici). `.headerHidden`/`useAutoHideHeader` ne
+   s'appliquent donc plus qu'à `.dashTop` (mobile) ci-dessous. */
 .top {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  /* Fond translucide plutôt qu'un `--paper` opaque : le header se distingue
-     du contenu qui défile dessous par le flou, sans trancher trop fort. */
-  background: color-mix(in srgb, var(--card) 70%, transparent);
-  backdrop-filter: saturate(140%) blur(12px);
-  border-bottom: 1px solid var(--line);
-  transition: transform 0.25s ease-out;
 }
 
-/* Masqué au scroll vers le bas, réaffiché vers le haut (Fix, demande
-   explicite — "rend la lecture touffue" en restant fixé en permanence) —
-   partagé par `.top` et `.dashTop` (cf. `useAutoHideHeader` dans
-   AppShell.tsx), sur toutes les tailles d'écran (Fix, demande explicite).
-   `.dashTop` n'est de toute façon rendu qu'en mobile (`display: none`
-   ≥901px, cf. plus bas) : cette règle ne s'applique concrètement qu'à `.top`
-   sur desktop. */
 .headerHidden {
   transform: translateY(-100%);
 }
 @media (prefers-reduced-motion: reduce) {
-  .top,
   .dashTop {
     transition: none;
   }
 }
 
+/* Largeur alignée sur `.stage` (la carte du module juste en dessous) plutôt
+   que pleine largeur — la croix + le stepper vivent "juste au-dessus du
+   bloc du module", pas comme un bandeau de site. */
 .bar {
-  max-width: 1180px;
+  max-width: var(--stage-max);
   margin: 0 auto;
-  padding: 13px 20px;
+  padding: 20px 20px 13px;
   display: flex;
   align-items: center;
   gap: 16px;
   justify-content: space-between;
 }
 
-/* Code + titre + phase du module courant (Fix, demande explicite — "comme
-   dans le POC" : cf. POC-Module-1/app.js, `.brand__sub` rempli par
-   `M.phase + " · " + M.code`). `flex:1`/`min-width:0` + ellipsis sur chaque
-   ligne : tronque proprement plutôt que de pousser le portefeuille hors
-   écran sur mobile. */
+/* Croix de sortie (Fix, alignement maquette) — rond discret, fond neutre
+   clair (pas de couleur de marque : c'est une action de sortie, pas une
+   action primaire). */
+.closeBtn {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--paper-2);
+  color: var(--ink);
+  font-size: 15px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.closeBtn:hover {
+  background: var(--line-strong);
+}
+.closeBtn:focus-visible {
+  outline: 3px solid var(--or);
+  outline-offset: 2px;
+}
+
+/* Code + titre du module courant (Fix, alignement maquette — en-tête
+   épurée : plus de nom de phase, redondant avec le stepper juste en
+   dessous ; plus de portefeuille, déjà dans la sidebar). `flex:1`/
+   `min-width:0` + ellipsis : tronque proprement plutôt que de déborder
+   sur mobile. */
 .moduleInfo {
   flex: 1;
   min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-.moduleTitle {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   font-family: var(--f-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 15px;
   color: var(--blue-2);
 }
@@ -77,15 +86,6 @@
    pour tout texte doré ailleurs dans l'app (kickers, eyebrows). */
 .moduleCode {
   color: var(--or-deep);
-}
-.modulePhase {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--ink-soft);
-  letter-spacing: 0.02em;
 }
 
 .brand {
@@ -122,7 +122,10 @@
 .stage {
   max-width: var(--stage-max);
   margin: 0 auto;
-  padding: 40px 20px 90px;
+  /* Padding haut réduit (Fix, alignement maquette) : le stepper juste
+     au-dessus fournit déjà de l'air, plus besoin d'un grand espace de
+     bandeau de page comme quand `.top` était un header sticky séparé. */
+  padding: 8px 20px 90px;
 }
 
 /* =============================================================
@@ -130,18 +133,20 @@
    POC-Module-1/styles.css (.stepper, .stepper__seg, .stepper__track,
    .stepper__fill, .stepper__name, .is-active, .is-done).
    ============================================================= */
+/* Sans libellé sous les barres (Fix, alignement maquette — "stepper sans
+   forcément de texte dessous") : `aria-hidden` de longue date sur ce
+   composant (cf. ModuleStepper, AppShell.tsx) — c'était déjà purement
+   décoratif pour les lecteurs d'écran, donc aucune régression a11y à
+   retirer le texte visuellement. */
 .stepper {
-  max-width: 1180px;
+  max-width: var(--stage-max);
   margin: 0 auto;
-  padding: 0 20px 12px;
+  padding: 0 20px 14px;
   display: flex;
-  gap: 9px;
+  gap: 6px;
 }
 .stepperSeg {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
 }
 .stepperTrack {
   height: 5px;
@@ -157,17 +162,6 @@
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.5s ease;
-}
-.stepperName {
-  font-family: var(--f-display);
-  font-size: 10.5px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  font-weight: 700;
-}
-.stepperSegActive .stepperName {
-  color: var(--blue);
 }
 .stepperSegActive .stepperFill {
   transform: scaleX(1);
@@ -254,7 +248,7 @@
   text-decoration: none;
   color: var(--ink-soft);
   font-family: var(--f-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 15px;
   transition: background 0.18s, color 0.18s;
 }
@@ -276,9 +270,17 @@
   text-align: center;
 }
 
+/* Fix (débordement sidebar) : `display:grid` sans `grid-template-columns`
+   crée une colonne implicite dimensionnée sur le max-content de son
+   contenu (l'email non wrappé, notamment) — elle pouvait dépasser la
+   largeur de la sidebar au lieu de s'y limiter. `display:flex` en colonne
+   applique `align-items:stretch` par défaut, qui force chaque enfant
+   (.sbwallet/.sbuser) à occuper exactement la largeur disponible quel que
+   soit son contenu — plus robuste ici que `minmax(0,1fr)` en grid. */
 .sidebarFoot {
   margin-top: auto;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 12px;
 }
 .sbwallet {
@@ -292,11 +294,11 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #a9c2d4;
-  font-weight: 700;
+  font-weight: 600;
 }
 .sbwalletAmt {
   font-family: var(--f-display);
-  font-weight: 800;
+  font-weight: 700;
   font-size: 1.3rem;
   font-variant-numeric: tabular-nums;
   margin-top: 3px;
@@ -308,7 +310,7 @@
 }
 .sbwalletStatus {
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   color: #c0d2e0;
   margin-top: 7px;
 }
@@ -316,7 +318,7 @@
    montant : celui-ci est déjà affiché, animé, dans le header (Wallet.tsx). */
 .sbwalletStatusBig {
   font-family: var(--f-display);
-  font-weight: 800;
+  font-weight: 700;
   font-size: 1.05rem;
   margin-top: 3px;
   line-height: 1.25;
@@ -329,36 +331,30 @@
   border: 1px solid var(--line);
   border-radius: 16px;
   padding: 10px 12px;
+  min-width: 0;
 }
 .sbuserMeta {
   min-width: 0;
+  flex: 1;
 }
+/* Fix (débordement sidebar) : sans ellipsis explicite, un email long
+   (fréquent avec les alias +tag) poussait la carte hors de la sidebar au
+   lieu de se tronquer proprement. */
 .sbuserName {
   font-family: var(--f-display);
-  font-weight: 800;
-  font-size: 0.95rem;
+  font-weight: 600;
+  font-size: 0.9rem;
   color: var(--blue-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .sbuserActions {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 2px;
-}
-.resetBtn {
-  appearance: none;
-  border: none;
-  background: transparent;
-  padding: 0;
-  font-family: var(--f-display);
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--azure);
-  text-decoration: none;
-}
-.resetBtn:hover {
-  color: var(--blue-2);
-  text-decoration: underline;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin-top: 3px;
 }
 .logoutBtn {
   appearance: none;
@@ -367,7 +363,7 @@
   padding: 0;
   font-family: var(--f-display);
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--clay);
   text-decoration: none;
 }
@@ -375,7 +371,7 @@
   color: #8a3d1e;
   text-decoration: underline;
 }
-.resetBtn:focus-visible {
+.logoutBtn:focus-visible {
   outline: 3px solid var(--or);
   outline-offset: 3px;
 }
@@ -453,11 +449,11 @@
 }
 
 .dashMain {
-  max-width: 860px;
+  max-width: 1080px;
   margin: 0 auto;
   padding: 34px 20px 56px;
   display: grid;
-  gap: 26px;
+  gap: 30px;
 }
 
 /* Barre d'onglets (mobile) — fixée au bord bas de l'écran (pattern iOS/
@@ -491,7 +487,7 @@
   text-decoration: none;
   color: var(--ink-soft);
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 600;
   transition: background 0.2s, color 0.2s;
 }
 .tabIc {

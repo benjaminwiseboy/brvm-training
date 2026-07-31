@@ -86,28 +86,25 @@ export function SlideDeck({
 
   return (
     <div className={styles.wrap}>
-      <div className={styles.head}>
-        <span className={styles.count}>
-          {i + 1} / {slides.length}
-        </span>
+      <div className={styles.card}>
+        {/* Seul indicateur de position au-dessus du titre (Fix, moins de
+            redondance — avant : ce même "X / Y" était déjà répété juste
+            au-dessus de la carte). */}
+        <div className={styles.eyebrow}>
+          Cours — slide {i + 1}/{slides.length}
+        </div>
+        <h2 className={styles.title}>{slide.title}</h2>
+        <div className={styles.body} key={i}>
+          {slide.blocks.map((block, bi) => (
+            <BlockRenderer key={bi} block={block} />
+          ))}
+        </div>
         <div className={styles.dots}>
           {slides.map((_, idx) => (
             <span
               key={idx}
               className={`${styles.dot} ${idx === i ? styles.on : ""} ${idx !== i && seen[idx] ? styles.seen : ""}`}
             />
-          ))}
-        </div>
-      </div>
-
-      <div className={styles.card}>
-        <div className={styles.phone}>
-          Slide {i + 1} / {slides.length}
-        </div>
-        <h2 className={styles.title}>{slide.title}</h2>
-        <div className={styles.body} key={i}>
-          {slide.blocks.map((block, bi) => (
-            <BlockRenderer key={bi} block={block} />
           ))}
         </div>
       </div>
