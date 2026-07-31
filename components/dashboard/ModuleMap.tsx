@@ -1,6 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { PHASES, getModule, orderedCodes } from "@/content/registry";
-import { deriveModuleState } from "@/lib/store";
+import { deriveModuleState, isFreeTrialModule, useProgress } from "@/lib/store";
 import styles from "./ModuleMap.module.css";
 
 type ModState = "done" | "current" | "unlocked" | "locked";
@@ -27,7 +29,9 @@ const STATE_CLASS: Record<ModState, string> = {
  * auto-résolu que `getNext`, déjà accepté à la revue de la Task 10).
  */
 export function ModuleMap({ completed }: { completed: Record<string, unknown> }) {
+  const { paymentStatus } = useProgress();
   const order = orderedCodes();
+  const hasFullAccess = paymentStatus === "paid";
 
   return (
     <section className={styles.sec}>
@@ -50,7 +54,15 @@ export function ModuleMap({ completed }: { completed: Record<string, unknown> })
               </div>
               <div className={styles.mods}>
                 {phase.codes.map((code) => (
-                  <ModuleRow key={code} code={code} state={deriveModuleState(code, completed, order)} />
+                  <ModuleRow
+                    key={code}
+                    code={code}
+                    state={deriveModuleState(code, completed, order)}
+                    // Essai gratuit (Fix, règle produit) : au-delà de la Phase 1,
+                    // "verrouillé pour raison de paiement" prime sur l'état de
+                    // progression — pas juste "pas encore atteint".
+                    paywalled={!hasFullAccess && !isFreeTrialModule(code)}
+                  />
                 ))}
               </div>
             </div>
@@ -61,23 +73,33 @@ export function ModuleMap({ completed }: { completed: Record<string, unknown> })
   );
 }
 
-function ModuleRow({ code, state }: { code: string; state: ModState }) {
+function ModuleRow({ code, state, paywalled }: { code: string; state: ModState; paywalled: boolean }) {
   const mod = getModule(code);
   const title = mod?.title ?? code;
-  const clickable = state !== "locked";
-  const cls = `${styles.mod} ${STATE_CLASS[state]} ${clickable ? styles.link : ""}`;
+  const displayState: ModState = paywalled ? "locked" : state;
+  // Reste cliquable même verrouillé par paiement (contrairement à un simple
+  // "pas encore atteint") : mène au vrai écran d'explication (ModuleBlocked,
+  // app/module/[code]/page.tsx), pas une ligne morte.
+  const clickable = paywalled || state !== "locked";
+  const cls = `${styles.mod} ${STATE_CLASS[displayState]} ${clickable ? styles.link : ""}`;
 
   const content = (
     <>
-      <span className={styles.ic}>{ICONS[state]}</span>
+      <span className={styles.ic}>{ICONS[displayState]}</span>
       <div className={styles.body}>
         <span className={styles.code}>{code}</span>
         <span className={styles.title}>{title}</span>
       </div>
       <span className={styles.right}>
-        {state === "current" && <span className={styles.resumeTag}>Reprendre →</span>}
-        {state === "done" && <span className={styles.revoirTag}>Revoir ↻</span>}
-        {state === "unlocked" && "→"}
+        {paywalled ? (
+          <span className={styles.paywallTag}>Plan payant</span>
+        ) : (
+          <>
+            {displayState === "current" && <span className={styles.resumeTag}>Reprendre →</span>}
+            {displayState === "done" && <span className={styles.revoirTag}>Revoir ↻</span>}
+            {displayState === "unlocked" && "→"}
+          </>
+        )}
       </span>
     </>
   );

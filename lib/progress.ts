@@ -114,6 +114,19 @@ export function deriveModuleState(
   return "locked";
 }
 
+export type PaymentStatus = "paid" | "unpaid";
+
+/**
+ * Essai gratuit (Fix, règle produit explicite) : seule la Phase 1
+ * (`PHASES[0]`, M01-M04) reste accessible à un compte non payant. Le reste
+ * du parcours exige `payments.status === "paid"` — appliqué côté serveur
+ * dans `app/module/[code]/page.tsx` (la vraie barrière), et reflété
+ * visuellement dans `ModuleMap`/`PhasePreview` pour ne pas surprendre au clic.
+ */
+export function isFreeTrialModule(code: string): boolean {
+  return PHASES[0]?.codes.includes(code.toUpperCase()) ?? false;
+}
+
 export function progressPct(doneCount: number, total: number): number {
   if (!total) return 0;
   return Math.round((doneCount / total) * 100);

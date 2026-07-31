@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { PHASES } from "@/content/registry";
+import { useProgress } from "@/lib/store";
 import styles from "./PhasePreview.module.css";
 
 /**
@@ -10,6 +13,9 @@ import styles from "./PhasePreview.module.css";
  * maquette : le dashboard ne montre qu'un aperçu, jamais les 28 modules).
  */
 export function PhasePreview({ completed }: { completed: Record<string, unknown> }) {
+  const { paymentStatus } = useProgress();
+  const hasFullAccess = paymentStatus === "paid";
+
   return (
     <section className={styles.sec}>
       <div className={styles.head}>
@@ -20,9 +26,13 @@ export function PhasePreview({ completed }: { completed: Record<string, unknown>
       </div>
 
       <div className={styles.list}>
-        {PHASES.map((phase) => {
+        {PHASES.map((phase, i) => {
           const done = phase.codes.filter((c) => completed[c]).length;
           const pct = Math.round((done / phase.codes.length) * 100);
+          // Essai gratuit (Fix, règle produit) : au-delà de la Phase 1 (i===0),
+          // un compte non payant voit "Plan payant" au lieu du compteur — même
+          // règle que ModuleMap, appliquée ici à l'échelle de la phase entière.
+          const paywalled = i > 0 && !hasFullAccess;
           return (
             <Link href="/parcours" key={phase.name} className={styles.row}>
               <span className={styles.emoji}>{phase.badge}</span>
@@ -32,9 +42,13 @@ export function PhasePreview({ completed }: { completed: Record<string, unknown>
                   <div className={styles.fill} style={{ width: `${pct}%` }} />
                 </div>
               </div>
-              <span className={styles.count}>
-                {done}/{phase.codes.length}
-              </span>
+              {paywalled ? (
+                <span className={styles.paywallTag}>🔒 Plan payant</span>
+              ) : (
+                <span className={styles.count}>
+                  {done}/{phase.codes.length}
+                </span>
+              )}
             </Link>
           );
         })}

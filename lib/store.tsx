@@ -5,6 +5,7 @@ import { createCoalescingQueue } from "@/lib/debounce";
 import {
   STORAGE_KEY,
   type ProgressState,
+  type PaymentStatus,
   initialState,
   isValidProgressState,
   applyCompletion,
@@ -18,6 +19,9 @@ export * from "@/lib/progress";
 const Ctx = createContext<{
   state: ProgressState;
   userEmail: string | null;
+  /** `null` = pas de compte, ou compte sans ligne `payments` — traité comme
+   * non-payant pour l'essai gratuit (cf. lib/progress.ts::isFreeTrialModule). */
+  paymentStatus: PaymentStatus | null;
   completeModule: (code: string, correct: number, total: number, capitalDelta: number) => void;
   setResumeSlide: (code: string, slide: number, phase?: "cours" | "defi") => void;
   setOnboarded: () => void;
@@ -36,11 +40,13 @@ export function ProgressProvider({
   userId = null,
   userEmail = null,
   initialProgress = null,
+  initialPaymentStatus = null,
 }: {
   children: React.ReactNode;
   userId?: string | null;
   userEmail?: string | null;
   initialProgress?: ProgressState | null;
+  initialPaymentStatus?: PaymentStatus | null;
 }) {
   const [state, setState] = useState<ProgressState>(() => initialProgress ?? initialState());
   const [hydrated, setHydrated] = useState(userId !== null); // compte : déjà résolu côté serveur
@@ -98,6 +104,7 @@ export function ProgressProvider({
   const value = {
     state,
     userEmail,
+    paymentStatus: initialPaymentStatus,
     completeModule: (code: string, correct: number, total: number, delta: number) =>
       setState((s) => applyCompletion(s, code, correct, total, delta)),
     setResumeSlide: (code: string, slide: number, phase: "cours" | "defi" = "cours") =>

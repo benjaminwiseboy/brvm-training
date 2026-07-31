@@ -34,15 +34,28 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   } = await supabase.auth.getUser();
 
   let initialProgress = null;
+  let initialPaymentStatus = null;
   if (user) {
-    const { data } = await supabase.from("user_progress").select("state").eq("user_id", user.id).maybeSingle();
-    initialProgress = data?.state ? resolveInitialProgress(data.state) : null;
+    const [{ data: progressRow }, { data: paymentRow }] = await Promise.all([
+      supabase.from("user_progress").select("state").eq("user_id", user.id).maybeSingle(),
+      supabase.from("payments").select("status").eq("user_id", user.id).maybeSingle(),
+    ]);
+    initialProgress = progressRow?.state ? resolveInitialProgress(progressRow.state) : null;
+    // Pas de ligne `payments` = jamais marqué payant → traité comme "unpaid"
+    // pour l'essai gratuit (cf. lib/progress.ts::isFreeTrialModule), cohérent
+    // avec le défaut de la colonne côté DB.
+    initialPaymentStatus = paymentRow?.status ?? "unpaid";
   }
 
   return (
     <html lang="fr" className={`${poppins.variable} ${nunito.variable}`}>
       <body>
-        <ProgressProvider userId={user?.id ?? null} userEmail={user?.email ?? null} initialProgress={initialProgress}>
+        <ProgressProvider
+          userId={user?.id ?? null}
+          userEmail={user?.email ?? null}
+          initialProgress={initialProgress}
+          initialPaymentStatus={initialPaymentStatus}
+        >
           {children}
         </ProgressProvider>
       </body>

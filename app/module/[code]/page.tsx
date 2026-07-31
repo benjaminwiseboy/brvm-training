@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getModule } from "@/content/registry";
+import { isFreeTrialModule } from "@/lib/progress";
 import { ModulePlayer } from "@/components/engine/ModulePlayer";
 import { ModuleBlocked } from "@/components/engine/ModuleBlocked";
 import { AppShell } from "@/components/nav/AppShell";
@@ -22,19 +23,34 @@ export default async function ModulePage({ params }: { params: Promise<{ code: s
   } = await supabase.auth.getUser();
 
   let blocked = false;
+  let reason: "admin" | "payment" = "admin";
   if (user) {
-    const { data } = await supabase
-      .from("module_access_overrides")
-      .select("blocked")
-      .eq("user_id", user.id)
-      .eq("module_code", mod.code)
-      .maybeSingle();
-    blocked = data?.blocked === true;
+    const [{ data: override }, { data: payment }] = await Promise.all([
+      supabase
+        .from("module_access_overrides")
+        .select("blocked")
+        .eq("user_id", user.id)
+        .eq("module_code", mod.code)
+        .maybeSingle(),
+      supabase.from("payments").select("status").eq("user_id", user.id).maybeSingle(),
+    ]);
+
+    if (override) {
+      // Override explicite admin (Ouvert/Fermé) — prévaut toujours sur la
+      // règle de paiement ci-dessous (auto).
+      blocked = override.blocked === true;
+      reason = "admin";
+    } else if (!isFreeTrialModule(mod.code) && payment?.status !== "paid") {
+      // Essai gratuit (Fix, règle produit) : sans override, seule la Phase 1
+      // reste accessible à un compte non payant.
+      blocked = true;
+      reason = "payment";
+    }
   }
 
   return (
     <AppShell moduleInfo={{ code: mod.code, title: mod.title, phase: mod.phase }}>
-      {blocked ? <ModuleBlocked module={mod} /> : <ModulePlayer module={mod} />}
+      {blocked ? <ModuleBlocked module={mod} reason={reason} /> : <ModulePlayer module={mod} />}
     </AppShell>
   );
 }
