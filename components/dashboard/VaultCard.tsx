@@ -93,7 +93,10 @@ export function VaultCard() {
             <div className={styles.body}>
               <span className={styles.name}>{r.name}</span>
               <span className={styles.meta}>
-                {r.unlocked ? "⬇ Disponible" : `🔒 Débloqué en ${"need" in r ? r.need : ""}`}
+                {/* "Bientôt disponible" (pas "Disponible") : cohérent avec le
+                    badge "Bientôt" de /coffre — aucun téléchargement réel
+                    n'est câblé, "Disponible" serait trompeur. */}
+                {r.unlocked ? "Bientôt disponible" : `🔒 Débloqué en ${"need" in r ? r.need : ""}`}
               </span>
             </div>
           </div>
