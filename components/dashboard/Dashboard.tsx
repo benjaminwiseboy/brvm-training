@@ -4,7 +4,7 @@ import { useProgress, deriveStatus, progressPct } from "@/lib/store";
 import { ResumeCard } from "./ResumeCard";
 import { ProgressCard } from "./ProgressCard";
 import { VaultCard } from "./VaultCard";
-import { ModuleMap } from "./ModuleMap";
+import { PhasePreview } from "./PhasePreview";
 
 // 28 = Module["totalModules"] (lib/types.ts) — nombre total de modules du parcours.
 const TOTAL_MODULES = 28;
@@ -12,7 +12,8 @@ const TOTAL_MODULES = 28;
 /**
  * Tableau de bord de l'apprenant — assemble, dans l'ordre de
  * POC-Module-1/dashboard.js (boot()) : reprise, progression, coffre-fort,
- * carte des modules. Pas de `.module.css` propre : ce composant ne fait que
+ * aperçu du parcours (détail complet module par module sur /parcours,
+ * cf. ModuleMap). Pas de `.module.css` propre : ce composant ne fait que
  * composer les 4 cartes ci-dessous ; leur mise en page en grille verticale
  * (`.dash`) est déjà portée dans `AppShell.module.css` (`.dashMain`,
  * variante "dash", Task 11).
@@ -39,7 +40,7 @@ export function Dashboard() {
         status={status}
       />
       <VaultCard />
-      <ModuleMap completed={state.completed} />
+      <PhasePreview completed={state.completed} />
     </>
   );
 }

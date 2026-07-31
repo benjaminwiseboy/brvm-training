@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { money } from "@/lib/format";
+import { relativeDate } from "@/lib/format";
 import styles from "./UserTable.module.css";
 
 export type AdminUserRow = {
@@ -10,6 +10,9 @@ export type AdminUserRow = {
   capital: number;
   streak: number;
   doneCount: number;
+  progressPct: number;
+  paymentStatus: "paid" | "unpaid";
+  lastSignIn: string | null;
 };
 
 export function UserTable({ rows }: { rows: AdminUserRow[] }) {
@@ -26,12 +29,11 @@ export function UserTable({ rows }: { rows: AdminUserRow[] }) {
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>Email</th>
-            <th>Inscrit le</th>
+            <th>Inscrit</th>
+            <th>Paiement</th>
+            <th>Progression</th>
             <th>Statut</th>
-            <th>Portefeuille</th>
-            <th>Série</th>
-            <th>Modules terminés</th>
+            <th>Dernière connexion</th>
           </tr>
         </thead>
         <tbody>
@@ -40,16 +42,21 @@ export function UserTable({ rows }: { rows: AdminUserRow[] }) {
               <td>
                 <Link className={styles.rowLink} href={`/admin/users/${row.id}`}>
                   <span className={styles.email}>{row.email}</span>
+                  <span className={styles.registered}>Inscrit le {new Date(row.createdAt).toLocaleDateString("fr-FR")}</span>
                 </Link>
               </td>
-              <td>{new Date(row.createdAt).toLocaleDateString("fr-FR")}</td>
               <td>
-                <span className={styles.badge}>{row.badge.emoji}</span>
-                {row.badge.label}
+                <span className={`${styles.payBadge} ${row.paymentStatus === "paid" ? styles.payBadgePaid : styles.payBadgeUnpaid}`}>
+                  {row.paymentStatus === "paid" ? "Payé" : "Impayé"}
+                </span>
               </td>
-              <td>{money(row.capital)} FCFA</td>
-              <td>{row.streak}</td>
-              <td>{row.doneCount}</td>
+              <td className={styles.progressCell}>{row.progressPct}%</td>
+              <td>
+                <span className={styles.badge}>
+                  {row.badge.emoji} {row.badge.label}
+                </span>
+              </td>
+              <td className={styles.muted}>{relativeDate(row.lastSignIn)}</td>
             </tr>
           ))}
         </tbody>

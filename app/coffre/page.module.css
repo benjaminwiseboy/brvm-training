@@ -21,31 +21,31 @@
 }
 .h1 {
   font-family: var(--f-display);
-  font-weight: 800;
+  font-weight: 700;
   font-size: 1.5rem;
   color: var(--blue-2);
   margin: 0;
 }
 .hint {
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--ink-soft);
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
+  gap: 16px;
 }
 
 .card {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 18px;
+  padding: 20px;
   box-shadow: var(--shadow-sm);
 }
 
@@ -70,6 +70,12 @@
 .icCoral {
   background: var(--coral-soft);
 }
+.icBlue {
+  background: var(--blue-soft);
+}
+.icViolet {
+  background: var(--violet-soft);
+}
 
 .body {
   min-width: 0;
@@ -78,15 +84,22 @@
 .name {
   display: block;
   font-family: var(--f-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 1rem;
   color: var(--blue-2);
   line-height: 1.2;
 }
+.desc {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.4;
+  margin-top: 3px;
+}
 .need {
   display: block;
   font-size: 11.5px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--ink-soft);
   margin-top: 4px;
 }
@@ -94,7 +107,7 @@
 .soon {
   flex: none;
   font-family: var(--f-display);
-  font-weight: 800;
+  font-weight: 700;
   font-size: 11px;
   letter-spacing: 0.02em;
   color: var(--or-deep);
@@ -112,6 +125,6 @@
     flex-wrap: wrap;
   }
   .soon {
-    margin-left: 66px; /* aligne sous le texte, sous l'icône (52px + gap 14px) */
+    margin-left: 68px; /* aligne sous le texte, sous l'icône (52px + gap 16px) */
   }
 }

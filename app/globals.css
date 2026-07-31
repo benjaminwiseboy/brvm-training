@@ -48,9 +48,14 @@
   --radius:     20px;
   --radius-lg:  28px;
   --radius-xl:  34px;
-  --shadow-sm:  0 2px 10px -4px rgba(14,47,68,.16);
-  --shadow:     0 14px 36px -18px rgba(14,47,68,.32);
-  --shadow-lg:  0 26px 60px -26px rgba(14,47,68,.44);
+  /* Allégées (Fix, alignement maquette) — la maquette design_handoff_brvm_learning
+     reste sur des ombres presque invisibles pour les cartes courantes
+     (rgba(...,.04-.05)) et une seule ombre plus marquée pour le hero/les
+     formulaires (rgba(...,.12)) ; nos valeurs précédentes (.16/.32/.44)
+     étaient nettement plus lourdes que ça sur les trois paliers. */
+  --shadow-sm:  0 2px 10px -4px rgba(14,47,68,.09);
+  --shadow:     0 10px 28px -16px rgba(14,47,68,.14);
+  --shadow-lg:  0 20px 46px -22px rgba(14,47,68,.20);
 
   /* Familles : pointent sur les variables injectées par next/font (layout.tsx) */
   --f-display:  var(--font-poppins), system-ui, sans-serif;

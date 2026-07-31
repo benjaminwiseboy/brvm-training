@@ -104,6 +104,27 @@ export async function requestPasswordReset(
   return { message: "Si ce compte existe, un email de réinitialisation vient d'être envoyé." };
 }
 
+/**
+ * Change l'email d'un compte connecté. Supabase envoie un lien de
+ * confirmation à la nouvelle adresse (comportement par défaut du projet) ;
+ * `auth.users.email` — donc le login — ne change qu'après ce clic. Le
+ * trigger `on_auth_user_email_updated` (migration dédiée) répercute alors
+ * le changement dans `profiles.email`, lu par l'admin.
+ */
+export async function updateEmail(
+  _prevState: AuthActionState,
+  formData: FormData
+): Promise<AuthActionState> {
+  const email = String(formData.get("email") ?? "").trim();
+  if (!isValidEmail(email)) return { error: "Adresse email invalide." };
+
+  const supabase = await createClient();
+  const { error } = await supabase.auth.updateUser({ email });
+  if (error) return { error: error.message };
+
+  return { message: "Vérifiez votre nouvelle boîte mail pour confirmer le changement." };
+}
+
 export async function updatePassword(
   _prevState: AuthActionState,
   formData: FormData

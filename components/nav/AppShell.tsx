@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useProgress, deriveStatus } from "@/lib/store";
 import { money } from "@/lib/format";
-import { Wallet } from "@/components/engine/Wallet";
 import { NavGuardProvider, GuardedLink, useNavGuardActive, useModulePhaseIndex } from "@/lib/navGuard";
 import { logout } from "@/lib/actions/auth";
 import styles from "./AppShell.module.css";
@@ -35,16 +34,14 @@ import styles from "./AppShell.module.css";
  */
 type NavItem = { ic: string; label: string; href: string };
 
-// Port de navItems() dans POC-Module-1/dashboard.js. Seules "Accueil" (/) et
-// "Coffre-fort" (/coffre) ont une route réelle dans ce plan v0 —
-// "Parcours"/"Progrès"/"Profil" restent des ancres "#" comme dans le POC
-// (mockup statique, jamais câblées à une vraie page).
+// Port de navItems() dans POC-Module-1/dashboard.js. Les 4 items pointent
+// maintenant tous vers une route réelle — "Progrès" (jamais câblé, ancre
+// "#" depuis le POC) a été retiré plutôt que laissé mort.
 const NAV_ITEMS: NavItem[] = [
   { ic: "🏠", label: "Accueil", href: "/" },
-  { ic: "🗺️", label: "Parcours", href: "#" },
-  { ic: "📊", label: "Progrès", href: "#" },
+  { ic: "🗺️", label: "Parcours", href: "/parcours" },
   { ic: "🗝️", label: "Coffre-fort", href: "/coffre" },
-  { ic: "👤", label: "Profil", href: "#" },
+  { ic: "👤", label: "Profil", href: "/profil" },
 ];
 
 // Mêmes 4 libellés que POC-Module-1/app.js (`var STEPS = [...]`) — l'index
@@ -124,28 +121,31 @@ function useAutoHideHeader() {
 }
 
 function ModuleShell({ children, moduleInfo }: { children: ReactNode; moduleInfo?: ModuleInfo }) {
-  const { state } = useProgress();
-  const headerHidden = useAutoHideHeader();
-
   return (
     <div className={styles.shell}>
       <Sidebar variant="module" />
 
-      <header className={`${styles.top} ${headerHidden ? styles.headerHidden : ""}`}>
+      {/* Fix, alignement maquette : plus un bandeau sticky pleine largeur, mais
+          une ligne compacte alignée sur la même colonne que la carte du
+          module (`.stage`, cf. plus bas) — pas de fond, elle défile avec le
+          contenu comme dans la maquette. */}
+      <header className={styles.top}>
         <div className={styles.bar}>
-          {/* Code (doré) + titre + phase du module courant (Fix, demande
-              explicite — "comme dans le POC" : cf. POC-Module-1/app.js,
-              `.brand__sub` rempli par `M.phase + " · " + M.code`). Pas de
-              marque "BRVM Learning" ici : déjà en haut de la sidebar. */}
+          {/* En-tête épurée (Fix, alignement maquette) : croix + numéro/titre du
+              module + stepper — plus de portefeuille (déjà dans la sidebar) ni
+              de nom de phase (redondant avec le stepper juste en dessous). */}
+          {/* Croix de sortie — passe par GuardedLink, pas un <Link> nu : respecte
+              automatiquement la garde "Quitter le défi ?" posée par ModulePlayer
+              pendant la phase "défi" (même protection que les liens de la
+              sidebar), sans logique dédiée. */}
+          <GuardedLink href="/" className={styles.closeBtn} aria-label="Quitter le module">
+            ✕
+          </GuardedLink>
           {moduleInfo && (
             <div className={styles.moduleInfo}>
-              <div className={styles.moduleTitle}>
-                <span className={styles.moduleCode}>{moduleInfo.code}</span> · {moduleInfo.title}
-              </div>
-              <div className={styles.modulePhase}>{moduleInfo.phase}</div>
+              <span className={styles.moduleCode}>{moduleInfo.code}</span> · {moduleInfo.title}
             </div>
           )}
-          <Wallet amount={state.capital} />
         </div>
 
         <ModuleStepper />
@@ -221,7 +221,6 @@ function ModuleStepper() {
           <div className={styles.stepperTrack}>
             <div className={styles.stepperFill} />
           </div>
-          <div className={styles.stepperName}>{label}</div>
         </div>
       ))}
     </div>
@@ -241,7 +240,7 @@ function ModuleStepper() {
  */
 function Sidebar({ variant }: { variant: "dash" | "module" }) {
   const pathname = usePathname();
-  const { state, userEmail, reset } = useProgress();
+  const { state, userEmail } = useProgress();
   const doneCount = Object.keys(state.completed).length;
   const status = deriveStatus(doneCount);
   // Fix P2 (critique UX) : estompée pendant un défi de module (même signal
@@ -305,28 +304,18 @@ function Sidebar({ variant }: { variant: "dash" | "module" }) {
           </div>
           <div className={styles.sbuserMeta}>
             <div className={styles.sbuserName}>{userEmail ?? "Mon profil"}</div>
-            <div className={styles.sbuserActions}>
-              <button
-                type="button"
-                className={styles.resetBtn}
-                onClick={() => {
-                  // Fix P0 (critique UX) : reset irréversible auparavant déclenché
-                  // en un clic, y compris en plein module — cf. .impeccable/critique.
-                  if (window.confirm("Réinitialiser toute la progression et le portefeuille ? Cette action est irréversible.")) {
-                    reset();
-                  }
-                }}
-              >
-                Réinitialiser
-              </button>
-              {userEmail && (
+            {/* "Réinitialiser" vivait ici (Fix P0, critique UX initiale) — déplacé
+                dans /profil (Fix, demande explicite : trop à portée d'un clic
+                accidentel dans la sidebar, toujours visible). */}
+            {userEmail && (
+              <div className={styles.sbuserActions}>
                 <form action={logout}>
                   <button type="submit" className={styles.logoutBtn}>
                     Se déconnecter
                   </button>
                 </form>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

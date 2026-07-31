@@ -4,7 +4,41 @@
    écran (pas d'<AppShell>), carte centrée façon .rung/.fmtCard.
    ============================================================= */
 
+.page {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--paper);
+}
+
+/* Cercles décoratifs flous (Fix, inspiré de la maquette design_handoff_brvm_learning
+   — écran de connexion) : purement cosmétique, donne de la profondeur au
+   fond crème derrière la carte centrée. */
+.blobGold,
+.blobNavy {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.blobGold {
+  top: -120px;
+  left: -100px;
+  width: 340px;
+  height: 340px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--or) 20%, transparent), transparent 70%);
+}
+.blobNavy {
+  bottom: -160px;
+  right: -120px;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--blue-2) 13%, transparent), transparent 70%);
+}
+
 .wrap {
+  position: relative;
+  z-index: 1;
   max-width: 440px;
   margin: 0 auto;
   min-height: 100vh;
@@ -63,7 +97,7 @@
 .subtitle {
   font-size: 0.95rem;
   color: var(--ink-soft);
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
   margin: 0 0 22px;
 }
@@ -76,7 +110,7 @@
   display: block;
   font-family: var(--f-display);
   font-size: 12.5px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--blue-2);
   margin-bottom: 6px;
 }
@@ -140,7 +174,7 @@
 .btnPrimary {
   background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
   color: #fff;
-  box-shadow: 0 12px 26px -14px rgba(14, 47, 68, 0.9);
+  box-shadow: 0 6px 16px -10px rgba(14, 47, 68, 0.45);
 }
 .btnPrimary:hover:not(:disabled) {
   filter: brightness(1.08);
@@ -151,11 +185,11 @@
   margin-top: 18px;
   font-size: 0.9rem;
   color: var(--ink-soft);
-  font-weight: 600;
+  font-weight: 500;
 }
 .footer a {
   color: var(--blue);
-  font-weight: 700;
+  font-weight: 600;
   text-decoration: none;
 }
 .footer a:hover {

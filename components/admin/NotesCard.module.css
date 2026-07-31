@@ -1,0 +1,80 @@
+.card {
+  background: var(--card);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+}
+.title {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--blue-2);
+  margin-bottom: 14px;
+}
+.empty {
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin: 0 0 14px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+.note {
+  background: var(--paper);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.noteBody {
+  font-size: 12.5px;
+  color: var(--ink);
+  line-height: 1.5;
+  margin: 0;
+}
+.noteMeta {
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 64px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-family: var(--f-body);
+  font-size: 12.5px;
+  color: var(--ink);
+  background: var(--paper);
+  resize: vertical;
+  margin-bottom: 8px;
+}
+.textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+}
+
+.addBtn {
+  appearance: none;
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  padding: 10px;
+  background: var(--blue-2);
+  color: #fff;
+  font-family: var(--f-display);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.addBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

@@ -8,8 +8,11 @@ export function AdminShell({ email, children }: { email: string; children: React
     <div className={styles.wrap}>
       <header className={styles.header}>
         <Link href="/admin" className={styles.brand}>
-          <span className={styles.brandTitle}>BRVM Learning</span>
-          <span className={styles.brandTag}>Administration</span>
+          <span className={styles.brandMark}>B</span>
+          <span>
+            <span className={styles.brandTitle}>BRVM Learning</span>
+            <span className={styles.brandTag}>Administration</span>
+          </span>
         </Link>
         <div className={styles.right}>
           <span className={styles.email}>{email}</span>
