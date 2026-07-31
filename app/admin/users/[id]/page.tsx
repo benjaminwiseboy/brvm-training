@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getLastSignIn } from "@/lib/supabase/admin";
 import { deriveStatus, deriveModuleState, resolveInitialProgress } from "@/lib/progress";
 import { getModule, orderedCodes, PHASES } from "@/content/registry";
-import { money, relativeDate } from "@/lib/format";
+import { money, relativeDate, type Currency } from "@/lib/format";
 import { ModuleAccessGrid } from "@/components/admin/ModuleAccessGrid";
 import { PaymentCard } from "@/components/admin/PaymentCard";
 import { NotesCard, type AdminNote } from "@/components/admin/NotesCard";
@@ -31,7 +31,7 @@ export default async function AdminUserDetailPage({ params }: { params: Promise<
     await Promise.all([
       supabase.from("user_progress").select("state").eq("user_id", id).maybeSingle(),
       supabase.from("module_access_overrides").select("module_code, blocked").eq("user_id", id),
-      supabase.from("payments").select("status, amount, method, paid_at").eq("user_id", id).maybeSingle(),
+      supabase.from("payments").select("status, amount, currency, method, paid_at").eq("user_id", id).maybeSingle(),
       supabase
         .from("admin_notes")
         .select("id, body, author_email, created_at")
@@ -180,6 +180,7 @@ export default async function AdminUserDetailPage({ params }: { params: Promise<
             userId={id}
             initialStatus={(paymentRow?.status as PaymentStatus) ?? "unpaid"}
             initialAmount={paymentRow?.amount ?? null}
+            initialCurrency={(paymentRow?.currency as Currency) ?? "FCFA"}
             initialMethod={paymentRow?.method ?? null}
             initialPaidAt={paymentRow?.paid_at ?? null}
           />

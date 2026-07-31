@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import type { Currency } from "@/lib/format";
 
 /**
  * Défense en profondeur : la policy RLS "overrides: admin manage all" est la
@@ -77,6 +78,7 @@ export async function savePayment(
   userId: string,
   status: PaymentStatus,
   amount: number | null,
+  currency: Currency,
   method: string | null,
   paidAt: string | null
 ) {
@@ -85,6 +87,7 @@ export async function savePayment(
     user_id: userId,
     status,
     amount,
+    currency,
     method,
     paid_at: paidAt,
   });

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { money } from "@/lib/format";
+import { formatCurrency, type Currency } from "@/lib/format";
 import { UserTable, type AdminUserRow } from "./UserTable";
 import styles from "./AdminUsersView.module.css";
 
@@ -17,13 +17,14 @@ export function AdminUsersView({
   rows,
   totalUsers,
   completionRate,
-  revenue,
+  revenueByCurrency,
 }: {
   rows: AdminUserRow[];
   totalUsers: number;
   completionRate: number;
-  revenue: number;
+  revenueByCurrency: Record<Currency, number>;
 }) {
+  const revenueEntries = (Object.entries(revenueByCurrency) as [Currency, number][]).filter(([, n]) => n > 0);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
 
@@ -49,9 +50,19 @@ export function AdminUsersView({
         </div>
         <div className={styles.statCard}>
           <div className={styles.statLabel}>Revenus</div>
-          <div className={styles.statValue}>
-            {money(revenue)} <span className={styles.statUnit}>FCFA</span>
-          </div>
+          {revenueEntries.length === 0 ? (
+            <div className={styles.statValue}>
+              0 <span className={styles.statUnit}>FCFA</span>
+            </div>
+          ) : (
+            <div className={styles.revenueList}>
+              {revenueEntries.map(([currency, amount]) => (
+                <div key={currency} className={styles.statValue}>
+                  {formatCurrency(amount, currency)}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
