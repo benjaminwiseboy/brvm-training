@@ -16,6 +16,22 @@ export function money(n: number): string {
   return sign + digits.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 }
 
+export type Currency = "FCFA" | "EUR" | "USD";
+export const CURRENCIES: Currency[] = ["FCFA", "EUR", "USD"];
+
+/** Prix payé, admin — même formatage groupé que `money()`, symbole/position selon la devise. */
+export function formatCurrency(n: number, currency: Currency): string {
+  const digits = money(n);
+  switch (currency) {
+    case "EUR":
+      return `${digits} €`;
+    case "USD":
+      return `$${digits}`;
+    default:
+      return `${digits} FCFA`;
+  }
+}
+
 export function splitMarkup(input: string): { bold: boolean; text: string }[] {
   const text = input.replace(/&nbsp;/g, " ");
   return text
