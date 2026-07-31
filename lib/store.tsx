@@ -16,6 +16,27 @@ import {
 // depuis "@/lib/progress" (voir le commentaire d'en-tête de ce fichier).
 export * from "@/lib/progress";
 
+/**
+ * `JSON.stringify` avec les clés triées à chaque niveau — pour comparer
+ * l'état local à celui renvoyé par `merge_user_progress` (RPC) sans faux
+ * positif dû au seul ORDRE des clés (`jsonb_build_object` côté SQL n'a pas
+ * le même ordre que l'objet JS). Sans ça, une simple différence d'ordre
+ * déclencherait une réécriture inutile à chaque fois.
+ */
+function stableStringify(value: unknown): string {
+  return JSON.stringify(value, (_key, val) => {
+    if (val && typeof val === "object" && !Array.isArray(val)) {
+      return Object.keys(val)
+        .sort()
+        .reduce((acc: Record<string, unknown>, k) => {
+          acc[k] = (val as Record<string, unknown>)[k];
+          return acc;
+        }, {});
+    }
+    return val;
+  });
+}
+
 const Ctx = createContext<{
   state: ProgressState;
   userEmail: string | null;
@@ -81,13 +102,22 @@ export function ProgressProvider({
 
   // Compte connecté : écritures vers Supabase, debounced + single-flight
   // (cf. lib/debounce.ts) — évite le chatter réseau sur chaque changement de
-  // slide tout en garantissant que la dernière écriture reflète toujours le
-  // dernier état.
+  // slide. Passe par le RPC `merge_user_progress` (fusion atomique côté
+  // serveur, jamais de régression) plutôt qu'un upsert brut — Fix, risque de
+  // perte de progression : un appareil resté ouvert avec un état périmé
+  // (ex. téléphone en arrière-plan pendant qu'on avance sur un laptop)
+  // écrasait silencieusement une progression plus récente à la moindre
+  // interaction locale. L'état local est ensuite réconcilié avec le résultat
+  // fusionné, pour refléter tout de suite ce qu'un autre appareil a ajouté
+  // entre-temps (sinon visible seulement au prochain chargement de page).
   useEffect(() => {
     if (userId === null) return;
     const supabase = createClient();
     queueRef.current = createCoalescingQueue<ProgressState>(async (value) => {
-      await supabase.from("user_progress").upsert({ user_id: userId, state: value });
+      const { data, error } = await supabase.rpc("merge_user_progress", { p_state: value });
+      if (!error && isValidProgressState(data) && stableStringify(data) !== stableStringify(value)) {
+        setState(data);
+      }
     }, 500);
     function flushOnHide() {
       if (document.visibilityState === "hidden") queueRef.current?.flushNow();
