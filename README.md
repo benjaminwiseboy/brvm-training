@@ -35,24 +35,25 @@ npm run start
 
 ## Déployer sur Vercel
 
-Le déploiement n'est **pas automatisé par cet agent** — c'est une action de l'utilisateur, sur son propre compte Vercel. Deux options :
+Le projet Vercel `brvm-training` est connecté au dépôt GitHub `benjaminwiseboy/brvm-training` (déploiement automatique à chaque push).
 
-**Option A — CLI Vercel**
+- **`main`** → déploiement **Production** (`brvm-training.vercel.app`).
+- **`develop`** → environnement de **dev/test**, déploiement Preview à chaque push, URL stable : `https://brvm-training-git-develop-wiseboy-s-projects.vercel.app`.
+
+Workflow recommandé :
+
+1. Travailler sur `develop` (ou une branche de feature mergée dans `develop`), pousser sur GitHub.
+2. Tester les changements sur l'URL dev ci-dessus (connexion au compte Vercel requise — la Deployment Protection redirige vers une auth SSO Vercel).
+3. Une fois validé, merger `develop` → `main` pour déployer en prod.
+
+Les variables d'environnement Supabase (`NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, etc., cf. `.env.local.example`) sont **partagées entre Preview et Production** : l'environnement dev tape sur la même base Supabase que la prod (choix assumé — pas de projet Supabase séparé pour l'instant).
+
+Déploiement manuel ponctuel (hors du flux Git, ex. dépannage) :
 
 ```bash
-npx vercel
+npx vercel          # preview
+npx vercel --prod   # production
 ```
-
-Suivre les invites (connexion au compte Vercel, choix du projet). Depuis la racine `app/` : aucune variable d'environnement n'est nécessaire pour la v0.
-
-**Option B — Import GitHub**
-
-1. Pousser ce dossier vers un dépôt GitHub (`git push`).
-2. Sur [vercel.com/new](https://vercel.com/new), importer le dépôt.
-3. Root Directory : `app/` (si le dépôt contient d'autres dossiers au même niveau, ex. `docs/`).
-4. Framework Preset : Next.js (auto-détecté).
-5. Aucune variable d'environnement à configurer pour la v0 (pas de backend, pas de clés).
-6. Déployer.
 
 ## QA avant mise en ligne
 
