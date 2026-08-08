@@ -180,6 +180,53 @@
   filter: brightness(1.08);
 }
 
+/* Séparateur "ou" entre le formulaire email/mdp et le bouton Google. */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+/* Bouton Google — fond blanc/bordure neutre plutôt que les couleurs de
+   marque du site (guideline Google : ne pas habiller le bouton "Sign in
+   with Google" avec l'identité tierce). */
+.btnGoogle {
+  appearance: none;
+  border: 2px solid var(--line-strong);
+  background: var(--card);
+  border-radius: 16px;
+  padding: 13px 24px;
+  font-family: var(--f-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.btnGoogle:hover:not(:disabled) {
+  border-color: var(--ink-soft);
+  background: var(--paper);
+}
+.btnGoogle:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .footer {
   text-align: center;
   margin-top: 18px;

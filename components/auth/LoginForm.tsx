@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { login } from "@/lib/actions/auth";
+import { GoogleAuthButton } from "./GoogleAuthButton";
 import styles from "./AuthCard.module.css";
 
 export function LoginForm() {
@@ -32,6 +33,7 @@ export function LoginForm() {
       <button className={`${styles.btn} ${styles.btnPrimary}`} type="submit" disabled={pending}>
         {pending ? "Connexion…" : "Se connecter"}
       </button>
+      <GoogleAuthButton next={next} />
       <p className={styles.footer}>
         <Link href="/reset-password">Mot de passe oublié ?</Link>
       </p>

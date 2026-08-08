@@ -4,6 +4,7 @@ import { useActionState, useRef } from "react";
 import Link from "next/link";
 import { signup } from "@/lib/actions/auth";
 import { STORAGE_KEY } from "@/lib/store";
+import { GoogleAuthButton } from "./GoogleAuthButton";
 import styles from "./AuthCard.module.css";
 
 export function SignupForm() {
@@ -50,6 +51,7 @@ export function SignupForm() {
       <button className={`${styles.btn} ${styles.btnPrimary}`} type="submit" disabled={pending}>
         {pending ? "Création…" : "Créer mon compte"}
       </button>
+      <GoogleAuthButton />
       <p className={styles.footer}>
         Déjà un compte ? <Link href="/login">Se connecter</Link>
       </p>
