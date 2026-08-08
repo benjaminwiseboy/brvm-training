@@ -104,18 +104,18 @@ export function InstallPrompt() {
       </button>
       <div className={styles.mark}>B</div>
       <div className={styles.body}>
-        <div className={styles.title}>Installer BRVM Learning</div>
+        <div className={styles.title}>Installe l&rsquo;application mobile</div>
         {showIOSHelp ? (
           <div className={styles.text}>
-            Appuyez sur <strong>Partager</strong> <span aria-hidden>📤</span> puis <strong>Sur l&rsquo;écran d&rsquo;accueil</strong> pour l&rsquo;ouvrir en un tap, comme une appli.
+            Installe BRVM Learning sur ton téléphone : appuie sur <strong>Partager</strong> <span aria-hidden>📤</span> puis <strong>Sur l&rsquo;écran d&rsquo;accueil</strong>.
           </div>
         ) : (
-          <div className={styles.text}>Accédez à votre parcours en un tap depuis l&rsquo;écran d&rsquo;accueil, sans passer par le navigateur.</div>
+          <div className={styles.text}>Installe BRVM Learning sur ton téléphone pour un accès direct depuis ton écran d&rsquo;accueil.</div>
         )}
       </div>
       {!showIOSHelp && (
         <button type="button" className={styles.install} onClick={handleInstall} disabled={installing}>
-          {installing ? "…" : "Installer"}
+          {installing ? "…" : "Installer l'application"}
         </button>
       )}
     </div>
