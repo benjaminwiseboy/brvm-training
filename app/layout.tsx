@@ -4,6 +4,7 @@ import { ProgressProvider } from "@/lib/store";
 import { resolveInitialProgress } from "@/lib/progress";
 import { createClient } from "@/lib/supabase/server";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
+import { NotificationPrompt } from "@/components/pwa/NotificationPrompt";
 import "./globals.css";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["500", "600", "700", "800"], variable: "--font-poppins" });
@@ -67,6 +68,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         >
           {children}
           <InstallPrompt />
+          <NotificationPrompt />
         </ProgressProvider>
       </body>
     </html>

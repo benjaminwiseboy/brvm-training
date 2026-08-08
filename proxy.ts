@@ -9,6 +9,10 @@ const ALWAYS_PUBLIC = [
   "/reset-password/update",
   "/auth/confirm",
   "/auth/auth-code-error",
+  // Appelés par Vercel Cron (pas de cookie de session) — l'auth se fait par
+  // le secret Bearer vérifié dans la route elle-même, cf. app/api/cron/*.
+  "/api/cron/reengagement",
+  "/api/cron/streak-reminder",
 ];
 
 /**
