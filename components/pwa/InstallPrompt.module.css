@@ -1,0 +1,122 @@
+.sheet {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  /* Dégagement de la tabbar mobile fixée en bas (AppShell, ~76px + safe-area) :
+     posé au-dessus plutôt que collé au bord pour ne jamais la recouvrir. */
+  bottom: calc(88px + env(safe-area-inset-bottom));
+  z-index: 200;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--line);
+  animation: rise 0.28s ease-out;
+}
+
+@media (min-width: 901px) {
+  /* Popup réservé au mobile (cf. breakpoint sidebar/tabbar d'AppShell). */
+  .sheet {
+    display: none;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mark {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 32% 28%, #2f7fb0, var(--blue-2));
+  color: var(--or);
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 17px;
+  box-shadow: inset 0 0 0 2px rgba(242, 183, 5, 0.5);
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  padding-right: 18px;
+}
+
+.title {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.text {
+  font-size: 0.83rem;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+.close:hover {
+  background: var(--paper-2);
+  color: var(--ink);
+}
+
+.install {
+  flex: none;
+  align-self: center;
+  appearance: none;
+  border: none;
+  border-radius: 14px;
+  padding: 10px 16px;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #3a2907;
+  background: linear-gradient(135deg, #f7cf49, var(--or));
+  box-shadow: 0 10px 22px -12px rgba(242, 183, 5, 0.85);
+  transition: transform 0.12s, filter 0.2s;
+}
+.install:active {
+  transform: translateY(1px) scale(0.98);
+}
+.install:disabled {
+  opacity: 0.6;
+}
+
+@media (max-width: 400px) {
+  .sheet {
+    flex-wrap: wrap;
+  }
+  .install {
+    width: 100%;
+  }
+}
