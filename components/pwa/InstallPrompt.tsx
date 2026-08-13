@@ -39,6 +39,32 @@ function isMobile(): boolean {
   );
 }
 
+// Le vrai glyphe « Partager » d'iOS (carré + flèche sortante). L'emoji 📤 qui
+// servait avant ne lui ressemble pas — les utilisateurs iOS ne reconnaissaient
+// pas le bouton à chercher dans la barre Safari.
+function ShareIcon() {
+  return (
+    <svg className={styles.shareIcon} viewBox="0 0 24 24" role="img" aria-label="l'icône Partager">
+      <path
+        d="M12 3v11M12 3 8.5 6.5M12 3l3.5 3.5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.9"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M7 10H5.6A1.6 1.6 0 0 0 4 11.6v7.8A1.6 1.6 0 0 0 5.6 21h12.8a1.6 1.6 0 0 0 1.6-1.6v-7.8A1.6 1.6 0 0 0 18.4 10H17"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.9"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function InstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showIOSHelp, setShowIOSHelp] = useState(false);
@@ -107,7 +133,19 @@ export function InstallPrompt() {
         <div className={styles.title}>Installe l&rsquo;application mobile</div>
         {showIOSHelp ? (
           <div className={styles.text}>
-            Installe BRVM Learning sur ton téléphone : appuie sur <strong>Partager</strong> <span aria-hidden>📤</span> puis <strong>Sur l&rsquo;écran d&rsquo;accueil</strong>.
+            <p className={styles.iosIntro}>Pour l&rsquo;installer sur ton iPhone, dans Safari :</p>
+            <ol className={styles.steps}>
+              <li>
+                Appuie sur <ShareIcon /> <strong>en bas de l&rsquo;écran</strong>.
+              </li>
+              <li>
+                Fais défiler le menu vers le bas, puis appuie sur{" "}
+                <strong>« Sur l&rsquo;écran d&rsquo;accueil »</strong>.
+              </li>
+              <li>
+                Appuie sur <strong>« Ajouter »</strong> en haut à droite. C&rsquo;est fait ! 🎉
+              </li>
+            </ol>
           </div>
         ) : (
           <div className={styles.text}>Installe BRVM Learning sur ton téléphone pour un accès direct depuis ton écran d&rsquo;accueil.</div>

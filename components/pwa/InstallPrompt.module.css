@@ -70,6 +70,49 @@
   color: var(--ink-soft);
 }
 
+/* ---- Mode d'emploi iOS : 3 étapes numérotées plutôt qu'une phrase dense
+   (les utilisateurs iPhone ne repéraient pas le bouton à chercher). ---- */
+.iosIntro {
+  margin: 0 0 8px;
+}
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  counter-reset: step;
+}
+.steps li {
+  position: relative;
+  padding-left: 26px;
+  counter-increment: step;
+}
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--blue-2);
+  color: #fff;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.68rem;
+}
+
+.shareIcon {
+  width: 15px;
+  height: 15px;
+  vertical-align: -3px;
+  color: #007aff; /* bleu système iOS — aide à retrouver l'icône dans Safari */
+}
+
 .close {
   position: absolute;
   top: 10px;
