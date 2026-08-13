@@ -33,8 +33,8 @@ export const m18: Module = {
   code: "M18",
   index: 18,
   totalModules: 28,
-  title: "Les obligations en profondeur",
-  phase: "Phase 4 · L'Analyse",
+  title: "Maîtriser les obligations",
+  phase: "Phase 4 · Devenir analyste",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
   reward: 25000,
 

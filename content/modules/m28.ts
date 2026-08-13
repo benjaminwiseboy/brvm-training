@@ -69,8 +69,8 @@ export const m28: Module = {
   code: "M28",
   index: 28,
   totalModules: 28,
-  title: "L'épreuve du feu : gérer son portefeuille en temps de crise",
-  phase: "Phase 5 · Suivi & maîtrise",
+  title: "L'épreuve du feu",
+  phase: "Phase 5 · Rester maître du jeu",
   status: { emoji: "💎", label: "Le Loup de la BRVM" },
   reward: 100000,
 

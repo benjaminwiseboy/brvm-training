@@ -30,8 +30,8 @@ export const m19: Module = {
   code: "M19",
   index: 19,
   totalModules: 28,
-  title: "Analyse fondamentale : les bases",
-  phase: "Phase 4 · L'Analyse",
+  title: "L'analyse fondamentale",
+  phase: "Phase 4 · Devenir analyste",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
   reward: 20000,
 

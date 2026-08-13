@@ -18,8 +18,8 @@ export const m17: Module = {
   code: "M17",
   index: 17,
   totalModules: 28,
-  title: "Le BOC avancé (3/3) : les colonnes de l'analyste",
-  phase: "Phase 4 · L'Analyse",
+  title: "BOC (3/3) : l'analyste",
+  phase: "Phase 4 · Devenir analyste",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
   reward: 20000,
 

@@ -22,8 +22,8 @@ export const m26: Module = {
   code: "M26",
   index: 26,
   totalModules: 28,
-  title: "Quand vendre ses titres (l'art de la sortie)",
-  phase: "Phase 5 · Suivi & maîtrise",
+  title: "L'art de la sortie",
+  phase: "Phase 5 · Rester maître du jeu",
   status: { emoji: "🎓", label: "L'Analyste Confirmé" },
   reward: 25000,
 

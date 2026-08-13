@@ -121,7 +121,7 @@ export type Module = {
   index: number;           // 1..26
   totalModules: 28;
   title: string;
-  phase: string;           // "Phase 1 · Fondations"
+  phase: string;           // "Phase 1 · Comprendre avant d'agir"
   status: { emoji: string; label: string };
   startingCapital?: number;
   reward?: number;         // récompense de complétion (barème harmonisé)

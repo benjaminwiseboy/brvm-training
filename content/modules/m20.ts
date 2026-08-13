@@ -29,8 +29,8 @@ export const m20: Module = {
   code: "M20",
   index: 20,
   totalModules: 28,
-  title: "Graham (1/4) : le portrait de l'entreprise",
-  phase: "Phase 4 · L'Analyse",
+  title: "Analyser (1/4) : le portrait",
+  phase: "Phase 4 · Devenir analyste",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
   reward: 20000,
 

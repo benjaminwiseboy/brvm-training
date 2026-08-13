@@ -33,8 +33,8 @@ export const m21: Module = {
   code: "M21",
   index: 21,
   totalModules: 28,
-  title: "Graham (2/4) : la performance (lire le compte de résultat)",
-  phase: "Phase 4 · L'Analyse",
+  title: "Analyser (2/4) : performance",
+  phase: "Phase 4 · Devenir analyste",
   status: { emoji: "🎓", label: "L'Analyste Confirmé" },
   reward: 30000,
 

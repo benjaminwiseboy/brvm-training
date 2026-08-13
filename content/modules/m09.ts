@@ -14,8 +14,8 @@ export const m09: Module = {
   code: "M09",
   index: 9,
   totalModules: 28,
-  title: "Votre plan d'investissement",
-  phase: "Phase 2 · La Boussole",
+  title: "Construire son plan",
+  phase: "Phase 2 · Trouver sa boussole",
   status: { emoji: "🥈", label: "L'Investisseur Curieux" },
 
   hero: {

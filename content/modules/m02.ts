@@ -9,8 +9,8 @@ export const m02: Module = {
   code: "M02",
   index: 2,
   totalModules: 28,
-  title: "Sécurité financière : les 3 règles d'or",
-  phase: "Phase 1 · Fondations",
+  title: "Les 3 règles d'or",
+  phase: "Phase 1 · Comprendre avant d'agir",
   status: { emoji: "🥉", label: "L'Épargnant Livret A" },
   reward: 20000,
 

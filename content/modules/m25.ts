@@ -28,8 +28,8 @@ export const m25: Module = {
   code: "M25",
   index: 25,
   totalModules: 28,
-  title: "Garder ce qu'on gagne (la fiscalité)",
-  phase: "Phase 5 · Suivi & maîtrise",
+  title: "Garder ce qu'on gagne",
+  phase: "Phase 5 · Rester maître du jeu",
   status: { emoji: "🎓", label: "L'Analyste Confirmé" },
   reward: 15000,
 

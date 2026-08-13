@@ -24,8 +24,8 @@ export const m27: Module = {
   code: "M27",
   index: 27,
   totalModules: 28,
-  title: "Simulations finales : le grand oral de l'investisseur",
-  phase: "Phase 5 · Suivi & maîtrise",
+  title: "Le grand oral",
+  phase: "Phase 5 · Rester maître du jeu",
   status: { emoji: "🎓", label: "L'Analyste Confirmé" },
   reward: 40000,
 

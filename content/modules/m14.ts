@@ -18,8 +18,8 @@ export const m14: Module = {
   code: "M14",
   index: 14,
   totalModules: 28,
-  title: "Lire le BOC : l'essentiel",
-  phase: "Phase 4 · L'Analyse",
+  title: "Décoder le BOC",
+  phase: "Phase 4 · Devenir analyste",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
   reward: 20000,
 

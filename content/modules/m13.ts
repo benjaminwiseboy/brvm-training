@@ -21,7 +21,7 @@ export const m13: Module = {
   code: "M13",
   index: 13,
   totalModules: 28,
-  title: "Passer votre premier ordre",
+  title: "Votre premier ordre",
   phase: "Phase 3 · Passage à l'action",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
   reward: 20000,

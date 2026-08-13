@@ -18,8 +18,8 @@ export const m07: Module = {
   code: "M07",
   index: 7,
   totalModules: 28,
-  title: "L'investissement de croissance",
-  phase: "Phase 2 · La Boussole",
+  title: "Viser la plus-value",
+  phase: "Phase 2 · Trouver sa boussole",
   status: { emoji: "🥈", label: "L'Investisseur Curieux" },
   reward: 20000,
 

@@ -18,8 +18,8 @@ export const m16: Module = {
   code: "M16",
   index: 16,
   totalModules: 28,
-  title: "Le BOC avancé (2/3) : lire une ligne d'action",
-  phase: "Phase 4 · L'Analyse",
+  title: "BOC (2/3) : lire une ligne",
+  phase: "Phase 4 · Devenir analyste",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
   reward: 20000,
 

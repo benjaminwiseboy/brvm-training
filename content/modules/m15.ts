@@ -20,8 +20,8 @@ export const m15: Module = {
   code: "M15",
   index: 15,
   totalModules: 28,
-  title: "Le BOC avancé (1/3) : indices, compartiments & secteurs",
-  phase: "Phase 4 · L'Analyse",
+  title: "BOC (1/3) : les indices",
+  phase: "Phase 4 · Devenir analyste",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
   reward: 20000,
 

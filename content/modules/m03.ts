@@ -12,8 +12,8 @@ export const m03: Module = {
   code: "M03",
   index: 3,
   totalModules: 28,
-  title: "Les gains : comment gagne-t-on de l'argent ?",
-  phase: "Phase 1 · Fondations",
+  title: "D'où viennent les gains ?",
+  phase: "Phase 1 · Comprendre avant d'agir",
   status: { emoji: "🥉", label: "L'Épargnant Livret A" },
   reward: 30000,
 

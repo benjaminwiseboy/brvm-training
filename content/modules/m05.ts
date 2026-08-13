@@ -16,7 +16,7 @@ export const m05: Module = {
   index: 5,
   totalModules: 28,
   title: "Votre profil d'investisseur",
-  phase: "Phase 2 · La Boussole",
+  phase: "Phase 2 · Trouver sa boussole",
   status: { emoji: "🥈", label: "L'Investisseur Curieux" },
 
   // ---- Écran d'accueil : carte thématique (pas de « cadeau ») ----

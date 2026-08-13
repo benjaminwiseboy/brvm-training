@@ -10,8 +10,8 @@ export const m10: Module = {
   code: "M10",
   index: 10,
   totalModules: 28,
-  title: "DCA & intérêts composés",
-  phase: "Phase 2 · La Boussole",
+  title: "Les intérêts composés",
+  phase: "Phase 2 · Trouver sa boussole",
   status: { emoji: "🥈", label: "L'Investisseur Curieux" },
   startingCapital: 1060000, // portefeuille repris des modules précédents
 

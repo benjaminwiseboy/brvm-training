@@ -40,13 +40,15 @@ export type PhaseDef = {
   codes: string[];
   /** Récap bullet-points affiché sur l'écran PhaseComplete (Partie 1, Tâche 8) — un item par notion clé de la phase. */
   recap: string[];
+  /** Accroche d'une ligne, montrée à un compte gratuit en fin de Phase 1 pour donner envie de débloquer la suite (cf. PhaseComplete). */
+  teaser?: string;
   /** Fonctionnalité annoncée mais pas encore construite (ex. export PDF) — affichée en bouton désactivé sur PhaseComplete. */
   futureNote?: string;
 };
 
 export const PHASES: PhaseDef[] = [
   {
-    name: "Phase 1 · Les Fondations",
+    name: "Phase 1 · Comprendre avant d'agir",
     badge: "🥉",
     codes: ["M01", "M02", "M03", "M04"],
     recap: [
@@ -57,7 +59,7 @@ export const PHASES: PhaseDef[] = [
     ],
   },
   {
-    name: "Phase 2 · La Boussole",
+    name: "Phase 2 · Trouver sa boussole",
     badge: "🥈",
     codes: ["M05", "M06", "M07", "M08", "M09", "M10"],
     recap: [
@@ -67,11 +69,53 @@ export const PHASES: PhaseDef[] = [
       "La régularité (DCA) et les intérêts composés — le vrai moteur de l'enrichissement.",
     ],
     futureNote: "📄 Téléchargement de votre plan en PDF — bientôt disponible",
+    teaser:
+      "Découvrez votre profil d'investisseur et repartez avec VOTRE plan personnalisé : objectif, horizon et stratégie.",
   },
-  { name: "Phase 3 · Passage à l'action", badge: "🥇", codes: ["M11","M12","M13"], recap: [] },
-  { name: "Phase 4 · L'Analyse", badge: "🥇", codes: ["M14","M15","M16","M17","M18","M19","M20","M21","M22","M23","M24"], recap: [] },
-  { name: "Phase 5 · Suivi & maîtrise", badge: "💎", codes: ["M25","M26","M27","M28"], recap: [] },
+  {
+    name: "Phase 3 · Passage à l'action",
+    badge: "🥇",
+    codes: ["M11", "M12", "M13"],
+    recap: [
+      "Comment choisir sa SGI et ouvrir un compte-titres — même depuis la diaspora — en mesurant le vrai impact des frais.",
+      "Lire une fiche OPCVM (Valeur Liquidative, catégorie, frais) pour déléguer intelligemment, en connaissance de cause.",
+      "La différence entre ordre à cours limité et ordre au marché, et comment passer votre tout premier ordre sans piège de prix.",
+    ],
+    teaser:
+      "Ouvrez votre compte chez une SGI et passez votre tout premier ordre en bourse, pas à pas.",
+  },
+  {
+    name: "Phase 4 · Devenir analyste",
+    badge: "🏆",
+    codes: ["M14", "M15", "M16", "M17", "M18", "M19", "M20", "M21", "M22", "M23", "M24"],
+    recap: [
+      "Lire le BOC en profondeur — indices, secteurs, PER, rendement, capitalisation — sans paniquer devant les colonnes.",
+      "Les obligations dans le détail : remboursement In Fine ou Amortissement, coupon couru, et comment décoder leur nom au BOC.",
+      "La méthode en 4 temps pour juger une entreprise : le portrait (qui est-elle), la performance (gagne-t-elle vraiment), les perspectives (va-t-elle le rester) et le juste prix (le prix est-il raisonnable).",
+      "Mener seul une analyse complète, du portrait au verdict d'achat, alignée sur votre stratégie plutôt que sur vos émotions.",
+    ],
+    teaser:
+      "Le cœur de la formation : analyser le marché et juger vous-même si une entreprise vaut votre argent, en 4 étapes.",
+  },
+  {
+    name: "Phase 5 · Rester maître du jeu",
+    badge: "💎",
+    codes: ["M25", "M26", "M27", "M28"],
+    recap: [
+      "La fiscalité en pratique : pourquoi vos dividendes et la plupart de vos plus-values ne vous coûtent rien de plus dans l'UEMOA.",
+      "Les bonnes raisons de vendre (objectif atteint, thèse cassée) et pourquoi une simple baisse de prix n'en est jamais une.",
+      "Mobiliser toute la chaîne Profil → Stratégie → Analyse → Bon produit face à des cas concrets, jusqu'au grand oral.",
+      "Garder son sang-froid en cas de krach, et transformer une baisse de marché en opportunité grâce au DCA.",
+    ],
+    teaser:
+      "Payer le moins d'impôts possible, savoir quand vendre, et garder la tête froide même en pleine crise.",
+  },
 ];
+
+/** Les phases verrouillées derrière le paiement (tout sauf l'essai gratuit) — teaser de fin de Phase 1. */
+export function lockedPhases(): PhaseDef[] {
+  return PHASES.slice(1);
+}
 
 export function orderedCodes(): string[] { return PHASES.flatMap((p) => p.codes); }
 export function getModule(code: string): Module | undefined { return MODULES[code.toUpperCase()]; }

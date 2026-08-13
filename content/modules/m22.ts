@@ -36,8 +36,8 @@ export const m22: Module = {
   code: "M22",
   index: 22,
   totalModules: 28,
-  title: "Graham (3/4) : les perspectives (top-down & bottom-up)",
-  phase: "Phase 4 · L'Analyse",
+  title: "Analyser (3/4) : l'avenir",
+  phase: "Phase 4 · Devenir analyste",
   status: { emoji: "🎓", label: "L'Analyste Confirmé" },
   reward: 25000,
 

@@ -30,7 +30,7 @@ export const m11: Module = {
   code: "M11",
   index: 11,
   totalModules: 28,
-  title: "Ouvrir son compte SGI (et comprendre les frais)",
+  title: "Ouvrir son compte SGI",
   phase: "Phase 3 · Passage à l'action",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
   reward: 20000,

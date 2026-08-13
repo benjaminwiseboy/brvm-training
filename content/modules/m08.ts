@@ -14,8 +14,8 @@ export const m08: Module = {
   code: "M08",
   index: 8,
   totalModules: 28,
-  title: "La stratégie de trade",
-  phase: "Phase 2 · La Boussole",
+  title: "Viser le gain rapide",
+  phase: "Phase 2 · Trouver sa boussole",
   status: { emoji: "🥈", label: "L'Investisseur Curieux" },
   reward: 20000,
 

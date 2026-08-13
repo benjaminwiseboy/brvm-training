@@ -15,8 +15,8 @@ export const m04: Module = {
   code: "M04",
   index: 4,
   totalModules: 28,
-  title: "Les produits : ce qu'on achète à la BRVM",
-  phase: "Phase 1 · Fondations",
+  title: "Savoir ce que vous achetez",
+  phase: "Phase 1 · Comprendre avant d'agir",
   status: { emoji: "🥉", label: "L'Épargnant Livret A" },
   reward: 20000,
 

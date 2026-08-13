@@ -36,8 +36,8 @@ export const m24: Module = {
   code: "M24",
   index: 24,
   totalModules: 28,
-  title: "Défi de synthèse : analyser une entreprise de A à Z",
-  phase: "Phase 4 · L'Analyse",
+  title: "Défi de synthèse",
+  phase: "Phase 4 · Devenir analyste",
   status: { emoji: "🎓", label: "L'Analyste Confirmé" },
   reward: 50000,
 

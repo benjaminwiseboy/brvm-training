@@ -34,8 +34,8 @@ export const m23: Module = {
   code: "M23",
   index: 23,
   totalModules: 28,
-  title: "Graham (4/4) : payer le juste prix (PER, PBR & la règle de Graham)",
-  phase: "Phase 4 · L'Analyse",
+  title: "Analyser (4/4) : juste prix",
+  phase: "Phase 4 · Devenir analyste",
   status: { emoji: "🎓", label: "L'Analyste Confirmé" },
   reward: 40000,
 

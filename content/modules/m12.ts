@@ -23,7 +23,7 @@ export const m12: Module = {
   code: "M12",
   index: 12,
   totalModules: 28,
-  title: "Les OPCVM en pratique (déléguer intelligemment)",
+  title: "Déléguer avec les OPCVM",
   phase: "Phase 3 · Passage à l'action",
   status: { emoji: "🥇", label: "L'Analyste Stratège" },
   reward: 20000,

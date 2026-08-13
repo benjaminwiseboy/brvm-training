@@ -17,8 +17,8 @@ export const m06: Module = {
   code: "M06",
   index: 6,
   totalModules: 28,
-  title: "L'investissement de rente",
-  phase: "Phase 2 · La Boussole",
+  title: "Viser un revenu régulier",
+  phase: "Phase 2 · Trouver sa boussole",
   status: { emoji: "🥈", label: "L'Investisseur Curieux" },
   reward: 20000,
 
