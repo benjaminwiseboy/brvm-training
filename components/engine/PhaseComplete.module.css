@@ -36,16 +36,95 @@
   position: relative;
 }
 
+/* ---- Confettis (16 pièces, angle/teinte/délai fixés par le composant via
+   --x/--rot/--hue/--delay) : chute + rotation + fade, façon écran de
+   victoire de jeu vidéo. `prefers-reduced-motion` est géré globalement
+   (globals.css réduit toutes les durées à ~0), pas besoin de le refaire ici. */
+.confetti {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.piece {
+  position: absolute;
+  top: -12px;
+  width: 7px;
+  height: 12px;
+  background: hsl(var(--hue) 90% 65%);
+  border-radius: 2px;
+  opacity: 0;
+  animation: confettiFall 1.1s ease-in var(--delay) both;
+}
+@keyframes confettiFall {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--x), 190px) rotate(var(--rot));
+  }
+}
+
+.badgeWrap {
+  position: relative;
+  width: 84px;
+  height: 84px;
+  margin: 0 auto 18px;
+  display: grid;
+  place-items: center;
+}
+
+/* Halo qui pulse deux fois derrière le badge, comme un "shockwave" de level-up. */
+.ring,
+.ring2 {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(247, 207, 73, 0.55);
+  animation: ringPulse 1.3s cubic-bezier(0.2, 0.7, 0.3, 1) 0.15s both;
+}
+.ring2 {
+  animation-delay: 0.45s;
+}
+@keyframes ringPulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.15);
+    opacity: 0;
+  }
+}
+
 .badge {
+  position: relative;
   width: 84px;
   height: 84px;
   border-radius: 50%;
   display: grid;
   place-items: center;
   font-size: 40px;
-  margin: 0 auto 18px;
   background: linear-gradient(135deg, #f7cf49, var(--or));
   box-shadow: 0 12px 26px -12px rgba(242, 183, 5, 0.85);
+  animation: badgePop 0.6s cubic-bezier(0.3, 1.6, 0.4, 1) both;
+}
+@keyframes badgePop {
+  0% {
+    transform: scale(0) rotate(-25deg);
+  }
+  65% {
+    transform: scale(1.12) rotate(4deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
 }
 
 .title {
@@ -55,6 +134,17 @@
   line-height: 1.15;
   margin: 0 0 8px;
   color: #fff;
+  animation: titleIn 0.5s ease-out 0.25s both;
+}
+@keyframes titleIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .sub {
@@ -78,6 +168,20 @@
   color: #dae6ef;
   font-weight: 600;
 }
+.recap li {
+  animation: recapIn 0.45s ease-out both;
+  animation-delay: calc(0.45s + var(--d) * 0.09s);
+}
+@keyframes recapIn {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 .recap li::before {
   content: "✓";
   position: absolute;
@@ -100,6 +204,115 @@
   font-weight: 600;
   font-size: 0.92rem;
   cursor: not-allowed;
+}
+
+/* ---- Upsell : affiché uniquement à un compte gratuit qui termine la Phase 1.
+   Fond clair (contraste avec la carte bleue au-dessus) pour se lire comme une
+   étape distincte — « voilà la suite », pas la suite du récap. ---- */
+.upsell {
+  margin-top: 18px;
+  padding: 22px 20px;
+  border-radius: var(--radius-xl);
+  background: var(--card);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-lg);
+  animation: recapIn 0.5s ease-out 0.9s both;
+}
+
+.upsellEyebrow {
+  font-family: var(--f-display);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--or-deep);
+  margin: 0 0 14px;
+}
+
+.upsellList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+.upsellList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.upsellList strong {
+  display: block;
+  font-family: var(--f-display);
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+.upsellList p {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+.upsellBadge {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+  background: var(--paper-2);
+}
+
+/* Bascule vers l'action : séparé de la liste par un filet, titre en display
+   pour qu'il porte plus que l'ancien paragraphe gris — sans encart coloré. */
+.hookTitle {
+  margin: 20px 0 5px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 1.08rem;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.hookText {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.waIcon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+
+.whatsappBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 14px;
+  padding: 15px 20px;
+  border-radius: 16px;
+  text-decoration: none;
+  font-family: var(--f-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  background: #25d366; /* vert de marque WhatsApp — signale le canal d'un coup d'œil */
+  box-shadow: 0 12px 24px -14px rgba(37, 211, 102, 0.9);
+  transition: transform 0.12s, filter 0.2s;
+}
+.whatsappBtn:hover {
+  filter: brightness(1.04);
+}
+.whatsappBtn:active {
+  transform: translateY(1px) scale(0.995);
 }
 
 .btn {

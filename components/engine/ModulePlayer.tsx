@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import type { Module } from "@/lib/types";
 import { useProgress } from "@/lib/store";
 import { useConfirmBeforeLeaving, useReportModulePhase } from "@/lib/navGuard";
-import { getNext, phaseCompletionFor } from "@/content/registry";
+import { getNext, phaseCompletionFor, lockedPhases } from "@/content/registry";
+import { isFreeTrialModule } from "@/lib/progress";
 import { Hero } from "./Hero";
 import { SlideDeck } from "./SlideDeck";
 import { QuizChallenge } from "./QuizChallenge";
@@ -70,7 +71,7 @@ export function ModulePlayer({ module }: { module: Module }) {
 
 function ModulePlayerInner({ module }: { module: Module }) {
   const router = useRouter();
-  const { state, completeModule, setResumeSlide } = useProgress();
+  const { state, completeModule, setResumeSlide, paymentStatus } = useProgress();
   // Reprise (Fix 3) : si le pointeur `resume` du store désigne CE module à un
   // slide > 0, on saute l'intro (Hero) et on monte directement en phase
   // "cours", `SlideDeck` initialisé au bon slide. Sinon flux intro→cours
@@ -202,12 +203,25 @@ function ModulePlayerInner({ module }: { module: Module }) {
 
       {phase === "phase-recap" && (() => {
         const completion = phaseCompletionFor(module.code)!;
+        // Fin de l'essai gratuit : un compte non payant qui termine la Phase 1
+        // voit, en plus du récap, ce qui l'attend dans la suite du parcours et
+        // un CTA de contact direct (pas encore de paiement en ligne).
+        const endOfFreeTrial = isFreeTrialModule(module.code) && paymentStatus !== "paid";
         return (
           <PhaseComplete
             badge={completion.badge}
             name={completion.name}
             recap={completion.recap}
             futureNote={completion.futureNote}
+            remainingPhases={
+              endOfFreeTrial
+                ? lockedPhases().map((p) => ({
+                    badge: p.badge,
+                    name: p.name,
+                    highlight: p.teaser ?? p.recap[0] ?? "",
+                  }))
+                : undefined
+            }
             onNext={handleNext}
           />
         );
