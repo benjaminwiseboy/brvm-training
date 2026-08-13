@@ -159,5 +159,8 @@
 @media (max-width: 640px) {
   .nav {
     flex-direction: column-reverse;
+    /* Fix (chevauchement Tabbar mobile), même cause que QuizChallenge.module.css :
+       les 2 boutons empilés dépassent la marge générique réservée par .stage. */
+    margin-bottom: 70px;
   }
 }

@@ -196,6 +196,15 @@ export function QuizChallenge({
         );
       })}
 
+      {/* TEMP DEBUG (à retirer une fois le blocage mobile M24 confirmé résolu) :
+          lecture d'état visible à l'écran — permet à un apprenant de faire une
+          capture sans avoir besoin de l'inspecteur navigateur. `pointer-events:
+          none` (cf. CSS) : ne peut jamais lui-même intercepter un tap. */}
+      <div className={styles.debugBadge} aria-hidden="true">
+        Q{qi + 1}/{total} · réponses[{answers.map((a) => (a === null ? "–" : "✓")).join("")}] ·
+        valider {allAnswered ? "actif" : "inactif"} · validated={String(validated)}
+      </div>
+
       {!validated && (
         <div className={styles.nav}>
           <button

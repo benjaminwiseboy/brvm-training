@@ -251,8 +251,33 @@
   transform: rotate(180deg);
 }
 
+/* TEMP DEBUG (cf. QuizChallenge.tsx) — pointer-events:none : ne peut jamais
+   lui-même bloquer un tap, positionné en haut pour rester hors de la zone
+   Tabbar/nav qu'on diagnostique. */
+.debugBadge {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  z-index: 999;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.78);
+  color: #6ee06e;
+  font: 11px/1.4 monospace;
+  padding: 6px 9px;
+  border-radius: 6px;
+  word-break: break-word;
+}
+
 @media (max-width: 640px) {
   .nav {
     flex-direction: column-reverse;
+    /* Fix (chevauchement Tabbar mobile) : empilés en colonne, les 2 boutons
+       (Précédent + Valider) prennent ~70px de plus qu'une seule rangée — la
+       marge de dégagement générique de .stage (AppShell.module.css, calibrée
+       pour UN bouton) ne suffit plus, et le bouton du bas (Précédent, en
+       dernier visuellement via column-reverse) passe sous la Tabbar fixe
+       (confirmé par capture d'écran utilisatrice, M24 Q6). */
+    margin-bottom: 70px;
   }
 }
