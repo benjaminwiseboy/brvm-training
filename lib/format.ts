@@ -51,3 +51,15 @@ export function fvAnnuity(monthly: number, annualRatePct: number, years: number)
   const future = i === 0 ? invested : monthly * ((Math.pow(1 + i, n) - 1) / i);
   return { invested, future };
 }
+
+/**
+ * Montant abrégé pour un axe de graphique — « 1,2 M », « 850 k ».
+ * Porté de `fmtBig` dans brvm-tracker : sur un axe, « 1 250 000 » mange la
+ * moitié de la largeur utile et ne se lit pas plus vite.
+ */
+export function moneyCompact(n: number): string {
+  const abs = Math.abs(n);
+  if (abs >= 1_000_000) return `${(n / 1_000_000).toFixed(1).replace(".", ",")} M`;
+  if (abs >= 1_000) return `${Math.round(n / 1_000)} k`;
+  return money(n);
+}

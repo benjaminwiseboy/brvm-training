@@ -1,0 +1,19 @@
+/* Conteneur du graphe Recharts — le seul de ce projet.
+   `ResponsiveContainer` mesure son parent : il lui faut donc une largeur
+   contrainte (`min-width: 0`) pour ne pas pousser la carte, et un fond clair
+   propre, la charte du tracker d'où vient le graphe étant sombre. */
+.wrap {
+  min-width: 0;
+  margin: 4px 0 14px;
+}
+
+/* Recharts injecte ses propres éléments : on ne les habille qu'au minimum,
+   le reste des couleurs est passé en props (cf. FeesChart.tsx). */
+.wrap :global(.recharts-legend-item-text) {
+  color: var(--ink-soft) !important;
+  font-family: var(--f-display);
+  font-weight: 600;
+}
+.wrap :global(.recharts-surface) {
+  overflow: visible;
+}

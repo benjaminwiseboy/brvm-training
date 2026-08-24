@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { money, splitMarkup, fvAnnuity } from "./format";
+import { money, moneyCompact, splitMarkup, fvAnnuity } from "./format";
 
 describe("money", () => {
   it("groupe les milliers avec un espace insécable U+00A0 (comme le POC)", () => {
@@ -38,5 +38,14 @@ describe("fvAnnuity", () => {
     const r = fvAnnuity(25000, 8, 15);
     expect(r.invested).toBe(4_500_000);
     expect(r.future).toBeGreaterThan(r.invested);
+  });
+});
+
+describe("moneyCompact", () => {
+  it("abrège les grands montants pour un axe de graphique", () => {
+    expect(moneyCompact(1_250_000)).toBe("1,3 M");
+    expect(moneyCompact(850_000)).toBe("850 k");
+    expect(moneyCompact(999)).toBe("999");
+    expect(moneyCompact(0)).toBe("0");
   });
 });

@@ -1,4 +1,5 @@
 import type { Module } from "@/lib/types";
+import { ACCOMPAGNEMENT, ACCOMPAGNEMENT_HREF } from "@/lib/contact";
 
 /* =============================================================
    Contenu du Module 11 — Ouvrir son compte SGI (et comprendre
@@ -79,21 +80,25 @@ export const m11: Module = {
     {
       title: "Comment ouvrir son compte, concrètement",
       blocks: [
-        { kind: "text", value: "Passer de la théorie à l'action, en 4 étapes :" },
+        { kind: "text", value: "Passer de la théorie à l'action, en 5 étapes :" },
         {
           kind: "list",
           items: [
             "**Comparez les SGI** — toutes ne se valent pas (frais, plateforme, conseil). Un comparateur vous fait gagner du temps.",
-            "**Réunissez vos documents** — pièce d'identité, justificatif de domicile, photos (détail à la slide suivante).",
-            "**Remplissez le dossier d'ouverture** — souvent en ligne, parfois en agence ou par correspondance depuis la diaspora.",
-            "**Déposez vos premiers fonds** — et votre compte est prêt : vous pouvez passer votre premier ordre.",
+            "**Écrivez à la SGI choisie** — un simple e-mail annonçant votre intention d'ouvrir un compte-titres et demandant la démarche. L'adresse est sur son site. Certaines SGI ont même un formulaire d'ouverture en ligne : c'est encore plus direct.",
+            "**Réunissez vos documents** — pièce d'identité, justificatif de domicile, photos (détail à la slide suivante). Si l'ouverture est manuelle, la SGI vous envoie en plus ses formulaires à remplir et à lui renvoyer.",
+            "**Renvoyez le dossier signé** — en ligne, par e-mail, en agence, ou par correspondance depuis la diaspora.",
+            "**Déposez vos premiers fonds** — demandez-lui d'abord quels moyens elle accepte : certaines prennent le **mobile money**, d'autres uniquement le **virement bancaire**.",
           ],
         },
         {
+          // Comparateur MAISON (Coffre-fort) plutôt que le lien externe qui
+          // était ici : mêmes données, mais l'apprenant reste dans la
+          // formation, et le simulateur chiffre les frais sur SON horizon.
           kind: "link",
-          label: "Comparer les SGI (frais, plateforme, conseil...)",
-          sublabel: "richbourse.com · comparatif des SGI",
-          href: "https://www.richbourse.com/dossier/sgi-comparatif",
+          label: "Comparer les 37 SGI et simuler leurs frais",
+          sublabel: "Coffre-fort · comparateur + simulateur sur 10 ans",
+          href: "/coffre/sgi",
         },
         { kind: "text", value: "À la fin de ce module, vous aurez tout en main pour passer à l'action. 👇" },
       ],
@@ -131,6 +136,21 @@ export const m11: Module = {
             "**Le conseil** — publie-t-elle de vraies **études d'entreprise** qui aident à décider ? Beaucoup se contentent de répéter l'actualité générale : ça, ce n'est pas du conseil. (Vous apprendrez à repérer une vraie étude sérieuse un peu plus loin dans la formation.)",
             "**Le montant minimum d'ouverture** — ce n'est pas un frais (c'est votre argent, que vous investirez), mais un minimum trop élevé (ex. 2 millions) vous bloque l'entrée. Choisissez-en un adapté à votre budget.",
           ],
+        },
+        // Offre commerciale du porteur du projet, posée là où l'apprenant
+        // hésite le plus (le choix de la SGI). Annoncée comme payante dans le
+        // callout ET dans le sous-titre du lien : la formation reste
+        // indépendante, l'accompagnement est un service distinct.
+        {
+          kind: "callout",
+          tone: "highlight",
+          value: `🤝 **${ACCOMPAGNEMENT.title}** ${ACCOMPAGNEMENT.body} *${ACCOMPAGNEMENT.note}*`,
+        },
+        {
+          kind: "link",
+          label: ACCOMPAGNEMENT.cta,
+          sublabel: ACCOMPAGNEMENT.sublabel,
+          href: ACCOMPAGNEMENT_HREF,
         },
       ],
     },
