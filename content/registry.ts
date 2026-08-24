@@ -67,6 +67,7 @@ export const PHASES: PhaseDef[] = [
       "Vos 3 stratégies possibles — rente, croissance, trade — et pour qui chacune est faite.",
       "Le plan d'investissement qui réunit objectif, horizon, stratégie et capacité d'épargne.",
       "La régularité (DCA) et les intérêts composés — le vrai moteur de l'enrichissement.",
+      "Votre plan est enregistré dans le Coffre-fort : vous pourrez le relire et le modifier à chaque fois que votre situation change.",
     ],
     futureNote: "📄 Téléchargement de votre plan en PDF — bientôt disponible",
     teaser:

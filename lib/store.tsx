@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { createCoalescingQueue } from "@/lib/debounce";
+import { mergePlans, removePlan, upsertPlan, type InvestmentPlan } from "@/lib/plan";
 import {
   STORAGE_KEY,
   type ProgressState,
@@ -46,6 +47,9 @@ const Ctx = createContext<{
   completeModule: (code: string, correct: number, total: number, capitalDelta: number) => void;
   setResumeSlide: (code: string, slide: number, phase?: "cours" | "defi") => void;
   setOnboarded: () => void;
+  /** Crée ou met à jour un plan d'investissement (cf. lib/plan.ts). */
+  savePlan: (plan: InvestmentPlan) => void;
+  deletePlan: (id: string) => void;
   reset: () => void;
   /**
    * `true` une fois l'état initial disponible — pour un invité, après le
@@ -115,8 +119,20 @@ export function ProgressProvider({
     const supabase = createClient();
     queueRef.current = createCoalescingQueue<ProgressState>(async (value) => {
       const { data, error } = await supabase.rpc("merge_user_progress", { p_state: value });
-      if (!error && isValidProgressState(data) && stableStringify(data) !== stableStringify(value)) {
-        setState(data);
+      if (!error && isValidProgressState(data)) {
+        // Filet de sécurité sur les plans. Le RPC reconstruit l'état avec
+        // `jsonb_build_object` : tant que la migration qui lui apprend la clé
+        // `plans` n'est pas appliquée en base, il renvoie un état SANS plans,
+        // et l'adopter tel quel effacerait sous les doigts de l'apprenant le
+        // seul document qui lui appartienne. On refusionne donc toujours côté
+        // client, avec la même règle que la fonction SQL (par identifiant, la
+        // version la plus récemment modifiée gagne) — ce qui rend la
+        // fonctionnalité sûre que la migration soit passée ou non.
+        const reconciled: ProgressState = {
+          ...data,
+          plans: mergePlans(value.plans ?? [], data.plans ?? []),
+        };
+        if (stableStringify(reconciled) !== stableStringify(value)) setState(reconciled);
       }
     }, 500);
     function flushOnHide() {
@@ -140,6 +156,10 @@ export function ProgressProvider({
     setResumeSlide: (code: string, slide: number, phase: "cours" | "defi" = "cours") =>
       setState((s) => ({ ...s, resume: { code, slide, phase } })),
     setOnboarded: () => setState((s) => ({ ...s, onboarded: true })),
+    savePlan: (plan: InvestmentPlan) =>
+      setState((s) => ({ ...s, plans: upsertPlan(s.plans ?? [], plan) })),
+    deletePlan: (id: string) =>
+      setState((s) => ({ ...s, plans: removePlan(s.plans ?? [], id) })),
     reset: () => setState(initialState()),
     hydrated,
   };

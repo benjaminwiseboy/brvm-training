@@ -6,7 +6,8 @@ import type { Module } from "@/lib/types";
 import { useProgress } from "@/lib/store";
 import { useConfirmBeforeLeaving, useReportModulePhase } from "@/lib/navGuard";
 import { getNext, phaseCompletionFor, lockedPhases } from "@/content/registry";
-import { isFreeTrialModule } from "@/lib/progress";
+import { isFreeTrialModule, readPlans } from "@/lib/progress";
+import { planFromAnswers } from "@/lib/plan";
 import { Hero } from "./Hero";
 import { SlideDeck } from "./SlideDeck";
 import { QuizChallenge } from "./QuizChallenge";
@@ -71,7 +72,7 @@ export function ModulePlayer({ module }: { module: Module }) {
 
 function ModulePlayerInner({ module }: { module: Module }) {
   const router = useRouter();
-  const { state, completeModule, setResumeSlide, paymentStatus } = useProgress();
+  const { state, completeModule, setResumeSlide, paymentStatus, savePlan } = useProgress();
   // Reprise (Fix 3) : si le pointeur `resume` du store désigne CE module à un
   // slide > 0, on saute l'intro (Hero) et on monte directement en phase
   // "cours", `SlideDeck` initialisé au bon slide. Sinon flux intro→cours
@@ -123,6 +124,17 @@ function ModulePlayerInner({ module }: { module: Module }) {
 
   function handlePlanResult({ answers }: { answers: number[] }) {
     setPlanAnswers(answers);
+    // Le plan ne meurt plus avec cet écran : il part dans la progression, où
+    // il devient une ressource du Coffre-fort, consultable et modifiable
+    // (cf. lib/plan.ts et app/coffre/plan). Rejouer le module ne crée pas un
+    // doublon — on met à jour le plan issu du module s'il existe déjà.
+    const existing = readPlans(state).find((p) => p.fromModule === module.code);
+    const plan = planFromAnswers(answers, existing?.name);
+    savePlan({
+      ...plan,
+      ...(existing ? { id: existing.id, createdAt: existing.createdAt, notes: existing.notes } : {}),
+      fromModule: module.code,
+    });
     completeModule(module.code, 1, 1, module.reward ?? 0);
     setPhase("bilan");
   }

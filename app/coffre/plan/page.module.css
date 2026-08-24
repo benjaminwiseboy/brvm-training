@@ -1,0 +1,494 @@
+/* =============================================================
+   /coffre/plan — Plan d'Investissement Personnel.
+   Même grammaire que /coffre/checklist : cartes blanches sur
+   --paper, titres marine en Poppins, accent doré pour l'action
+   principale. Les piliers se lisent comme une fiche d'identité,
+   pas comme un formulaire — c'est un document qu'on relit.
+   ============================================================= */
+
+.back {
+  display: inline-block;
+  margin-bottom: 16px;
+  font-family: var(--f-display);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--blue);
+  text-decoration: none;
+}
+.back:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Verrouillé ---------- */
+.locked {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 40px 26px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+.lockedIc {
+  display: block;
+  font-size: 38px;
+  margin-bottom: 12px;
+}
+.lockedText {
+  max-width: 46ch;
+  margin: 10px auto 22px;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+.lockedText strong {
+  color: var(--blue-2);
+}
+.lockedBtn {
+  display: inline-block;
+  padding: 14px 24px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
+  color: #fff;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.98rem;
+  text-decoration: none;
+}
+
+/* ---------- En-tête ---------- */
+.head {
+  margin-bottom: 20px;
+}
+.eyebrow {
+  font-family: var(--f-display);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--or-deep);
+  margin: 0 0 8px;
+}
+.h1 {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 4.6vw, 2rem);
+  line-height: 1.15;
+  color: var(--blue-2);
+  margin: 0;
+}
+.lead {
+  margin: 10px 0 0;
+  max-width: 62ch;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+.lead strong {
+  color: var(--ink);
+}
+
+/* ---------- Aucun plan ---------- */
+.empty {
+  background: var(--card);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  text-align: center;
+}
+.emptyIc {
+  display: block;
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+.emptyText {
+  max-width: 48ch;
+  margin: 0 auto 20px;
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+.emptyActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* ---------- Cartes de plan ---------- */
+.list {
+  display: grid;
+  gap: 16px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 22px 20px;
+  box-shadow: var(--shadow-sm);
+}
+.cardEditing {
+  border-color: var(--or);
+  box-shadow: var(--shadow);
+}
+.cardHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.cardTitleWrap {
+  flex: 1;
+  min-width: 0;
+}
+.cardTitle {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 1.2rem;
+  line-height: 1.2;
+  color: var(--blue-2);
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.cardMeta {
+  margin: 4px 0 0;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+.editBtn {
+  flex: none;
+  appearance: none;
+  padding: 9px 16px;
+  border-radius: 12px;
+  border: 1.5px solid var(--line-strong);
+  background: transparent;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--blue-2);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.editBtn:hover {
+  background: var(--paper);
+  border-color: var(--blue);
+}
+
+/* Piliers : une ligne « libellé / valeur » par pilier, lisible d'un coup. */
+.pillars {
+  margin: 0;
+  display: grid;
+  gap: 2px;
+}
+.pillar {
+  display: grid;
+  grid-template-columns: minmax(150px, 34%) 1fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 11px 10px;
+  border-radius: 12px;
+}
+.pillar:nth-child(odd) {
+  background: var(--paper);
+}
+.pillar dt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  min-width: 0;
+}
+.pillarIc {
+  font-size: 1rem;
+}
+.pillar dd {
+  margin: 0;
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+.pillarEmpty dd {
+  color: var(--ink-soft);
+  font-weight: 500;
+  font-style: italic;
+}
+
+.notes {
+  margin: 14px 0 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--gold-soft);
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--ink);
+  white-space: pre-wrap;
+}
+
+.cardActions {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.linkBtn {
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--blue);
+  cursor: pointer;
+}
+.linkBtn:hover {
+  text-decoration: underline;
+}
+.danger {
+  color: var(--clay);
+  margin-left: auto;
+}
+
+/* ---------- Éditeur ---------- */
+.field {
+  display: block;
+  margin-bottom: 18px;
+}
+.fieldLabel {
+  display: block;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--blue-2);
+  margin-bottom: 6px;
+}
+.input,
+.textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--line-strong);
+  background: var(--card);
+  font-family: var(--f-body);
+  font-size: 0.96rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+.textarea {
+  resize: vertical;
+  line-height: 1.55;
+}
+.input:focus,
+.textarea:focus {
+  outline: 3px solid var(--azure);
+  outline-offset: 1px;
+  border-color: var(--azure);
+}
+
+.editPillar {
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+.editLabel {
+  margin: 0;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: var(--blue-2);
+}
+.editPrompt {
+  margin: 3px 0 10px;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+/* Pastilles : les réponses du module 09, en un clic — le champ libre juste
+   dessous reste ouvert à ceux dont la situation n'y rentre pas. */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.chip {
+  appearance: none;
+  padding: 9px 14px;
+  border-radius: 999px;
+  border: 1.5px solid var(--line-strong);
+  background: var(--card);
+  font-family: var(--f-body);
+  font-weight: 600;
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.chip:hover {
+  border-color: var(--blue);
+  color: var(--blue-2);
+}
+.chipOn {
+  background: var(--blue-2);
+  border-color: var(--blue-2);
+  color: #fff;
+}
+.chip:focus-visible {
+  outline: 3px solid var(--azure);
+  outline-offset: 2px;
+}
+
+.editActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.primary,
+.ghost {
+  appearance: none;
+  border-radius: 14px;
+  padding: 14px 24px;
+  font-family: var(--f-display);
+  font-size: 0.96rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: filter 0.2s, background 0.15s, transform 0.12s;
+}
+.primary {
+  border: 2px solid transparent;
+  background: linear-gradient(135deg, #f7cf49, var(--or));
+  color: #3a2907;
+  box-shadow: 0 14px 26px -16px rgba(242, 183, 5, 0.95);
+}
+.primary:hover {
+  filter: brightness(1.04);
+}
+.primary:active,
+.ghost:active {
+  transform: translateY(1px) scale(0.995);
+}
+.ghost {
+  border: 1.5px solid var(--line-strong);
+  background: var(--card);
+  color: var(--ink);
+}
+.ghost:hover {
+  background: var(--paper-2);
+}
+
+.add {
+  appearance: none;
+  width: 100%;
+  margin-top: 16px;
+  padding: 15px 20px;
+  border-radius: 16px;
+  border: 1.5px dashed var(--line-strong);
+  background: transparent;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.94rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.add:hover {
+  background: var(--card);
+  color: var(--blue-2);
+  border-color: var(--blue);
+}
+
+/* ---------- Relecture accompagnée (offre payante) ---------- */
+.review {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 26px;
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: var(--blue-soft);
+  border: 1px solid rgba(47, 147, 201, 0.35);
+}
+.reviewIc {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  background: rgba(255, 255, 255, 0.75);
+}
+.reviewBody {
+  flex: 1;
+  min-width: 0;
+}
+.reviewBody strong {
+  display: block;
+  font-family: var(--f-display);
+  font-size: 0.98rem;
+  line-height: 1.25;
+  color: var(--blue-2);
+}
+.reviewBody p {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+.reviewBtn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: #25d366;
+  color: #fff;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: filter 0.15s;
+}
+.reviewBtn:hover {
+  filter: brightness(1.05);
+}
+.reviewIcon {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+
+.disclaimer {
+  margin: 24px 0 0;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: var(--paper-2);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 600px) {
+  .pillar {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .review {
+    flex-wrap: wrap;
+  }
+  .reviewBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}

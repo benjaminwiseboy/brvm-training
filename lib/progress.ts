@@ -8,6 +8,7 @@
  * opaques, non invocables côté serveur (erreur runtime, pas détectée par tsc).
  */
 import { orderedCodes, getModule, PHASES } from "@/content/registry";
+import { activePlans, type InvestmentPlan } from "@/lib/plan";
 
 export const STORAGE_KEY = "brvm-learning:v1";
 
@@ -19,6 +20,12 @@ export type ProgressState = {
   // reprendre directement au défi — `slide` seul ne distinguait pas les deux.
   resume?: { code: string; slide: number; phase?: "cours" | "defi" };
   unlockedResources: string[];
+  /**
+   * Plans d'investissement de l'apprenant (module 09 puis édition libre).
+   * Optionnel : les états déjà persistés avant l'arrivée de cette
+   * fonctionnalité n'ont pas la clé, et doivent rester valides.
+   */
+  plans?: InvestmentPlan[];
 };
 
 export const initialState = (): ProgressState => ({
@@ -46,8 +53,16 @@ export function isValidProgressState(x: unknown): x is ProgressState {
     typeof s.capital === "number" &&
     typeof s.onboarded === "boolean" &&
     typeof s.streak === "number" &&
-    Array.isArray(s.unlockedResources)
+    Array.isArray(s.unlockedResources) &&
+    // `plans` est facultatif (états antérieurs à la fonctionnalité), mais s'il
+    // est là il doit être un tableau — sinon la page Plan planterait au rendu.
+    (s.plans === undefined || Array.isArray(s.plans))
   );
+}
+
+/** Plans visibles d'un état : ni supprimés, ni mal formés. */
+export function readPlans(state: ProgressState): InvestmentPlan[] {
+  return activePlans(state.plans ?? []);
 }
 
 /**
