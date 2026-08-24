@@ -1,0 +1,624 @@
+/* =============================================================
+   /coffre/checklist — la check-list « 7 premiers jours ».
+   Même vocabulaire visuel que /coffre et le reste du tableau de
+   bord (cartes blanches sur --paper, pastilles colorées, titres
+   marine en Poppins) ; l'accent doré marque ici la ressource
+   débloquée, le vert marque ce qui est fait.
+   ============================================================= */
+
+.back {
+  display: inline-block;
+  margin-bottom: 16px;
+  font-family: var(--f-display);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--blue);
+  text-decoration: none;
+}
+.back:hover {
+  text-decoration: underline;
+}
+
+/* ---------- État verrouillé ---------- */
+.locked {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 40px 26px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+.lockedIc {
+  display: block;
+  font-size: 38px;
+  margin-bottom: 12px;
+}
+.lockedText {
+  max-width: 46ch;
+  margin: 10px auto 22px;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+.lockedText strong {
+  color: var(--blue-2);
+}
+
+/* Aperçu des 7 journées : les titres seulement, pour montrer ce que le
+   verrou garde sans le livrer. */
+.teaser {
+  list-style: none;
+  max-width: 30rem;
+  margin: 0 auto 24px;
+  padding: 18px 0 0;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 8px;
+  text-align: left;
+}
+.teaser li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.teaserTag {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  background: var(--paper-2);
+}
+.teaserTitle {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  min-width: 0;
+}
+.lockedBtn {
+  display: inline-block;
+  padding: 14px 24px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
+  color: #fff;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.98rem;
+  text-decoration: none;
+}
+
+/* ---------- En-tête ---------- */
+.head {
+  margin-bottom: 20px;
+}
+.eyebrow {
+  font-family: var(--f-display);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--or-deep);
+  margin: 0 0 8px;
+}
+.h1 {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 4.6vw, 2rem);
+  line-height: 1.15;
+  color: var(--blue-2);
+  margin: 0;
+}
+.lead {
+  margin: 10px 0 0;
+  max-width: 62ch;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+.lead strong {
+  color: var(--ink);
+}
+
+/* ---------- Compteur d'avancement ---------- */
+.meter {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 14px;
+}
+.meterDone {
+  border-color: var(--pos);
+  background: var(--pos-soft);
+}
+.meterTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.meterLabel {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--blue-2);
+}
+.meterCount {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.bar {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--paper-2);
+  overflow: hidden;
+}
+/* Remplissage animé en `transform` plutôt qu'en `width` (pas de reflow à
+   chaque case cochée) : la barre occupe toute la largeur et se contracte
+   depuis la gauche. Les extrémités arrondies viennent de `.bar`
+   (`overflow: hidden`), donc la mise à l'échelle ne déforme aucun rayon. */
+.fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform-origin: left center;
+  transform: scaleX(var(--p, 0));
+  background: linear-gradient(90deg, var(--pos), #3fc795);
+  transition: transform 0.35s ease;
+}
+
+/* ---------- Lien comparateur ---------- */
+.compare {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 24px;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.15s, transform 0.12s;
+}
+.compare:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-1px);
+}
+.compareIc {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  background: var(--blue-soft);
+}
+.compareBody {
+  flex: 1;
+  min-width: 0;
+}
+.compareLabel {
+  display: block;
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--blue-2);
+  line-height: 1.25;
+}
+.compareSub {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+.compareArw {
+  flex: none;
+  color: var(--ink-soft);
+  font-size: 1rem;
+}
+
+/* ---------- Les 7 journées ---------- */
+.days {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.day {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+.dayDone {
+  border-color: rgba(31, 167, 116, 0.45);
+}
+
+.dayHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding-bottom: 14px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.tag {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--or-deep);
+  background: var(--gold-soft);
+}
+.dayDone .tag {
+  color: #fff;
+  background: var(--pos);
+  font-size: 1.15rem;
+}
+.dayTitle {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.12rem;
+  line-height: 1.2;
+  color: var(--blue-2);
+  margin: 0;
+}
+.dayGoal {
+  margin: 4px 0 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 10px 10px 8px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.step:hover {
+  background: var(--paper);
+}
+
+/* La vraie case reste dans le flux (accessible au clavier et aux lecteurs
+   d'écran) mais invisible : c'est `.tick` qui est peint. */
+.box {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+}
+.tick {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  margin-top: 1px;
+  border-radius: 8px;
+  border: 2px solid var(--line-strong);
+  background: var(--card);
+  display: grid;
+  place-items: center;
+  transition: background 0.15s, border-color 0.15s;
+}
+.tick::after {
+  content: "✓";
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.15s, transform 0.15s;
+}
+.stepOn .tick {
+  background: var(--pos);
+  border-color: var(--pos);
+}
+.stepOn .tick::after {
+  opacity: 1;
+  transform: scale(1);
+}
+/* Focus clavier : l'anneau se pose sur la case peinte, pas sur l'input caché. */
+.box:focus-visible + .tick {
+  outline: 3px solid var(--azure);
+  outline-offset: 2px;
+}
+
+.stepBody {
+  min-width: 0;
+}
+.stepLabel {
+  display: block;
+  font-size: 0.96rem;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.stepLabel strong {
+  font-weight: 700;
+  color: var(--blue-2);
+}
+.stepOn .stepLabel {
+  color: var(--ink-soft);
+  text-decoration: line-through;
+  text-decoration-color: rgba(31, 167, 116, 0.6);
+}
+.stepOn .stepLabel strong {
+  color: var(--ink-soft);
+}
+.stepHint {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+.stepOn .stepHint {
+  opacity: 0.6;
+}
+
+/* ---------- Après le jour 7 ---------- */
+.after {
+  margin-top: 30px;
+}
+.afterTitle {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--blue-2);
+  margin: 0;
+}
+.afterLead {
+  margin: 6px 0 16px;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+.afterGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+.afterCard {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow-sm);
+}
+.afterIc {
+  display: block;
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+.afterCardTitle {
+  display: block;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: var(--blue-2);
+}
+.afterBody {
+  margin: 6px 0 0;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.disclaimer {
+  margin: 26px 0 0;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: var(--paper-2);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 640px) {
+  .afterGrid {
+    grid-template-columns: 1fr;
+  }
+  .day {
+    padding: 18px 16px;
+  }
+}
+
+/* ---------- Étape pivot (step.highlight) ----------
+   Les quelques gestes qui font vraiment basculer la semaine : l'e-mail à la
+   SGI, la question des moyens de versement, l'ordre à cours limité. Fond
+   doré + filet à gauche, pour qu'on les repère en balayant la page. */
+.stepKey {
+  background: var(--gold-soft);
+  border-left: 3px solid var(--or);
+  border-radius: 12px;
+  padding-left: 12px;
+}
+.stepKey:hover {
+  background: #fbe9b8;
+}
+.stepKey .stepLabel {
+  font-weight: 700;
+}
+.stepKey .stepHint {
+  color: var(--ink);
+  opacity: 0.85;
+}
+/* Une fois faite, l'étape pivot redevient une étape ordinaire : elle n'a
+   plus rien à signaler. */
+.stepKey.stepOn {
+  background: transparent;
+  border-left-color: var(--pos);
+}
+
+/* ---------- Modèle d'e-mail (dans la carte J1) ---------- */
+.mail {
+  margin-top: 14px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line-strong);
+}
+.mailIntro {
+  margin: 0 0 12px;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.mailCard {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--paper);
+}
+.mailSubject {
+  margin: 0;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  background: var(--card);
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--blue-2);
+}
+.mailSubject span {
+  display: inline-block;
+  margin-right: 8px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.mailBody {
+  margin: 0;
+  padding: 14px;
+  /* Le modèle se lit comme un e-mail : chasse fixe, retours à la ligne
+     conservés, et défilement horizontal confiné plutôt qu'une page qui
+     déborde sur mobile. */
+  font-family: ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  line-height: 1.65;
+  color: var(--ink);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.mailCopy {
+  appearance: none;
+  width: 100%;
+  margin-top: 10px;
+  padding: 13px 16px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, #f7cf49, var(--or));
+  color: #3a2907;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.94rem;
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.12s;
+}
+.mailCopy:hover {
+  filter: brightness(1.04);
+}
+.mailCopy:active {
+  transform: translateY(1px) scale(0.995);
+}
+.mailOutro {
+  margin: 10px 0 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* ---------- Accompagnement personnalisé (offre payante) ---------- */
+.help {
+  margin-top: 26px;
+  padding: 24px 20px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(140deg, var(--blue-1), var(--blue-2));
+  color: #e7eef4;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+.helpIc {
+  display: block;
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+.helpTitle {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 1.2rem;
+  line-height: 1.2;
+  color: #fff;
+  margin: 0;
+}
+.helpBody {
+  max-width: 48ch;
+  margin: 10px auto 18px;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #cbdcea;
+}
+.helpBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 15px 26px;
+  border-radius: 16px;
+  text-decoration: none;
+  font-family: var(--f-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  background: #25d366;
+  box-shadow: 0 12px 24px -14px rgba(37, 211, 102, 0.9);
+  transition: filter 0.2s, transform 0.12s;
+}
+.helpBtn:hover {
+  filter: brightness(1.04);
+}
+.helpBtn:active {
+  transform: translateY(1px) scale(0.995);
+}
+.helpIcon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+/* La mention « payant » n'est pas une note de bas de page qu'on cache : elle
+   est lisible avant même le clic. */
+.helpNote {
+  margin: 12px 0 0;
+  font-size: 0.78rem;
+  color: #a9c2d4;
+}
