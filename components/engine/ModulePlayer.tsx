@@ -16,6 +16,7 @@ import { DiagnosticChallenge } from "./DiagnosticChallenge";
 import { PlanBuilderChallenge } from "./PlanBuilderChallenge";
 import { Bilan } from "./Bilan";
 import { PhaseComplete } from "./PhaseComplete";
+import { ParcoursComplete } from "./ParcoursComplete";
 
 type Phase = "intro" | "cours" | "defi" | "bilan" | "phase-recap";
 
@@ -214,6 +215,13 @@ function ModulePlayerInner({ module }: { module: Module }) {
       )}
 
       {phase === "phase-recap" && (() => {
+        // Dernier module du parcours (plus rien après lui) : écran de FIN DE
+        // PARCOURS, pas le récap de phase générique. Avant, la Phase 5 se
+        // terminait comme les quatre autres puis renvoyait au tableau de bord
+        // tout coché — un apprenant qui venait de prendre goût à la bourse
+        // n'avait littéralement aucune étape suivante (cf. ParcoursComplete).
+        if (!getNext(module.code)) return <ParcoursComplete onNext={handleNext} />;
+
         const completion = phaseCompletionFor(module.code)!;
         // Fin de l'essai gratuit : un compte non payant qui termine la Phase 1
         // voit, en plus du récap, ce qui l'attend dans la suite du parcours et

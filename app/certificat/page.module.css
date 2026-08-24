@@ -1,0 +1,310 @@
+/* =============================================================
+   /certificat — certificat de fin de parcours (aperçu canvas +
+   téléchargement + partage).
+   Le certificat lui-même est peint dans lib/certificate.ts : cette
+   feuille n'habille que la page autour.
+   ============================================================= */
+
+/* Sondes de police : présentes dans le flux (pour que getComputedStyle
+   renvoie la famille réellement résolue) mais sans surface ni contenu. */
+.probeDisplay,
+.probeBody {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.probeDisplay {
+  font-family: var(--f-display);
+}
+.probeBody {
+  font-family: var(--f-body);
+}
+
+/* ---------- État verrouillé ---------- */
+.locked {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 40px 26px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+.lockedIc {
+  display: block;
+  font-size: 38px;
+  margin-bottom: 12px;
+}
+.lockedText {
+  max-width: 44ch;
+  margin: 10px auto 22px;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+.lockedText strong {
+  color: var(--blue-2);
+}
+.lockedBtn {
+  display: inline-block;
+  padding: 14px 24px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
+  color: #fff;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.98rem;
+  text-decoration: none;
+}
+
+/* ---------- En-tête ---------- */
+.head {
+  margin-bottom: 20px;
+}
+.eyebrow {
+  font-family: var(--f-display);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--or-deep);
+  margin: 0 0 8px;
+}
+.h1 {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 4.6vw, 2rem);
+  line-height: 1.15;
+  color: var(--blue-2);
+  margin: 0;
+}
+.lead {
+  margin: 10px 0 0;
+  max-width: 60ch;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+/* ---------- Champ « nom » ---------- */
+.field {
+  display: block;
+  margin-bottom: 18px;
+}
+.fieldLabel {
+  display: block;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--blue-2);
+  margin-bottom: 6px;
+}
+.input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1.5px solid var(--line-strong);
+  background: var(--card);
+  font-family: var(--f-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.input:focus {
+  outline: 3px solid var(--azure);
+  outline-offset: 1px;
+  border-color: var(--azure);
+}
+
+/* ---------- Aperçu ---------- */
+.preview {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 18px;
+  /* Le marine du certificat déborde jusqu'aux angles : pas de cadre clair
+     autour, sinon l'aperçu ne ressemble plus à l'image téléchargée. */
+  background: var(--blue-2);
+}
+.canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ---------- Actions ---------- */
+.actions {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+.primary,
+.ghost {
+  appearance: none;
+  border-radius: 16px;
+  padding: 16px 22px;
+  font-family: var(--f-display);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.12s, filter 0.2s, background 0.15s;
+}
+.primary {
+  border: 2px solid transparent;
+  background: linear-gradient(135deg, #f7cf49, var(--or));
+  color: #3a2907;
+  box-shadow: 0 14px 26px -16px rgba(242, 183, 5, 0.95);
+}
+.primary:hover {
+  filter: brightness(1.04);
+}
+.primary:active,
+.ghost:active {
+  transform: translateY(1px) scale(0.995);
+}
+.ghost {
+  border: 1.5px solid var(--line-strong);
+  background: var(--card);
+  color: var(--ink);
+  white-space: nowrap;
+}
+.ghost:hover {
+  background: var(--paper-2);
+}
+
+/* ---------- Repli desktop : liens vers les réseaux ---------- */
+.links {
+  margin-top: 16px;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+}
+.linksTitle {
+  margin: 0;
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--blue-2);
+}
+.linksText {
+  margin: 6px 0 14px;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.netRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.net {
+  flex: 1 1 auto;
+  text-align: center;
+  padding: 12px 16px;
+  border-radius: 14px;
+  text-decoration: none;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: #fff;
+  transition: filter 0.15s;
+}
+.net:hover {
+  filter: brightness(1.06);
+}
+.netWa {
+  background: #25d366;
+}
+.netLi {
+  background: #0a66c2;
+}
+.netFb {
+  background: #1877f2;
+}
+.netX {
+  background: #14171a;
+}
+.copy {
+  appearance: none;
+  width: 100%;
+  margin-top: 12px;
+  padding: 13px 16px;
+  border-radius: 14px;
+  border: 1.5px dashed var(--line-strong);
+  background: transparent;
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.copy:hover {
+  background: var(--paper-2);
+  color: var(--ink);
+}
+
+/* ---------- Rappel de la vraie prochaine étape ---------- */
+.nextStep {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 26px;
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: var(--gold-soft);
+  border: 1px solid rgba(242, 183, 5, 0.45);
+}
+.nextIc {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  background: rgba(255, 255, 255, 0.7);
+}
+.nextBody {
+  flex: 1;
+  min-width: 0;
+}
+.nextBody strong {
+  display: block;
+  font-family: var(--f-display);
+  font-size: 0.98rem;
+  line-height: 1.25;
+  color: var(--blue-2);
+}
+.nextBody p {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+.nextBtn {
+  flex: none;
+  padding: 11px 16px;
+  border-radius: 12px;
+  background: var(--blue-2);
+  color: #fff;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  .actions {
+    grid-template-columns: 1fr;
+  }
+  .nextStep {
+    flex-wrap: wrap;
+  }
+  .nextBtn {
+    width: 100%;
+    text-align: center;
+  }
+}

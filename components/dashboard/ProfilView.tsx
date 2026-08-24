@@ -4,6 +4,7 @@ import { useActionState, useState } from "react";
 import Link from "next/link";
 import { useProgress, deriveStatus } from "@/lib/store";
 import { money } from "@/lib/format";
+import { isParcoursComplete } from "@/content/vault";
 import { logout, updateEmail } from "@/lib/actions/auth";
 import styles from "./ProfilView.module.css";
 
@@ -34,6 +35,22 @@ export function ProfilView({ isAdmin }: { isAdmin: boolean }) {
         <Stat cls={styles.stTeal} icon="🔥" val={`${state.streak} j`} label="Série" />
         <Stat cls={styles.stGreen} icon="🎓" val={`${doneCount} / ${TOTAL_MODULES}`} label="Modules" />
       </div>
+
+      {/* Le certificat se gagne au dernier module, mais il doit rester
+          retrouvable ensuite : l'écran de fin ne s'affiche qu'une fois. */}
+      {isParcoursComplete(state.completed) && (
+        <div className={styles.section}>
+          <h2 className={styles.sectionTitle}>Fin du parcours</h2>
+          <Link href="/certificat" className={styles.row}>
+            <span>🎓 Mon certificat</span>
+            <span className={styles.arrow}>→</span>
+          </Link>
+          <Link href="/coffre/checklist" className={styles.row}>
+            <span>🗝️ Check-list « 7 premiers jours »</span>
+            <span className={styles.arrow}>→</span>
+          </Link>
+        </div>
+      )}
 
       <div className={styles.section}>
         <h2 className={styles.sectionTitle}>Compte</h2>
