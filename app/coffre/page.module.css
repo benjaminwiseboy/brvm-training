@@ -117,6 +117,42 @@
   white-space: nowrap;
 }
 
+/* Carte verrouillée : atténuée, comme dans l'aperçu du tableau de bord. */
+.cardLocked {
+  opacity: 0.62;
+}
+.cardLocked .ic {
+  filter: grayscale(0.55);
+}
+
+/* Carte d'un outil qui existe vraiment : seule carte cliquable de la grille. */
+.cardOpen {
+  text-decoration: none;
+  border-color: var(--line-strong);
+  transition: transform 0.12s, border-color 0.15s, box-shadow 0.15s;
+}
+.cardOpen:hover {
+  transform: translateY(-2px);
+  border-color: var(--or);
+  box-shadow: var(--shadow);
+}
+.cardOpen:focus-visible {
+  outline: 3px solid var(--or);
+  outline-offset: 3px;
+}
+.openBadge {
+  flex: none;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: #3a2907;
+  background: linear-gradient(135deg, #f7cf49, var(--or));
+  border-radius: 999px;
+  padding: 6px 12px;
+  white-space: nowrap;
+}
+
 @media (max-width: 640px) {
   .grid {
     grid-template-columns: 1fr;
@@ -124,7 +160,8 @@
   .card {
     flex-wrap: wrap;
   }
-  .soon {
+  .soon,
+  .openBadge {
     margin-left: 68px; /* aligne sous le texte, sous l'icône (52px + gap 16px) */
   }
 }

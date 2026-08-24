@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { AppShell } from "@/components/nav/AppShell";
-import { RESOURCES } from "@/components/dashboard/VaultCard";
+import { useProgress } from "@/lib/store";
+import { RESOURCES, gateLabel, isResourceUnlocked } from "@/content/vault";
 import styles from "./page.module.css";
 
 const TONE_CLASS: Record<string, string> = {
@@ -14,28 +16,21 @@ const TONE_CLASS: Record<string, string> = {
 };
 
 /**
- * `/coffre` — page complète du Coffre-fort (Task 13), pendant en pleine
- * page de la section compacte `VaultCard` du tableau de bord (Task 11).
- * Réutilise `RESOURCES` exportée de `VaultCard.tsx` (source unique des
- * données — pas de duplication) : mêmes 4 outils, mêmes icônes/tons.
+ * `/coffre` — page complète du Coffre-fort, pendant en pleine page de la
+ * section compacte `VaultCard` du tableau de bord. Les deux lisent le même
+ * catalogue (`content/vault.ts`).
  *
- * Choix d'affichage (documenté dans task-13-report.md) : contrairement à
- * `VaultCard` qui distingue « ⬇ Disponible » (unlocked) de
- * « 🔒 Débloqué en Phase X » (locked), chaque carte affiche ici, sans
- * exception, un badge « Bientôt » non cliquable — aucun outil n'a de
- * fonctionnalité réelle de téléchargement/interaction en v0 (pas de
- * backend, pas de stockage de fichiers), donc « Bientôt » est l'état
- * honnête pour les quatre. Le statut narratif « Débloqué en Phase X »
- * reste affiché en sous-texte pour les outils encore verrouillés dans le
- * parcours, à titre d'information secondaire.
- *
- * Pas d'appel à `useProgress()` ici : la grille est entièrement statique
- * (comme `RESOURCES` et `VaultCard` elle-même, qui ne le consomme pas non
- * plus) — `AppShell variant="dash"` lit déjà `useProgress()` pour son
- * propre portefeuille/statut de sidebar, et fournit le lien retour
- * dashboard (item « Accueil ») demandé par le Step 2 du brief.
+ * Trois états de carte, et un seul est cliquable :
+ * - **débloquée ET construite** (`href`) : carte-lien, badge « Ouvrir » ;
+ * - **débloquée mais pas encore construite** : badge « Bientôt » — c'est le
+ *   cas de tous les outils restants, aucun téléchargement n'est câblé ;
+ * - **verrouillée** : la condition est affichée en clair (« Débloqué en
+ *   Phase 3 », « Débloqué en fin de parcours »), désormais réellement
+ *   évaluée sur la progression et non plus décorative.
  */
 export default function CoffrePage() {
+  const { state, hydrated } = useProgress();
+
   return (
     <AppShell variant="dash">
       <section className={styles.sec}>
@@ -45,19 +40,38 @@ export default function CoffrePage() {
         </div>
 
         <div className={styles.grid}>
-          {RESOURCES.map((r) => (
-            <div key={r.name} className={styles.card}>
-              <span className={`${styles.ic} ${TONE_CLASS[r.tone]}`}>{r.icon}</span>
-              <div className={styles.body}>
-                <span className={styles.name}>{r.name}</span>
-                <span className={styles.desc}>{r.desc}</span>
-                {!r.unlocked && "need" in r && (
-                  <span className={styles.need}>🔒 Débloqué en {r.need}</span>
-                )}
+          {RESOURCES.map((r) => {
+            // Avant hydratation, l'état de progression n'est pas fiable : on
+            // affiche tout verrouillé plutôt que d'ouvrir une carte l'espace
+            // d'un rendu (même précaution qu'app/page.tsx).
+            const unlocked = hydrated && isResourceUnlocked(r, state.completed);
+            const open = unlocked && r.href;
+            const inner = (
+              <>
+                <span className={`${styles.ic} ${TONE_CLASS[r.tone]}`}>{r.icon}</span>
+                <div className={styles.body}>
+                  <span className={styles.name}>{r.name}</span>
+                  <span className={styles.desc}>{r.desc}</span>
+                  {!unlocked && (
+                    <span className={styles.need}>🔒 Débloqué en {gateLabel(r.gate)}</span>
+                  )}
+                </div>
+                <span className={open ? styles.openBadge : styles.soon}>
+                  {open ? "Ouvrir →" : "Bientôt"}
+                </span>
+              </>
+            );
+
+            return open ? (
+              <Link key={r.id} href={r.href!} className={`${styles.card} ${styles.cardOpen}`}>
+                {inner}
+              </Link>
+            ) : (
+              <div key={r.id} className={`${styles.card} ${unlocked ? "" : styles.cardLocked}`}>
+                {inner}
               </div>
-              <span className={styles.soon}>Bientôt</span>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
     </AppShell>

@@ -112,6 +112,26 @@
   filter: grayscale(0.55);
 }
 
+/* Ressource réellement ouvrable (elle a une page) : la carte devient un
+   lien, et son `meta` passe en doré pour se distinguer d'un « Bientôt ». */
+.resOpen {
+  text-decoration: none;
+  border-color: var(--line-strong);
+  transition: transform 0.12s, border-color 0.15s, box-shadow 0.15s;
+}
+.resOpen:hover {
+  transform: translateY(-2px);
+  border-color: var(--or);
+  box-shadow: var(--shadow);
+}
+.resOpen:focus-visible {
+  outline: 3px solid var(--or);
+  outline-offset: 3px;
+}
+.metaOpen {
+  color: var(--or-deep);
+}
+
 .link:focus-visible {
   outline: 3px solid var(--or);
   outline-offset: 3px;
