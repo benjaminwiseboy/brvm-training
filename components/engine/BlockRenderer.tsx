@@ -1,5 +1,6 @@
 import type { Block } from "@/lib/types";
 import { renderMarkup } from "@/lib/markup";
+import { CourseText } from "./CourseText";
 import { BocTable } from "./BocTable";
 import { IdCard } from "./IdCard";
 import { TrendChart } from "./TrendChart";
@@ -7,23 +8,31 @@ import styles from "./BlockRenderer.module.css";
 
 /**
  * Rendu d'un bloc de slide — port de renderBlock() dans POC-Module-1/app.js.
- * Composant serveur (aucune interactivité) : le switch couvre les 6 kinds
- * du type `Block` (lib/types.ts). Toute valeur affichée passe par
- * `renderMarkup` (jamais de dangerouslySetInnerHTML de contenu brut).
+ * Le switch couvre tous les kinds du type `Block` (lib/types.ts). Toute
+ * valeur affichée passe par un renderer (jamais de
+ * dangerouslySetInnerHTML de contenu brut).
+ *
+ * Deux renderers, et la distinction n'est pas cosmétique :
+ * - `CourseText` pour la PROSE du cours (lead, text, list, callout, duo) —
+ *   il rend le gras ET rend cliquables les termes du glossaire, pour que
+ *   l'apprenant qui bute sur « coupon couru » n'ait pas à quitter sa slide ;
+ * - `renderMarkup` pour tout le reste (formules, étiquettes de fiche,
+ *   légendes) — souligner un mot au milieu d'une formule ou d'un libellé de
+ *   colonne n'aiderait personne et abîmerait la lecture.
  */
 export function BlockRenderer({ block }: { block: Block }) {
   switch (block.kind) {
     case "lead":
-      return <p className={styles.lead}>{renderMarkup(block.value)}</p>;
+      return <p className={styles.lead}><CourseText value={block.value} /></p>;
 
     case "text":
-      return <p className={styles.text}>{renderMarkup(block.value)}</p>;
+      return <p className={styles.text}><CourseText value={block.value} /></p>;
 
     case "list":
       return (
         <ul className={styles.list}>
           {block.items.map((item, i) => (
-            <li key={i}>{renderMarkup(item)}</li>
+            <li key={i}><CourseText value={item} /></li>
           ))}
         </ul>
       );
@@ -34,7 +43,7 @@ export function BlockRenderer({ block }: { block: Block }) {
           {block.items.map((item, i) => (
             <div className={styles.duoItem} key={i}>
               <div className={styles.duoSide}>{item.side}</div>
-              <div>{renderMarkup(item.value)}</div>
+              <div><CourseText value={item.value} /></div>
             </div>
           ))}
         </div>
@@ -42,7 +51,7 @@ export function BlockRenderer({ block }: { block: Block }) {
 
     case "callout": {
       const toneClass = { info: styles.info, highlight: styles.highlight, warn: styles.warn }[block.tone];
-      return <div className={`${styles.callout} ${toneClass}`}>{renderMarkup(block.value)}</div>;
+      return <div className={`${styles.callout} ${toneClass}`}><CourseText value={block.value} /></div>;
     }
 
     case "countries":

@@ -1,0 +1,175 @@
+/* =============================================================
+   GlossaryTerm — terme du glossaire cliquable dans les cours,
+   et sa feuille de définition.
+   Le mot doit rester du TEXTE : même police, même taille, même
+   couleur d'encre que la phrase qui l'entoure. Seul le pointillé
+   doré signale qu'il est cliquable — un lien bleu à chaque terme
+   technique transformerait la slide en page de résultats.
+   ============================================================= */
+
+.term {
+  appearance: none;
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: underline dotted var(--or);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+  transition: background 0.15s;
+}
+.term:hover {
+  background: var(--gold-soft);
+  border-radius: 4px;
+}
+.term:focus-visible {
+  outline: 3px solid var(--or);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ---------- Feuille de définition ---------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(14, 47, 68, 0.45);
+  backdrop-filter: blur(2px);
+  animation: fade 0.18s ease-out both;
+  padding: 0;
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.sheet {
+  width: 100%;
+  max-width: 520px;
+  max-height: 82vh;
+  overflow-y: auto;
+  background: var(--card);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  padding: 22px 20px calc(22px + env(safe-area-inset-bottom));
+  box-shadow: var(--shadow-lg);
+  animation: rise 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes rise {
+  from {
+    transform: translateY(18px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.eyebrow {
+  font-family: var(--f-display);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--or-deep);
+  margin: 0 0 4px;
+}
+.title {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  color: var(--blue-2);
+  margin: 0;
+}
+.close {
+  flex: none;
+  appearance: none;
+  width: 34px;
+  height: 34px;
+  margin-left: auto;
+  border: none;
+  border-radius: 50%;
+  background: var(--paper-2);
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.close:hover {
+  background: var(--line);
+  color: var(--ink);
+}
+
+.def {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.def strong {
+  color: var(--blue-2);
+}
+.def code,
+.extra code {
+  font-family: ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+  font-size: 0.88em;
+  background: var(--paper-2);
+  border-radius: 5px;
+  padding: 1px 5px;
+}
+
+.extra {
+  margin: 12px 0 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 6px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.extra strong {
+  color: var(--ink);
+}
+
+.all {
+  display: inline-block;
+  margin-top: 18px;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--blue);
+  text-decoration: none;
+}
+.all:hover {
+  text-decoration: underline;
+}
+
+@media (min-width: 641px) {
+  /* Sur grand écran, la feuille devient une carte centrée : rien ne justifie
+     de la coller en bas quand l'écran n'est pas tenu à une main. */
+  .overlay {
+    align-items: center;
+    padding: 24px;
+  }
+  .sheet {
+    border-radius: var(--radius-xl);
+    padding-bottom: 22px;
+  }
+}
