@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getModule } from "@/content/registry";
-import { isFreeTrialModule } from "@/lib/progress";
+import { isPaywalled } from "@/lib/progress";
 import { ModulePlayer } from "@/components/engine/ModulePlayer";
 import { ModuleBlocked } from "@/components/engine/ModuleBlocked";
 import { AppShell } from "@/components/nav/AppShell";
@@ -40,9 +40,12 @@ export default async function ModulePage({ params }: { params: Promise<{ code: s
       // règle de paiement ci-dessous (auto).
       blocked = override.blocked === true;
       reason = "admin";
-    } else if (!isFreeTrialModule(mod.code) && payment?.status !== "paid") {
+    } else if (isPaywalled(mod.code, payment?.status === "paid" ? "paid" : "unpaid")) {
       // Essai gratuit (Fix, règle produit) : sans override, seule la Phase 1
-      // reste accessible à un compte non payant.
+      // reste accessible à un compte non payant. Même fonction que le tableau
+      // de bord (`ModuleMap`/`PhasePreview`) : la barrière et son affichage ne
+      // peuvent plus diverger — c'est ce qui laissait un compte payant devant
+      // des modules encore étiquetés « Plan payant ».
       blocked = true;
       reason = "payment";
     }

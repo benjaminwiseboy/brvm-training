@@ -18,6 +18,9 @@ import {
   CHECKLIST_TITLE,
   CHECKLIST_TOTAL_STEPS,
   EMAIL_TEMPLATE,
+  INVESTOR_ROUTINE,
+  ROUTINE_LEAD,
+  ROUTINE_TITLE,
 } from "@/content/checklist";
 import styles from "./page.module.css";
 
@@ -139,6 +142,16 @@ ${EMAIL_TEMPLATE.body}`
                 <span className={styles.teaserTitle}>{day.title}</span>
               </li>
             ))}
+            {/* Ce qui vient APRÈS la semaine compte autant dans la promesse :
+                sans ça, l'aperçu s'arrête au premier ordre. */}
+            <li>
+              <span className={styles.teaserTag} aria-hidden="true">
+                +
+              </span>
+              <span className={styles.teaserTitle}>
+                {ROUTINE_TITLE} — semaine, mois, trimestre, année
+              </span>
+            </li>
           </ol>
 
           <Link href="/parcours" className={styles.lockedBtn}>
@@ -273,10 +286,60 @@ ${EMAIL_TEMPLATE.body}`
             <p className={styles.helpNote}>{ACCOMPAGNEMENT.note}</p>
           </section>
 
+          {/* Le jour 7 n'est pas une fin : c'est le début d'un rythme. Sans ce
+              bloc, la ressource s'arrêtait sur « vous avez passé votre premier
+              ordre », et laissait l'apprenant sans le mode d'emploi des mois
+              suivants — le moment où l'on décroche, ou l'on s'affole. */}
+          <section className={styles.routine}>
+            <h2 className={styles.afterTitle}>{ROUTINE_TITLE}</h2>
+            <p className={styles.afterLead}>{renderMarkup(ROUTINE_LEAD)}</p>
+
+            <div className={styles.routineBlocks}>
+              {INVESTOR_ROUTINE.map((block) => (
+                <section key={block.id} className={styles.routineBlock}>
+                  <div className={styles.routineHead}>
+                    <h3 className={styles.routineCadence}>{block.cadence}</h3>
+                    <span className={styles.routineBudget}>{block.budget}</span>
+                  </div>
+                  <p className={styles.routineGoal}>{block.goal}</p>
+
+                  <ul className={styles.routineItems}>
+                    {block.items.map((item) => (
+                      <li key={item.id} className={styles.routineItem}>
+                        <span className={styles.routineIc} aria-hidden="true">
+                          {item.icon}
+                        </span>
+                        <div className={styles.routineBody}>
+                          <strong className={styles.routineItemTitle}>{item.title}</strong>
+                          <p className={styles.routineText}>{item.body}</p>
+                          {item.link &&
+                            (item.link.external ? (
+                              <a
+                                className={styles.routineLink}
+                                href={item.link.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {item.link.label} <span aria-hidden="true">↗</span>
+                              </a>
+                            ) : (
+                              <Link className={styles.routineLink} href={item.link.href}>
+                                {item.link.label} <span aria-hidden="true">→</span>
+                              </Link>
+                            ))}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ))}
+            </div>
+          </section>
+
           <section className={styles.after}>
-            <h2 className={styles.afterTitle}>Et après le jour 7 ?</h2>
+            <h2 className={styles.afterTitle}>Les quatre réflexes</h2>
             <p className={styles.afterLead}>
-              Quatre réflexes qui ne se cochent pas — ils se gardent.
+              Ceux-là ne se cochent pas et n&rsquo;ont pas de date — ils se gardent.
             </p>
             <div className={styles.afterGrid}>
               {CHECKLIST_AFTER.map((a) => (

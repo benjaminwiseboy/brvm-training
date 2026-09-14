@@ -11,7 +11,7 @@
 }
 .table th {
   text-align: left;
-  font-family: var(--f-display);
+  font-family: var(--f-mono);
   font-size: 11px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -78,11 +78,11 @@
 }
 .payBadgePaid {
   background: var(--pos-soft);
-  color: #0b5e40;
+  color: var(--pos-ink);
 }
 .payBadgeUnpaid {
   background: var(--clay-soft);
-  color: #8a3d1e;
+  color: var(--clay-ink);
 }
 .empty {
   padding: 32px;

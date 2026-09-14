@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import styles from "./AuthCard.module.css";
+import { BrandMark } from "@/components/ui/BrandMark";
 
 export function AuthCard({
   title,
@@ -18,7 +19,7 @@ export function AuthCard({
       <div className={styles.blobNavy} aria-hidden="true" />
       <div className={styles.wrap}>
         <div className={styles.brand}>
-          <div className={styles.brandMark}>B</div>
+          <BrandMark size={40} />
           <div className={styles.brandName}>BRVM Learning</div>
         </div>
         <div className={styles.card}>

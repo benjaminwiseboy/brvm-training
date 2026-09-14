@@ -132,6 +132,13 @@ export function deriveModuleState(
 export type PaymentStatus = "paid" | "unpaid";
 
 /**
+ * Décisions d'accès posées à la main par l'admin (`module_access_overrides`),
+ * indexées par code de module : `true` = forcé fermé, `false` = forcé ouvert.
+ * L'ABSENCE de clé est l'état « auto » (la règle de paiement s'applique).
+ */
+export type ModuleOverrides = Record<string, boolean>;
+
+/**
  * Essai gratuit (Fix, règle produit explicite) : seule la Phase 1
  * (`PHASES[0]`, M01-M04) reste accessible à un compte non payant. Le reste
  * du parcours exige `payments.status === "paid"` — appliqué côté serveur
@@ -140,6 +147,48 @@ export type PaymentStatus = "paid" | "unpaid";
  */
 export function isFreeTrialModule(code: string): boolean {
   return PHASES[0]?.codes.includes(code.toUpperCase()) ?? false;
+}
+
+/**
+ * Ce module doit-il porter la mention « Plan payant » pour CET apprenant ?
+ *
+ * Source unique de la question, partagée par `ModuleMap` et `PhasePreview` —
+ * et alignée sur la barrière serveur d'`app/module/[code]/page.tsx`, qui suit
+ * exactement le même ordre de priorité :
+ *
+ * 1. un override admin (ouvert OU fermé) tranche seul — la décision a été
+ *    prise à la main pour cette personne, la règle de paiement ne s'applique
+ *    plus. En particulier, l'accès ouvert manuellement (le geste par lequel on
+ *    débloque aujourd'hui quelqu'un qui vient de payer, faute de paiement en
+ *    ligne) ne doit JAMAIS continuer d'afficher « Plan payant » ;
+ * 2. sinon, `payments.status === "paid"` ouvre tout le parcours ;
+ * 3. sinon, seule la Phase 1 (essai gratuit) reste ouverte.
+ *
+ * Un module fermé par l'admin est bien verrouillé, mais pas « pour cause de
+ * paiement » : il renvoie `false` ici et s'affiche comme verrouillé simple
+ * (l'écran `ModuleBlocked` en donne la vraie raison).
+ */
+export function isPaywalled(
+  code: string,
+  paymentStatus: PaymentStatus | null,
+  overrides: ModuleOverrides = {}
+): boolean {
+  if (code.toUpperCase() in overrides) return false;
+  if (paymentStatus === "paid") return false;
+  return !isFreeTrialModule(code);
+}
+
+/**
+ * Une phase ne porte la mention « Plan payant » que si TOUS ses modules la
+ * portent : dès qu'un seul a été ouvert (paiement ou geste admin), l'étiquette
+ * globale devient fausse et doit disparaître.
+ */
+export function isPhasePaywalled(
+  codes: string[],
+  paymentStatus: PaymentStatus | null,
+  overrides: ModuleOverrides = {}
+): boolean {
+  return codes.length > 0 && codes.every((c) => isPaywalled(c, paymentStatus, overrides));
 }
 
 export function progressPct(doneCount: number, total: number): number {

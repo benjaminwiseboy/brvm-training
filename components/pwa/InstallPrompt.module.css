@@ -35,19 +35,23 @@
   }
 }
 
+
+/* Pastille d'icône du bandeau notifications — le bandeau installation, lui,
+   affiche le monogramme partagé (components/ui/BrandMark.tsx). */
 .mark {
-  flex: none;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+  flex: none;
   display: grid;
   place-items: center;
-  background: radial-gradient(circle at 32% 28%, #2f7fb0, var(--blue-2));
-  color: var(--or);
-  font-family: var(--f-display);
-  font-weight: 800;
-  font-size: 17px;
-  box-shadow: inset 0 0 0 2px rgba(242, 183, 5, 0.5);
+  border-radius: 12px;
+  background: var(--navy-050);
+  border: 1px solid var(--line);
+  color: var(--navy-700);
+}
+.mark svg {
+  width: 20px;
+  height: 20px;
 }
 
 .body {
@@ -120,13 +124,17 @@
   appearance: none;
   border: none;
   background: transparent;
-  color: var(--ink-soft);
-  font-size: 0.8rem;
+  color: var(--ink-mute);
   width: 26px;
   height: 26px;
   border-radius: 50%;
   display: grid;
   place-items: center;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease);
+}
+.close svg {
+  width: 13px;
+  height: 13px;
 }
 .close:hover {
   background: var(--paper-2);
@@ -138,15 +146,17 @@
   align-self: center;
   appearance: none;
   border: none;
-  border-radius: 14px;
-  padding: 10px 16px;
+  border-radius: var(--radius-pill);
+  padding: 10px 18px;
   font-family: var(--f-display);
   font-weight: 700;
   font-size: 0.85rem;
-  color: #3a2907;
-  background: linear-gradient(135deg, #f7cf49, var(--or));
-  box-shadow: 0 10px 22px -12px rgba(242, 183, 5, 0.85);
-  transition: transform 0.12s, filter 0.2s;
+  color: var(--navy-900);
+  background: var(--gold-500);
+  box-shadow: var(--shadow-gold);
+  transition: background 0.25s var(--ease), transform 0.3s var(--ease-out);
+  box-shadow: 0 10px 22px -12px rgba(232, 158, 17, 0.85);
+  transition: transform 0.3s var(--ease-out), filter 0.2s;
 }
 .install:active {
   transform: translateY(1px) scale(0.98);

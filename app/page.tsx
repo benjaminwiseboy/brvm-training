@@ -1,49 +1,26 @@
-"use client";
-
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useProgress } from "@/lib/store";
-import { AppShell } from "@/components/nav/AppShell";
-import { Dashboard } from "@/components/dashboard/Dashboard";
+import type { Metadata } from "next";
+import { getCurrentUser } from "@/lib/supabase/user";
+import { HomeDashboard } from "@/components/home/HomeDashboard";
+import { Landing } from "@/components/landing/Landing";
 
 /**
- * Page d'accueil — tableau de bord de l'apprenant, ou redirection vers
- * `/onboarding` (Task 12) à la toute première visite.
+ * `/` sert deux publics :
+ * - visiteur non connecté → la landing publique (proxy.ts laisse passer "/") ;
+ * - apprenant connecté → son tableau de bord, comme avant.
  *
- * Gap #1 (cf. task-11-brief.md) : on ne décide qu'après hydratation
- * (`hydrated === true`, ajouté à `useProgress()` dans lib/store.tsx pour
- * cette tâche) — sinon `state.onboarded === false` de `initialState()`
- * (valeur neutre du tout premier rendu, avant la lecture `localStorage`)
- * redirigerait par erreur, le temps d'un flash, tout apprenant déjà
- * onboardé.
- *
- * La redirection est déclenchée dans un `useEffect` (navigation, pas un
- * calcul dérivé du rendu — cf. node_modules/next/dist/docs/.../use-router.md)
- * et non dans un updater `setState` : ce n'est pas le cas visé par la leçon
- * Strict Mode des Tasks 6/7/10 (callback à l'intérieur d'un updater), c'est
- * un effet de navigation ponctuel, gardé par `hydrated`/`state.onboarded`
- * dans ses dépendances — il ne se déclenche donc qu'une fois l'état neutre
- * initial remplacé par l'état réel.
+ * Garder la même URL évite de toucher aux liens « Accueil » de la sidebar, au
+ * bouton « Quitter le module » et aux `redirect("/")` des actions serveur.
  */
-export default function Home() {
-  const router = useRouter();
-  const { state, hydrated } = useProgress();
+export const metadata: Metadata = {
+  title: "BRVM Learning — De zéro à investisseur autonome à la BRVM",
+  description:
+    "La méthode interactive, pas à pas et 100 % pratique pour investir sur la Bourse Régionale des Valeurs Mobilières. 28 modules, 5 minutes par jour, sans jargon financier.",
+};
 
-  useEffect(() => {
-    if (hydrated && !state.onboarded) {
-      router.replace("/onboarding");
-    }
-  }, [hydrated, state.onboarded, router]);
+export default async function Home() {
+  const user = await getCurrentUser();
 
-  // Tant que l'hydratation n'est pas terminée, ou pendant la fenêtre entre
-  // la détection "non onboardé" et l'exécution effective de la redirection
-  // ci-dessus : ne rien rendre (évite un flash du tableau de bord ou de
-  // contenu neutre).
-  if (!hydrated || !state.onboarded) return null;
+  if (!user) return <Landing />;
 
-  return (
-    <AppShell variant="dash">
-      <Dashboard />
-    </AppShell>
-  );
+  return <HomeDashboard />;
 }

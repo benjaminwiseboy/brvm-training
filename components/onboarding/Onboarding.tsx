@@ -5,7 +5,10 @@ import { useRouter } from "next/navigation";
 import { useProgress } from "@/lib/store";
 import { money } from "@/lib/format";
 import { renderMarkup } from "@/lib/markup";
+import { MODULES } from "@/content/registry";
+import { formatMinutes, moduleMinutes, totalMinutes } from "@/lib/duration";
 import styles from "./Onboarding.module.css";
+import { BrandMark } from "@/components/ui/BrandMark";
 
 type Tone = "blue" | "gold" | "green" | "coral";
 type Visual = "wallet-static" | "wallet-reveal" | "ladder" | "format" | "features";
@@ -179,21 +182,36 @@ function OnbLadder() {
 }
 
 function OnbFormat() {
+  // Durée annoncée dès l'accueil, avec le format : « combien de temps ça me
+  // prend » fait partie des règles du jeu au même titre que « en 3 temps ».
+  // Calculée sur le contenu réel, jamais saisie à la main (lib/duration.ts).
+  const all = Object.values(MODULES);
+  const perModule = all.map(moduleMinutes).sort((a, b) => a - b);
+  const low = perModule[Math.floor(perModule.length * 0.2)];
+  const high = perModule[Math.floor(perModule.length * 0.8)];
+
   return (
-    <div className={styles.fmt}>
-      {FORMAT_STEPS.map((c) => (
-        <div key={c.n} className={styles.fmtCard}>
-          <span className={styles.fmtCardN} style={{ background: c.bg }}>
-            {c.n}
-          </span>
-          <span className={styles.fmtCardEm}>{c.em}</span>
-          <div>
-            <div className={styles.fmtCardT}>{c.t}</div>
-            <div className={styles.fmtCardD}>{c.d}</div>
+    <>
+      <div className={styles.fmt}>
+        {FORMAT_STEPS.map((c) => (
+          <div key={c.n} className={styles.fmtCard}>
+            <span className={styles.fmtCardN} style={{ background: c.bg }}>
+              {c.n}
+            </span>
+            <span className={styles.fmtCardEm}>{c.em}</span>
+            <div>
+              <div className={styles.fmtCardT}>{c.t}</div>
+              <div className={styles.fmtCardD}>{c.d}</div>
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+      <p className={styles.fmtTime}>
+        ⏱ Comptez <strong>{low} à {high} minutes</strong> par module — {all.length} modules en tout,
+        soit environ <strong>{formatMinutes(totalMinutes(all))}</strong> de contenu. Chaque module
+        affiche sa durée, et vous reprenez toujours là où vous vous êtes arrêté.
+      </p>
+    </>
   );
 }
 
@@ -304,7 +322,7 @@ export function Onboarding() {
     <div className={styles.onb}>
       <div className={styles.top}>
         <div className={styles.brand}>
-          <span className={styles.brandMark}>B</span>
+          <BrandMark size={40} />
           <span className={styles.brandName}>BRVM Learning</span>
         </div>
         <button type="button" className={styles.skip} onClick={finish}>

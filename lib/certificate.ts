@@ -24,12 +24,12 @@ const SCALE = 2;
 
 // Couleurs reprises telles quelles des tokens de globals.css — le canvas ne
 // peut pas lire les variables CSS, ce sont donc les seules valeurs dupliquées.
-const BLUE_1 = "#1C6E96";
-const BLUE_2 = "#0E2F44";
-const OR = "#F2B705";
-const OR_LIGHT = "#F7CF49";
-const INK_ON_DARK = "#DAE6EF";
-const MUTED_ON_DARK = "#A9C2D4";
+const BLUE_1 = "#0A4680";   // --navy-600
+const BLUE_2 = "#012247";   // --navy-800
+const OR = "#E89E11";       // --gold-500
+const OR_LIGHT = "#FFB937"; // --gold-400
+const INK_ON_DARK = "#E9F0F8";  // --navy-050
+const MUTED_ON_DARK = "#8FA8C4"; // équivalent opaque de --on-dark-2
 
 export type CertificateData = {
   /** Nom affiché sur le certificat (saisi par l'apprenant). */

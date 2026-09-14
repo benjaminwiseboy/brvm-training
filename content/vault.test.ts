@@ -60,10 +60,10 @@ describe("isResourceUnlocked", () => {
   });
 
   it("débloque une ressource de phase quand tous les modules de CETTE phase sont faits", () => {
-    const simulateur = getResource("simulateur-dca")!; // Phase 2
+    const comparateur = getResource("comparateur-sgi")!; // Phase 2
     const phase2 = PHASES[1].codes;
-    expect(isResourceUnlocked(simulateur, doneFor(phase2.slice(0, -1)))).toBe(false);
-    expect(isResourceUnlocked(simulateur, doneFor(phase2))).toBe(true);
+    expect(isResourceUnlocked(comparateur, doneFor(phase2.slice(0, -1)))).toBe(false);
+    expect(isResourceUnlocked(comparateur, doneFor(phase2))).toBe(true);
   });
 });
 

@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import { PHASES } from "@/content/registry";
 import {
   deriveStatus,
   deriveModuleState,
@@ -6,6 +7,8 @@ import {
   applyCompletion,
   initialState,
   isValidProgressState,
+  isPaywalled,
+  isPhasePaywalled,
   resolveInitialProgress,
 } from "./store";
 
@@ -101,6 +104,59 @@ describe("isValidProgressState", () => {
 // Comptes (Supabase) : même garde de forme que localStorage, appliquée à
 // `user_progress.state` — lue côté serveur (app/layout.tsx) et côté admin
 // (app/admin/**).
+// Le point qui compte pour l'apprenant : quelqu'un qui a payé — ou à qui
+// l'accès a été ouvert à la main, faute de paiement en ligne — ne doit plus
+// voir la mention « Plan payant » nulle part.
+describe("isPaywalled", () => {
+  const free = PHASES[0].codes[0]; // M01, essai gratuit
+  const paid = PHASES[1].codes[0]; // premier module hors essai
+
+  it("laisse l'essai gratuit ouvert à tout le monde", () => {
+    expect(isPaywalled(free, "unpaid")).toBe(false);
+    expect(isPaywalled(free, null)).toBe(false);
+  });
+
+  it("ferme le reste du parcours à un compte non payant", () => {
+    expect(isPaywalled(paid, "unpaid")).toBe(true);
+    expect(isPaywalled(paid, null)).toBe(true);
+  });
+
+  it("ouvre TOUT le parcours à un compte payant", () => {
+    for (const code of PHASES.flatMap((p) => p.codes)) {
+      expect(isPaywalled(code, "paid"), code).toBe(false);
+    }
+  });
+
+  it("respecte un accès ouvert à la main par l'admin", () => {
+    expect(isPaywalled(paid, "unpaid", { [paid]: false })).toBe(false);
+  });
+
+  it("ne présente pas un blocage admin comme une question de paiement", () => {
+    // Verrouillé, oui — mais l'écran ModuleBlocked en donne la vraie raison ;
+    // proposer de payer pour rouvrir serait mensonger.
+    expect(isPaywalled(paid, "unpaid", { [paid]: true })).toBe(false);
+  });
+
+  it("est insensible à la casse du code", () => {
+    expect(isPaywalled(paid.toLowerCase(), "unpaid")).toBe(true);
+    expect(isPaywalled(paid.toLowerCase(), "unpaid", { [paid]: false })).toBe(false);
+  });
+});
+
+describe("isPhasePaywalled", () => {
+  const locked = PHASES[1];
+
+  it("marque la phase payante seulement pour un compte non payant", () => {
+    expect(isPhasePaywalled(locked.codes, "unpaid")).toBe(true);
+    expect(isPhasePaywalled(locked.codes, "paid")).toBe(false);
+    expect(isPhasePaywalled(PHASES[0].codes, "unpaid")).toBe(false);
+  });
+
+  it("retire la mention dès qu'UN module de la phase a été ouvert", () => {
+    expect(isPhasePaywalled(locked.codes, "unpaid", { [locked.codes[0]]: false })).toBe(false);
+  });
+});
+
 describe("resolveInitialProgress", () => {
   it("retourne l'état tel quel s'il est bien formé", () => {
     const s = applyCompletion(initialState(), "M01", 4, 4, 20000);

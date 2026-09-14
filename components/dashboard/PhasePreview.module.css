@@ -78,6 +78,16 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+/* Temps total de la phase, sous son nom : la question « j'en ai pour
+   combien ? » se pose au niveau de la phase autant que du module. */
+.time {
+  display: block;
+  margin-top: 3px;
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 11.5px;
+  color: var(--ink-soft);
+}
 .track {
   height: 6px;
   border-radius: 999px;

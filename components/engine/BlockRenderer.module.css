@@ -59,7 +59,7 @@
   padding: 17px 19px;
 }
 .duoSide {
-  font-family: var(--f-display);
+  font-family: var(--f-mono);
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -78,30 +78,30 @@
 }
 .highlight {
   background: var(--gold-soft);
-  border-color: #efd79a;
-  color: #6c4d12;
+  border-color: rgba(232, 158, 17, .38);
+  color: var(--gold-ink);
 }
 .highlight strong {
-  color: #7a5411;
+  color: var(--gold-ink);
 }
 .info {
   background: var(--pos-soft);
-  border-color: #b7e6d2;
-  color: #0b5e40;
+  border-color: rgba(14, 156, 116, .32);
+  color: var(--pos-ink);
 }
 .info strong {
-  color: #094a34;
+  color: var(--pos-ink);
 }
 /* --warn : variante non présente dans le POC (n'apparaît dans aucun bloc de
    slide de M01/M08) — ton d'alerte douce, cohérent avec .exp__note / .opt.wrong
    (clay) déjà utilisés ailleurs dans le POC pour signaler une correction. */
 .warn {
   background: var(--clay-soft);
-  border-color: #efc7b4;
-  color: #8a3d1e;
+  border-color: rgba(201, 85, 58, .3);
+  color: var(--clay-ink);
 }
 .warn strong {
-  color: #6b2c14;
+  color: var(--clay-ink);
 }
 
 .countries {
@@ -116,7 +116,7 @@
   padding: 7px 15px;
   border-radius: 999px;
   background: var(--blue-soft);
-  color: #0e3a56;
+  color: var(--navy-800);
 }
 
 .download {
@@ -124,7 +124,7 @@
   align-items: center;
   gap: 14px;
   background: var(--blue-soft);
-  border: 1px solid #bcd4e6;
+  border: 1px solid var(--on-dark-3);
   border-radius: var(--radius);
   padding: 15px 18px;
   text-decoration: none;
@@ -150,7 +150,7 @@
   font-family: var(--f-display);
   font-weight: 700;
   font-size: 1rem;
-  color: #0e3a56;
+  color: var(--navy-800);
 }
 .downloadSublabel {
   font-size: 13px;
@@ -170,7 +170,7 @@
   text-align: center;
 }
 .formulaLabel {
-  font-family: var(--f-display);
+  font-family: var(--f-mono);
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.08em;

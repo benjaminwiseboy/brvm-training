@@ -43,8 +43,8 @@
 .lockedBtn {
   display: inline-block;
   padding: 14px 24px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
+  border-radius: var(--radius-pill);
+  background: linear-gradient(150deg, var(--navy-600), var(--navy-800));
   color: #fff;
   font-family: var(--f-display);
   font-weight: 700;
@@ -57,7 +57,7 @@
   margin-bottom: 20px;
 }
 .eyebrow {
-  font-family: var(--f-display);
+  font-family: var(--f-mono);
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -288,7 +288,7 @@
 }
 /* Meilleure valeur de la sélection — le vert « positif » de la charte. */
 .best {
-  color: var(--pos);
+  color: var(--pos-deep);
   font-weight: 800;
 }
 
@@ -357,7 +357,7 @@
 }
 .ratio {
   font-weight: 800;
-  color: var(--clay);
+  color: var(--clay-deep);
 }
 .empty {
   margin: 0;
@@ -413,7 +413,7 @@
   align-items: center;
   gap: 8px;
   padding: 12px 18px;
-  border-radius: 12px;
+  border-radius: var(--radius-pill);
   background: #25d366;
   color: #fff;
   font-family: var(--f-display);
@@ -424,6 +424,7 @@
 }
 .helpBtn:hover {
   filter: brightness(1.05);
+  transform: translateY(-2px);
 }
 .helpIcon {
   width: 18px;

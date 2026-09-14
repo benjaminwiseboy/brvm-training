@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { PHASES, getModule, orderedCodes } from "@/content/registry";
-import { deriveModuleState, isFreeTrialModule, useProgress } from "@/lib/store";
+import { PHASES, MODULES, getModule, orderedCodes } from "@/content/registry";
+import { deriveModuleState, isPaywalled, useProgress } from "@/lib/store";
+import { durationLabel, moduleMinutes, totalMinutes } from "@/lib/duration";
 import styles from "./ModuleMap.module.css";
 
 type ModState = "done" | "current" | "unlocked" | "locked";
@@ -29,9 +30,8 @@ const STATE_CLASS: Record<ModState, string> = {
  * auto-résolu que `getNext`, déjà accepté à la revue de la Task 10).
  */
 export function ModuleMap({ completed }: { completed: Record<string, unknown> }) {
-  const { paymentStatus } = useProgress();
+  const { paymentStatus, moduleOverrides } = useProgress();
   const order = orderedCodes();
-  const hasFullAccess = paymentStatus === "paid";
 
   return (
     <section className={styles.sec}>
@@ -43,11 +43,13 @@ export function ModuleMap({ completed }: { completed: Record<string, unknown> })
       <div className={styles.map}>
         {PHASES.map((phase) => {
           const done = phase.codes.filter((c) => completed[c]).length;
+          const phaseMinutes = totalMinutes(phase.codes.map((c) => MODULES[c]).filter(Boolean));
           return (
             <div className={styles.phase} key={phase.name}>
               <div className={styles.phaseHead}>
                 <span className={styles.badge}>{phase.badge}</span>
                 <span className={styles.name}>{phase.name}</span>
+                <span className={styles.phaseTime}>⏱ {durationLabel(phaseMinutes)}</span>
                 <span className={styles.count}>
                   {done}/{phase.codes.length}
                 </span>
@@ -60,8 +62,10 @@ export function ModuleMap({ completed }: { completed: Record<string, unknown> })
                     state={deriveModuleState(code, completed, order)}
                     // Essai gratuit (Fix, règle produit) : au-delà de la Phase 1,
                     // "verrouillé pour raison de paiement" prime sur l'état de
-                    // progression — pas juste "pas encore atteint".
-                    paywalled={!hasFullAccess && !isFreeTrialModule(code)}
+                    // progression — pas juste "pas encore atteint". Un compte
+                    // payant, ou un accès ouvert à la main par l'admin, ne voit
+                    // évidemment plus rien de tout ça (cf. lib/progress.ts).
+                    paywalled={isPaywalled(code, paymentStatus, moduleOverrides)}
                   />
                 ))}
               </div>
@@ -87,7 +91,15 @@ function ModuleRow({ code, state, paywalled }: { code: string; state: ModState; 
     <>
       <span className={styles.ic}>{ICONS[displayState]}</span>
       <div className={styles.body}>
-        <span className={styles.code}>{code}</span>
+        <span className={styles.code}>
+          {code}
+          {mod && (
+            <>
+              {" · "}
+              <span className={styles.time}>{durationLabel(moduleMinutes(mod))}</span>
+            </>
+          )}
+        </span>
         <span className={styles.title}>{title}</span>
       </div>
       <span className={styles.right}>

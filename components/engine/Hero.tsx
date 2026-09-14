@@ -3,6 +3,7 @@
 import type { Module } from "@/lib/types";
 import { renderMarkup } from "@/lib/markup";
 import { money } from "@/lib/format";
+import { durationLabel, moduleMinutes } from "@/lib/duration";
 import styles from "./Hero.module.css";
 
 // ①②③④ — port de rulesList() dans POC-Module-1/app.js (au-delà de 4 règles : puce générique).
@@ -53,6 +54,16 @@ export function Hero({ module, onStart }: { module: Module; onStart: () => void 
       <p className={styles.eyebrow}>{h.eyebrow}</p>
       <h1 className={styles.title}>{renderMarkup(h.headline)}</h1>
       <p className={styles.lead}>{renderMarkup(h.lead)}</p>
+
+      {/* Durée annoncée AVANT de commencer, pas après : « est-ce que j'ai le
+          temps là, maintenant ? » est la première question qu'on se pose en
+          ouvrant un module. Estimée depuis le contenu (cf. lib/duration.ts). */}
+      <p className={styles.duration}>
+        <span className={styles.durationIc} aria-hidden="true">
+          ⏱
+        </span>
+        Durée estimée&nbsp;: <strong>{durationLabel(moduleMinutes(module))}</strong>
+      </p>
 
       <div className={styles.card}>
         {h.card ? (

@@ -2,13 +2,14 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { logout } from "@/lib/actions/auth";
 import styles from "./AdminShell.module.css";
+import { BrandMark } from "@/components/ui/BrandMark";
 
 export function AdminShell({ email, children }: { email: string; children: ReactNode }) {
   return (
     <div className={styles.wrap}>
       <header className={styles.header}>
         <Link href="/admin" className={styles.brand}>
-          <span className={styles.brandMark}>B</span>
+          <BrandMark size={34} />
           <span>
             <span className={styles.brandTitle}>BRVM Learning</span>
             <span className={styles.brandTag}>Administration</span>

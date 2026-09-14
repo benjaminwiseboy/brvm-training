@@ -24,6 +24,20 @@ import { PHASES, orderedCodes } from "@/content/registry";
 export type VaultTone = "green" | "gold" | "teal" | "coral" | "blue" | "violet";
 
 /**
+ * Icône de la carte — une CLÉ, pas un glyphe : le dessin vit dans le jeu
+ * partagé avec la landing (`components/ui/Icons.tsx`), résolu par
+ * `components/ui/VaultIcon.tsx`. Ce fichier reste du contenu pur, sans JSX.
+ */
+export type VaultIconKey =
+  | "check"
+  | "target"
+  | "scale"
+  | "trend"
+  | "book"
+  | "calendar"
+  | "wallet";
+
+/**
  * Condition de déblocage :
  * - `always` : disponible dès le premier jour ;
  * - `phase` : tous les modules de la phase N terminés (1-indexé, comme
@@ -37,7 +51,7 @@ export type VaultGate =
 
 export type VaultResource = {
   id: string;
-  icon: string;
+  icon: VaultIconKey;
   name: string;
   desc: string;
   tone: VaultTone;
@@ -61,16 +75,16 @@ export const RESOURCES: VaultResource[] = [
   // derrière des cartes « Bientôt » dans l'onglet Coffre-fort.
   {
     id: "checklist-7-jours",
-    icon: "✅",
+    icon: "check",
     name: "Check-list « 7 premiers jours »",
-    desc: "Le plan jour par jour pour ouvrir votre compte et passer votre premier ordre.",
+    desc: "Le plan jour par jour pour ouvrir votre compte, passer votre premier ordre — puis la routine à tenir ensuite.",
     tone: "gold",
     gate: { kind: "parcours" },
     href: "/coffre/checklist",
   },
   {
     id: "plan-investissement",
-    icon: "📝",
+    icon: "target",
     name: "Plan d'Investissement Personnel",
     // Verrou ramené de la Phase 4 à la Phase 2 : c'est le module 09 qui fait
     // construire le plan, et il est en Phase 2. L'ancienne valeur promettait
@@ -82,7 +96,7 @@ export const RESOURCES: VaultResource[] = [
   },
   {
     id: "comparateur-sgi",
-    icon: "🏦",
+    icon: "scale",
     name: "Comparateur de SGI",
     desc: "Les 37 courtiers agréés, leurs frais réels, et ce qu'ils coûtent sur 10 ans.",
     tone: "teal",
@@ -93,16 +107,8 @@ export const RESOURCES: VaultResource[] = [
     href: "/coffre/sgi",
   },
   {
-    id: "tracker",
-    icon: "📊",
-    name: "Tracker de portefeuille",
-    desc: "Suivez vos positions et calculez vos gains au fil du parcours.",
-    tone: "green",
-    gate: { kind: "always" },
-  },
-  {
     id: "glossaire",
-    icon: "📖",
+    icon: "book",
     name: "Glossaire interactif",
     desc: "61 termes expliqués simplement — et cliquables au fil des cours.",
     tone: "blue",
@@ -111,22 +117,6 @@ export const RESOURCES: VaultResource[] = [
     // derrière une phase le retirerait exactement à ceux qui en ont besoin.
     gate: { kind: "always" },
     href: "/coffre/glossaire",
-  },
-  {
-    id: "calendrier-dividendes",
-    icon: "📅",
-    name: "Calendrier des dividendes",
-    desc: "Les dates de détachement à ne pas manquer.",
-    tone: "teal",
-    gate: { kind: "phase", index: 3 },
-  },
-  {
-    id: "simulateur-dca",
-    icon: "📈",
-    name: "Simulateur DCA",
-    desc: "Modèle pour simuler vos versements réguliers.",
-    tone: "violet",
-    gate: { kind: "phase", index: 2 },
   },
 ];
 

@@ -40,6 +40,13 @@ const deposit = (v: number | null) => (v == null ? "n.c." : v === 0 ? "Aucun" : 
 const tenue = (s: Sgi) =>
   s.tenueAnnual === null ? "n.c." : s.tenueAnnual === 0 ? "Gratuit" : `${money(s.tenueAnnual)} F`;
 const onlineLabel = (o: Sgi["online"]) => (o === "oui" ? "✅" : o === "non" ? "❌" : "—");
+/**
+ * Un `mobileMoney` absent est un TROU DE SOURCE, pas un refus de la SGI :
+ * seules 11 SGI sur 40 disent quoi que ce soit sur la question. D'où le repli
+ * sur « nc » (le tiret) plutôt que sur « non » — l'inverse ferait écarter une
+ * SGI pour une lacune documentaire, ce que ce comparateur s'interdit.
+ */
+const mobileMoneyLabel = (s: Sgi) => onlineLabel(s.mobileMoney ?? "nc");
 const stars = (r?: number) => (r == null ? "—" : `★ ${r.toFixed(1).replace(".", ",")}`);
 
 /**
@@ -285,6 +292,7 @@ export default function SgiPage() {
                 </th>
                 <th className={styles.num}>Tenue/an</th>
                 <th>En ligne</th>
+                <th>Mobile money</th>
                 <th className={`${styles.num} ${styles.sortable}`} onClick={() => setSort("rating")}>
                   Note{arrow("rating")}
                 </th>
@@ -336,6 +344,10 @@ export default function SgiPage() {
                       {s.tenueRaw && <span className={styles.star}> *</span>}
                     </td>
                     <td>{onlineLabel(s.online)}</td>
+                    <td title={s.fundingRaw}>
+                      {mobileMoneyLabel(s)}
+                      {s.fundingRaw && <span className={styles.star}> *</span>}
+                    </td>
                     <td className={`${styles.num} ${styles.rating}`}>{stars(s.rating)}</td>
                   </tr>
                 );
@@ -345,7 +357,12 @@ export default function SgiPage() {
         </div>
         <p className={styles.footnote}>
           * la valeur d&rsquo;origine est une fourchette (on retient la borne haute) ou un montant
-          trimestriel (annualisé ici) — survolez la case pour la voir.
+          trimestriel (annualisé ici) — survolez la case pour la voir. En colonne mobile money,
+          l&rsquo;étoile renvoie au détail : opérateurs acceptés, ou moyens de dépôt à défaut.
+          {" "}
+          <strong>Un tiret ne veut pas dire « non »</strong> : seules 11 SGI publient leurs moyens
+          d&rsquo;approvisionnement. Le virement, le chèque et le versement en agence, eux,
+          fonctionnent partout — demandez le mobile money à la SGI avant de la choisir pour ça.
           {full && " Décochez une SGI pour en comparer une autre."}
         </p>
       </section>
@@ -516,6 +533,15 @@ export default function SgiPage() {
                   <th scope="row">Plateforme en ligne</th>
                   {selectedSgis.map((s) => (
                     <td key={s.name}>{onlineLabel(s.online)}</td>
+                  ))}
+                </tr>
+                <tr>
+                  <th scope="row">Dépôt par mobile money</th>
+                  {selectedSgis.map((s) => (
+                    <td key={s.name} title={s.fundingRaw}>
+                      {mobileMoneyLabel(s)}
+                      {s.fundingRaw && <span className={styles.sub}> {s.fundingRaw}</span>}
+                    </td>
                   ))}
                 </tr>
                 <tr>

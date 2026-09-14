@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import styles from "./InstallPrompt.module.css";
+import { BrandMark } from "@/components/ui/BrandMark";
+import { Close } from "@/components/ui/Icons";
 
 const DISMISS_KEY = "brvm-learning:pwa-install-dismissed-at";
 const DISMISS_COOLDOWN_MS = 14 * 24 * 60 * 60 * 1000; // 14 jours
@@ -126,9 +128,9 @@ export function InstallPrompt() {
   return (
     <div className={styles.sheet} role="dialog" aria-label="Installer l'application BRVM Learning">
       <button type="button" className={styles.close} onClick={dismiss} aria-label="Fermer">
-        ✕
+        <Close />
       </button>
-      <div className={styles.mark}>B</div>
+      <BrandMark size={40} />
       <div className={styles.body}>
         <div className={styles.title}>Installe l&rsquo;application mobile</div>
         {showIOSHelp ? (

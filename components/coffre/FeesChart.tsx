@@ -32,12 +32,12 @@ import styles from "./FeesChart.module.css";
  *  attributs SVG de Recharts et ses pastilles de légende ne partagent pas le
  *  même contexte CSS). */
 export const FEE_SERIES_COLORS = [
-  "#0F4A6E", // --blue
-  "#F2B705", // --or
-  "#1FA774", // --pos
-  "#E07A4E", // --clay
-  "#7C6BD1", // --violet
-  "#2E93A8", // --teal
+  "#0A4680", // --navy-600
+  "#E89E11", // --gold-500
+  "#0E9C74", // --pos
+  "#C9553A", // --clay
+  "#4F5BB5", // --violet
+  "#167E94", // --teal
 ];
 
 export type FeesSeries = {
@@ -60,32 +60,32 @@ export function FeesChart({ series, years, ticks }: { series: FeesSeries[]; year
     <div className={styles.wrap}>
       <ResponsiveContainer width="100%" height={320}>
         <LineChart data={data} margin={{ top: 8, right: 12, left: 4, bottom: 4 }}>
-          <CartesianGrid stroke="#E7E5DD" strokeDasharray="3 3" vertical={false} />
+          <CartesianGrid stroke="rgba(2,51,98,.11)" strokeDasharray="3 3" vertical={false} />
           <XAxis
             dataKey="year"
             type="number"
             domain={[1, years]}
             ticks={ticks}
-            tick={{ fill: "#616D75", fontSize: 11 }}
-            stroke="#D6D3C9"
+            tick={{ fill: "#6B819A", fontSize: 11 }}
+            stroke="rgba(2,51,98,.2)"
             tickFormatter={(y: number) => `${y} an${y > 1 ? "s" : ""}`}
           />
           <YAxis
             width={58}
-            tick={{ fill: "#616D75", fontSize: 11 }}
-            stroke="#D6D3C9"
+            tick={{ fill: "#6B819A", fontSize: 11 }}
+            stroke="rgba(2,51,98,.2)"
             tickFormatter={(v: number) => moneyCompact(v)}
           />
           <Tooltip
             contentStyle={{
               background: "#FFFFFF",
-              border: "1px solid #D6D3C9",
-              borderRadius: 14,
-              color: "#232B31",
+              border: "1px solid rgba(2,51,98,.2)",
+              borderRadius: 18,
+              color: "#08192B",
               fontSize: 13,
-              boxShadow: "0 10px 28px -16px rgba(14,47,68,.35)",
+              boxShadow: "0 12px 32px -12px rgba(2,51,98,.28)",
             }}
-            labelStyle={{ fontWeight: 700, color: "#0E2F44", marginBottom: 4 }}
+            labelStyle={{ fontWeight: 700, color: "#023362", marginBottom: 4 }}
             labelFormatter={(y) => `Au bout de ${y} an${Number(y) > 1 ? "s" : ""}`}
             formatter={(v, name) => [`${money(Number(v))} FCFA`, name as string]}
           />

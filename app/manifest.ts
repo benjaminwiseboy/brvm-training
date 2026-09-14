@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "De zéro à investisseur autonome à la BRVM.",
     start_url: "/",
     display: "standalone",
-    background_color: "#F4F4F1",
-    theme_color: "#0E2F44",
+    background_color: "#f3f6fb",   // --paper
+    theme_color: "#023362",        // --navy-700, couleur de marque
     lang: "fr",
     icons: [
       { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },

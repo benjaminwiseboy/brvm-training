@@ -26,11 +26,6 @@
   background: var(--gold-soft);
   border-radius: 4px;
 }
-.term:focus-visible {
-  outline: 3px solid var(--or);
-  outline-offset: 2px;
-  border-radius: 4px;
-}
 
 /* ---------- Feuille de définition ---------- */
 .overlay {
@@ -83,7 +78,7 @@
   margin-bottom: 12px;
 }
 .eyebrow {
-  font-family: var(--f-display);
+  font-family: var(--f-mono);
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;

@@ -23,8 +23,8 @@ const sgi = (over: Partial<Sgi> = {}): Sgi => ({
 });
 
 describe("catalogue", () => {
-  it("porte les 37 SGI du projet tracker", () => {
-    expect(SGIS).toHaveLength(37);
+  it("porte les 40 SGI de la liste BRVM", () => {
+    expect(SGIS).toHaveLength(40);
   });
   it("n'a pas de doublon de nom", () => {
     const names = SGIS.map((s) => s.name);

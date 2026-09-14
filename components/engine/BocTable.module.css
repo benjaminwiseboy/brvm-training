@@ -55,7 +55,7 @@
 
 .hl {
   background: var(--gold-soft) !important;
-  color: #6c4d12 !important;
+  color: var(--gold-ink) !important;
 }
 .table thead th.hl {
   background: var(--or-deep) !important;
