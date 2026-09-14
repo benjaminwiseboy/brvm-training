@@ -47,8 +47,17 @@
   flex: 1;
 }
 .icon {
-  font-size: 26px;
-  line-height: 1;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  background: var(--navy-050);
+  color: var(--navy-700);
+}
+.icon svg {
+  width: 21px;
+  height: 21px;
 }
 .title {
   font-family: var(--f-display);
@@ -84,22 +93,33 @@
   flex: none;
   width: 38px;
   height: 38px;
-  border-radius: 50%;
+  border-radius: 12px;
   display: grid;
   place-items: center;
   font-size: 18px;
 }
+.statIc svg {
+  width: 18px;
+  height: 18px;
+}
+/* La pastille porte le fond, l'icône hérite de la teinte assortie —
+   `currentColor` du jeu d'icônes partagé. Les deux pastilles restées en
+   emoji (statut, série) ignorent simplement la couleur. */
 .stBlue .statIc {
   background: var(--blue-soft);
+  color: var(--navy-700);
 }
 .stGreen .statIc {
   background: var(--pos-soft);
+  color: var(--pos-ink);
 }
 .stGold .statIc {
   background: var(--gold-soft);
+  color: var(--gold-ink);
 }
 .stTeal .statIc {
   background: var(--teal-soft);
+  color: var(--teal);
 }
 .statMeta {
   display: flex;
@@ -114,11 +134,12 @@
   font-variant-numeric: tabular-nums;
 }
 .statLabel {
-  font-size: 11px;
+  font-family: var(--f-mono);
+  font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--ink-soft);
+  letter-spacing: 0.14em;
+  color: var(--ink-mute);
 }
 
 /* ---------- Responsive (cf. styles.css @media 640px) ---------- */

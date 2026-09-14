@@ -12,7 +12,7 @@
 }
 
 .eyebrow {
-  font-family: var(--f-display);
+  font-family: var(--f-mono);
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -129,11 +129,12 @@
   font-variant-numeric: tabular-nums;
 }
 .statLabel {
-  font-size: 11px;
+  font-family: var(--f-mono);
+  font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--ink-soft);
+  letter-spacing: 0.14em;
+  color: var(--ink-mute);
 }
 
 /* ---------- Explications ---------- */
@@ -165,14 +166,14 @@
   box-sizing: border-box;
   text-align: center;
   align-self: flex-start;
-  font-family: var(--f-display);
+  font-family: var(--f-mono);
   font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #8a3d1e;
+  color: var(--clay-ink);
   background: var(--clay-soft);
-  border: 1px solid #efc7b4;
+  border: 1px solid rgba(201, 85, 58, .3);
   padding: 6px 10px;
   border-radius: 999px;
   margin-top: 3px;
@@ -197,18 +198,18 @@
   font-weight: 600;
 }
 .expAnswerRight {
-  color: #0b5e40;
+  color: var(--pos-ink);
 }
 .expAnswerWrong {
-  color: #8a3d1e;
+  color: var(--clay-ink);
 }
 .expNote {
   margin: 12px 0 0;
   padding: 13px 15px;
   border-radius: 14px;
   background: var(--gold-soft);
-  border: 1px solid #efd79a;
-  color: #6c4d12;
+  border: 1px solid rgba(232, 158, 17, .38);
+  color: var(--gold-ink);
   font-size: 0.95rem;
   font-weight: 600;
 }
@@ -220,7 +221,7 @@
 .btn {
   appearance: none;
   border: 2px solid transparent;
-  border-radius: 16px;
+  border-radius: var(--radius-pill);
   padding: 17px 28px;
   font-family: var(--f-display);
   font-size: 1.06rem;
@@ -231,22 +232,18 @@
   gap: 9px;
   width: 100%;
   margin-top: 26px;
-  transition: transform 0.12s, filter 0.2s;
+  transition: transform 0.3s var(--ease-out), filter 0.2s;
 }
 .btn:active {
   transform: translateY(1px) scale(0.995);
-}
-.btn:focus-visible {
-  outline: 3px solid var(--or);
-  outline-offset: 3px;
-}
-/* Pas d'ombre portée (Fix, alignement maquette). */
+}/* Pas d'ombre portée (Fix, alignement maquette). */
 .btnGold {
-  background: linear-gradient(135deg, #f7cf49, var(--or));
-  color: #3a2907;
+  background: var(--gold-500);
+  color: var(--navy-900);
 }
 .btnGold:hover {
   filter: brightness(1.04);
+  transform: translateY(-2px);
 }
 .arw {
   transition: transform 0.2s;
@@ -277,7 +274,7 @@
    que partagés entre CSS Modules, comme .btn/.btnGold ailleurs dans le
    moteur), .planbox(+__title), .planlist, .planitem(+__n). */
 .lessonHl {
-  background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
+  background: linear-gradient(150deg, var(--navy-600), var(--navy-800));
   color: #fff;
   border-radius: var(--radius-xl);
   padding: 26px;
@@ -344,14 +341,14 @@
   border-radius: var(--radius);
   padding: 16px 19px;
   font-size: 1.02rem;
-  border: 1px solid #efd79a;
+  border: 1px solid rgba(232, 158, 17, .38);
   font-weight: 600;
   background: var(--gold-soft);
-  color: #6c4d12;
+  color: var(--gold-ink);
   margin: 0;
 }
 .golden strong {
-  color: #7a5411;
+  color: var(--gold-ink);
 }
 
 .planbox {

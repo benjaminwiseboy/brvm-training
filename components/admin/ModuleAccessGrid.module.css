@@ -29,7 +29,7 @@
   color: var(--ink-soft);
   font-size: 16px;
   line-height: 1;
-  transition: transform 0.15s;
+  transition: transform 0.3s var(--ease-out);
   flex: none;
 }
 .chevronOpen {
@@ -117,7 +117,7 @@
   appearance: none;
   border: none;
   background: transparent;
-  border-radius: 8px;
+  border-radius: var(--radius-pill);
   padding: 7px 12px;
   font-family: var(--f-display);
   font-size: 12px;
@@ -136,9 +136,9 @@
 }
 .segBtnActive_open {
   background: var(--pos-soft);
-  color: #0b5e40;
+  color: var(--pos-ink);
 }
 .segBtnActive_closed {
   background: var(--clay-soft);
-  color: #8a3d1e;
+  color: var(--clay-ink);
 }

@@ -64,7 +64,7 @@
 .addBtn {
   appearance: none;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-pill);
   width: 100%;
   padding: 10px;
   background: var(--blue-2);

@@ -51,17 +51,18 @@
   display: grid;
   place-items: center;
   background: var(--paper-2);
-  color: var(--ink);
-  font-size: 15px;
+  color: var(--ink-soft);
   text-decoration: none;
-  transition: background 0.15s;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease), transform 0.3s var(--ease-out);
+}
+.closeBtn svg {
+  width: 15px;
+  height: 15px;
 }
 .closeBtn:hover {
-  background: var(--line-strong);
-}
-.closeBtn:focus-visible {
-  outline: 3px solid var(--or);
-  outline-offset: 2px;
+  background: var(--navy-700);
+  color: #fff;
+  transform: rotate(90deg);
 }
 
 /* Code + titre du module courant (Fix, alignement maquette — en-tête
@@ -81,10 +82,13 @@
   color: var(--blue-2);
 }
 /* Numéro de module en doré (Fix, demande explicite) — `--or-deep`, pas
-   `--or` : `--or` (#F2B705) tombe sous 2:1 de contraste en texte sur fond
+   `--or` : `--or` (var(--or)) tombe sous 2:1 de contraste en texte sur fond
    clair (cf. .impeccable/critique), `--or-deep` est le token déjà utilisé
    pour tout texte doré ailleurs dans l'app (kickers, eyebrows). */
 .moduleCode {
+  font-family: var(--f-mono);
+  font-size: 0.92em;
+  letter-spacing: 0.06em;
   color: var(--or-deep);
 }
 
@@ -95,31 +99,23 @@
   flex: none;
 }
 
-.brandMark {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  flex: none;
-  background: radial-gradient(circle at 32% 28%, #2f7fb0, var(--blue-2));
-  color: var(--or);
-  display: grid;
-  place-items: center;
-  font-family: var(--f-display);
-  font-weight: 800;
-  font-size: 17px;
-  box-shadow: inset 0 0 0 2px rgba(242, 183, 5, 0.5), var(--shadow-sm);
-}
+/* Monogramme repris tel quel de la landing (`.lp .brandmark`) : carré
+   arrondi marine, liseré or plein, lettre or — plus le rond dégradé du POC,
+   qui n'existait nulle part sur la page publique. */
 
 .brandName {
   font-family: var(--f-display);
   font-weight: 700;
   font-size: 16px;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.02em;
   white-space: nowrap;
   color: var(--blue-2);
 }
 
+/* `app-rise` (globals.css) : l'arrivée sur un écran n'est plus un
+   basculement sec — même respiration que les révélations de la landing. */
 .stage {
+  animation: app-rise 0.5s var(--ease-out) both;
   max-width: var(--stage-max);
   margin: 0 auto;
   /* Padding haut réduit (Fix, alignement maquette) : le stepper juste
@@ -149,7 +145,7 @@
   flex: 1;
 }
 .stepperTrack {
-  height: 5px;
+  height: 4px;
   border-radius: 999px;
   background: var(--line-strong);
   overflow: hidden;
@@ -158,16 +154,16 @@
   height: 100%;
   width: 100%;
   border-radius: 999px;
-  background: var(--blue);
+  background: var(--gold-500);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.5s ease;
+  transition: transform 0.6s var(--ease-out);
 }
 .stepperSegActive .stepperFill {
   transform: scaleX(1);
 }
 .stepperSegDone .stepperFill {
-  background: var(--pos);
+  background: var(--navy-600);
   transform: scaleX(1);
 }
 /* =============================================================
@@ -227,9 +223,12 @@
   padding: 4px 8px 0;
 }
 .brandSub {
-  font-size: 12px;
-  color: var(--ink-soft);
-  margin-top: -2px;
+  font-family: var(--f-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 1px;
   font-weight: 600;
   white-space: nowrap;
 }
@@ -240,34 +239,50 @@
   gap: 4px;
 }
 .navitem {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 13px;
-  padding: 12px 14px;
-  border-radius: 14px;
+  padding: 11px 16px;
+  border-radius: var(--radius-pill);
   text-decoration: none;
   color: var(--ink-soft);
   font-family: var(--f-display);
   font-weight: 600;
   font-size: 15px;
-  transition: background 0.18s, color 0.18s;
+  letter-spacing: -0.01em;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease);
 }
 .navitem:hover {
   background: var(--paper);
   color: var(--blue-2);
 }
-.navitemActive {
-  background: var(--blue-2);
-  color: #fff;
-}
+.navitemActive,
 .navitemActive:hover {
   background: var(--blue-2);
   color: #fff;
 }
+/* L'or ne repeint pas l'item actif : il le signale, comme sur la landing où
+   il ne sert qu'à pointer (soulignage du hero, rail du parcours). */
+.navitemActive .navitemIc {
+  color: var(--gold-400);
+}
 .navitemIc {
-  font-size: 18px;
-  width: 22px;
-  text-align: center;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  flex: none;
+  color: var(--ink-mute);
+  transition: color 0.25s var(--ease), transform 0.35s var(--ease-out);
+}
+.navitem:hover .navitemIc {
+  color: var(--blue-2);
+  transform: translateX(1px);
+}
+.navitemIc svg {
+  width: 19px;
+  height: 19px;
 }
 
 /* Fix (débordement sidebar) : `display:grid` sans `grid-template-columns`
@@ -284,16 +299,20 @@
   gap: 12px;
 }
 .sbwallet {
-  background: linear-gradient(140deg, var(--blue-1), var(--blue-2));
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(150deg, var(--navy-600) 0%, var(--navy-800) 100%);
   color: #fff;
-  border-radius: 18px;
+  border: 1px solid rgba(232, 158, 17, 0.22);
+  border-radius: var(--radius);
   padding: 14px 16px;
 }
 .sbwalletLabel {
-  font-size: 10px;
-  letter-spacing: 0.12em;
+  font-family: var(--f-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #a9c2d4;
+  color: var(--on-dark-3);
   font-weight: 600;
 }
 .sbwalletAmt {
@@ -311,8 +330,10 @@
 .sbwalletStatus {
   font-size: 12px;
   font-weight: 600;
-  color: #c0d2e0;
-  margin-top: 7px;
+  color: var(--on-dark-2);
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line-dark);
 }
 /* Variante "module" du bloc sbwallet (Fix, critique UX) — statut seul, sans
    montant : celui-ci est déjà affiché, animé, dans le header (Wallet.tsx). */
@@ -322,6 +343,9 @@
   font-size: 1.05rem;
   margin-top: 3px;
   line-height: 1.25;
+  /* Les libellés de statut sont longs (« L'Épargnant Livret A ») et la
+     sidebar fait 250px : sans équilibrage, le dernier mot tombe seul. */
+  text-wrap: balance;
 }
 .sbuser {
   display: flex;
@@ -329,9 +353,14 @@
   gap: 11px;
   background: var(--paper);
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius: var(--radius);
   padding: 10px 12px;
   min-width: 0;
+  transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+}
+.sbuser:hover {
+  border-color: var(--line-strong);
+  background: var(--card);
 }
 .sbuserMeta {
   min-width: 0;
@@ -361,32 +390,38 @@
   border: none;
   background: transparent;
   padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   font-family: var(--f-display);
   font-size: 12px;
   font-weight: 600;
-  color: var(--clay);
+  color: var(--ink-mute);
   text-decoration: none;
+  transition: color 0.25s var(--ease);
+}
+.logoutBtn svg {
+  width: 13px;
+  height: 13px;
 }
 .logoutBtn:hover {
-  color: #8a3d1e;
-  text-decoration: underline;
-}
-.logoutBtn:focus-visible {
-  outline: 3px solid var(--or);
-  outline-offset: 3px;
+  color: var(--clay-deep);
 }
 
 .avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
   flex: none;
   display: grid;
   place-items: center;
-  font-size: 18px;
-  background: radial-gradient(circle at 30% 28%, var(--azure), var(--blue-2));
-  border: 2px solid #fff;
+  color: var(--navy-050);
+  background: linear-gradient(155deg, var(--navy-500), var(--navy-800));
   box-shadow: var(--shadow-sm);
+}
+.avatar svg {
+  width: 19px;
+  height: 19px;
 }
 
 /* Header mobile (variante dash) — équivalent de <header class="top"> côté
@@ -422,10 +457,11 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
-  color: #eaf1f6;
-  padding: 10px 16px 10px 22px;
-  border-radius: 999px;
+  background: linear-gradient(150deg, var(--navy-600), var(--navy-800));
+  color: var(--navy-050);
+  padding: 9px 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(232, 158, 17, 0.22);
   box-shadow: var(--shadow);
 }
 .topWalletMeta {
@@ -433,11 +469,12 @@
   line-height: 1.15;
 }
 .topWalletLabel {
-  font-size: 10px;
-  letter-spacing: 0.12em;
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #a6becf;
-  font-weight: 700;
+  color: var(--on-dark-3);
+  font-weight: 600;
 }
 .topWalletAmount {
   font-family: var(--f-display);
@@ -449,6 +486,7 @@
 }
 
 .dashMain {
+  animation: app-rise 0.5s var(--ease-out) both;
   max-width: 1080px;
   margin: 0 auto;
   padding: 34px 20px 56px;
@@ -481,21 +519,32 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  padding: 6px 4px;
-  border-radius: 12px;
+  gap: 4px;
+  padding: 7px 4px;
+  border-radius: var(--radius-sm);
   text-decoration: none;
-  color: var(--ink-soft);
+  color: var(--ink-mute);
+  font-family: var(--f-display);
   font-size: 10px;
   font-weight: 600;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease);
 }
 .tabIc {
-  font-size: 17px;
+  display: grid;
+  place-items: center;
+  transition: transform 0.35s var(--ease-out);
+}
+.tabIc svg {
+  width: 20px;
+  height: 20px;
 }
 .tabActive {
   background: var(--blue-2);
   color: #fff;
+}
+.tabActive .tabIc {
+  color: var(--gold-400);
+  transform: translateY(-1px);
 }
 
 /* Bascule sidebar (desktop) ↔ header+onglets (mobile) — commune aux deux
@@ -543,11 +592,6 @@
     display: none;
   }
   .topWalletAmount {
-    font-size: 15px;
-  }
-  .brandMark {
-    width: 36px;
-    height: 36px;
     font-size: 15px;
   }
 }

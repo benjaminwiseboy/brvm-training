@@ -7,6 +7,8 @@ import { useProgress, deriveStatus } from "@/lib/store";
 import { money } from "@/lib/format";
 import { NavGuardProvider, GuardedLink, useNavGuardActive, useModulePhaseIndex } from "@/lib/navGuard";
 import { logout } from "@/lib/actions/auth";
+import { Close, Home, LogOut, Map, User, Vault } from "@/components/ui/Icons";
+import { BrandMark } from "@/components/ui/BrandMark";
 import styles from "./AppShell.module.css";
 
 /**
@@ -32,16 +34,20 @@ import styles from "./AppShell.module.css";
  * encore câblées à une vraie page) restent de simples `Link` : rien à
  * perdre à les cliquer.
  */
-type NavItem = { ic: string; label: string; href: string };
+type NavItem = { Ic: (p: { className?: string }) => ReactNode; label: string; href: string };
 
 // Port de navItems() dans POC-Module-1/dashboard.js. Les 4 items pointent
 // maintenant tous vers une route réelle — "Progrès" (jamais câblé, ancre
 // "#" depuis le POC) a été retiré plutôt que laissé mort.
+// Icônes SVG du jeu de marque (components/ui/Icons.tsx) plutôt que les emoji
+// du POC : rendus de façon incohérente d'un système à l'autre, ils ne
+// pouvaient ni hériter de la couleur de l'item actif ni s'aligner sur le
+// trait des autres icônes de l'interface.
 const NAV_ITEMS: NavItem[] = [
-  { ic: "🏠", label: "Accueil", href: "/" },
-  { ic: "🗺️", label: "Parcours", href: "/parcours" },
-  { ic: "🗝️", label: "Coffre-fort", href: "/coffre" },
-  { ic: "👤", label: "Profil", href: "/profil" },
+  { Ic: Home, label: "Accueil", href: "/" },
+  { Ic: Map, label: "Parcours", href: "/parcours" },
+  { Ic: Vault, label: "Coffre-fort", href: "/coffre" },
+  { Ic: User, label: "Profil", href: "/profil" },
 ];
 
 // Mêmes 4 libellés que POC-Module-1/app.js (`var STEPS = [...]`) — l'index
@@ -139,7 +145,7 @@ function ModuleShell({ children, moduleInfo }: { children: ReactNode; moduleInfo
               pendant la phase "défi" (même protection que les liens de la
               sidebar), sans logique dédiée. */}
           <GuardedLink href="/" className={styles.closeBtn} aria-label="Quitter le module">
-            ✕
+            <Close />
           </GuardedLink>
           {moduleInfo && (
             <div className={styles.moduleInfo}>
@@ -169,7 +175,7 @@ function DashShell({ children }: { children: ReactNode }) {
       <header className={`${styles.dashTop} ${headerHidden ? styles.headerHidden : ""}`}>
         <div className={styles.dashTopBar}>
           <div className={styles.brand}>
-            <span className={styles.brandMark}>B</span>
+            <BrandMark size={38} />
             <div>
               <div className={styles.brandName}>BRVM Learning</div>
               <div className={styles.brandSub}>Tableau de bord</div>
@@ -254,7 +260,7 @@ function Sidebar({ variant }: { variant: "dash" | "module" }) {
       aria-label="Navigation principale"
     >
       <div className={styles.sidebarBrand}>
-        <span className={styles.brandMark}>B</span>
+        <BrandMark size={38} />
         <div>
           <div className={styles.brandName}>BRVM Learning</div>
           <div className={styles.brandSub}>Navigation</div>
@@ -262,15 +268,18 @@ function Sidebar({ variant }: { variant: "dash" | "module" }) {
       </div>
 
       <nav className={styles.sidebarNav}>
-        {NAV_ITEMS.map((it) => {
+        {NAV_ITEMS.map(({ Ic, ...it }) => {
           const ItemLink = it.href === "#" ? Link : GuardedLink;
           return (
             <ItemLink
               key={it.label}
               href={it.href}
               className={`${styles.navitem} ${pathname === it.href ? styles.navitemActive : ""}`}
+              aria-current={pathname === it.href ? "page" : undefined}
             >
-              <span className={styles.navitemIc}>{it.ic}</span>
+              <span className={styles.navitemIc}>
+                <Ic />
+              </span>
               <span>{it.label}</span>
             </ItemLink>
           );
@@ -300,7 +309,7 @@ function Sidebar({ variant }: { variant: "dash" | "module" }) {
 
         <div className={styles.sbuser}>
           <div className={styles.avatar} aria-hidden="true">
-            👤
+            <User />
           </div>
           <div className={styles.sbuserMeta}>
             <div className={styles.sbuserName}>{userEmail ?? "Mon profil"}</div>
@@ -311,6 +320,7 @@ function Sidebar({ variant }: { variant: "dash" | "module" }) {
               <div className={styles.sbuserActions}>
                 <form action={logout}>
                   <button type="submit" className={styles.logoutBtn}>
+                    <LogOut />
                     Se déconnecter
                   </button>
                 </form>
@@ -333,15 +343,18 @@ function Tabbar() {
       className={`${styles.tabbar} ${dimmed ? styles.chromeDim : ""}`}
       aria-label="Navigation principale (mobile)"
     >
-      {NAV_ITEMS.map((it) => {
+      {NAV_ITEMS.map(({ Ic, ...it }) => {
         const ItemLink = it.href === "#" ? Link : GuardedLink;
         return (
           <ItemLink
             key={it.label}
             href={it.href}
             className={`${styles.tab} ${pathname === it.href ? styles.tabActive : ""}`}
+            aria-current={pathname === it.href ? "page" : undefined}
           >
-            <span className={styles.tabIc}>{it.ic}</span>
+            <span className={styles.tabIc}>
+              <Ic />
+            </span>
             <span>{it.label}</span>
           </ItemLink>
         );

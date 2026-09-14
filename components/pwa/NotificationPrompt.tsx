@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useProgress } from "@/lib/store";
 import { subscribeToPush } from "@/lib/actions/push";
+import { Bell, Close } from "@/components/ui/Icons";
 import styles from "./InstallPrompt.module.css";
 
 const DISMISS_KEY = "brvm-learning:notif-prompt-dismissed-at";
@@ -97,9 +98,11 @@ export function NotificationPrompt() {
   return (
     <div className={styles.sheet} role="dialog" aria-label="Activer les notifications">
       <button type="button" className={styles.close} onClick={dismiss} aria-label="Fermer">
-        ✕
+        <Close />
       </button>
-      <div className={styles.mark}>🔔</div>
+      <div className={styles.mark}>
+        <Bell />
+      </div>
       <div className={styles.body}>
         <div className={styles.title}>Active les notifications</div>
         <div className={styles.text}>

@@ -1,5 +1,7 @@
+import type { ReactNode } from "react";
 import { PHASES, orderedCodes } from "@/content/registry";
 import { money } from "@/lib/format";
+import { Banknote, BookOpen, TrendUp } from "@/components/ui/Icons";
 import { ScoreRing } from "@/components/engine/ScoreRing";
 import styles from "./ProgressCard.module.css";
 
@@ -56,7 +58,9 @@ export function ProgressCard({
         <ScoreRing pct={pct} label="complété" />
       </div>
       <div className={styles.main}>
-        <div className={styles.icon}>📈</div>
+        <div className={styles.icon}>
+          <TrendUp />
+        </div>
         <h2 className={styles.title}>Beau parcours !</h2>
         <p className={styles.body}>
           Vous avez terminé{" "}
@@ -67,16 +71,16 @@ export function ProgressCard({
         </p>
         <div className={styles.stats}>
           <Stat cls={styles.stBlue} icon={status.emoji} val={status.label} label="Statut" />
-          <Stat cls={styles.stGold} icon="💰" val={money(capital)} label="Portefeuille" />
+          <Stat cls={styles.stGold} icon={<Banknote />} val={money(capital)} label="Portefeuille" />
           <Stat cls={styles.stTeal} icon="🔥" val={`${streak} j`} label="Série" />
-          <Stat cls={styles.stGreen} icon="🎓" val={`${doneCount} / ${total}`} label="Modules" />
+          <Stat cls={styles.stGreen} icon={<BookOpen />} val={`${doneCount} / ${total}`} label="Modules" />
         </div>
       </div>
     </div>
   );
 }
 
-function Stat({ cls, icon, val, label }: { cls: string; icon: string; val: string; label: string }) {
+function Stat({ cls, icon, val, label }: { cls: string; icon: ReactNode; val: string; label: string }) {
   return (
     <div className={`${styles.stat} ${cls}`}>
       <span className={styles.statIc}>{icon}</span>

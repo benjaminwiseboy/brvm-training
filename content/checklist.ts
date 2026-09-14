@@ -300,27 +300,210 @@ export const CHECKLIST: ChecklistDay[] = [
   },
 ];
 
-/** Ce qui vient après — pas des cases à cocher, des réflexes à garder. */
+/**
+ * LA ROUTINE DE L'INVESTISSEUR — ce qui vient après le jour 7.
+ *
+ * La check-list amenait l'apprenant jusqu'à son premier ordre, puis le laissait
+ * là. Or c'est précisément après que tout se joue : un investisseur qui n'a pas
+ * de rythme finit soit par regarder les cours dix fois par jour, soit par ne
+ * plus jamais y revenir. Les deux se terminent mal.
+ *
+ * Structure par CADENCE, pas par thème : la seule question qui compte ici est
+ * « qu'est-ce que je fais, et quand ». Chaque item porte une durée réaliste,
+ * pour qu'on puisse réellement le caler dans une semaine.
+ *
+ * Règle de rédaction du projet (formation lue sans narration) : chaque `body`
+ * explique le POURQUOI et le COMMENT — jamais une étiquette seule.
+ *
+ * Cohérence volontaire avec `CHECKLIST_AFTER` juste en dessous : la routine dit
+ * « une fois par semaine », le réflexe dit « pas tous les jours ». Les deux
+ * disent la même chose, et se renvoient explicitement l'un à l'autre.
+ */
+export type RoutineItem = {
+  id: string;
+  icon: string;
+  title: string;
+  body: string;
+  /** Lien pour passer à l'acte tout de suite. `external` = quitte l'app. */
+  link?: { label: string; href: string; external?: boolean };
+};
+
+export type RoutineBlock = {
+  id: string;
+  /** « Chaque semaine », « Chaque mois »… */
+  cadence: string;
+  /** Le budget-temps honnête de ce bloc. */
+  budget: string;
+  /** Ce que le bloc sert à obtenir, en une phrase. */
+  goal: string;
+  items: RoutineItem[];
+};
+
+export const ROUTINE_TITLE = "La routine de l'investisseur";
+
+export const ROUTINE_LEAD =
+  "Investir n'est pas un événement, c'est une habitude. Voici le rythme d'un investisseur BRVM débutant : **moins de deux heures par mois**, réparties en rendez-vous courts. Tout ce qui n'est pas dans cette liste peut attendre.";
+
+export const INVESTOR_ROUTINE: RoutineBlock[] = [
+  {
+    id: "hebdo",
+    cadence: "Chaque semaine",
+    budget: "≈ 15 minutes",
+    goal: "Rester familier du marché, sans le subir.",
+    items: [
+      {
+        id: "r-boc",
+        icon: "📊",
+        title: "Ouvrir le BOC et parcourir vos lignes",
+        body: "Le BOC (Bulletin Officiel de la Cote) est le relevé officiel publié par la BRVM à chaque séance : cours de clôture, variation du jour, volume échangé, PER, rendement. Fixez-vous UN rendez-vous hebdomadaire — le samedi matin, par exemple — et relisez calmement les colonnes de vos entreprises. Le but n'est pas de réagir : c'est de garder l'œil entraîné, pour qu'un chiffre anormal vous saute aux yeux le jour où il apparaît. Une fois par semaine suffit largement, et surtout : pas tous les matins (voir les réflexes plus bas).",
+        link: {
+          label: "Les cours de la séance sur brvm.org",
+          href: "https://www.brvm.org/fr/cours-actions/0",
+          external: true,
+        },
+      },
+      {
+        id: "r-veille",
+        icon: "📰",
+        title: "Vous informer en 5 minutes avec une newsletter",
+        body: "Suivre l'actualité de la BRVM à la source demanderait des heures : communiqués, presse économique, décisions de la BCEAO. Une newsletter quotidienne fait ce tri à votre place et vous livre l'essentiel déjà expliqué. Cauri News résume chaque séance de la BRVM et l'actualité économique africaine dans un langage fait pour les débutants — c'est exactement le niveau dont vous avez besoin après cette formation. Lisez-la quand elle arrive, ou groupez trois éditions le week-end.",
+        link: {
+          label: "S'abonner à Cauri News",
+          href: "https://cauri-news.ghost.io/#/portal/signup",
+          external: true,
+        },
+      },
+      {
+        id: "r-nouvelles",
+        icon: "🔔",
+        title: "Vérifier s'il s'est passé quelque chose chez VOS entreprises",
+        body: "Vous ne suivez pas les 40 sociétés cotées : vous suivez les deux ou trois que vous détenez. Un communiqué de résultats, un changement de dirigeant, une annonce de dividende, une opération sur le capital — voilà les seules nouvelles qui doivent retenir votre attention. L'espace « actualités » de brvm.org et la page de chaque société suffisent.",
+        link: {
+          label: "Les sociétés cotées et leurs actualités",
+          href: "https://www.brvm.org/fr/emetteurs/societes-cotees",
+          external: true,
+        },
+      },
+    ],
+  },
+  {
+    id: "mensuel",
+    cadence: "Chaque mois",
+    budget: "≈ 30 minutes",
+    goal: "Faire grossir le portefeuille, et savoir ce qu'il contient vraiment.",
+    items: [
+      {
+        id: "r-versement",
+        icon: "💧",
+        title: "Verser votre montant mensuel, quoi qu'il arrive",
+        body: "C'est LE rendez-vous qui construit le patrimoine — celui du DCA (l'investissement régulier, module 10). Toujours le même montant, toujours à la même date, sans regarder si le marché monte ou descend. Quand les prix sont bas, votre versement achète mécaniquement plus d'actions ; quand ils sont hauts, il en achète moins. Vous n'avez donc jamais à deviner le bon moment : la régularité le fait pour vous. Mettez une alarme récurrente le jour de votre salaire.",
+      },
+      {
+        id: "r-journal",
+        icon: "🧾",
+        title: "Mettre à jour votre journal de portefeuille",
+        body: "Une ligne par opération : date, valeur, quantité, prix payé, frais. Sans les frais, votre prix de revient est faux — vous vous croirez gagnant avant de l'être. Ce journal est aussi ce qui vous permettra, dans cinq ans, de calculer votre vraie performance (plus-value + dividendes encaissés), au lieu de vous fier à une impression.",
+      },
+      {
+        id: "r-dividendes",
+        icon: "📅",
+        title: "Suivre les dividendes annoncés et leur date de détachement",
+        body: "La date de détachement décide qui touche le dividende : il suffit d'être actionnaire la veille. Notez ces dates pour vos lignes, vérifiez que le versement arrive bien sur votre compte-titres, et décidez à l'avance de ce que vous en faites — le réinvestir est ce qui déclenche les intérêts composés, le retirer transforme votre portefeuille en revenu.",
+      },
+    ],
+  },
+  {
+    id: "trimestriel",
+    cadence: "Chaque trimestre",
+    budget: "≈ 1 heure",
+    goal: "Vérifier que le portefeuille ressemble toujours à votre plan.",
+    items: [
+      {
+        id: "r-these",
+        icon: "📖",
+        title: "Relire la thèse de chaque ligne",
+        body: "Vous aviez écrit, en une phrase, pourquoi vous achetiez chaque action. Reprenez ces phrases : sont-elles toujours vraies ? Si oui, il n'y a rien à faire, même si le cours a baissé. Si la raison a disparu — l'entreprise a changé de métier, perdu son marché, cessé d'être rentable — alors c'est un vrai motif de vente, le seul avec « mon objectif est atteint ».",
+      },
+      {
+        id: "r-equilibre",
+        icon: "⚖️",
+        title: "Vérifier votre équilibre entre valeurs et secteurs",
+        body: "Avec le temps, la ligne qui monte le plus finit par peser lourd dans le portefeuille — et votre risque se concentre sans que vous l'ayez décidé. Regardez la part de chaque valeur, puis de chaque secteur (banques, télécoms, agro-industrie…). Aucune ligne ne devrait peser au point qu'une mauvaise nouvelle sur elle seule décide de votre année. Le rééquilibrage se fait en douceur : orientez vos prochains versements mensuels vers ce qui est sous-représenté, plutôt que de vendre.",
+      },
+      {
+        id: "r-plan",
+        icon: "📄",
+        title: "Relire votre plan d'investissement",
+        body: "Objectif, horizon, stratégie, capacité d'épargne : votre plan a été écrit à un moment de votre vie, et votre vie bouge. Une naissance, un déménagement, un changement de revenus valent une mise à jour. C'est le document qui vous évitera de changer de stratégie sur un coup de tête.",
+        link: { label: "Ouvrir mon plan dans le Coffre-fort", href: "/coffre/plan" },
+      },
+    ],
+  },
+  {
+    id: "annuel",
+    cadence: "Chaque année",
+    budget: "≈ 2 heures",
+    goal: "Refaire le travail d'analyste, une fois par an, sur pièces neuves.",
+    items: [
+      {
+        id: "r-rapports",
+        icon: "🔍",
+        title: "Repasser vos entreprises à la méthode des 4 P",
+        body: "À la publication des rapports annuels, reprenez chaque ligne comme si vous l'achetiez aujourd'hui : Portrait (que fait-elle exactement), Performance (gagne-t-elle toujours de l'argent, et davantage), Perspectives (son marché va-t-il dans le bon sens), Prix (le cours actuel reste-t-il raisonnable au regard du PER et du rendement). C'est le cœur de la formation, et c'est en le refaisant chaque année qu'il devient un réflexe.",
+        link: {
+          label: "Rapports annuels et états financiers",
+          href: "https://www.brvm.org/fr/rapports-societes-cotees",
+          external: true,
+        },
+      },
+      {
+        id: "r-fisc",
+        icon: "🧮",
+        title: "Faire le point fiscal — en général, il n'y a rien à faire",
+        body: "L'IRVM sur les dividendes est prélevée à la source : le montant qui arrive sur votre compte est déjà net d'impôt (~12 % en Côte d'Ivoire, 12,5 % au Burkina, 7 % au Niger, 4 % au Bénin). Vérifiez simplement, sur vos avis d'opéré, que le net reçu correspond. C'est aussi le moment de calculer votre performance de l'année à partir de votre journal : plus-value latente + dividendes encaissés − frais.",
+      },
+      {
+        id: "r-montant",
+        icon: "📈",
+        title: "Réviser à la hausse votre versement mensuel",
+        body: "Si vos revenus ont augmenté, votre versement devrait suivre — c'est le levier le plus puissant dont vous disposez, bien plus que le choix de la « bonne » action. Augmenter de quelques milliers de francs par mois change davantage le résultat sur dix ans qu'une année de bourse exceptionnelle.",
+      },
+    ],
+  },
+];
+
+export function allRoutineIds(): string[] {
+  return INVESTOR_ROUTINE.flatMap((b) => b.items.map((i) => i.id));
+}
+
+/**
+ * Les réflexes — pas des cases à cocher, pas non plus des rendez-vous
+ * d'agenda : l'état d'esprit qui tient la routine ci-dessus debout.
+ *
+ * Volontairement disjoint d'`INVESTOR_ROUTINE` : ce qui a une fréquence (verser,
+ * relire sa thèse, suivre les détachements) vit dans la routine ; ici on ne
+ * garde que ce qui n'a pas de date — des attitudes.
+ */
 export const CHECKLIST_AFTER: { icon: string; title: string; body: string }[] = [
   {
     icon: "📵",
-    title: "Ne regardez pas les cours tous les jours",
-    body: "Vous avez investi pour 5 ans et plus. Consulter son portefeuille chaque matin n'améliore aucun rendement — ça n'entraîne que la panique.",
+    title: "Le marché n'est pas un tableau de bord à surveiller",
+    body: "Un rendez-vous par semaine, c'est le bon rythme. Regarder son portefeuille chaque matin n'améliore aucun rendement : ça ne fait qu'entraîner la panique — et la panique, elle, coûte cher.",
   },
   {
-    icon: "📄",
-    title: "Relisez votre thèse avant toute vente",
-    body: "Une baisse de prix n'est pas une raison de vendre. Le sont : votre objectif est atteint, ou l'entreprise a fondamentalement changé.",
+    icon: "🛡️",
+    title: "Une baisse de prix n'est pas une raison de vendre",
+    body: "Tant que l'entreprise gagne toujours de l'argent, un cours qui recule ne vous a rien pris — vous n'avez perdu que si vous vendez. Les deux seules bonnes raisons de sortir : votre objectif est atteint, ou votre thèse est cassée.",
   },
   {
-    icon: "📅",
-    title: "Suivez les résultats et les dates de détachement",
-    body: "Les résultats annuels mettent votre analyse à jour. La date de détachement décide qui touche le dividende — être actionnaire la veille suffit.",
+    icon: "🐢",
+    title: "Le temps travaille pour vous, pas la vitesse",
+    body: "Ce sont les dividendes réinvestis pendant dix ans qui font la différence, pas le coup réussi de ce trimestre. Chaque fois que vous hésitez, demandez-vous où sera cette entreprise dans cinq ans — pas vendredi.",
   },
   {
-    icon: "💧",
-    title: "Continuez à verser, surtout quand ça baisse",
-    body: "Votre versement mensuel achète mécaniquement plus d'actions quand les prix sont bas. C'est le seul marché où les soldes font fuir les clients.",
+    icon: "🚫",
+    title: "Méfiez-vous des tuyaux et des rendements promis",
+    body: "Personne ne connaît le cours de demain. Une information « sûre » qui circule dans un groupe WhatsApp est soit déjà dans le prix, soit fausse. Vous avez désormais une méthode pour juger par vous-même : elle vaut mieux que n'importe quel conseil gratuit.",
   },
 ];
 

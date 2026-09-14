@@ -7,6 +7,7 @@ import {
   STORAGE_KEY,
   type ProgressState,
   type PaymentStatus,
+  type ModuleOverrides,
   initialState,
   isValidProgressState,
   applyCompletion,
@@ -44,6 +45,8 @@ const Ctx = createContext<{
   /** `null` = pas de compte, ou compte sans ligne `payments` — traité comme
    * non-payant pour l'essai gratuit (cf. lib/progress.ts::isFreeTrialModule). */
   paymentStatus: PaymentStatus | null;
+  /** Accès forcés ouverts/fermés par l'admin — cf. lib/progress.ts::isPaywalled. */
+  moduleOverrides: ModuleOverrides;
   completeModule: (code: string, correct: number, total: number, capitalDelta: number) => void;
   setResumeSlide: (code: string, slide: number, phase?: "cours" | "defi") => void;
   setOnboarded: () => void;
@@ -60,18 +63,23 @@ const Ctx = createContext<{
   hydrated: boolean;
 } | null>(null);
 
+/** Défaut stable (jamais recréé) : évite un nouveau `value` de contexte à chaque rendu. */
+const EMPTY_OVERRIDES: ModuleOverrides = {};
+
 export function ProgressProvider({
   children,
   userId = null,
   userEmail = null,
   initialProgress = null,
   initialPaymentStatus = null,
+  initialModuleOverrides = EMPTY_OVERRIDES,
 }: {
   children: React.ReactNode;
   userId?: string | null;
   userEmail?: string | null;
   initialProgress?: ProgressState | null;
   initialPaymentStatus?: PaymentStatus | null;
+  initialModuleOverrides?: ModuleOverrides;
 }) {
   const [state, setState] = useState<ProgressState>(() => initialProgress ?? initialState());
   const [hydrated, setHydrated] = useState(userId !== null); // compte : déjà résolu côté serveur
@@ -151,6 +159,7 @@ export function ProgressProvider({
     state,
     userEmail,
     paymentStatus: initialPaymentStatus,
+    moduleOverrides: initialModuleOverrides,
     completeModule: (code: string, correct: number, total: number, delta: number) =>
       setState((s) => applyCompletion(s, code, correct, total, delta)),
     setResumeSlide: (code: string, slide: number, phase: "cours" | "defi" = "cours") =>

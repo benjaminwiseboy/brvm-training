@@ -56,7 +56,13 @@
   border-radius: 16px;
   display: grid;
   place-items: center;
-  font-size: 24px;
+  /* Teinte du trait : la pastille porte le fond, l'icône hérite de la
+     couleur, comme les `.card__ico` de la landing. */
+  color: var(--blue-2);
+}
+.ic svg {
+  width: 24px;
+  height: 24px;
 }
 .icGreen {
   background: var(--pos-soft);
@@ -129,25 +135,20 @@
 .cardOpen {
   text-decoration: none;
   border-color: var(--line-strong);
-  transition: transform 0.12s, border-color 0.15s, box-shadow 0.15s;
+  transition: transform 0.3s var(--ease-out), border-color 0.15s, box-shadow 0.15s;
 }
 .cardOpen:hover {
   transform: translateY(-2px);
   border-color: var(--or);
   box-shadow: var(--shadow);
-}
-.cardOpen:focus-visible {
-  outline: 3px solid var(--or);
-  outline-offset: 3px;
-}
-.openBadge {
+}.openBadge {
   flex: none;
   font-family: var(--f-display);
   font-weight: 700;
   font-size: 11px;
   letter-spacing: 0.02em;
-  color: #3a2907;
-  background: linear-gradient(135deg, #f7cf49, var(--or));
+  color: var(--navy-900);
+  background: var(--gold-500);
   border-radius: 999px;
   padding: 6px 12px;
   white-space: nowrap;

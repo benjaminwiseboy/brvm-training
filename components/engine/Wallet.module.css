@@ -9,8 +9,8 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
-  color: #eaf1f6;
+  background: linear-gradient(150deg, var(--navy-600), var(--navy-800));
+  color: var(--navy-050);
   padding: 10px 16px 10px 22px;
   border-radius: 999px;
   box-shadow: var(--shadow);
@@ -21,7 +21,7 @@
   animation: shake 0.5s;
 }
 .wallet.isCorrection .amount {
-  color: #ffd9c7;
+  color: rgba(201, 85, 58, .22);
 }
 
 @keyframes shake {
@@ -52,7 +52,7 @@
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #a6becf;
+  color: var(--on-dark-2);
   font-weight: 700;
 }
 
@@ -87,11 +87,11 @@
   opacity: 0;
 }
 .gain {
-  color: #0b5e40;
+  color: var(--pos-ink);
   background: var(--pos-soft);
 }
 .loss {
-  color: #8a3d1e;
+  color: var(--clay-ink);
   background: var(--clay-soft);
 }
 .run {

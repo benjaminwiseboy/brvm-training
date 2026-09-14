@@ -3,6 +3,9 @@ import { NextResponse, type NextRequest } from "next/server";
 import { isModulePublic } from "@/lib/access";
 
 const ALWAYS_PUBLIC = [
+  // Landing publique : `app/page.tsx` sert la page marketing au visiteur et le
+  // tableau de bord à l'apprenant connecté.
+  "/",
   "/login",
   "/signup",
   "/reset-password",

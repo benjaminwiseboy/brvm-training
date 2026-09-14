@@ -5,6 +5,7 @@ import { AppShell } from "@/components/nav/AppShell";
 import { useProgress } from "@/lib/store";
 import { RESOURCES, gateLabel, isResourceUnlocked } from "@/content/vault";
 import styles from "./page.module.css";
+import { VaultIcon } from "@/components/ui/VaultIcon";
 
 const TONE_CLASS: Record<string, string> = {
   green: styles.icGreen,
@@ -48,7 +49,9 @@ export default function CoffrePage() {
             const open = unlocked && r.href;
             const inner = (
               <>
-                <span className={`${styles.ic} ${TONE_CLASS[r.tone]}`}>{r.icon}</span>
+                <span className={`${styles.ic} ${TONE_CLASS[r.tone]}`}>
+                  <VaultIcon name={r.icon} />
+                </span>
                 <div className={styles.body}>
                   <span className={styles.name}>{r.name}</span>
                   <span className={styles.desc}>{r.desc}</span>

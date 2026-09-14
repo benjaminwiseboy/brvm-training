@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useProgress } from "@/lib/store";
 import { RESOURCES, gateLabel, isResourceUnlocked } from "@/content/vault";
 import styles from "./VaultCard.module.css";
+import { VaultIcon } from "@/components/ui/VaultIcon";
 
 const TONE_CLASS: Record<string, string> = {
   green: styles.icGreen,
@@ -49,7 +50,9 @@ export function VaultCard() {
                 "Bientôt disponible";
           const inner = (
             <>
-              <span className={`${styles.ic} ${TONE_CLASS[r.tone]}`}>{r.icon}</span>
+              <span className={`${styles.ic} ${TONE_CLASS[r.tone]}`}>
+                <VaultIcon name={r.icon} />
+              </span>
               <div className={styles.body}>
                 <span className={styles.name}>{r.name}</span>
                 <span className={`${styles.meta} ${open ? styles.metaOpen : ""}`}>{meta}</span>
