@@ -34,7 +34,6 @@ export default function Outils() {
         <div className="tools__layout">
           <div>
             <header className="head" data-reveal="left">
-              <p className="eyebrow">Votre boîte à outils</p>
               <h2 className="h2">Tout le nécessaire pour agir facilement sans bloquer.</h2>
             </header>
 
@@ -53,10 +52,11 @@ export default function Outils() {
 
           <div data-reveal="right">
             <Mockup
-              caption="Capture — Le coffre-fort d’outils"
-              hint="Plan d’investissement, comparateur de SGI, glossaire et checklist."
-              url="brvmlearning.com/coffre"
-              ratio="4 / 3.4"
+              caption="Capture — Comparateur de SGI"
+              hint="Simulation des frais cumulés sur 10 ans, SGI par SGI."
+              url="brvmlearning.com/coffre/sgi"
+              ratio="1620 / 1129"
+              src="/screenshots/comparateur-sgi.png"
             />
           </div>
         </div>

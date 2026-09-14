@@ -17,7 +17,6 @@ export default function PourQui() {
     <section className="section fit">
       <div className="shell shell--tight">
         <header className="head head--center" data-reveal>
-          <p className="eyebrow">Honnêtement</p>
           <h2 className="h2">Ce parcours est‑il fait pour vous&nbsp;?</h2>
         </header>
 

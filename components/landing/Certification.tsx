@@ -13,7 +13,6 @@ export default function Certification() {
       <div className="shell">
         <div className="cert__layout">
           <div data-reveal="left">
-            <p className="eyebrow">Ce que vous repartez avec</p>
             <h2 className="h2">Une certification à afficher, pas un simple écran de fin.</h2>
             <p className="lead cert__lead">
               Au bout du parcours, vous recevez votre attestation et votre badge officiel BRVM
@@ -45,7 +44,8 @@ export default function Certification() {
               hint="Attestation nominative + badge 💎, au format partageable sur les réseaux."
               tone="light"
               chrome={false}
-              ratio="297 / 210"
+              ratio="1591 / 849"
+              src="/screenshots/certificat.png"
             />
           </div>
         </div>

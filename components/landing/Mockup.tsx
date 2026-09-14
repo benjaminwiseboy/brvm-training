@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import Image from "next/image";
 import { Frame } from "./Icons";
 
 type Props = {
@@ -14,6 +15,8 @@ type Props = {
   /** Barre de navigateur factice — à masquer pour un document (certificat…). */
   chrome?: boolean;
   className?: string;
+  /** Vraie capture d'écran — remplace le placeholder filaire quand fournie. */
+  src?: string;
 };
 
 export default function Mockup({
@@ -25,6 +28,7 @@ export default function Mockup({
   ratio,
   chrome = true,
   className = "",
+  src,
 }: Props) {
   const classes = [
     "mock",
@@ -45,19 +49,29 @@ export default function Mockup({
           <span className="mock__url">{url}</span>
         </div>
       ) : null}
-      <div className="mock__screen" style={ratio ? ({ "--ratio": ratio } as CSSProperties) : undefined}>
-        <span className="mock__wire" aria-hidden="true">
-          <i />
-          <i />
-          <i />
-          <i />
-        </span>
-        <span className="mock__ph">
-          <Frame />
-        </span>
-        <span className="mock__cap">{caption}</span>
-        {hint ? <span className="mock__hint">{hint}</span> : null}
+      <div
+        className={`mock__screen${src ? " mock__screen--img" : ""}`}
+        style={ratio ? ({ "--ratio": ratio } as CSSProperties) : undefined}
+      >
+        {src ? (
+          <Image src={src} alt={caption} fill sizes="(max-width: 720px) 92vw, 640px" className="mock__img" />
+        ) : (
+          <>
+            <span className="mock__wire" aria-hidden="true">
+              <i />
+              <i />
+              <i />
+              <i />
+            </span>
+            <span className="mock__ph">
+              <Frame />
+            </span>
+            <span className="mock__cap">{caption}</span>
+            {hint ? <span className="mock__hint">{hint}</span> : null}
+          </>
+        )}
       </div>
+      {src ? <p className="mock__caption">{caption}</p> : null}
     </div>
   );
 }

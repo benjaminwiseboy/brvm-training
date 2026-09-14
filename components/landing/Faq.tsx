@@ -17,12 +17,12 @@ const QUESTIONS = [
     a: "Absolument. Les 4 modules de la phase 1 sont accessibles immédiatement dès la création de votre compte, sans aucune carte bancaire demandée. Même si vous vous arrêtez là, vous en ressortez en sachant ce qu’est la BRVM, comment on y gagne de l’argent — dividende et plus-value — et quelles règles de sécurité respecter avant d’investir.",
   },
   {
-    q: "Combien coûte l’accès complet ?",
-    a: "C’est un paiement unique, sans abonnement, et l’accès reste ouvert à vie. Le tarif est pensé pour rester accessible, y compris à un étudiant : on est loin des 200 000 FCFA (300 €) que coûtent les autres formations de ce type. Nous vous le présentons à la fin de la phase 1, quand vous aurez une idée précise de ce que vaut le parcours plutôt qu’un prix à juger avant d’avoir rien vu.",
+    q: "Comment se débloque l’accès complet ?",
+    a: "Les 4 modules de la phase 1 sont offerts. La suite se débloque en une fois, sans abonnement, à un tarif pensé pour rester accessible — y compris à un étudiant. Nous vous le présentons à la fin de la phase 1, quand vous aurez une idée précise de ce que vaut le parcours plutôt qu’un chiffre à juger avant d’avoir rien vu.",
   },
   {
     q: "Combien de temps faut-il pour terminer le parcours ?",
-    a: "Chaque module se boucle en quelques minutes. À 5 minutes par jour vous avancez d’une leçon à la fois ; en y consacrant un quart d’heure, vous terminez en quelques semaines. L’accès étant à vie, rien ne vous presse.",
+    a: "Chaque module se boucle en quelques minutes. À 5 minutes par jour vous avancez d’une leçon à la fois ; en y consacrant un quart d’heure, vous terminez en quelques semaines. Rien ne vous presse : vous avancez à votre rythme.",
   },
 ];
 
@@ -33,7 +33,6 @@ export default function Faq() {
     <section className="section faq" id="faq">
       <div className="shell shell--tight">
         <header className="head head--center" data-reveal>
-          <p className="eyebrow">Foire aux questions</p>
           <h2 className="h2">Ce que l’on nous demande le plus souvent.</h2>
         </header>
 

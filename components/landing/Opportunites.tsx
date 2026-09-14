@@ -1,23 +1,24 @@
-import { Banknote, Globe, TrendUp } from "./Icons";
 import { delay } from "./style";
 
-const CARDS = [
+/**
+ * Trois arguments, chacun ancré par un chiffre. Le chiffre EST l'argument :
+ * il porte donc la composition, en gros display sous un filet or — pas dans
+ * une carte à icône, qui le réduisait à une vignette de plus.
+ */
+const FAITS = [
   {
-    icon: <TrendUp />,
-    kpi: "+100 %",
-    kpiLabel: "en une année · ex. ETI Ecobank",
+    kpi: "+100 %",
+    kpiLabel: "en une année — exemple ETI Ecobank",
     title: "Des croissances spectaculaires",
-    text: "Concrètement : 100 000 FCFA placés au début de cette hausse en valaient 200 000 un an plus tard, soit 100 000 FCFA de gain. Encore fallait-il savoir repérer l’occasion — c’est ce que le parcours vous apprend.",
+    text: "Concrètement : 100 000 FCFA placés au début de cette hausse en valaient 200 000 un an plus tard, soit 100 000 FCFA de gain. Encore fallait-il savoir repérer l’occasion — c’est ce que le parcours vous apprend.",
   },
   {
-    icon: <Banknote />,
-    kpi: "7 à 12 %",
-    kpiLabel: "de dividendes par an",
+    kpi: "7 à 12 %",
+    kpiLabel: "de dividendes versés par an",
     title: "Des revenus versés chaque année",
     text: "Des entreprises qui vous versent directement une partie de leurs bénéfices chaque année, bien plus que ce que vous rapporte un compte bancaire ordinaire.",
   },
   {
-    icon: <Globe />,
     kpi: "Économie réelle",
     kpiLabel: "télécoms · banque · énergie",
     title: "Un investissement utile & concret",
@@ -30,7 +31,6 @@ export default function Opportunites() {
     <section className="section opp" id="opportunites">
       <div className="shell">
         <header className="head" data-reveal>
-          <p className="eyebrow">Le potentiel méconnu</p>
           <h2 className="h2">
             Faire fructifier son argent tout en soutenant la croissance du continent.
           </h2>
@@ -41,21 +41,13 @@ export default function Opportunites() {
           </p>
         </header>
 
-        <div className="grid grid--3 opp__grid">
-          {CARDS.map((card, index) => (
-            <article
-              className="card card--hover"
-              key={card.title}
-              data-reveal
-              style={delay(index * 110)}
-            >
-              <span className="card__ico">{card.icon}</span>
-              <p className="opp__kpi">
-                {card.kpi}
-                <small>{card.kpiLabel}</small>
-              </p>
-              <h3 className="h3 opp__name">{card.title}</h3>
-              <p className="card__text">{card.text}</p>
+        <div className="opp__faits">
+          {FAITS.map((fait, index) => (
+            <article className="opp__fait" key={fait.title} data-reveal style={delay(index * 110)}>
+              <p className="opp__kpi">{fait.kpi}</p>
+              <p className="opp__kpi-label">{fait.kpiLabel}</p>
+              <h3 className="h3 opp__name">{fait.title}</h3>
+              <p className="opp__text">{fait.text}</p>
             </article>
           ))}
         </div>

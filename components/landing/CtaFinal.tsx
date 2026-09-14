@@ -23,7 +23,7 @@ export default function CtaFinal() {
               Revoir la méthode
             </Btn>
           </div>
-          <p className="final__micro">Sans carte bancaire · 4 premiers modules offerts · Accès à vie</p>
+          <p className="final__micro">Sans carte bancaire · 4 premiers modules offerts · Accessible à tous</p>
         </div>
       </div>
     </section>

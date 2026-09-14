@@ -45,7 +45,7 @@ export default function Hero() {
               <Smartphone /> Accessible sur Web &amp; Mobile
             </span>
             <span>
-              <CreditCard /> 0 FCFA requis pour commencer
+              <CreditCard /> Gratuit pour commencer
             </span>
           </p>
         </div>
@@ -79,6 +79,7 @@ export default function Hero() {
               caption="Capture — Tableau de bord du parcours"
               hint="Progression par quiz, déblocage des modules et badges."
               ratio="16 / 9.4"
+              src="/screenshots/dashboard.png"
             />
           </div>
         </div>

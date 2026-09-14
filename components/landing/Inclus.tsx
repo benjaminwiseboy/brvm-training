@@ -18,7 +18,6 @@ export default function Inclus() {
     <section className="section incl" id="inclus">
       <div className="shell">
         <header className="head head--center" data-reveal>
-          <p className="eyebrow">Commencer ne coûte rien</p>
           <h2 className="h2">Testez gratuitement, décidez ensuite.</h2>
           <p className="lead">
             Les 4 premiers modules sont offerts, sans carte bancaire. Vous jugez la méthode sur
@@ -57,8 +56,8 @@ export default function Inclus() {
             </div>
 
             <p className="incl__note">
-              L’accès complet se débloque par un <b>paiement unique</b>, avec un accès à vie et sans
-              abonnement. Le tarif vous est présenté à la fin de la phase 1, quand vous saurez
+              L’accès complet se débloque en une fois, sans abonnement, à un tarif pensé pour rester
+              <b> accessible</b>. Nous vous le présentons à la fin de la phase 1, quand vous saurez
               exactement ce que vaut le parcours.
             </p>
           </div>

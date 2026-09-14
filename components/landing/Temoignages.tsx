@@ -1,71 +1,82 @@
-import { delay } from "./style";
+import Image from "next/image";
 
 /**
- * Emplacements de témoignages. Remplacez `quote`, `name` et `role` par les
- * retours réellement recueillis — le reste du composant ne bouge pas.
+ * Retours réels reçus par message. Deux seulement, et c'est
+ * volontaire : la capture d'origine est affichée à côté de chaque extrait, ce
+ * qu'un mur de faux avis ne peut pas faire. Le second retour garde sa réserve
+ * (« un peu scientifique au milieu ») — c'est elle qui rend l'ensemble crédible.
  */
-const TESTIMONIALS = [
+const AVIS = [
   {
-    id: "t1",
-    quote:
-      "Emplacement du premier témoignage. Racontez en deux ou trois phrases d’où partait l’apprenant, ce qu’il a fait grâce au parcours, et ce qui a changé concrètement.",
-    name: "Prénom N.",
-    role: "Profession · Ville",
-    initials: "??",
+    id: "beta-1",
+    lead: "On arrive progressivement à comprendre énormément de choses sans avoir l’impression d’être noyé dans des termes techniques.",
+    body: [
+      "J’ai surtout apprécié le fait que le jargon reste simple, accessible et très terre-à-terre.",
+      "Un truc qui m’a fait réaliser que la formation avait fonctionné pour moi : je comprends beaucoup mieux aujourd’hui le rôle du Cauri News. Avant, je pouvais voir passer ces informations sans forcément comprendre toute leur importance. Maintenant, je sais ce qu’il faut regarder et surtout pourquoi.",
+      "J’ai eu du mal à trouver une « faille » ou un vrai point négatif.",
+    ],
+    who: "Partait de zéro sur la BRVM",
+    shot: "/screenshots/avis-long.png",
+    shotRatio: "934 / 760",
+    shotAlt:
+      "Capture du message reçu : le jargon reste simple et accessible, et aucun vrai point négatif n’a été trouvé.",
   },
   {
-    id: "t2",
-    quote:
-      "Emplacement du deuxième témoignage. Les retours qui parlent le mieux sont ceux qui citent un fait précis : un compte-titres ouvert, une première analyse menée seul, un premier dividende reçu.",
-    name: "Prénom N.",
-    role: "Profession · Ville",
-    initials: "??",
-  },
-  {
-    id: "t3",
-    quote:
-      "Emplacement du troisième témoignage. Pensez à varier les profils : un actif sur place, un membre de la diaspora, un jeune qui débute avec une petite épargne.",
-    name: "Prénom N.",
-    role: "Profession · Ville",
-    initials: "??",
+    id: "beta-2",
+    lead: "Ça donne l’envie d’investir en bourse.",
+    body: [
+      "C’était captivant au début, un peu scientifique et technique au milieu — ça m’a pris du temps pour finir — et intéressant à la fin, car c’était un récap de tout le parcours.",
+    ],
+    who: "Parcours terminé",
+    shot: "/screenshots/avis-court.png",
+    shotRatio: "795 / 216",
+    shotAlt:
+      "Capture du message reçu : le parcours vient d’être terminé et donne envie d’investir en bourse.",
   },
 ];
 
 export default function Temoignages() {
   return (
-    <section className="section section--dark tmoi" id="avis">
-      <span className="glow tmoi__glow" />
-
+    <section className="section section--dark avis" id="avis">
       <div className="shell">
-        <header className="head head--center" data-reveal>
-          <p className="eyebrow">Ils ont suivi le parcours</p>
-          <h2 className="h2">Ce que ça change, dit par ceux qui l’ont fait.</h2>
+        <header className="avis__head" data-reveal>
+          <h2 className="h2 avis__title">Ils ont terminé les 28 modules. Voici ce qu’ils en disent.</h2>
+          <p className="avis__note">
+            Extraits des messages reçus. La capture d’origine est affichée à côté de chaque retour —
+            réserves comprises.
+          </p>
         </header>
 
-        <div className="grid grid--3 tmoi__grid">
-          {TESTIMONIALS.map((item, index) => (
-            <figure
-              className="tmoi__card"
-              key={item.id}
-              data-reveal
-              style={delay(index * 110)}
-            >
-              <span className="tmoi__mark" aria-hidden="true">
-                &ldquo;
+        {AVIS.map((avis, index) => (
+          <article
+            className={`avis__row${index % 2 === 1 ? " avis__row--flip" : ""}`}
+            key={avis.id}
+            data-reveal
+          >
+            <div className="avis__text">
+              <blockquote className="avis__lead">{avis.lead}</blockquote>
+              {avis.body.map((paragraph) => (
+                <p className="avis__p" key={paragraph.slice(0, 32)}>
+                  {paragraph}
+                </p>
+              ))}
+              <p className="avis__who">{avis.who}</p>
+            </div>
+
+            <figure className="avis__proof">
+              <span className="avis__shot" style={{ aspectRatio: avis.shotRatio }}>
+                <Image
+                  src={avis.shot}
+                  alt={avis.shotAlt}
+                  fill
+                  sizes="(max-width: 900px) 92vw, 420px"
+                  className="avis__img"
+                />
               </span>
-              <blockquote className="tmoi__quote">{item.quote}</blockquote>
-              <figcaption className="tmoi__who">
-                <span className="tmoi__avatar" aria-hidden="true">
-                  {item.initials}
-                </span>
-                <span>
-                  <b>{item.name}</b>
-                  <small>{item.role}</small>
-                </span>
-              </figcaption>
+              <figcaption className="avis__cap">Le message d’origine</figcaption>
             </figure>
-          ))}
-        </div>
+          </article>
+        ))}
       </div>
     </section>
   );

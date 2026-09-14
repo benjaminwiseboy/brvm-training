@@ -1,5 +1,5 @@
 import { Trophy } from "./Icons";
-import { step } from "./style";
+import { delay } from "./style";
 
 type Phase = {
   n: string;
@@ -52,7 +52,7 @@ const STATS = [
   { value: "28", label: "modules" },
   { value: "5", label: "phases" },
   { value: "5 min", label: "par jour" },
-  { value: "Accès", label: "à vie" },
+  { value: "24/7", label: "accessible" },
 ];
 
 export default function Programme() {
@@ -60,7 +60,6 @@ export default function Programme() {
     <section className="section parcours" id="programme">
       <div className="shell">
         <header className="head" data-reveal>
-          <p className="eyebrow">Votre parcours de transformation</p>
           <h2 className="h2">De débutant complet à investisseur confiant.</h2>
           <p className="lead">
             Pas de cours théoriques ennuyeux. Chaque étape est pensée pour vous apporter un
@@ -83,7 +82,7 @@ export default function Programme() {
 
           <ol className="steps__list">
             {PHASES.map((phase, index) => (
-            <li className="step" key={phase.n} data-reveal style={step(index)}>
+            <li className="step" key={phase.n} data-reveal style={delay(index * 90)}>
               <span className="step__node" aria-hidden="true">
                 {phase.n}
               </span>

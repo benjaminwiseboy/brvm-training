@@ -107,14 +107,6 @@ export const RESOURCES: VaultResource[] = [
     href: "/coffre/sgi",
   },
   {
-    id: "tracker",
-    icon: "trend",
-    name: "Tracker de portefeuille",
-    desc: "Suivez vos positions et calculez vos gains au fil du parcours.",
-    tone: "green",
-    gate: { kind: "always" },
-  },
-  {
     id: "glossaire",
     icon: "book",
     name: "Glossaire interactif",
@@ -125,22 +117,6 @@ export const RESOURCES: VaultResource[] = [
     // derrière une phase le retirerait exactement à ceux qui en ont besoin.
     gate: { kind: "always" },
     href: "/coffre/glossaire",
-  },
-  {
-    id: "calendrier-dividendes",
-    icon: "calendar",
-    name: "Calendrier des dividendes",
-    desc: "Les dates de détachement à ne pas manquer.",
-    tone: "teal",
-    gate: { kind: "phase", index: 3 },
-  },
-  {
-    id: "simulateur-dca",
-    icon: "wallet",
-    name: "Simulateur DCA",
-    desc: "Modèle pour simuler vos versements réguliers.",
-    tone: "violet",
-    gate: { kind: "phase", index: 2 },
   },
 ];
 

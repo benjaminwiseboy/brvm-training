@@ -8,9 +8,9 @@ const ROWS = [
     to: "Une feuille de route étape par étape, de l’initiation jusqu’à votre premier placement.",
   },
   {
-    from: "« Les formations coûtent 300 € (200 000 FCFA) et plus »",
+    from: "« Les formations sur le sujet sont hors de prix »",
     title: "Accessible à tous",
-    to: "Un paiement unique, un tarif accessible même à un étudiant, et les 4 premiers modules offerts pour juger sur pièces.",
+    to: "Un tarif pensé pour rester accessible, même à un étudiant, et les 4 premiers modules offerts pour juger sur pièces.",
   },
   {
     from: "« C’est trop technique et j’ai peur de perdre mon argent »",
@@ -47,7 +47,6 @@ export default function Solution() {
     <section className="section section--alt sol" id="methode">
       <div className="shell">
         <header className="head" data-reveal>
-          <p className="eyebrow">La révolution pédagogique</p>
           <h2 className="h2">
             Et si apprendre la Bourse devenait aussi simple, accessible et motivant qu’un jeu&nbsp;?
           </h2>

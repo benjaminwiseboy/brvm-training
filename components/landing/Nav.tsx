@@ -51,8 +51,11 @@ export default function Nav() {
             Se connecter
           </Link>
 
+          {/* Libellé court sur petits écrans : le CTA reste visible en
+              permanence, il ne doit jamais se replier dans le burger. */}
           <Btn href={START_HREF} variant="gold" className="nav__cta">
-            Démarrer gratuitement
+            <span className="nav__cta-full">Démarrer gratuitement</span>
+            <span className="nav__cta-compact">Démarrer</span>
           </Btn>
 
           <button
@@ -77,9 +80,6 @@ export default function Nav() {
           <Link href={LOGIN_HREF} onClick={() => setOpen(false)}>
             Se connecter
           </Link>
-          <Btn href={START_HREF} variant="gold">
-            Démarrer gratuitement
-          </Btn>
         </div>
       </div>
     </header>
