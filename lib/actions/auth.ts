@@ -54,7 +54,14 @@ export async function signup(
       const parsed = JSON.parse(localProgressRaw);
       if (isValidProgressState(parsed)) {
         const admin = createAdminClient();
-        await admin.from("user_progress").upsert({ user_id: data.user.id, state: parsed });
+        // `ignoreDuplicates` : n'écrit QUE si aucune progression n'existe.
+        // Ré-inscrire l'email d'un compte existant non confirmé renvoie ce
+        // même compte — sans ce garde-fou, n'importe qui pouvait écraser sa
+        // progression avec un état forgé (audit sécurité 2026-11, cf.
+        // docs/SECURITY-AUDIT.md).
+        await admin
+          .from("user_progress")
+          .upsert({ user_id: data.user.id, state: parsed }, { onConflict: "user_id", ignoreDuplicates: true });
       }
     } catch {
       // JSON malformé : on ignore silencieusement, l'utilisateur repart avec
