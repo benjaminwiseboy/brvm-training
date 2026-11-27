@@ -8,6 +8,14 @@ BASE_URL="${BASE_URL%/}"
 HEADERS=()
 if [ -n "${BYPASS:-}" ]; then HEADERS=(-H "x-vercel-protection-bypass: ${BYPASS}"); fi
 
+# Déploiement protégé par Vercel (SSO) : tout répondrait 302/401 ; le dire
+# clairement au lieu d'aligner six échecs trompeurs.
+location=$(curl -sS -o /dev/null -w "%{redirect_url}" --max-time 20 "${HEADERS[@]}" "${BASE_URL}/api/health" || true)
+if [[ "$location" == *"vercel.com/sso"* || "$location" == *"vercel.com/login"* ]]; then
+  echo "✗ ${BASE_URL} est protégé par Vercel Deployment Protection : BYPASS absent ou invalide."
+  exit 1
+fi
+
 fail=0
 check() { # check <chemin> <code attendu> [motif attendu dans le corps]
   local path="$1" expected="$2" pattern="${3:-}"

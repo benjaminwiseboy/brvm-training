@@ -27,7 +27,7 @@ Vue d'ensemble, schéma de données et flux : **[docs/ARCHITECTURE.md](docs/ARCH
 
 ## Démarrer en local
 
-Prérequis : Node 22 (voir `.nvmrc`) et l'accès au projet Supabase **dev**. Ne branchez jamais votre poste sur la prod.
+Prérequis : Node 24, comme Vercel (voir `.nvmrc`) et l'accès au projet Supabase **dev**. Ne branchez jamais votre poste sur la prod.
 
 ```bash
 npm install
