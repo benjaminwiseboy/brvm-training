@@ -1,0 +1,25 @@
+# Mises à jour de dépendances : PR hebdomadaires vers develop (jamais main),
+# groupées pour éviter une PR par paquet.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    target-branch: develop
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels: ["type:chore", "area:infra"]
+    groups:
+      next-react:
+        patterns: ["next", "eslint-config-next", "react", "react-dom", "@types/react*"]
+      supabase:
+        patterns: ["@supabase/*"]
+      dev-tooling:
+        dependency-type: development
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: develop
+    schedule:
+      interval: monthly
+    labels: ["type:chore", "area:infra"]

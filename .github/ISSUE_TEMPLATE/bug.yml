@@ -1,0 +1,57 @@
+name: 🐞 Bug
+description: Quelque chose ne marche pas comme prévu.
+title: "[Bug] "
+labels: ["type:bug", "status:triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci ! Ne collez **aucune donnée personnelle** (email d'apprenant, téléphone, capture de l'admin non floutée) : le dépôt est public.
+  - type: dropdown
+    id: env
+    attributes:
+      label: Environnement
+      options: [Production, Dev / preview, Local]
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Gravité
+      description: P0 = bloque tous les apprenants ou perte de données · P1 = fonction majeure cassée · P2 = gênant, contournable · P3 = cosmétique
+      options: ["P0 — critique", "P1 — majeur", "P2 — mineur", "P3 — cosmétique"]
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Zone
+      options: [Parcours / modules, Tableau de bord, Coffre-fort, Portefeuille virtuel, Compte / connexion, Admin, Landing, Notifications push, Infra / déploiement]
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Étapes pour reproduire
+      placeholder: |
+        1. Se connecter avec un compte gratuit
+        2. Ouvrir M03, aller à la slide 4
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Résultat attendu / obtenu
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Appareil / navigateur
+      placeholder: "Android, Chrome 131, PWA installée"
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Captures, alerte Telegram, logs
+      description: Collez le texte de l'alerte Telegram si elle existe (route, digest, commit).

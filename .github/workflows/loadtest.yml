@@ -1,0 +1,58 @@
+# Test de montée en charge à la demande (onglet Actions → « Test de charge »
+# → Run workflow). Tourne sur un runner GitHub : rien à installer en local.
+# Les scripts refusent toute URL de production (loadtest/lib.js).
+name: Test de charge
+
+on:
+  workflow_dispatch:
+    inputs:
+      scenario:
+        description: Scénario
+        type: choice
+        options: [public-pages, progress-sync]
+        default: public-pages
+      profile:
+        description: Profil de charge
+        type: choice
+        options: [smoke, load, stress, spike]
+        default: smoke
+      base_url:
+        description: URL de l'environnement DEV (public-pages) — vide = variable DEV_BASE_URL
+        required: false
+      users:
+        description: Nombre de comptes de test (progress-sync)
+        default: "20"
+
+permissions:
+  contents: read
+
+jobs:
+  k6:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: dev
+    steps:
+      - uses: actions/checkout@v5
+      - uses: grafana/setup-k6-action@v1
+      - name: k6 run
+        env:
+          PROFILE: ${{ inputs.profile }}
+          BASE_URL: ${{ inputs.base_url || vars.DEV_BASE_URL }}
+          VERCEL_BYPASS: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+          SUPABASE_URL: ${{ vars.DEV_SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.DEV_SUPABASE_ANON_KEY }}
+          LOADTEST_PASSWORD: ${{ secrets.LOADTEST_PASSWORD }}
+          USERS: ${{ inputs.users }}
+          SCENARIO: ${{ inputs.scenario }}
+        run: >-
+          k6 run
+          -e PROFILE -e BASE_URL -e VERCEL_BYPASS -e SUPABASE_URL
+          -e SUPABASE_ANON_KEY -e LOADTEST_PASSWORD -e USERS
+          --summary-export=summary.json
+          "loadtest/${SCENARIO}.js"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-${{ inputs.scenario }}-${{ inputs.profile }}
+          path: summary.json
+          if-no-files-found: ignore

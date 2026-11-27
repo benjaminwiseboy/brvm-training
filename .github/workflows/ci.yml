@@ -1,0 +1,96 @@
+# Intégration continue — tourne sur chaque PR et chaque push vers develop/main.
+# Une PR ne se merge que si TOUS ces jobs sont verts (règle de protection de
+# branche, cf. docs/WORKFLOW.md). Le déploiement lui-même est fait par
+# l'intégration Git de Vercel, pas par ce workflow.
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop, main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Lint · types · tests · build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npx tsc --noEmit
+      - run: npm test
+      - name: Build de production
+        run: npm run build
+        env:
+          # Valeurs factices : le build ne contacte pas Supabase, il a seulement
+          # besoin que les variables existent pour les inliner.
+          NEXT_PUBLIC_SUPABASE_URL: https://ci-placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ci-placeholder
+          SUPABASE_SERVICE_ROLE_KEY: ci-placeholder
+          NEXT_TELEMETRY_DISABLED: "1"
+
+  migrations:
+    name: Migrations sur base vierge
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      # Démarre un Postgres Supabase local et y applique TOUTES les migrations
+      # dans l'ordre : une migration qui ne passe pas sur base vierge casse ici,
+      # pas en prod.
+      - run: supabase db start
+      - name: Lint du schéma (fonctions plpgsql, types)
+        run: supabase db lint --local --fail-on error
+
+  security:
+    name: Dépendances · secrets
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: npm audit (dépendances de prod, sévérité ≥ high)
+        run: npm audit --omit=dev --audit-level=high
+      - name: Recherche de secrets dans l'historique
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  notify:
+    name: Alerte si échec sur develop/main
+    needs: [quality, migrations, security]
+    if: failure() && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/telegram-notify
+        with:
+          bot-token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          chat-id: ${{ secrets.TELEGRAM_CHAT_ID }}
+          message: |
+            🟠 <b>[CI] Échec sur ${{ github.ref_name }}</b>
+            • commit : <code>${{ github.sha }}</code>
+            • par : ${{ github.actor }}
+            <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">Voir le run</a>
