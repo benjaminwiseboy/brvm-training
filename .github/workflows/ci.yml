@@ -49,9 +49,9 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v5
-      - uses: supabase/setup-cli@v1
+      - uses: supabase/setup-cli@1dedf2c611547ede7232d26866dd3c56ab903bbb # v1.7.3
         with:
-          version: latest
+          version: 3.4.0
       # Démarre un Postgres Supabase local et y applique TOUTES les migrations
       # dans l'ordre : une migration qui ne passe pas sur base vierge casse ici,
       # pas en prod.
@@ -74,7 +74,7 @@ jobs:
       - name: npm audit (dépendances de prod, sévérité ≥ high)
         run: npm audit --omit=dev --audit-level=high
       - name: Recherche de secrets dans l'historique
-        uses: gitleaks/gitleaks-action@v2
+        uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2.3.9
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

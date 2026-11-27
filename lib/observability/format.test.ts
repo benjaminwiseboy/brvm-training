@@ -51,6 +51,15 @@ describe("AlertGate", () => {
   });
 });
 
+describe("AlertGate — alertes critiques", () => {
+  it("laisse passer une alerte critique malgré le plafond, mais la dédoublonne", () => {
+    const gate = new AlertGate(1000, 1);
+    expect(gate.allow("a", 0)).toBe(true);
+    expect(gate.allow("crit", 1, true)).toBe(true);
+    expect(gate.allow("crit", 2, true)).toBe(false);
+  });
+});
+
 describe("filtres de bruit", () => {
   it("reconnaît les erreurs de contrôle de flux de Next.js", () => {
     expect(isNextControlFlow("NEXT_REDIRECT;replace;/login;307;")).toBe(true);

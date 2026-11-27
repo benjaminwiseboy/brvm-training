@@ -16,9 +16,6 @@ on:
         type: choice
         options: [smoke, load, stress, spike]
         default: smoke
-      base_url:
-        description: URL de l'environnement DEV (public-pages) — vide = variable DEV_BASE_URL
-        required: false
       users:
         description: Nombre de comptes de test (progress-sync)
         default: "20"
@@ -33,11 +30,13 @@ jobs:
     environment: dev
     steps:
       - uses: actions/checkout@v5
-      - uses: grafana/setup-k6-action@v1
+      - uses: grafana/setup-k6-action@c47136d33d365efbeb9ae7266908b5dcf98cdece # v1.3.0
       - name: k6 run
         env:
           PROFILE: ${{ inputs.profile }}
-          BASE_URL: ${{ inputs.base_url || vars.DEV_BASE_URL }}
+          # Cible FIXE (variable de dépôt), jamais une URL saisie au lancement :
+          # le secret de contournement Vercel ne doit partir que vers notre preview.
+          BASE_URL: ${{ vars.DEV_BASE_URL }}
           VERCEL_BYPASS: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
           SUPABASE_URL: ${{ vars.DEV_SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.DEV_SUPABASE_ANON_KEY }}

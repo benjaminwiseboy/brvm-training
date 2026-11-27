@@ -11,7 +11,8 @@ const MAX_BYTES = 8 * 1024;
  *
  * Route publique : un visiteur de la landing peut planter aussi. D'où les
  * garde-fous — taille bornée, champs tronqués, bruit filtré, et l'AlertGate
- * de sendAlert (dédoublonnage + plafond par fenêtre) contre l'inondation.
+ * de sendAlert, avec un budget « client » séparé de celui du serveur : inonder
+ * cette route ne peut pas masquer une vraie alerte serveur.
  * Répond toujours 204 : rien à apprendre pour un appelant malveillant.
  */
 export async function POST(request: NextRequest) {
@@ -41,7 +42,7 @@ export async function POST(request: NextRequest) {
       userAgent: truncate(request.headers.get("user-agent") ?? "", 160),
     },
     fingerprint: `client:${path}:${message.slice(0, 120)}`,
-  });
+  }, "client");
 
   return new NextResponse(null, { status: 204 });
 }

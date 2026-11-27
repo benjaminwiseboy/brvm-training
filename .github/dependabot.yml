@@ -17,6 +17,8 @@ updates:
         patterns: ["@supabase/*"]
       dev-tooling:
         dependency-type: development
+  # Les actions tierces sont épinglées par SHA : Dependabot met à jour le SHA
+  # et le commentaire de version.
   - package-ecosystem: github-actions
     directory: /
     target-branch: develop

@@ -4,7 +4,18 @@ import { log } from "./log";
 
 export type { Alert, Severity } from "./format";
 
-const gate = new AlertGate();
+/**
+ * Deux budgets distincts : les alertes déclenchées par un appel PUBLIC
+ * (/api/monitoring/client-error) ne doivent jamais pouvoir épuiser celles
+ * du serveur, sinon il suffirait d'inonder la route publique pour rendre
+ * une vraie panne invisible. Les alertes critiques passent toujours.
+ */
+const gates = {
+  server: new AlertGate(10 * 60 * 1000, 20),
+  client: new AlertGate(10 * 60 * 1000, 5),
+};
+
+export type AlertSource = keyof typeof gates;
 
 /** `production` / `preview` / `development` sur Vercel, `local` ailleurs. */
 export function currentEnv(): string {
@@ -18,7 +29,7 @@ export function currentEnv(): string {
  * Sans `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID` (dev local, CI), l'alerte
  * est seulement journalisée — c'est le comportement voulu, pas une panne.
  */
-export async function sendAlert(alert: Alert): Promise<void> {
+export async function sendAlert(alert: Alert, source: AlertSource = "server"): Promise<void> {
   const env = currentEnv();
   log(alert.severity === "info" ? "info" : "error", "alert", { title: alert.title, ...alert.details });
 
@@ -27,7 +38,7 @@ export async function sendAlert(alert: Alert): Promise<void> {
   if (!token || !chatId) return;
 
   const fingerprint = alert.fingerprint ?? `${alert.severity}:${alert.title}`;
-  if (!gate.allow(fingerprint)) return;
+  if (!gates[source].allow(fingerprint, Date.now(), alert.severity === "critical")) return;
 
   try {
     const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {

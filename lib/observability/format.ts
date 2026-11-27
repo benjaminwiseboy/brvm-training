@@ -70,12 +70,13 @@ export class AlertGate {
     private readonly maxPerWindow = 20,
   ) {}
 
-  allow(fingerprint: string, now = Date.now()): boolean {
+  /** `bypassCap` : une alerte critique ignore le plafond (pas le dédoublonnage). */
+  allow(fingerprint: string, now = Date.now(), bypassCap = false): boolean {
     for (const [key, at] of this.seen) if (now - at >= this.windowMs) this.seen.delete(key);
     this.sentInWindow = this.sentInWindow.filter((at) => now - at < this.windowMs);
 
     if (this.seen.has(fingerprint)) return false;
-    if (this.sentInWindow.length >= this.maxPerWindow) return false;
+    if (!bypassCap && this.sentInWindow.length >= this.maxPerWindow) return false;
 
     this.seen.set(fingerprint, now);
     this.sentInWindow.push(now);
