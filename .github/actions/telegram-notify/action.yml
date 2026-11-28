@@ -1,0 +1,30 @@
+name: Notifier Telegram
+description: Envoie un message sur le canal d'alertes Telegram (no-op si les secrets ne sont pas configurés).
+inputs:
+  message:
+    description: Texte du message (HTML Telegram autorisé — <b>, <code>, <a>).
+    required: true
+  bot-token:
+    description: secrets.TELEGRAM_BOT_TOKEN
+    required: false
+  chat-id:
+    description: secrets.TELEGRAM_CHAT_ID
+    required: false
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      env:
+        TOKEN: ${{ inputs.bot-token }}
+        CHAT: ${{ inputs.chat-id }}
+        MESSAGE: ${{ inputs.message }}
+      run: |
+        if [ -z "$TOKEN" ] || [ -z "$CHAT" ]; then
+          echo "Secrets Telegram absents : notification ignorée."
+          exit 0
+        fi
+        curl -sS --fail-with-body -X POST "https://api.telegram.org/bot${TOKEN}/sendMessage" \
+          --data-urlencode "chat_id=${CHAT}" \
+          --data-urlencode "text=${MESSAGE}" \
+          --data-urlencode "parse_mode=HTML" \
+          --data-urlencode "disable_web_page_preview=true" > /dev/null || echo "Envoi Telegram en échec (non bloquant)."

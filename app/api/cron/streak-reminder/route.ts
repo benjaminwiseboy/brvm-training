@@ -1,14 +1,16 @@
 import webpush from "web-push";
 import { NextResponse, type NextRequest } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { isAuthorizedCron, reportCronRun } from "@/lib/cron";
+import { sendAlert } from "@/lib/observability/alert";
 
 export const dynamic = "force-dynamic";
 
 type DueRow = { user_id: string; endpoint: string; p256dh: string; auth_key: string; streak_days: number };
 
 export async function GET(request: NextRequest) {
-  const authHeader = request.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  const startedAt = Date.now();
+  if (!isAuthorizedCron(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -25,6 +27,12 @@ export async function GET(request: NextRequest) {
 
   const { data, error } = await admin.rpc("get_users_due_for_streak_reminder");
   if (error) {
+    await sendAlert({
+      severity: "critical",
+      title: "Cron streak-reminder : lecture des utilisateurs impossible",
+      details: { error: error.message },
+      fingerprint: "cron:streak-reminder:rpc",
+    });
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
@@ -51,5 +59,6 @@ export async function GET(request: NextRequest) {
     }
   }
 
+  await reportCronRun("streak-reminder", { sent, expired, failed }, startedAt);
   return NextResponse.json({ sent, expired, failed });
 }

@@ -16,6 +16,10 @@ const ALWAYS_PUBLIC = [
   // le secret Bearer vérifié dans la route elle-même, cf. app/api/cron/*.
   "/api/cron/reengagement",
   "/api/cron/streak-reminder",
+  // Observabilité (docs/OBSERVABILITY.md) : sonde UptimeRobot / smoke test,
+  // et remontée des erreurs navigateur — y compris d'un visiteur anonyme.
+  "/api/health",
+  "/api/monitoring/client-error",
 ];
 
 /**

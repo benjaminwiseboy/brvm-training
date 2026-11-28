@@ -1,6 +1,7 @@
 import webpush from "web-push";
 import { NextResponse, type NextRequest } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { isAuthorizedCron, reportCronRun } from "@/lib/cron";
 
 export const dynamic = "force-dynamic";
 
@@ -18,8 +19,8 @@ const TIERS: Tier[] = [
 type DueRow = { user_id: string; endpoint: string; p256dh: string; auth_key: string; last_activity_at: string };
 
 export async function GET(request: NextRequest) {
-  const authHeader = request.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  const startedAt = Date.now();
+  if (!isAuthorizedCron(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -74,5 +75,6 @@ export async function GET(request: NextRequest) {
     }
   }
 
+  await reportCronRun("reengagement", { sent, expired, failed }, startedAt);
   return NextResponse.json({ sent, expired, failed });
 }
