@@ -1,0 +1,52 @@
+# Smoke test post-déploiement : Vercel publie un « deployment status » GitHub
+# à la fin de chaque déploiement (preview ou prod) ; on vérifie alors que
+# l'URL déployée répond et que la base est joignable (/api/health).
+name: Smoke test post-déploiement
+
+on:
+  deployment_status:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    if: github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      BASE_URL: ${{ github.event.deployment_status.environment_url }}
+      ENV_NAME: ${{ github.event.deployment.environment }}
+      # Les previews sont protégées par Vercel Deployment Protection : ce
+      # secret (Settings → Deployment Protection → Protection Bypass for
+      # Automation) permet au robot de passer.
+      BYPASS: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+    steps:
+      - uses: actions/checkout@v5
+      # Sans le secret de contournement, une preview protégée répond 302 vers
+      # le SSO Vercel sur toutes les routes : le test ne mesurerait rien. On
+      # l'ignore alors avec un avertissement visible plutôt que d'échouer
+      # (la production, elle, n'est pas protégée et reste toujours testée).
+      - name: Préconditions
+        id: pre
+        run: |
+          if [ "$ENV_NAME" != "Production" ] && [ -z "$BYPASS" ]; then
+            echo "::warning title=Smoke test ignoré::Preview protégée et secret VERCEL_AUTOMATION_BYPASS_SECRET absent (docs/ENVIRONMENTS.md §3.3)."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Vérifie les routes clés
+        if: steps.pre.outputs.run == 'true'
+        run: bash scripts/smoke.sh "$BASE_URL"
+
+      - if: failure()
+        uses: ./.github/actions/telegram-notify
+        with:
+          bot-token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          chat-id: ${{ secrets.TELEGRAM_CHAT_ID }}
+          message: |
+            🔴 <b>[DEPLOY] Smoke test en échec — ${{ github.event.deployment.environment }}</b>
+            • url : ${{ github.event.deployment_status.environment_url }}
+            • commit : <code>${{ github.sha }}</code>
+            <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">Voir le run</a>

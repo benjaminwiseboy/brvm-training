@@ -1,0 +1,23 @@
+name: 📚 Erreur de contenu
+description: Chiffre faux, coquille, explication confuse dans un module.
+title: "[Contenu] M__ — "
+labels: ["type:content", "area:contenu", "status:triage"]
+body:
+  - type: input
+    id: module
+    attributes:
+      label: Module et slide
+      placeholder: "M12, slide 3/7"
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: Ce qui est écrit / ce qui devrait l'être
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source (pour un chiffre)
+      placeholder: "BOC du 12/11/2026, rapport annuel Sonatel 2025…"

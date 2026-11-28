@@ -49,12 +49,25 @@ export async function signup(
 
   // Migration de la progression locale (requirement 4) : pas de session à ce
   // stade (email non confirmé), donc on écrit via le client service-role.
-  if (localProgressRaw) {
+  // Supabase renvoie un objet `user` même quand l'email existe déjà (pour ne
+  // pas révéler l'existence du compte) : `identities` vide pour un compte
+  // confirmé, compte d'origine pour un compte non confirmé. On ne migre donc
+  // QUE si ce signUp vient de créer le compte, sinon un tiers pourrait
+  // planter une progression forgée dans le compte (non confirmé) d'autrui.
+  const createdNow =
+    (data.user.identities?.length ?? 0) > 0 &&
+    Date.now() - new Date(data.user.created_at).getTime() < 60_000;
+
+  if (localProgressRaw && createdNow) {
     try {
       const parsed = JSON.parse(localProgressRaw);
       if (isValidProgressState(parsed)) {
         const admin = createAdminClient();
-        await admin.from("user_progress").upsert({ user_id: data.user.id, state: parsed });
+        // `ignoreDuplicates` : seconde ceinture, n'écrit jamais par-dessus
+        // une progression existante (audit sécurité 2026-11, S4).
+        await admin
+          .from("user_progress")
+          .upsert({ user_id: data.user.id, state: parsed }, { onConflict: "user_id", ignoreDuplicates: true });
       }
     } catch {
       // JSON malformé : on ignore silencieusement, l'utilisateur repart avec

@@ -1,0 +1,28 @@
+name: ✨ Évolution
+description: Une nouvelle fonctionnalité ou une amélioration.
+title: "[Feature] "
+labels: ["type:feature", "status:triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problème de l'apprenant (ou de l'admin)
+      description: Le besoin, pas la solution. Qui, dans quelle situation, qu'est-ce qui bloque ?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposition
+  - type: textarea
+    id: done
+    attributes:
+      label: Critères d'acceptation
+      placeholder: |
+        - [ ] ...
+        - [ ] Testé sur mobile (390 px)
+  - type: dropdown
+    id: area
+    attributes:
+      label: Zone
+      options: [Parcours / modules, Tableau de bord, Coffre-fort, Portefeuille virtuel, Compte / connexion, Admin, Landing, Notifications push, Infra / déploiement, Contenu pédagogique]
