@@ -22,7 +22,7 @@ jobs:
       # Automation) permet au robot de passer.
       BYPASS: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       # Sans le secret de contournement, une preview protégée répond 302 vers
       # le SSO Vercel sur toutes les routes : le test ne mesurerait rien. On
       # l'ignore alors avec un avertissement visible plutôt que d'échouer
