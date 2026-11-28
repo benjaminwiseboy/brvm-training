@@ -9,7 +9,7 @@
 | # | Constat | Gravité | Statut |
 |---|---|---|---|
 | S1 | Next.js 16.2.11 touché par 16 avis de sécurité, dont plusieurs RCE non authentifiées (Image Optimization, `next/og`), du cache poisoning et un DoS via Server Actions | **Critique** | ✅ Corrigé : Next 16.4.6, `npm audit` à 0 |
-| S2 | Les previews Vercel utilisaient la base de **production** : n'importe quelle branche de test lisait et écrivait les données réelles | **Élevée** | ⏳ Outillage prêt, bascule à faire ([ENVIRONMENTS.md](ENVIRONMENTS.md) §3) |
+| S2 | Les previews Vercel utilisaient la base de **production** : n'importe quelle branche de test lisait et écrivait les données réelles | **Élevée** | ✅ Corrigé le 28/11/2026 : projet Supabase dev dédié, variables Vercel Preview séparées de la Production (vérifié dans le bundle de la preview) |
 | S3 | Authentification des crons : si `CRON_SECRET` manquait, l'en-tête littéral `Bearer undefined` était accepté, et n'importe qui pouvait déclencher l'envoi de notifications push | Moyenne | ✅ Corrigé : `lib/cron.ts` échoue fermé, comparaison à temps constant, tests |
 | S4 | Inscription : la reprise de la progression locale (client service-role) **écrasait** une progression existante. En ré-inscrivant l'email d'un compte non confirmé, un tiers pouvait remplacer son état | Faible | 🟡 Atténué : migration seulement si ce `signUp` vient de créer le compte (`identities` non vide, créé il y a moins de 60 s), jamais par-dessus une progression existante. **Risque résiduel accepté** : quelqu'un qui inscrit en premier l'email d'un tiers peut pré-remplir une progression fictive dans ce compte non confirmé. Impact limité au score et à la progression de la phase gratuite : pas d'accès aux données, pas de contournement du paiement. Correctif complet prévu : migrer la progression **après** confirmation, avec la session de l'utilisateur (RPC `merge_user_progress`), quand `lib/store.tsx` aura été stabilisé par le merge du portefeuille |
 | S5 | Aucun en-tête de sécurité : pas de HSTS ni d'anti-clickjacking, `X-Powered-By` exposé | Faible | ✅ Corrigé : `next.config.ts` (HSTS, `frame-ancestors 'none'`, nosniff, Referrer-Policy, Permissions-Policy) |
@@ -33,7 +33,7 @@
 
 ## 3. Actions restantes (propriétaire du dépôt)
 
-1. Basculer les previews sur le projet Supabase dev (S2).
+1. ~~Basculer les previews sur le projet Supabase dev (S2).~~ Fait le 28/11/2026.
 2. *Settings → Code security* : activer **Private vulnerability reporting**, **Dependabot alerts**, **Secret scanning** et **Push protection**.
 3. Protéger `main` et `develop` ([WORKFLOW.md](WORKFLOW.md), annexe).
 4. Supabase prod → *Authentication* : longueur minimale du mot de passe ≥ 8 (alignée sur l'app), confirmation d'email obligatoire, limites de débit par défaut conservées.

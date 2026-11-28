@@ -13,7 +13,7 @@ Rendre le produit fiable avant d'accélérer l'acquisition.
 | Chantier | Pourquoi maintenant | Issue |
 |---|---|---|
 | Fondations SDLC : CI/CD, alertes, docs, audit (cette PR) | On ne peut pas grandir sans filet | PR `chore/sdlc-foundations` |
-| Basculer les previews sur un projet Supabase **dev** | Les tests écrivent aujourd'hui dans la base des apprenants | [#6](https://github.com/benjaminwiseboy/brvm-training/issues/6) |
+| ✅ Basculer les previews sur un projet Supabase **dev** (fait le 28/11/2026) | Les tests écrivaient dans la base des apprenants | [#6](https://github.com/benjaminwiseboy/brvm-training/issues/6) |
 | Activer les protections GitHub (branches, secret scanning, signalement privé) | Dépôt public | [#7](https://github.com/benjaminwiseboy/brvm-training/issues/7) |
 | Brancher les alertes Telegram et UptimeRobot | Le code est prêt, il manque le bot et les variables | [#8](https://github.com/benjaminwiseboy/brvm-training/issues/8) |
 | Activer les migrations automatiques en prod | Fin des migrations appliquées à la main | [#9](https://github.com/benjaminwiseboy/brvm-training/issues/9) |

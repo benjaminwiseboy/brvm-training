@@ -8,10 +8,12 @@
 | Branche | `develop`, et toute branche de PR (preview) | `main` |
 | URL | `https://brvm-training-git-develop-wiseboy-s-projects.vercel.app` (protégée par Vercel) | `https://brvm-training.vercel.app` |
 | Variables Vercel | portée **Preview** | portée **Production** |
-| Supabase | projet `brvm-learning-dev` | projet actuel (prod) |
+| Supabase | `brvm-learning-dev` (réf. `ybvkmgnjlpfidqrfxhne`, Paris) | `BRVM Learning` (réf. `arokxyrimpyoiandwfpe`, Paris) |
 | Données | fictives : comptes de test, comptes de charge `loadtest+N@brvm-learning.test` | réelles, personnelles : ne jamais les copier en dev |
 
-> **Avant novembre 2026**, Preview et Production partageaient la même base : chaque preview écrivait dans les données des vrais apprenants. C'est ce que corrige ce document.
+> **Mis en place le 28/11/2026.** Avant cette date, Preview et Production partageaient la même base : chaque preview écrivait dans les données des vrais apprenants.
+
+**Convention locale :** le dossier de travail `brvm-training/app` est relié (`supabase link`) au projet **dev**. Une commande `npx supabase …` touche donc la base de test par défaut ; viser la prod demande un `--project-ref arokxyrimpyoiandwfpe` explicite. Les migrations de prod passent de préférence par le workflow GitHub, avec approbation.
 
 ## 2. Variables d'environnement
 
@@ -30,6 +32,8 @@
 Toute nouvelle variable doit être ajoutée à trois endroits dans la même PR : `.env.local.example`, Vercel (Preview **et** Production), et le tableau ci-dessus.
 
 ## 3. Mettre en place l'environnement dev (une seule fois)
+
+> ✅ **Fait le 28/11/2026** pour `brvm-learning-dev`. La procédure reste ici pour recréer l'environnement si besoin. Le câblage Vercel et GitHub (§3.2 et §3.3, hors secrets personnels) est automatisé par `node scripts/env/setup-dev-env.mjs <ref-dev>` : il restreint chaque variable partagée à la Production, sans en changer la valeur, puis crée la valeur Preview.
 
 ### 3.1 Créer le projet Supabase dev
 
