@@ -45,7 +45,7 @@ jobs:
       (github.event_name == 'push' && github.ref_name == 'develop') ||
       vars.PROD_MIGRATIONS_ENABLED == 'true'
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: supabase/setup-cli@1dedf2c611547ede7232d26866dd3c56ab903bbb # v1.7.3
         with:
           version: 3.4.0
